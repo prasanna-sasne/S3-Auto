@@ -1,4 +1,4 @@
-.content {
+/*.content {
     display: flex;
     margin: 82px auto 32px;
     padding: 0 16px;
@@ -6,4 +6,8 @@
     flex-direction: column;
    
   }
+*/
 
+.content{
+	margin-top: 82px;
+}

@@ -12,6 +12,8 @@
     background-color: #1976d2 !important;
     color: white;
     font-weight: 600;
+    z-index: 10;
+    background-image: linear-gradient(to right, #563d7c, #1976d2);
   }
 
 .toolbar i {
