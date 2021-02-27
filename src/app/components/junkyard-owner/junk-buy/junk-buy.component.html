@@ -1,0 +1,25 @@
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-link" id="nav-home-tab" data-toggle="tab" 
+    routerLinkActive="active"
+    routerLink="/" 
+    [routerLinkActiveOptions]="{exact:true}"
+    role="tab" aria-controls="nav-home" 
+    aria-selected="true">Buy</a>
+
+    <a class="nav-link" id="nav-profile-tab" data-toggle="tab" 
+    routerLink="/sell-inventory" role="tab" aria-controls="nav-profile" 
+    routerLinkActive="active"
+    aria-selected="false">Sell</a>
+
+    <a class="nav-link" id="nav-contact-tab" data-toggle="tab" 
+    routerLink="/sell-history" role="tab" aria-controls="nav-contact" 
+    routerLinkActive="active"
+    aria-selected="false">Sell History</a>
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+  	<router-outlet></router-outlet>
+  </div>
+</div>
