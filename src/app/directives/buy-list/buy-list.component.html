@@ -1,60 +1,133 @@
-<p>buy-list works</p>
+<div class="filter-row" >
+  <p-dropdown [options]="makers" [(ngModel)]="selectedMake" optionLabel="make" [filter]="true" filterBy="make"
+  [showClear]="true" placeholder="Select Make" class="select-style"
+  (onChange)="onChangeMake($event)">
+  <ng-template pTemplate="selectedItem">
+    <div class="country-item country-item-value" *ngIf="selectedMake">
+      <div>{{selectedMake.make}}</div>
+    </div>
+  </ng-template>
+  <ng-template let-maker pTemplate="item">
+    <div class="country-item">
+      <div>{{maker.make}}</div>
+    </div>
+  </ng-template>
+</p-dropdown>
 
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
-  <div class="col mb-4">
-    <div class="card h-100">
-      <img src="/assets/car1.jpg" class="card-img-top img-thumbnail img-thumbnail" alt="...">
-      <div class="card-body">
-        <div class="card-text">
-        	<div class="buy-item-box">
-        	  <h4>{{ value | currency }}</h4>		
-			  <div>Item Name</div>
-			  <div>Connect with junkyard</div>
-			</div>
-        </div>
-      </div>
-    </div>
+<p-dropdown [options]="models" [(ngModel)]="selectedModel" optionLabel="model" [filter]="true" filterBy="model"
+[showClear]="true" placeholder="Select Model" class="select-style"
+(onChange)="onChangeModel($event)" [disabled]="modelFlag">
+<ng-template pTemplate="selectedItem">
+  <div class="country-item country-item-value" *ngIf="selectedModel">
+    <div>{{selectedModel.model}}</div>
   </div>
-  <div class="col mb-4">
-    <div class="card h-100">
-      <img src="/assets/car2.jpg" class="card-img-top img-thumbnail" alt="...">
-      <div class="card-body">
-        <div class="card-text">
-        	<div class="buy-item-box">
-        	  <h4>{{ value | currency }}</h4>		
-			  <div>Item Name</div>
-			  <div>Connect with junkyard</div>
-			</div>
-        </div>
-      </div>
-    </div>
+</ng-template>
+<ng-template let-model pTemplate="item">
+  <div class="country-item">
+    <div>{{model.model}}</div>
   </div>
-  <div class="col mb-4">
-    <div class="card h-100">
-      <img src="/assets/car3.jpg" class="card-img-top img-thumbnail" alt="...">
-      <div class="card-body">
-        <div class="card-text">
-        	<div class="buy-item-box">
-        	  <h4>{{ value | currency }}</h4>		
-			  <div>Item Name</div>
-			  <div>Connect with junkyard</div>
-			</div>
-        </div>
-      </div>
-    </div>
+</ng-template>
+</p-dropdown>
+
+<p-dropdown [options]="years" [(ngModel)]="selectedYear" optionLabel="year" [filter]="true" filterBy="year"
+[showClear]="true" placeholder="Select Year" class="select-style" 
+[disabled]="yearStateFlag">
+<ng-template pTemplate="selectedItem">
+  <div class="country-item country-item-value" *ngIf="selectedYear">
+    <div>{{selectedYear.year}}</div>
   </div>
-  <div class="col mb-4">
-    <div class="card h-100">
-      <img src="/assets/car1.jpg" class="card-img-top img-thumbnail" alt="...">
-      <div class="card-body">
-        <div class="card-text">
-        	<div class="buy-item-box">
-        	  <h4>{{ value | currency }}</h4>		
-			  <div>Item Name</div>
-			  <div>Connect with junkyard</div>
-			</div>
+</ng-template>
+<ng-template let-yearNum pTemplate="item">
+  <div class="country-item">
+    <div>{{yearNum.year}}</div>
+  </div>
+</ng-template>
+</p-dropdown>
+
+<!-- use this for parts -->
+<!-- <p-dropdown [options]="parts" [(ngModel)]="selectedPart" optionLabel="part" [filter]="true" filterBy="part"
+[showClear]="true" placeholder="Select Part" class="select-style" 
+[disabled]="yearStateFlag">
+<ng-template pTemplate="selectedItem">
+  <div class="country-item country-item-value" *ngIf="selectedPart">
+    <div>{{selectedPart.part}}</div>
+  </div>
+</ng-template>
+<ng-template let-partName pTemplate="item">
+  <div class="country-item">
+    <div>{{partName.part}}</div>
+  </div>
+</ng-template>
+</p-dropdown> -->
+
+
+<p-dropdown [options]="states" [(ngModel)]="selectedstate" optionLabel="state" [filter]="true" filterBy="state"
+[showClear]="true" placeholder="Select State" class="select-style" [disabled]="yearStateFlag">
+<ng-template pTemplate="selectedItem">
+  <div class="country-item country-item-value" *ngIf="selectedstate">
+    <div>{{selectedstate.state}}</div>
+  </div>
+</ng-template>
+<ng-template let-stateObj pTemplate="item">
+  <div class="country-item">
+    <div>{{stateObj.state}}</div>
+  </div>
+</ng-template>
+</p-dropdown>
+<button type="button" class="btn btn-primary filter-btn" 
+(click)="search()" [disabled]="yearStateFlag">Search</button>
+<div class="btn btn-secondary filter-btn" (click)="resetFilters()">Reset</div>
+</div>
+
+<!-- Display card content -->
+<div class="buy-list">
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
+    <div class="col mb-4" *ngFor="let item of buyItems">
+      <div class="card h-100">
+        <div class="embed-responsive embed-responsive-16by9">
+          <img [src]="item.imageUri" class="card-img-top img-thumbnail embed-responsive-item" alt="Salvage Car">
+        </div>
+        <div class="card-body">
+          <div class="card-text">
+            <div class="buy-item-box">
+              <div class="card-content">
+                <h3>{{ item.price | currency }}</h3> 
+                <!-- <span><p-rating [ngModel]="rating" readonly="true" stars="5" [cancel]="false"></p-rating></span> -->
+              </div>
+              <div>{{item.make}} {{item.model}} {{item.year}}</div>
+              <div>{{item.sellDate | date: 'dd/MM/yyyy'}}</div>
+              <div class="card-content">
+                <span>{{item.city}}, {{item.state}}</span>
+                <span style="color:#1976d2;">Contact Seller<span><i class="bi bi-chat-left-fill"></i> </span></span> 
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<div class="no-data-found" *ngIf="buyItems?.length == 0">
+  <div>
+    <img class="img-thumbnail" src=".././assets/sorry.png" alt="">
+  </div>
+</div>
+
+
+<nav aria-label="Page navigation example" *ngIf="buyItems?.length !== 0">
+  <ul class="pagination justify-content-center">
+    <li class="page-item" [ngClass]="{'disabled': previousRecordFlag}" style="cursor: pointer;">
+      <a class="page-link"
+      (click)="previousPage()">Previous</a>
+    </li>
+    
+    <li class="page-item disabled">
+      <a class="page-link">{{currentPageIndex}}</a>
+    </li>
+    
+    <li class="page-item" [ngClass]="{'disabled': nextRecordFlag}" style="cursor: pointer;">
+      <a class="page-link" (click)="nextPage()">Next</a>
+    </li>
+  </ul>
+</nav>

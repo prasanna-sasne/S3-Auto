@@ -10,4 +10,11 @@
 
 .content{
 	margin-top: 82px;
+	padding: 0px 65px;
+}
+
+@media only screen and (max-width: 600px){
+  .content {
+    padding: 0px 30px;
+  }
 }
