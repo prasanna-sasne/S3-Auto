@@ -19,20 +19,22 @@ export class BuyListComponent implements OnInit {
   buyItems: BuyItems[] = [];
 
   //Initial values for select
-  selectedMake: {"makeId": number, "make": string} = {"makeId": 0, "make": ""};
-  selectedModel: {"modelId": number, "model": string} = {"modelId": 0, "model": ""};
+  selectedMake: {"makeId": number, "make": string} = {"makeId": -1, "make": ""};
+  selectedModel: {"modelId": number, "model": string} = {"modelId": -1, "model": ""};
   selectedstate: {"stateId": string, "state": string} = {"stateId": "*", "state": ""};
-  selectedYear: {"yearId": number, "year": string} = {"yearId": 0, "year": "*"};
-  selectedPart: {"partId": number, "part": string} = {"partId": 0, "part": ""};
+  selectedYear: {"yearId": number, "year": string} = {"yearId": -1, "year": "*"};
+  selectedPart: {"partId": number, "part": string} = {"partId": -1, "part": ""};
 
   //Flag for validation of select control
   modelFlag:boolean = true;
   yearStateFlag: boolean = true;
-  rating: number = 2;
   nextRecordFlag: boolean = true;
   previousRecordFlag: boolean = true;
   startIndex = 0;
   currentPageIndex = 1;
+
+  //role: string = "JUNK_YARD_OWNER";
+  role: string = "USER";
 
   constructor(private buyService: BuyService) { 
     this.generateYears();
@@ -73,9 +75,22 @@ export class BuyListComponent implements OnInit {
       this.selectedstate = {"stateId": "*", "state": ""};
       this.selectedYear = {"yearId": 0, "year": "*"};
     } else {
-      this.yearStateFlag = false;
+      if(this.role.localeCompare("USER") === 0){
+        if(this.selectedPart !== null && this.selectedPart.part !== "")
+          this.yearStateFlag = false;  
+      } else this.yearStateFlag = false; 
+      
     } 
   }
+
+  onChangePart(event: any){
+    if(event.value == null){
+      this.yearStateFlag = true;
+    } else {
+      if(this.selectedModel !== null && this.selectedModel.model !== "")
+        this.yearStateFlag = false;
+    }
+  } 
 
   // To get previous page data
   previousPage(): void {
@@ -101,32 +116,50 @@ export class BuyListComponent implements OnInit {
       startIdx: this.startIndex,
       resultSize: 9
     }
-    this.buyService.getBuyVehicles(filterQuery).subscribe(data => {
-      //deep-copy of data array to buyItems
-      this.buyItems = JSON.parse(JSON.stringify(data));
-      //trim last record
-      this.buyItems.splice(8, 1);
 
-      // console.log(this.buyItems);
-      if(data.length % 9 == 0){
-        this.nextRecordFlag = false;
-      } else this.nextRecordFlag = true;  
+    if(this.selectedPart.part != ""){
+      filterQuery["partId"] = this.selectedPart.partId;
+    }
+
+    console.log(filterQuery);
+
+    this.buyService.getBuyItemList(filterQuery, this.role).subscribe(data => {
+      this.handlePaginationOnRes(data);
     });
     this.currentPageIndex > 1 ? this.previousRecordFlag = false: this.previousRecordFlag = true; 
     
   }
 
+  handlePaginationOnRes(data: BuyItems[]){
+    //deep-copy of data array to buyItems
+    this.buyItems = JSON.parse(JSON.stringify(data));
+    //trim last record
+    this.buyItems.splice(8, 1);
+
+    // console.log(this.buyItems);
+    if(data.length % 9 == 0){
+      this.nextRecordFlag = false;
+    } else this.nextRecordFlag = true;  
+  }
+
   // To reset all filterdata and load data without filter
   resetFilters(): void {
-    this.selectedMake = {"makeId": 0, "make": ""};
-    this.selectedModel = {"modelId": 0, "model": ""};
+    this.selectedMake = {"makeId": -1, "make": ""};
+    this.selectedModel = {"modelId": -1, "model": ""};
     this.selectedstate = {"stateId": "*", "state": ""};
-    this.selectedYear = {"yearId": 0, "year": "*"};
+    this.selectedYear =  {"yearId": -1, "year": "*"};
+    this.selectedPart = {"partId": -1, "part": ""};
+
     this.modelFlag = true;
+    this.yearStateFlag = true;
     this.buyService.getMakers().subscribe(data => this.makers = data);
     this.buyService.getStates().subscribe(data => this.states = data);
     this.buyService.getParts().subscribe(data => this.parts = data);
-    this.buyService.getBuyVehicles({}).subscribe(data => this.buyItems= data);
+
+    this.buyService.getBuyItemList({}, this.role).subscribe(data => {
+      this.handlePaginationOnRes(data);
+    });
+    this.currentPageIndex > 1 ? this.previousRecordFlag = false: this.previousRecordFlag = true; 
   }
 
   ngOnInit(): void { }

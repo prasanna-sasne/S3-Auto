@@ -30,27 +30,71 @@ export class BuyService{
                     state: currentValue.state,
                     userId: currentValue.userId,
                     vehId: vehicle.vehId,
-                    imageUri: vehicle.vehicleImages[0].imageUri
+                    imageUri: vehicle.vehicleImages[0].imageUri,
+                    part: "",
+                    junkyardId: -1,
+                    partId: -1,
+                    rating: -1 
                 };
-                console.log();
                 this.buyItems.push(vehicleObject);
             })
         });
     }
+    
+    builtBuyPartsModel(res: any){
+        this.buyItems = [];
+        res.forEach( (partItem, index) => {
+            let partObject = {
+                    imageUri: partItem.imageUri,
+                    price : partItem.price,
+                    make  : partItem.make,
+                    model : partItem.model,
+                    part : partItem.part,
+                    year  : partItem.year,
+                    sellDate: partItem.soldDate,
+                    city: partItem.city,
+                    state: partItem.state,
+                    junkyardId: partItem.junkYardId,
+                    partId: partItem.vehId,
+                    rating: partItem.junkYardRating,
+                    vehId: -1,
+                    userId: -1
+                };
+           this.buyItems.push(partObject);     
+        });
+    }
 
-    getBuyVehicles(queryData: any): Observable<BuyItems[]>{
-        let url: string = `${this.appUrl}/uvp/vehicles/get`;
-
-        if(JSON.stringify(queryData) !== '{}'){
-            url = `${this.appUrl}/uvp/vehicles/get/${queryData.makeId}/${queryData.modelId}/${queryData.year}/${queryData.stateId}/${queryData.startIdx}/${queryData.resultSize}`;
+    generateAppUrl(queryData: any, role: string): string{
+        let url : string = "";
+        if(role.localeCompare("JUNK_YARD_OWNER") === 0){
+            url = `${this.appUrl}/uvp/vehicles/get`;
+            if(JSON.stringify(queryData) !== '{}'){
+                url += `/${queryData.makeId}/${queryData.modelId}/${queryData.year}/${queryData.stateId}/${queryData.startIdx}/${queryData.resultSize}`;
+            }
+        } else if(role.localeCompare("USER") === 0){
+            url = `${this.appUrl}/uvp/parts/get`;
+            if(JSON.stringify(queryData) !== '{}'){
+                url += `/${queryData.makeId}/${queryData.modelId}/${queryData.year}/${queryData.partId}/${queryData.stateId}/${queryData.startIdx}/${queryData.resultSize}`;
+            }
         }
+        return url;
+    }
 
+    getBuyItemList(queryData: any, role: string): Observable<BuyItems[]>{
+        let url = this.generateAppUrl(queryData, role);
         return this.http.get<BuyItems[]>(url)
         .pipe(
-            map( response => {  
-                this.builtBuyVehicleModel(response["Success"]["0"]["userSellVehicles"]);
-                return this.buyItems;
-            }),catchError(this.handleError('getBuyVehicles', []))
+            map( response => {
+                if(role.localeCompare("JUNK_YARD_OWNER") === 0){
+                    this.builtBuyVehicleModel(response["Success"]["0"]["userSellVehicles"]); 
+                    return this.buyItems;   
+                }  
+                else {
+                    this.builtBuyPartsModel(response["Success"]["0"]["userSellParts"]);
+                    return this.buyItems;
+                }
+               
+            }),catchError(this.handleError('getBuyItemList', []))
             );//end pipe
     }
 
