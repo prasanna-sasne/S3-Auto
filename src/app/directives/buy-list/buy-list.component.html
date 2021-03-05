@@ -30,7 +30,7 @@
 </p-dropdown>
 
 <p-dropdown [options]="years" [(ngModel)]="selectedYear" optionLabel="year" [filter]="true" filterBy="year"
-[showClear]="true" placeholder="Select Year" class="select-style" 
+[showClear]="true" placeholder="Select Year" class="select-style"
 [disabled]="yearStateFlag">
 <ng-template pTemplate="selectedItem">
   <div class="country-item country-item-value" *ngIf="selectedYear">
@@ -46,7 +46,7 @@
 
 <!-- use this for parts -->
 <p-dropdown [options]="parts" [(ngModel)]="selectedPart" optionLabel="part" [filter]="true" filterBy="part"
-[showClear]="true" placeholder="Select Part" class="select-style" 
+[showClear]="true" placeholder="Select Part" class="select-style"
 [disabled]="modelFlag"
 (onChange)="onChangePart($event)"
 *ngIf="role === 'USER'">
@@ -76,7 +76,7 @@
   </div>
 </ng-template>
 </p-dropdown>
-<button type="button" class="btn btn-primary filter-btn" 
+<button type="button" class="btn btn-primary filter-btn"
 (click)="search()" [disabled]="yearStateFlag">Search</button>
 <div class="btn btn-secondary filter-btn" (click)="resetFilters()">Reset</div>
 </div>
@@ -94,25 +94,25 @@
             <div class="buy-item-box">
               <div class="card-content">
                 <span><h3>{{ item.price | currency }}</h3> </span>
-                <span *ngIf="item.rating !== -1">
-                  <!-- <span *ngFor="let item of [1, 2, 3, 4 ,5]; let i = index;">
+                <!-- <span *ngIf="item.rating !== -1">
+                   <span *ngFor="let item of [1, 2, 3, 4 ,5]; let i = index;">
                     <i class="bi bi-star-fill" style="color: #007bff;"></i>
-                  </span> -->
-                  <!-- <p-rating [ngModel]="item.rating" readonly="true" stars="5" [cancel]="false"></p-rating> -->
-                </span> 
+                  </span>
+                  <p-rating [ngModel]="item.rating" readonly=status stars=stars [cancel]="false"></p-rating>
+                </span> -->
 
               </div>
               <div><span *ngIf="item.part !== ''"><strong>{{item.part}}</strong></span> {{item.make}} {{item.model}} {{item.year}}</div>
               <div class="card-content"><span>{{item.sellDate | date: 'dd/MM/yyyy'}}</span>
                 <span style="color:#007bff;" *ngIf="item.rating !== -1">Contact Junkyard
                   <span><i class="bi bi-chat-left-fill"> </i> </span>
-                </span> 
+                </span>
               </div>
               <div class="card-content">
                 <span>{{item.city}}, {{item.state}}</span>
                 <span style="color:#007bff;" *ngIf="item.rating == -1">Contact Seller
                   <span><i class="bi bi-chat-left-fill"> </i> </span>
-                </span> 
+                </span>
               </div>
 
             </div>
@@ -136,11 +136,11 @@
       <a class="page-link"
       (click)="previousPage()">Previous</a>
     </li>
-    
+
     <li class="page-item disabled">
       <a class="page-link">{{currentPageIndex}}</a>
     </li>
-    
+
     <li class="page-item" [ngClass]="{'disabled': nextRecordFlag}" style="cursor: pointer;">
       <a class="page-link" (click)="nextPage()">Next</a>
     </li>

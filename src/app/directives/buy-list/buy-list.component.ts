@@ -11,7 +11,7 @@ import { BuyService } from '../../services/buy.service';
 })
 
 export class BuyListComponent implements OnInit {
-  makers: {"makeId": number, "make": string}[] = [];  
+  makers: {"makeId": number, "make": string}[] = [];
   years: {"yearId": number, "year": number}[] = [];
   models: {"modelId": number, "model": string}[] = [];
   parts: {"partId": number, "part": string}[] = [];
@@ -33,32 +33,33 @@ export class BuyListComponent implements OnInit {
   startIndex = 0;
   currentPageIndex = 1;
 
+
   //role: string = "JUNK_YARD_OWNER";
   role: string = "USER";
 
-  constructor(private buyService: BuyService) { 
+  constructor(private buyService: BuyService) {
     this.generateYears();
     this.resetFilters();
   }
 
-  // Generate list of past 50 years from current year 
+  // Generate list of past 50 years from current year
   generateYears():void {
     var currentYear = new Date().getFullYear();
-    let startYear = (currentYear-50) || 1980;  
+    let startYear = (currentYear-50) || 1980;
     let index = 0;
     while ( currentYear >= startYear ) {
       this.years.push({"year": currentYear--, "yearId": index++});
     }
   }
 
-  /* Clear all dropdowns and disable these fileds on clearing make */ 
+  /* Clear all dropdowns and disable these fileds on clearing make */
   onChangeMake(event: any) {
     if(event.value == null){
       this.selectedModel = {"modelId": 0, "model": ""};
       this.selectedstate = {"stateId": "*", "state": ""};
       this.selectedYear = {"yearId": 0, "year": "*"};
       this.modelFlag = true;
-      this.yearStateFlag = true; 
+      this.yearStateFlag = true;
       this.resetFilters();
     } else {
       this.buyService.getModels(this.selectedMake.makeId)
@@ -68,7 +69,7 @@ export class BuyListComponent implements OnInit {
 
   }
 
-  /* To clear state and year dropdown data and disable these fileds on clearing model */ 
+  /* To clear state and year dropdown data and disable these fileds on clearing model */
   onChangeModel(event: any) {
     if(event.value == null){
       this.yearStateFlag = true;
@@ -77,10 +78,10 @@ export class BuyListComponent implements OnInit {
     } else {
       if(this.role.localeCompare("USER") === 0){
         if(this.selectedPart !== null && this.selectedPart.part !== "")
-          this.yearStateFlag = false;  
-      } else this.yearStateFlag = false; 
-      
-    } 
+          this.yearStateFlag = false;
+      } else this.yearStateFlag = false;
+
+    }
   }
 
   onChangePart(event: any){
@@ -90,12 +91,12 @@ export class BuyListComponent implements OnInit {
       if(this.selectedModel !== null && this.selectedModel.model !== "")
         this.yearStateFlag = false;
     }
-  } 
+  }
 
   // To get previous page data
   previousPage(): void {
     this.currentPageIndex--;
-    this.startIndex -= 8; 
+    this.startIndex -= 8;
     this.search();
   }
 
@@ -126,8 +127,8 @@ export class BuyListComponent implements OnInit {
     this.buyService.getBuyItemList(filterQuery, this.role).subscribe(data => {
       this.handlePaginationOnRes(data);
     });
-    this.currentPageIndex > 1 ? this.previousRecordFlag = false: this.previousRecordFlag = true; 
-    
+    this.currentPageIndex > 1 ? this.previousRecordFlag = false: this.previousRecordFlag = true;
+
   }
 
   handlePaginationOnRes(data: BuyItems[]){
@@ -139,7 +140,7 @@ export class BuyListComponent implements OnInit {
     // console.log(this.buyItems);
     if(data.length % 9 == 0){
       this.nextRecordFlag = false;
-    } else this.nextRecordFlag = true;  
+    } else this.nextRecordFlag = true;
   }
 
   // To reset all filterdata and load data without filter
@@ -159,7 +160,7 @@ export class BuyListComponent implements OnInit {
     this.buyService.getBuyItemList({}, this.role).subscribe(data => {
       this.handlePaginationOnRes(data);
     });
-    this.currentPageIndex > 1 ? this.previousRecordFlag = false: this.previousRecordFlag = true; 
+    this.currentPageIndex > 1 ? this.previousRecordFlag = false: this.previousRecordFlag = true;
   }
 
   ngOnInit(): void { }
