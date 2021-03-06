@@ -17,34 +17,36 @@ import { JunkBuyComponent } from './components/junkyard-owner/junk-buy/junk-buy.
 import { TestComponent } from './test/test.component';
 import { HttpErrorHandler } from './services/http-error-handler.service';
 import { MessageService } from './services/message.service';
+import { ItemDetailsComponent } from './directives/buy-list/item-details/item-details.component';
 
 const appRoutes: Routes = [
-  { path: 'sell-inventory', component: TestComponent },
-  { path: 'sell-history', component: TestComponent},
-  { path: '', component: BuyListComponent },
+{ path: 'buy-inventory', component: BuyListComponent },
+{ path: 'sell-inventory', component: TestComponent },
+{ path: 'sell-history', component: TestComponent},
 ];
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HeaderComponent,
-    LoginComponent,
-    BuyListComponent,
-    JunkBuyComponent,
-    TestComponent
+  AppComponent,
+  HeaderComponent,
+  LoginComponent,
+  BuyListComponent,
+  JunkBuyComponent,
+  TestComponent,
+  ItemDetailsComponent
   ],
 
   imports: [
-    BrowserModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    DropdownModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    RatingModule,
-    PaginatorModule,
-    HttpClientModule,
-    RouterModule.forRoot(appRoutes)
+  BrowserModule,
+  AppRoutingModule,
+  ReactiveFormsModule,
+  DropdownModule,
+  FormsModule,
+  BrowserAnimationsModule,
+  RatingModule,
+  PaginatorModule,
+  HttpClientModule,
+  RouterModule.forRoot(appRoutes)
   ],
   providers: [MessageService, HttpErrorHandler],
   bootstrap: [AppComponent]

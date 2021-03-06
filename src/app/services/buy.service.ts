@@ -11,13 +11,15 @@ export class BuyService{
     buyItems: BuyItems[] = [];
     appUrl = 'http://s3auto-env.eba-dqkeutck.us-east-2.elasticbeanstalk.com';  // URL to web api
     private handleError: HandleError;
-    
+    itemResponseList : any[];
+
     constructor(private http: HttpClient,  httpErrorHandler: HttpErrorHandler){
         this.handleError = httpErrorHandler.createHandleError('BuyService');
     }  
 
     builtBuyVehicleModel(res: any){
         this.buyItems = [];
+
         res.forEach( (currentValue, index) => {
             currentValue.vehicleSells.forEach((vehicle, vehicleIndex) =>{
                 let vehicleObject = {
@@ -39,6 +41,7 @@ export class BuyService{
                 this.buyItems.push(vehicleObject);
             })
         });
+        this.itemResponseList = res;
     }
     
     builtBuyPartsModel(res: any){
@@ -55,13 +58,14 @@ export class BuyService{
                     city: partItem.city,
                     state: partItem.state,
                     junkyardId: partItem.junkYardId,
-                    partId: partItem.vehId,
+                    partId: partItem.partId,
                     rating: partItem.junkYardRating,
                     vehId: -1,
                     userId: -1
                 };
            this.buyItems.push(partObject);     
         });
+        this.itemResponseList = res;
     }
 
     generateAppUrl(queryData: any, role: string): string{
@@ -138,6 +142,34 @@ export class BuyService{
                 return response["Success"]["0"]["parts"]; 
             }),catchError(this.handleError('getstates', []))
             );//end pipe
-
     }
+
+    getItemResponse(item: BuyItems){
+        if(item.partId !== -1){ //get partDetails
+           let filteredArray = this.itemResponseList.filter(function( obj ) {
+                return obj.partId === item.partId;    
+            });
+           return filteredArray[0];
+        } else { //work on getting vehicle details
+            let selectedVehicle = {};
+            this.itemResponseList.forEach( (currentValue, index) => {
+                currentValue.vehicleSells.forEach((vehicle, vehicleIndex) =>{
+                    if(vehicle.vehId === item.vehId){
+                        selectedVehicle = vehicle;
+                        selectedVehicle["userId"] = currentValue.userId;
+                        selectedVehicle["username"] = currentValue.username;
+                        selectedVehicle["city"] = currentValue.city;
+                        selectedVehicle["state"] = currentValue.state;
+                        selectedVehicle["street"] = currentValue.street;
+                        selectedVehicle["zip"] = currentValue.zip;
+                        selectedVehicle["email"] = currentValue.email;
+                        selectedVehicle["phone"] = currentValue.phone;
+                    }                
+                });
+            });
+            return selectedVehicle;    
+        }
+        return this.itemResponseList;
+    }
+
 }

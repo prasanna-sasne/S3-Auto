@@ -1,0 +1,23 @@
+.item-details-container {
+	background: #f1f5fb;
+}
+
+.content-space{
+  justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card-ellipse{
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media(max-width: 892px){
+	#headingGroup h1{
+		font-weight: 100;
+		font-size: 27px;
+	}
+	
+}
