@@ -50,7 +50,7 @@
 </p-dropdown>
 
 <p-dropdown [options]="years" [(ngModel)]="selectedYear" optionLabel="year" [filter]="true" filterBy="year"
-[showClear]="true" placeholder="Select Year" class="select-style" 
+[showClear]="true" placeholder="Select Year" class="select-style"
 [disabled]="yearStateFlag">
 <ng-template pTemplate="selectedItem">
   <div class="country-item country-item-value" *ngIf="selectedYear">
@@ -63,7 +63,6 @@
   </div>
 </ng-template>
 </p-dropdown>
-
 
 <p-dropdown [options]="states" [(ngModel)]="selectedstate" optionLabel="state" [filter]="true" filterBy="state"
 [showClear]="true" placeholder="Select State" class="select-style" [disabled]="yearStateFlag">
@@ -78,7 +77,7 @@
   </div>
 </ng-template>
 </p-dropdown>
-<button type="button" class="btn btn-primary filter-btn" 
+<button type="button" class="btn btn-primary filter-btn"
 (click)="search()" [disabled]="yearStateFlag">Search</button>
 <div class="btn btn-secondary filter-btn" (click)="resetFilters()">Reset</div>
 </div>
@@ -113,15 +112,14 @@
             <div class="card-content"><span>{{item.sellDate | date: 'dd/MM/yyyy'}}</span>
               <span style="color:#007bff;" *ngIf="item.rating !== -1">Contact Junkyard
                 <span><i class="bi bi-chat-left-fill"> </i> </span>
-              </span> 
+              </span>
             </div>
             <div class="card-content">
               <span>{{item.city}}, {{item.state}}</span>
               <span style="color:#007bff;" *ngIf="item.rating == -1">Contact Seller
                 <span><i class="bi bi-chat-left-fill"> </i> </span>
-              </span> 
+              </span>
             </div>
-
           </div>
         </div>
       </div>
@@ -129,13 +127,11 @@
   </div>
 </div>
 </div>
-
 <div class="no-data-found" *ngIf="buyItems?.length == 0">
   <div>
     <img class="img-thumbnail" src=".././assets/sorry.png" alt="">
   </div>
 </div>
-
 
 <nav aria-label="Page navigation example" *ngIf="buyItems?.length !== 0">
   <ul class="pagination justify-content-center">
@@ -143,11 +139,11 @@
       <a class="page-link"
       (click)="previousPage()">Previous</a>
     </li>
-    
+
     <li class="page-item disabled">
       <a class="page-link">{{currentPageIndex}}</a>
     </li>
-    
+
     <li class="page-item" [ngClass]="{'disabled': nextRecordFlag}" style="cursor: pointer;">
       <a class="page-link" (click)="nextPage()">Next</a>
     </li>
@@ -155,11 +151,6 @@
 </nav>
 </div>
 
-<!-- <div *ngIf="showLandingPage === false">
-  <app-item-details 
-  [selectedItemDetail]="itemDetails"
-  (renderBuySection)="backTriggerFromChild($event)"></app-item-details>
-</div> -->
 <div *ngIf="showLandingPage === false">
   <app-item-details 
   (renderBuySection)="backTriggerFromChild($event)"></app-item-details>

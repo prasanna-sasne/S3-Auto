@@ -1,0 +1,134 @@
+<div class="row">
+  <div class="col-md-12 p-4">
+    <h3 class="mb-3"></h3>
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+      <div class="form-row my-2">
+        <div class="form-group col-md-6">
+          <input type="text" class="form-control" formControlName="fname" id="fName" required minlength="4"
+            placeholder="First Name">
+          <div *ngIf="isValidInput('fname')" class="error-messages">
+            <div *ngIf="registrationForm.controls['fname'].errors!.required">
+              First Name is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label></label>
+            <input type="text" class="form-control" formControlName="username" id="username" placeholder="User Name">
+            <div *ngIf="isValidInput('username')" class="error-messages">
+              <div *ngIf="registrationForm.controls['username'].errors!.required">
+                User Name is required.
+              </div>
+            </div>
+            <!----PASSWORD----->
+            <div class="form-group">
+              <label></label>
+              <input type="text" class="form-control" formControlName="password" id="password" placeholder="Password">
+
+              <div *ngIf="isValidInput('password')" class="error-messages">
+                <div *ngIf="registrationForm.controls['password'].errors!.required">
+                  User Name is required.
+                </div>
+              </div>
+              <!--EMAIL-->
+              <div class="form-group">
+                <label></label>
+                <input type="text" class="form-control" formControlName="email" id="email" placeholder="Email">
+
+                <div *ngIf="isValidInput('email')" class="error-messages">
+                  <div *ngIf="registrationForm.controls['email'].errors!.required">
+                    User Name is required.
+                  </div>
+                </div>
+                <div *ngIf="isValidInput('email')" class="error-messages">
+                  <div *ngIf="registrationForm.controls['email'].errors!.email">
+                    enter valid email.
+                  </div>
+                </div>
+
+                <!--JUNK-YARD OWNER NAME-->
+                <div class="form-group" *ngIf="show">
+                  <label></label>
+                  <input type="text" class="form-control" id="form36" style="" placeholder="Junk Yard Name">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <input type="text" class="form-control" id="lastName" placeholder="Last Name">
+          <div class="form-group">
+            <label></label>
+            <input type="text" class="form-control" id="phoneNumber" placeholder="Phone Number">
+            <div class="form-group">
+              <div class="form-group">
+                <label></label>
+                <input type="text" class="form-control" id="confirmPassword" placeholder="Confirm Password">
+
+              </div>
+              <label></label>
+              <div class="form-group col-md-12" style="border: 5px solid rgb(184, 207, 238);">
+                <h5>Select Your Role:</h5>
+                <div class="row">
+                  <h6>Junk Yard Owner</h6>
+                  <label class="switch">
+                    <input type="checkbox" (change)="toggle()" checked>
+                    <span class="slider round"></span>
+                  </label>
+                  <h6>User</h6>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <!-----STATE DATA----->
+        <div class="form-group col-md-3">
+          <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
+          <p-dropdown [options]="states" formGroupName="selectedstate" optionLabel="state" [filter]="true"
+            filterBy="state" (onChange)="selectChange($event)" [showClear]="true" placeholder="Select State"
+            class="select-style">
+            <ng-template pTemplate="selectedItem">
+              <div class="country-item country-item-value" *ngIf="selectedstate">
+                <div>{{selectedstate.state}}</div>
+              </div>
+            </ng-template>
+            <ng-template let-stateObj pTemplate="item">
+              <div class="country-item">
+                <div>{{stateObj.state}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+        <!---CITY VALUE---->
+        <div class="form-group col-md-3">
+          <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
+          <p-dropdown [options]="citiesList" formGroupName="selectedcity" optionLabel="city" [filter]="true"
+            filterBy="city" (onChange)="selectCityChange($event)" [showClear]="true" placeholder="Select City"
+            class="select-style">
+            <ng-template pTemplate="selectedItem">
+              <div class="country-item country-item-value" *ngIf="selectedcity">
+                <div>{{selectedcity.city}}</div>
+              </div>
+            </ng-template>
+            <ng-template let-cityObj pTemplate="item">
+              <div class="country-item">
+                <div>{{cityObj.city}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+
+        <!-- <div class="form-group col-md-3"> <input type="text" class="form-control" id="form41" placeholder="City">
+        </div>-->
+        <div class="form-group col-md-3">
+          <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="Zip Code"></div>
+        </div>
+      </div>
+      <div class="form-group"> <textarea class="form-control" id="form43" rows="3" placeholder="Address"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary button">Register</button>
+    </form>
+  </div>
+</div>

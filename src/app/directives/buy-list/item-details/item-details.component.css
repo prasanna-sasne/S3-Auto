@@ -3,15 +3,26 @@
 }
 
 .content-space{
-  justify-content: space-between;
-  display: flex;
-  flex-wrap: wrap;
+	justify-content: space-between;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 .card-ellipse{
 	white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+@media only screen and (max-width: 600px) {
+	
+	.owner-info-header, .contact-seller-btn{
+		font-size: 13px;
+	}
+	.junk-email{
+		font-size: 9px;
+	}
+
 }
 
 @media(max-width: 892px){

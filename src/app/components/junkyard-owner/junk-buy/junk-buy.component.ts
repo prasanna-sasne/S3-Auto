@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-junk-buy',
@@ -8,7 +9,11 @@ import { Component, OnInit } from '@angular/core';
 export class JunkBuyComponent implements OnInit {
   viewNum: number = 1;
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit(): void {}
+
+  setTab(tabname: string) {
+    this.router.navigate([`/${tabname}`]);
+  }
 }
