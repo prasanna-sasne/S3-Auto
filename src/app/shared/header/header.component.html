@@ -29,31 +29,31 @@
       </div>  
 
       <div class="nav-item mb-2 mb-md-0" 
-        style="cursor: pointer;" 
-        *ngIf="email === undefined"
-        (click)="openModal('custom-modal-1')">
-        Sign Up/Login  
-      </div>
+      style="cursor: pointer;" 
+      *ngIf="email === undefined"
+      (click)="openModal('custom-modal-1')">
+      Sign Up/Login  
     </div>
   </div>
+</div>
 
-  <jw-modal id="custom-modal-1">
-    <div class="modal-header custumheader">
-      <ul class="nav justify-content-center">
-        <li class="nav-item">
-          <button type="button" class="btn btn-outline-light button border-light" (click)="onSwitchMode(false)" >Sign Up</button>
-        </li>
-        <li class="nav-item">
-          <button type="button" class="btn btn-outline-light button border-light" (click)="onSwitchMode(true)">Login</button>
-        </li>
-      </ul>      
-      <button type="button" class="close" (click)="closeModal('custom-modal-1')" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <app-auth *ngIf="!isLoginMode"></app-auth>
-    <br>
-    <app-login (userEmail)="logedinUserEmail($event)" *ngIf="isLoginMode"></app-login>
-  </jw-modal>
-  
+<jw-modal id="custom-modal-1">
+  <div class="modal-header custumheader">
+    <ul class="nav justify-content-center">
+      <li class="nav-item">
+        <button type="button" class="btn btn-outline-light button border-light" (click)="onSwitchMode(false)" >Sign Up</button>
+      </li>
+      <li class="nav-item">
+        <button type="button" class="btn btn-outline-light button border-light" (click)="onSwitchMode(true)">Login</button>
+      </li>
+    </ul>      
+    <button type="button" class="close" (click)="closeModal('custom-modal-1')" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <app-auth *ngIf="!isLoginMode"></app-auth>
+  <br>
+  <app-login (userEmail)="logedinUserEmail($event)" *ngIf="isLoginMode"></app-login>
+</jw-modal>
+
 </div>
