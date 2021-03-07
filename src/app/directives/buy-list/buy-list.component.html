@@ -1,5 +1,5 @@
 <div *ngIf="showLandingPage">
-  <div class="filter-row" >
+  <div class="filter-row row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-5">
     <p-dropdown [options]="makers" [(ngModel)]="selectedMake" optionLabel="make" [filter]="true" filterBy="make"
     [showClear]="true" placeholder="Select Make" class="select-style"
     (onChange)="onChangeMake($event)">
@@ -77,10 +77,24 @@
   </div>
 </ng-template>
 </p-dropdown>
-<button type="button" class="btn btn-primary filter-btn"
-(click)="search()" [disabled]="yearStateFlag">Search</button>
-<div class="btn btn-secondary filter-btn" (click)="resetFilters()">Reset</div>
+<span *ngIf="role === 'USER'; else junkyardSearch">
+  <button type="button" class="btn btn-primary mr-2 mt-3"
+  (click)="search()" [disabled]="yearStateFlag">Search</button>
+  <button class="btn btn-secondary mr-2 mt-3" (click)="resetFilters()">Reset</button>
+</span>
+<ng-template #junkyardSearch>
+  <span>
+   <button type="button" class="btn btn-primary mr-2 filter-btn"
+   (click)="search()" [disabled]="yearStateFlag">Search</button>
+   <button class="btn btn-secondary mr-2 filter-btn" (click)="resetFilters()">Reset</button>
+ </span>
+</ng-template>
+
+<!-- [ngClass]="{'filter-btn': role !== 'USER'}" -->
+<!-- [ngClass]="{'filter-btn': role !== 'USER'}" -->
 </div>
+
+
 
 <!-- Display card content -->
 <div class="buy-list">

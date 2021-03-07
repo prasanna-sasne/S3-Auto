@@ -37,8 +37,8 @@ export class BuyListComponent implements OnInit {
   itemDetails: any = [];
   stars: number[] = [];
 
-  //role: string = "JUNK_YARD_OWNER";
-  role: string = "USER";
+  role: string = "JUNK_YARD_OWNER";
+  //role: string = "USER";
 
   constructor(private buyService: BuyService) { 
     this.stars = Array(5).fill(0).map((x,i)=>i);

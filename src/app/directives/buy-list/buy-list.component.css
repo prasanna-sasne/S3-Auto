@@ -59,22 +59,20 @@
 }
 
 .select-style{
-  margin-right: 9px;
-  margin-top: 16px;
   flex-wrap: wrap;
   width: 13%;
 }
 
-.filter-btn{
-  margin: -9px 9px 0px 0px;
-}
 
 button.btn.btn-primary.filter-btn:disabled {
     cursor: not-allowed;
 }
 
-@media only screen and (max-width: 600px){
+@media only screen and (max-width: 1125px){
+  .select-style{
+     margin-top: 16px;
+  }
   .filter-btn{
-    margin-top: 10px;
+    margin-top: 16px;
   }
 }
