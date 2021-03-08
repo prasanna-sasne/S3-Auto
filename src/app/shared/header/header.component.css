@@ -154,10 +154,14 @@
   }
 
 .btnHeadr:hover {
-  background-color: #5a09f0;
+  background-color: #4586db;
   box-shadow: 0px 15px 20px rgba(89, 56, 235, 0.4);
   color: #fff;
   transform: translateY(-7px);
+}
+
+.closeColor {
+  color: #fff;
 }
 }
 
