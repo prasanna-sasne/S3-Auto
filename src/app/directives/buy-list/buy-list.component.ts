@@ -18,6 +18,8 @@ export class BuyListComponent implements OnInit {
   states: {"stateId": number, "state": string}[] = [];
   buyItems: BuyItems[] = [];
 
+  showLandingPage: boolean = true;
+
   //Initial values for select
   selectedMake: {"makeId": number, "make": string} = {"makeId": -1, "make": ""};
   selectedModel: {"modelId": number, "model": string} = {"modelId": -1, "model": ""};
@@ -32,19 +34,21 @@ export class BuyListComponent implements OnInit {
   previousRecordFlag: boolean = true;
   startIndex = 0;
   currentPageIndex = 1;
+  itemDetails: any = [];
+  stars: number[] = [];
 
+  role: string = "JUNK_YARD_OWNER";
+  //role: string = "USER";
 
-  //role: string = "JUNK_YARD_OWNER";
-  role: string = "USER";
-
-  constructor(private buyService: BuyService) {
-    this.generateYears();
-    this.resetFilters();
+  constructor(private buyService: BuyService) { 
+    this.stars = Array(5).fill(0).map((x,i)=>i);
   }
+
+
 
   // Generate list of past 50 years from current year
   generateYears():void {
-    var currentYear = new Date().getFullYear();
+    let currentYear = new Date().getFullYear();
     let startYear = (currentYear-50) || 1980;
     let index = 0;
     while ( currentYear >= startYear ) {
@@ -52,7 +56,9 @@ export class BuyListComponent implements OnInit {
     }
   }
 
+
   /* Clear all dropdowns and disable these fileds on clearing make */
+
   onChangeMake(event: any) {
     if(event.value == null){
       this.selectedModel = {"modelId": 0, "model": ""};
@@ -66,7 +72,6 @@ export class BuyListComponent implements OnInit {
       .subscribe(data => this.models = data);
       this.modelFlag = false;
     }
-
   }
 
   /* To clear state and year dropdown data and disable these fileds on clearing model */
@@ -122,13 +127,10 @@ export class BuyListComponent implements OnInit {
       filterQuery["partId"] = this.selectedPart.partId;
     }
 
-    console.log(filterQuery);
-
     this.buyService.getBuyItemList(filterQuery, this.role).subscribe(data => {
       this.handlePaginationOnRes(data);
     });
     this.currentPageIndex > 1 ? this.previousRecordFlag = false: this.previousRecordFlag = true;
-
   }
 
   handlePaginationOnRes(data: BuyItems[]){
@@ -163,6 +165,19 @@ export class BuyListComponent implements OnInit {
     this.currentPageIndex > 1 ? this.previousRecordFlag = false: this.previousRecordFlag = true;
   }
 
-  ngOnInit(): void { }
+  navigateItemDetails(item: BuyItems) {
+    this.itemDetails = this.buyService.getItemResponse(item);
+    sessionStorage.setItem('itemDetails', JSON.stringify(this.itemDetails));
+    this.showLandingPage = !this.showLandingPage;
+  }
+
+  backTriggerFromChild(flag: boolean) {
+    this.showLandingPage = true;
+  }
+
+  ngOnInit(): void { 
+    this.generateYears();
+    this.resetFilters();
+  }
 
 }

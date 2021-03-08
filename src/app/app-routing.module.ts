@@ -7,19 +7,18 @@ import { AuthComponent } from './auth/auth.component';
 
 
 const routes: Routes = [
-  { path: 'auth', component: AuthComponent },
-  {
-    path: 'junkYard',
-    component: JunkBuyComponent,
-    children: [
-      { path: 'BuyList', component: BuyListComponent },
-      { path: 'sell-inventory', component: TestComponent },
-      { path: 'sell-history', component: TestComponent },
-    ]
-  },
+{ path: 'auth', component: AuthComponent },
+{
+  path: 'junk-yard',
+  component: JunkBuyComponent,
+  children: [
+  { path: 'buy-list', component: BuyListComponent },
+  { path: 'sell-inventory', component: TestComponent },
+  { path: 'sell-history', component: TestComponent },
+  ]
+},
+{ path: '**', redirectTo: '' }
 
-
-  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

@@ -9,26 +9,26 @@ import {ModalService } from '../../_modal/modal.service';
 })
 export class HeaderComponent implements OnInit {
 
-isLoginMode = true;
-email;
+  isLoginMode = true;
+  email;
   constructor(public modalService:ModalService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
 
-  }
   onSwitchMode(set){
     this.isLoginMode = set;
   }
   openModal(id: string) {
     this.modalService.open(id);
-}
+  }
 
-closeModal(id: string) {
+  closeModal(id: string) {
     this.modalService.close(id);
-}
-logedinUserEmail(el) {
-  console.log('email',el);
-this.email = el;
-}
+  }
+  
+  logedinUserEmail(el) {
+    console.log('email',el);
+    this.email = el;
+  }
 
 }

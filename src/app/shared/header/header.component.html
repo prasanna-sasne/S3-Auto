@@ -1,51 +1,59 @@
 <div class="toolbar navbar navbar-expand-sm py-0 navbar-dark" role="banner">
   <img width="60" alt="S3-Auto Logo" src="./assets/logo.png" />
-
   <div class="box">
     <div class="h4 my-0 text-light">S3 Auto</div>
     <div id="long-form">Sell Salvage Save</div>
   </div>
   <div class="spacer"></div>
 
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <ul class="nav justify-content-end">
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <div class="header-menu navbar-nav">
+      <div class="nav-item" *ngIf="email !== undefined">
+        <h4><span class="badge badge-pill badge-light">2<i class="bi bi-bell-fill"></i></span></h4>
+      </div>
 
-    <li class="nav-item">
-      <a gtm-id="Notifications" class="nav-link dropdown-toggle colorLight" alt="Notifications" id="navbarNotification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-        <span id="navbarNotificationCounter" class="badge rounded red z-depth-1" alt="Notifications" style="display: none;">2</span>
-        <i class="bi bi-bell-fill" alt="Notifications"></i>
-      </a>
-    </li>
-    <li>
-      <!-- <a class="nav-link colorLight" (click)="openModal('custom-modal-1')">Sign Up/Login</a> -->
-      <a class="nav-link colorLight" (click)="openModal('custom-modal-1')">{{ email ? email : 'Sign Up/Login' }}</a>
-    </li>
-    <!-- <li class="nav-item">
-      <a class="nav-link colorLight active" (click)="openModal('custom-modal-2')" tabindex="-1" aria-disabled="true">Sign In</a>
-    </li> -->
+      <div class="nav-item" *ngIf="email !== undefined">
+        <div class="btn-group">
+          <button type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{email}}
+          </button>
+          <div class="dropdown-menu dropdown-menu-right">
+            <button class="dropdown-item" type="button">Profile</button>
+            <button class="dropdown-item " type="button">Logout</button>
+          </div>
+        </div>
+      </div>
 
-  </ul>
-  <jw-modal id="custom-modal-1">
-    <div class="modal-header custumheader">
-      <ul class="nav nav-pills nav-fill mx-auto">
-        <li class="nav-item">
-          <button type="button" class="btn btn-outline-light btnHeadr btnRadius" (click)="onSwitchMode(false)" >Sign Up</button>
-        </li>
-        <li class="nav-item active">
-          <button type="button" class="btn btn-outline-light btnHeadr btnRadius" (click)="onSwitchMode(true)">Login</button>
-        </li>
-      </ul>
-      <i class="close bi bi-x-octagon" (click)="closeModal('custom-modal-1')" data-dismiss="modal" aria-label="Close"></i>
-
+      <div class="nav-item mb-2 mb-md-0"
+      style="cursor: pointer;"
+      *ngIf="email === undefined"
+      (click)="openModal('custom-modal-1')">
+      Sign Up/Login
     </div>
-    <app-auth *ngIf="!isLoginMode"></app-auth>
-    <br>
-    <app-login (userEmail)="logedinUserEmail($event)" *ngIf="isLoginMode"></app-login>
-    <!-- <button (click)="closeModal('custom-modal-1');">Close</button> -->
-   </jw-modal>
+  </div>
+</div>
+
+<jw-modal id="custom-modal-1">
+  <div class="modal-header custumheader">
+    <ul class="nav justify-content-center">
+      <li class="nav-item">
+        <button type="button" class="btn btn-outline-light button border-light" (click)="onSwitchMode(false)" >Sign Up</button>
+      </li>
+      <li class="nav-item">
+        <button type="button" class="btn btn-outline-light button border-light" (click)="onSwitchMode(true)">Login</button>
+      </li>
+    </ul>
+    <button type="button" class="close" (click)="closeModal('custom-modal-1')" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <app-auth *ngIf="!isLoginMode"></app-auth>
+  <br>
+  <app-login (userEmail)="logedinUserEmail($event)" *ngIf="isLoginMode"></app-login>
+</jw-modal>
 
 </div>

@@ -19,40 +19,34 @@ import { JunkBuyComponent } from './components/junkyard-owner/junk-buy/junk-buy.
 import { TestComponent } from './test/test.component';
 import { HttpErrorHandler } from './services/http-error-handler.service';
 import { MessageService } from './services/message.service';
+import { ItemDetailsComponent } from './directives/buy-list/item-details/item-details.component';
 import { AuthComponent } from './auth/auth.component';
-// const appRoutes: Routes = [
-//   { path: 'sell-inventory', component: TestComponent },
-//   { path: 'sell-history', component: TestComponent},
-//   { path: 'BuyList', component: BuyListComponent },
-// ];
-
-
-
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HeaderComponent,
-    LoginComponent,
-    BuyListComponent,
-    JunkBuyComponent,
-    TestComponent,
-    AuthComponent
+  AppComponent,
+  HeaderComponent,
+  LoginComponent,
+  BuyListComponent,
+  JunkBuyComponent,
+  TestComponent,
+  ItemDetailsComponent,
+  AuthComponent
   ],
 
   imports: [
-
-    BrowserModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    DropdownModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    RatingModule,
-    PaginatorModule,
-    HttpClientModule,
-    ModalModule
+  BrowserModule,
+  AppRoutingModule,
+  ReactiveFormsModule,
+  DropdownModule,
+  FormsModule,
+  BrowserAnimationsModule,
+  RatingModule,
+  PaginatorModule,
+  HttpClientModule,
+  ModalModule
   ],
+
   providers: [MessageService, HttpErrorHandler],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   bootstrap: [AppComponent]
