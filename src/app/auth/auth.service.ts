@@ -20,23 +20,12 @@ export class AuthService {
 
    }
 
-  signup() {
+  signup(reqData) {
+    console.log( 'request data ',reqData);
     return this.http
       .post<AuthResponseData>(
         `${this.appUrl}/uvp/authentication/signup`,
-        {
-          "username": "apurba",
-          "firstName": "appu",
-          "lastName": "Das",
-          "email": "testData@gmail.com",
-          "password": "12345678",
-          "role": "USER",
-          "phoneNumber": "2482772085",
-          "street": "21948 Rio Grande Dr",
-          "state": "Michigan",
-          "city": "Rochester",
-          "zipCode": "48044"
-        }
+        reqData
       )
       .pipe(
         catchError(errorRes => {

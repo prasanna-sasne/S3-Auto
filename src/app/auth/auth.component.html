@@ -1,6 +1,9 @@
 <div class="row">
   <div class="col-md-12 p-4">
     <h3 class="mb-3"></h3>
+    <div *ngIf="error.length >0" class="alert alert-danger">
+      <span *ngFor="let item of error">{{item}} </span>
+    </div>
     <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
       <div class="form-row my-2">
         <div class="form-group col-md-6">
@@ -32,49 +35,66 @@
               <!--EMAIL-->
               <div class="form-group">
                 <label></label>
-                <input type="text" class="form-control" formControlName="email" id="email" placeholder="Email">
+                <input type="email" class="form-control" formControlName="email" id="email" placeholder="Email">
 
                 <div *ngIf="isValidInput('email')" class="error-messages">
                   <div *ngIf="registrationForm.controls['email'].errors!.required">
                     User Name is required.
                   </div>
                 </div>
-                <div *ngIf="isValidInput('email')" class="error-messages">
-                  <div *ngIf="registrationForm.controls['email'].errors!.email">
-                    enter valid email.
-                  </div>
-                </div>
+                <label class="text-danger" *ngIf="registrationForm.controls['email'].hasError('email')">
+                  Enter a valid email address!
+                </label>
 
                 <!--JUNK-YARD OWNER NAME-->
                 <div class="form-group" *ngIf="show">
                   <label></label>
-                  <input type="text" class="form-control" id="form36" style="" placeholder="Junk Yard Name">
+                  <input type="text" class="form-control" id="junkYardName" formControlName="junkYardName" style=""
+                    placeholder="Junk Yard Name">
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div class="form-group col-md-6">
-          <input type="text" class="form-control" id="lastName" placeholder="Last Name">
+          <input type="text" class="form-control" formControlName="lastName" id="lastName" placeholder="Last Name">
+    <!----Phone number input value----->
           <div class="form-group">
             <label></label>
-            <input type="text" class="form-control" id="phoneNumber" placeholder="Phone Number">
+            <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber"
+              placeholder="Phone Number">
+              <div *ngIf="registrationForm.controls.phoneNumber.touched && registrationForm.controls.phoneNumber.invalid" class="error-messages">
+                <div *ngIf="registrationForm.controls.phoneNumber.errors!.required">Mobile Number is required.</div>
+              </div>
+              <div class="error-messages" *ngIf="registrationForm.controls.phoneNumber.errors?.pattern">Please, Enter 10 digit Phone Number.</div>
+
             <div class="form-group">
+
+  <!----Confirm Password input value----->
               <div class="form-group">
                 <label></label>
-                <input type="text" class="form-control" id="confirmPassword" placeholder="Confirm Password">
+                <input type="text" class="form-control" id="confirmPassword" formControlName="confirmPassword"
+                  placeholder="Confirm Password">
+                  <div *ngIf="isValidInput('confirmPassword')" class="error-messages">
+                    <div *ngIf="registrationForm.controls['confirmPassword'].errors!.required">
+                      Please confirm your password.
+                    </div>
+                  </div>
+                <div class="error-messages" *ngIf="registrationForm.controls.confirmPassword.errors!.confirmedValidator">Password and Confirm
+                  Password does not match.</div>
 
               </div>
+   <!---------Select for ROLE-------->
               <label></label>
               <div class="form-group col-md-12" style="border: 5px solid rgb(184, 207, 238);">
                 <h5>Select Your Role:</h5>
                 <div class="row">
-                  <h6>Junk Yard Owner</h6>
+                  <h6>User</h6>
                   <label class="switch">
-                    <input type="checkbox" (change)="toggle()" checked>
+                    <input type="checkbox" [checked]=show (change)="toggle()" checked>
                     <span class="slider round"></span>
                   </label>
-                  <h6>User</h6>
+                  <h6>Junk Yard Owner</h6>
                 </div>
 
               </div>
@@ -123,12 +143,21 @@
         <!-- <div class="form-group col-md-3"> <input type="text" class="form-control" id="form41" placeholder="City">
         </div>-->
         <div class="form-group col-md-3">
-          <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="Zip Code"></div>
+          <div class="form-group">
+            <input type="text" class="form-control" formControlName="zipCode" id="zipCode"
+              placeholder="Zip Code">
+              <div class="error-messages" *ngIf="registrationForm.controls.zipCode.errors?.pattern">Please, Enter valid 5 digit Zip Code.</div>
+            </div>
         </div>
       </div>
-      <div class="form-group"> <textarea class="form-control" id="form43" rows="3" placeholder="Address"></textarea>
+      <div class="form-group"> <textarea class="form-control" id="address" formControlName="address" rows="3"
+          placeholder="Address"></textarea>
       </div>
-      <button type="submit" class="btn btn-primary button">Register</button>
+      <div>
+        <button type="submit" class="btn btn-primary button">Register</button><br>
+        <button type="button" (click)=resetForm() class="btn btn-link">Reset</button>
+      </div>
+
     </form>
   </div>
 </div>
