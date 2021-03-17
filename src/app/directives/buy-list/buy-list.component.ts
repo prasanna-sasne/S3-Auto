@@ -39,12 +39,10 @@ export class BuyListComponent implements OnInit {
 
   role: string = "JUNK_YARD_OWNER";
   //role: string = "USER";
-
+ 
   constructor(private buyService: BuyService) { 
     this.stars = Array(5).fill(0).map((x,i)=>i);
   }
-
-
 
   // Generate list of past 50 years from current year
   generateYears():void {

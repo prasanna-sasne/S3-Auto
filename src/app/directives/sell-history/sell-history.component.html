@@ -1,0 +1,56 @@
+<div class="child-container">
+
+  <div class="card mb-3 container" *ngFor="let item of soldItems; let parentIndx = index;">
+    <div class="row no-gutters">
+
+
+      <div class="embed-responsive embed-responsive-16by9 col-md-4">     
+        <span *ngIf="item.vehicleImages !== undefined; else soldPartImage">
+          <img class="img-thumbnail embed-responsive-item" *ngFor="let itemImages of item.vehicleImages;let aIndex= index;" [src]="itemImages.imageUri" alt="sell-history">
+        </span>
+        <ng-template #soldPartImage>
+          <img class="img-thumbnail embed-responsive-item" [src]="item.imageUri" alt="sell-history">
+        </ng-template>
+      </div>
+
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title"><strong><span *ngIf="item.partId !== undefined">{{item.part}} - </span> {{item.make}} {{ item.model }} {{item.year}}</strong></h5>
+          <h6 class="card-subtitle mb-2 text-muted"><strong>{{ item.price | currency }}</strong></h6>
+          <div class="row row-cols-xs-1 row-cols-sm-2">
+            <div class="col" *ngIf="item.mileage !== undefined"><span class="text-muted">Miles Driven:</span> {{item.mileage}} miles</div>
+            <div class="col" *ngIf="item.vin !== undefined"><span class="text-muted">Vin: </span>{{ item.vin }}</div>
+            <div class="col" *ngIf="item.shipping !== undefined">
+              <span class="text-muted">Shipping:</span> {{ item.shipping == true ? 'Available': 'Not Available'}}
+            </div>
+          </div>
+          <p class="card-text mt-2"><span class="text-muted">Description: </span>{{ item.description }}</p>
+          <footer class="blockquote-footer">Sold Date: <cite title="Source Title">{{item.soldDate | date}}</cite></footer>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="alert alert-info text-center" role="alert" *ngIf="soldItems?.length == 0">
+  NO SOLD DATA TO SHOW!!!
+</div>
+
+<nav aria-label="Page navigation example" *ngIf="soldItems?.length !== 0">
+  <ul class="pagination justify-content-center">
+    <li class="page-item" [ngClass]="{'disabled': previousRecordFlag}" style="cursor: pointer;">
+      <a class="page-link"
+      (click)="previousPage()">Previous</a>
+    </li>
+
+    <li class="page-item disabled">
+      <a class="page-link">{{currentPageIndex}}</a>
+    </li>
+
+    <li class="page-item" [ngClass]="{'disabled': nextRecordFlag}" style="cursor: pointer;">
+      <a class="page-link" (click)="nextPage()">Next</a>
+    </li>
+  </ul>
+</nav>
+
+</div>
+

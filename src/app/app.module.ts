@@ -10,7 +10,6 @@ import { AppRoutingModule } from './app-routing.module';
 import {ModalModule} from './_modal';
 import { DropdownModule } from 'primeng/dropdown';
 
-
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { LoginComponent } from './login/login.component';
@@ -26,7 +25,7 @@ import { ResetPasswordComponent } from './shared/reset-password/reset-password.c
 import { WelcomPageComponent } from './shared/welcom-page/welcom-page.component';
 import { SellInventoryComponent } from './components/sell-inventory/sell-inventory.component';
 import { RegisterComponent } from './register/register.component';
-
+import { SellHistoryComponent } from './directives/sell-history/sell-history.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +41,8 @@ import { RegisterComponent } from './register/register.component';
   ResetPasswordComponent,
   WelcomPageComponent,
   SellInventoryComponent,
-  RegisterComponent
+  RegisterComponent,
+  SellHistoryComponent
   ],
 
   imports: [

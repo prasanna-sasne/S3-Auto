@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ModalService } from '../../_modal/modal.service';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -11,13 +11,13 @@ export class HeaderComponent implements OnInit {
 
   isLoginMode = true;
   email;
-  constructor(public modalService:ModalService) { }
+  constructor(public modalService:ModalService, private router:Router) { }
 
   ngOnInit(): void {
     if(window.sessionStorage.getItem('EMAIL') != ""){
       this.email = window.sessionStorage.getItem('EMAIL');
     }
-  //  console.log(window.sessionStorage.getItem('EMAIL'));
+    //  console.log(window.sessionStorage.getItem('EMAIL'));
   }
 
   onSwitchMode(set){
@@ -36,4 +36,10 @@ export class HeaderComponent implements OnInit {
     this.email = el;
   }
 
+  signOut(){
+    sessionStorage.clear();
+    //navigate to homepage
+    this.ngOnInit();
+    this.router.navigate(['welcome']);
+  }
 }

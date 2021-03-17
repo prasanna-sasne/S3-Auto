@@ -8,10 +8,10 @@ import { HttpErrorHandler, HandleError } from './http-error-handler.service';
 
 @Injectable()
 export class BuyService{
-    buyItems: BuyItems[] = [];
-    appUrl = 'http://s3auto-env.eba-dqkeutck.us-east-2.elasticbeanstalk.com';  // URL to web api
+    private buyItems: BuyItems[] = [];
+    private appUrl = 'http://s3auto-env.eba-dqkeutck.us-east-2.elasticbeanstalk.com';  // URL to web api
     private handleError: HandleError;
-    itemResponseList : any[];
+    private itemResponseList : any[];
 
     constructor(private http: HttpClient,  httpErrorHandler: HttpErrorHandler){
         this.handleError = httpErrorHandler.createHandleError('BuyService');
@@ -150,7 +150,7 @@ export class BuyService{
                 return obj.partId === item.partId;    
             });
            return filteredArray[0];
-        } else { //work on getting vehicle details
+        } else { //get vehicle details
             let selectedVehicle = {};
             this.itemResponseList.forEach( (currentValue, index) => {
                 currentValue.vehicleSells.forEach((vehicle, vehicleIndex) =>{

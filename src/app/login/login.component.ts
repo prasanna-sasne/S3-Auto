@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
           console.log("response Data", resData.Success[i]);
           this.responseData = resData.Success[i];
           window.sessionStorage.setItem("ID", this.responseData.id);
-          window.sessionStorage.setItem("ROLE", this.responseData.role);
+          window.sessionStorage.setItem("ROLE", JSON.stringify(this.responseData.role));
           window.sessionStorage.setItem("EMAIL", this.responseData.email);
           window.sessionStorage.setItem("USERNAME", this.responseData.username);
 
@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
           // reditecting according to the role....
           if(this.responseData.role == "JUNK_YARD_OWNER"){
             this.modalService.close('signUp_modal');
-            this.router.navigate(['/junkYard']);
+            this.router.navigate(['/junk-yard/buy-list']);
           }else {
             this.modalService.close('signUp_modal');
             // this.router.navigate(['/junkYard']);
