@@ -1,26 +1,18 @@
-
-
 <div class="row" style="border: 2px solid rgb(184, 207, 238);align-items: center;">
   <div class="col-lg-6">
-      <img
-          alt="Login Logo"
-          src="./assets/login_logo.png"
-      />
+    <img alt="Login Logo" src="./assets/login_logo.png" />
   </div>
-  <div *ngIf="error.length >0" class="alert alert-danger" >
-     <span *ngFor="let item of error">{{item}} </span>
+  <div *ngIf="error.length >0" class="alert alert-danger">
+    <span *ngFor="let item of error">{{item}} </span>
   </div>
 
   <div class="col-lg-6">
     <form [formGroup]="loginForm" (ngSubmit)="login()">
       <div class="form-group">
         <label for="userName">User Name</label>
-        <input type="text"
-               class="form-control"
-               formControlName="userName">
+        <input type="text" class="form-control" formControlName="userName">
       </div>
-      <div *ngIf="isValidInput('userName')"
-        class="alert alert-danger">
+      <div *ngIf="isValidInput('userName')" class="alert alert-danger">
         <div *ngIf="loginForm.controls['userName'].errors!.required">
           User Name is required.
         </div>
@@ -31,25 +23,23 @@
 
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password"
-               class="form-control"
-               formControlName ="password">
+        <input type="password" class="form-control" formControlName="password">
       </div>
-      <div *ngIf="isValidInput('password')"
-        class="alert alert-danger">
+      <div *ngIf="isValidInput('password')" class="alert alert-danger">
         <div *ngIf="loginForm.controls['password'].errors!.required">
           Password is required.
         </div>
       </div>
 
-      <button
-      type="submit"
-      class="btn btn-warning button"
-      >Sign In</button>
+      <button type="submit" class="btn btn-warning button">Sign In</button>
 
-      <button type="button" class="btn btn-link">Forgot Password?</button>
+      <button type="button" (click)="openModal('forgotPassword')" class="btn btn-link">Forgot Password?</button>
     </form>
   </div>
 </div>
-<div class="modal-footer">
-</div>
+
+<jw-modal id="forgotPassword">
+  <!-- <h1 style="height:10px"></h1> -->
+  <app-forgot-password></app-forgot-password>
+
+ </jw-modal>

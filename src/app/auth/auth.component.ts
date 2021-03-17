@@ -61,6 +61,7 @@ export class AuthComponent {
 
   ConfirmedValidator(controlName: string, matchingControlName: string){
     return (formGroup: FormGroup) => {
+      debugger;
         const control = formGroup.controls[controlName];
         const matchingControl = formGroup.controls[matchingControlName];
         if (matchingControl.errors && !matchingControl.errors.confirmedValidator) {

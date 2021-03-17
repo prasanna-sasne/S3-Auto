@@ -21,15 +21,15 @@
       </a>
     </li>
     <li>
-      <!-- <a class="nav-link colorLight" (click)="openModal('custom-modal-1')">Sign Up/Login</a> -->
-      <a class="nav-link colorLight" (click)="openModal('custom-modal-1')">{{ email ? email : 'Sign Up/Login' }}</a>
+      <!-- <a class="nav-link colorLight" (click)="openModal('signUp_modal')">Sign Up/Login</a> -->
+      <a class="nav-link colorLight" (click)="openModal('signUp_modal')">{{ email ? email : 'Sign Up/Login' }}</a>
     </li>
     <!-- <li class="nav-item">
       <a class="nav-link colorLight active" (click)="openModal('custom-modal-2')" tabindex="-1" aria-disabled="true">Sign In</a>
     </li> -->
 
   </ul>
-  <jw-modal id="custom-modal-1">
+  <jw-modal id="signUp_modal">
     <div class="modal-header custumheader">
       <ul class="nav nav-pills nav-fill mx-auto">
         <li class="nav-item">
@@ -39,13 +39,13 @@
           <button type="button" class="btn btn-outline-light btnHeadr btnRadius" (click)="onSwitchMode(true)">Login</button>
         </li>
       </ul>
-      <i class="close closeColor bi bi-x-octagon" (click)="closeModal('custom-modal-1')" data-dismiss="modal" aria-label="Close"></i>
+      <i class="close closeColor bi bi-x-octagon" (click)="closeModal('signUp_modal')" data-dismiss="modal" aria-label="Close"></i>
 
     </div>
     <app-auth *ngIf="!isLoginMode"></app-auth>
     <br>
     <app-login (userEmail)="logedinUserEmail($event)" *ngIf="isLoginMode"></app-login>
-    <!-- <button (click)="closeModal('custom-modal-1');">Close</button> -->
+    <!-- <button (click)="closeModal('signUp_modal');">Close</button> -->
    </jw-modal>
 
 </div>

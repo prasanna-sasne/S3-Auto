@@ -42,8 +42,7 @@ export class LoginComponent implements OnInit {
     this.error = [];
     const userName = this.loginForm.value.userName;
     const password = this.loginForm.value.password;
-    console.log('usename', userName);
-    console.log('password', password);
+
 
     if (!this.loginForm.valid) {
       //  this.error = "Enter the details";
@@ -65,9 +64,10 @@ export class LoginComponent implements OnInit {
 
           // reditecting according to the role....
           if(this.responseData.role == "JUNK_YARD_OWNER"){
-            this.modalService.close('custom-modal-1');
+            this.modalService.close('signUp_modal');
             this.router.navigate(['/junkYard']);
           }else {
+            this.modalService.close('signUp_modal');
             // this.router.navigate(['/junkYard']);
           }
         }
@@ -81,6 +81,15 @@ export class LoginComponent implements OnInit {
       }
     );
   }
+
+  closeModal(id: string) {
+    this.modalService.close(id);
+  }
+
+  openModal(id: string) {
+    this.closeModal('signUp_modal')
+    this.modalService.open(id);
+}
 }
 
 

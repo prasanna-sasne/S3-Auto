@@ -3,11 +3,12 @@ import { BuyListComponent } from './directives/buy-list/buy-list.component';
 import { JunkBuyComponent } from './components/junkyard-owner/junk-buy/junk-buy.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthComponent } from './auth/auth.component';
-
+import { WelcomPageComponent } from './shared/welcom-page/welcom-page.component';
+import {ResetPasswordComponent} from './shared/reset-password/reset-password.component'
 
 const routes: Routes = [
-{ path: 'auth', component: AuthComponent },
+{ path: 'welcome', component: WelcomPageComponent },
+{ path: 'resetPassword/reset', component: ResetPasswordComponent },
 {
   path: 'junk-yard',
   component: JunkBuyComponent,

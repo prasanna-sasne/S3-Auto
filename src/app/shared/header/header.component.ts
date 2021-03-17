@@ -13,7 +13,12 @@ export class HeaderComponent implements OnInit {
   email;
   constructor(public modalService:ModalService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if(window.sessionStorage.getItem('EMAIL') != ""){
+      this.email = window.sessionStorage.getItem('EMAIL');
+    }
+  //  console.log(window.sessionStorage.getItem('EMAIL'));
+  }
 
   onSwitchMode(set){
     this.isLoginMode = set;
@@ -25,7 +30,7 @@ export class HeaderComponent implements OnInit {
   closeModal(id: string) {
     this.modalService.close(id);
   }
-  
+
   logedinUserEmail(el) {
     console.log('email',el);
     this.email = el;

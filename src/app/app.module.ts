@@ -21,6 +21,12 @@ import { HttpErrorHandler } from './services/http-error-handler.service';
 import { MessageService } from './services/message.service';
 import { ItemDetailsComponent } from './directives/buy-list/item-details/item-details.component';
 import { AuthComponent } from './auth/auth.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './shared/reset-password/reset-password.component';
+import { WelcomPageComponent } from './shared/welcom-page/welcom-page.component';
+import { SellInventoryComponent } from './components/sell-inventory/sell-inventory.component';
+import { RegisterComponent } from './register/register.component';
+
 
 @NgModule({
   declarations: [
@@ -31,7 +37,12 @@ import { AuthComponent } from './auth/auth.component';
   JunkBuyComponent,
   TestComponent,
   ItemDetailsComponent,
-  AuthComponent
+  AuthComponent,
+  ForgotPasswordComponent,
+  ResetPasswordComponent,
+  WelcomPageComponent,
+  SellInventoryComponent,
+  RegisterComponent
   ],
 
   imports: [

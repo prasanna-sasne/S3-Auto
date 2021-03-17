@@ -29,7 +29,7 @@
 
               <div *ngIf="isValidInput('password')" class="error-messages">
                 <div *ngIf="registrationForm.controls['password'].errors!.required">
-                  User Name is required.
+                  Password is required.
                 </div>
               </div>
               <!--EMAIL-->
@@ -75,14 +75,14 @@
                 <label></label>
                 <input type="text" class="form-control" id="confirmPassword" formControlName="confirmPassword"
                   placeholder="Confirm Password">
+
                   <div *ngIf="isValidInput('confirmPassword')" class="error-messages">
                     <div *ngIf="registrationForm.controls['confirmPassword'].errors!.required">
                       Please confirm your password.
                     </div>
                   </div>
-                <div class="error-messages" *ngIf="registrationForm.controls.confirmPassword.errors!.confirmedValidator">Password and Confirm
-                  Password does not match.</div>
-
+                <div class="error-messages" *ngIf="registrationForm.controls.confirmPassword.errors?.confirmedValidator">
+                  Password and Confirm Password does not match.</div>
               </div>
    <!---------Select for ROLE-------->
               <label></label>
