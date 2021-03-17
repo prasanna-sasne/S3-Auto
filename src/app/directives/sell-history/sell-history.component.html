@@ -1,6 +1,6 @@
 <div class="child-container">
-
-  <div class="card mb-3 container" *ngFor="let item of soldItems; let parentIndx = index;">
+  <div *ngIf="soldItems.length !== 0">
+    <div class="card mb-3 container" *ngFor="let item of soldItems; let parentIndx = index;">
     <div class="row no-gutters">
 
 
@@ -29,7 +29,9 @@
         </div>
       </div>
     </div>
+  </div>  
   </div>
+  
 
 <div class="alert alert-info text-center" role="alert" *ngIf="soldItems?.length == 0">
   NO SOLD DATA TO SHOW!!!

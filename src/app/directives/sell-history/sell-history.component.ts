@@ -9,11 +9,11 @@ import { SellHistoryService } from '../../services/sell-history.service';
 })
 export class SellHistoryComponent implements OnInit {
 	soldItems: any[] = [];
-	private userId: number = 75; //parts
-	//private readonly userId: number = 83; //vehicles
+	//private userId: number = 75; //parts
+	private readonly userId: number = 83; //vehicles
 	
-	private role: string = "USER";
-	//private readonly role: string = "JUNK_YARD_OWNER";
+	//private role: string = "USER";
+	private readonly role: string = "JUNK_YARD_OWNER";
 
 	nextRecordFlag: boolean = true;
 	previousRecordFlag: boolean = true;

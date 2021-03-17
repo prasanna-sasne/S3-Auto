@@ -3,7 +3,6 @@ import { HttpClient } from "@angular/common/http";
 import { HttpErrorHandler, HandleError } from './http-error-handler.service';
 import { Observable } from 'rxjs';
 import { map , catchError } from 'rxjs/operators';
-import { BuyItems } from '../shared/models/buyItems.model';
 
 @Injectable({
 	providedIn: 'root'
@@ -11,7 +10,7 @@ import { BuyItems } from '../shared/models/buyItems.model';
 export class SellHistoryService {
 	private appUrl = 'http://s3auto-env.eba-dqkeutck.us-east-2.elasticbeanstalk.com/uvp';  // URL to web api
 	private handleError: HandleError;
-	private soldItems: BuyItems[] = [];
+	private soldItems: any[] = [];
 
 	constructor(private http: HttpClient,  httpErrorHandler: HttpErrorHandler) { 
 		this.handleError = httpErrorHandler.createHandleError('SellHistoryService');
@@ -32,7 +31,6 @@ export class SellHistoryService {
 						this.soldItems.push(currentValue["vehicleSells"]["0"]);
 					});	
 				} else { //get sold parts
-					console.log(response["Success"]["0"]["userSellParts"]);
 					this.soldItems = response["Success"]["0"]["userSellParts"];	
 				}
 				return this.soldItems;
