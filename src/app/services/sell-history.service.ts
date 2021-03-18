@@ -12,7 +12,7 @@ export class SellHistoryService {
 	private handleError: HandleError;
 	private soldItems: any[] = [];
 
-	constructor(private http: HttpClient,  httpErrorHandler: HttpErrorHandler) { 
+	constructor(private http: HttpClient,  httpErrorHandler: HttpErrorHandler) {
 		this.handleError = httpErrorHandler.createHandleError('SellHistoryService');
 	}
 
@@ -29,10 +29,13 @@ export class SellHistoryService {
 				if(queryHeader.role.localeCompare("JUNK_YARD_OWNER") === 0){
 					response["Success"]["0"]["userSellVehicles"].forEach( (currentValue, index) => {
 						this.soldItems.push(currentValue["vehicleSells"]["0"]);
-					});	
+					});
 				} else { //get sold parts
-					this.soldItems = response["Success"]["0"]["userSellParts"];	
+
+					this.soldItems = response["Success"]["0"]["userSellParts"];
+
 				}
+        console.log(this.soldItems)
 				return this.soldItems;
 			}),catchError(this.handleError('getSoldInventory', []))
 			);//end pipe

@@ -11,7 +11,7 @@ export class SellHistoryComponent implements OnInit {
 	soldItems: any[] = [];
 	//private userId: number = 75; //parts
 	private readonly userId: number = 83; //vehicles
-	
+
 	//private role: string = "USER";
 	private readonly role: string = "JUNK_YARD_OWNER";
 
@@ -20,7 +20,7 @@ export class SellHistoryComponent implements OnInit {
 	startIndex = 0;
 	currentPageIndex = 1;
 
-	constructor(private sellService: SellHistoryService) { 
+	constructor(private sellService: SellHistoryService) {
 		//this.userId = JSON.parse(`${sessionStorage.getItem("ID")}`);
 		//this.role = JSON.parse(sessionStorage.getItem('ROLE') || '{}');
 	}

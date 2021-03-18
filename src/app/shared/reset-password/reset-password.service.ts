@@ -6,11 +6,6 @@ import { throwError } from 'rxjs';
 interface AuthResponseData {
   "Success": [
     {
-        token: "",
-        id: 0,
-        username: "",
-        email: "",
-        role: ""
     }
 ]
 }

@@ -1,14 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RatingModule } from "primeng/rating";
 import { PaginatorModule } from "primeng/paginator";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Routes, RouterModule } from "@angular/router";
 import { NgModule,CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { FormsModule,ReactiveFormsModule }   from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import {ModalModule} from './_modal';
 import { DropdownModule } from 'primeng/dropdown';
+
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
@@ -25,7 +27,7 @@ import { ResetPasswordComponent } from './shared/reset-password/reset-password.c
 import { WelcomPageComponent } from './shared/welcom-page/welcom-page.component';
 import { SellInventoryComponent } from './components/sell-inventory/sell-inventory.component';
 import { RegisterComponent } from './register/register.component';
-import { SellHistoryComponent } from './directives/sell-history/sell-history.component';
+import {AuthInterceptor} from './_helper/auth.interceptor'
 
 @NgModule({
   declarations: [
@@ -41,11 +43,11 @@ import { SellHistoryComponent } from './directives/sell-history/sell-history.com
   ResetPasswordComponent,
   WelcomPageComponent,
   SellInventoryComponent,
-  RegisterComponent,
-  SellHistoryComponent
+  RegisterComponent
   ],
 
   imports: [
+    CommonModule,
   BrowserModule,
   AppRoutingModule,
   ReactiveFormsModule,
@@ -58,7 +60,9 @@ import { SellHistoryComponent } from './directives/sell-history/sell-history.com
   ModalModule
   ],
 
-  providers: [MessageService, HttpErrorHandler],
+  providers: [MessageService, HttpErrorHandler,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   bootstrap: [AppComponent]
 })

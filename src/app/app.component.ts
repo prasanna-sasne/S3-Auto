@@ -12,15 +12,15 @@ export class AppComponent implements OnInit{
   url = new URL(window.location.href);
 
   constructor(private router:Router) {}
-  
+
   ngOnInit(): void {
-    //this.router.navigate(['welcome']);
-    // this.flagresetForm = false;
-    // if(this.url.searchParams.get('token') !== null || undefined){
-      //   console.log(this.url.searchParams.get('token'));
-      //   this.flagresetForm = true;
-      //   this.router.navigate(['/resetPassword/reset']);
-      // }
+    this.router.navigate(['welcome']);
+    this.flagresetForm = false;
+    if(this.url.searchParams.get('token') !== null || undefined){
+        console.log(this.url.searchParams.get('token'));
+        this.flagresetForm = true;
+        this.router.navigate(['/resetPassword/reset']);
+      }
   }
 
 }

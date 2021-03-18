@@ -12,7 +12,7 @@ export class ResetPasswordComponent implements OnInit {
   resetForm: FormGroup;
   error = [];
   responseData;
-  href;
+
   constructor(private fb: FormBuilder, private resetService:ResetService,
      private router:Router) {
   }
