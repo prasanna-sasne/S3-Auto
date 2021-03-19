@@ -1,6 +1,7 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+
 import { TestComponent } from './test/test.component';
 import { BuyListComponent } from './directives/buy-list/buy-list.component';
 import { SellHistoryComponent } from './directives/sell-history/sell-history.component';

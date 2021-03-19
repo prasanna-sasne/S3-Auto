@@ -9,11 +9,8 @@ import { SellHistoryService } from '../../services/sell-history.service';
 })
 export class SellHistoryComponent implements OnInit {
 	soldItems: any[] = [];
-	//private userId: number = 75; //parts
-	private readonly userId: number = 83; //vehicles
-
-	//private role: string = "USER";
-	private readonly role: string = "JUNK_YARD_OWNER";
+	private userId: number;
+	private role: string;
 
 	nextRecordFlag: boolean = true;
 	previousRecordFlag: boolean = true;
@@ -21,8 +18,8 @@ export class SellHistoryComponent implements OnInit {
 	currentPageIndex = 1;
 
 	constructor(private sellService: SellHistoryService) {
-		//this.userId = JSON.parse(`${sessionStorage.getItem("ID")}`);
-		//this.role = JSON.parse(sessionStorage.getItem('ROLE') || '{}');
+		this.userId = JSON.parse(`${sessionStorage.getItem("ID")}`);
+		this.role = JSON.parse(sessionStorage.getItem('ROLE') || '{}');
 	}
 
 	// To get previous page data

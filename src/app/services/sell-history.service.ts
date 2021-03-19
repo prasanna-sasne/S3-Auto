@@ -19,7 +19,7 @@ export class SellHistoryService {
 	getSoldInventory(queryHeader: any): Observable<any[]>{
 		let url : string = `${this.appUrl}`;
 		this.soldItems = [];
-		queryHeader.role.localeCompare("JUNK_YARD_OWNER") === 0 ? url +=  `/vehicles` : url +=  `/parts`;
+		queryHeader.role.localeCompare("JUNK_YARD_OWNER") === 0 ? url +=  `/parts` : url +=  `/vehicles`;
 		url += `/get/${queryHeader.userId}/Sold/${queryHeader.startIdx}/${queryHeader.resultSize}`;
 
 		return this.http.get<any[]>(url)
@@ -27,15 +27,12 @@ export class SellHistoryService {
 			map( response => {
 				//get sold vehicles
 				if(queryHeader.role.localeCompare("JUNK_YARD_OWNER") === 0){
+					this.soldItems = response["Success"]["0"]["userSellParts"];
+				} else { //get sold parts
 					response["Success"]["0"]["userSellVehicles"].forEach( (currentValue, index) => {
 						this.soldItems.push(currentValue["vehicleSells"]["0"]);
 					});
-				} else { //get sold parts
-
-					this.soldItems = response["Success"]["0"]["userSellParts"];
-
 				}
-        console.log(this.soldItems)
 				return this.soldItems;
 			}),catchError(this.handleError('getSoldInventory', []))
 			);//end pipe

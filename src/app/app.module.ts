@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RatingModule } from "primeng/rating";
@@ -6,16 +5,16 @@ import { PaginatorModule } from "primeng/paginator";
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Routes, RouterModule } from "@angular/router";
 import { NgModule,CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
-import { FormsModule,ReactiveFormsModule }   from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
-import {ModalModule} from './_modal';
+import { ModalModule } from './_modal';
 import { DropdownModule } from 'primeng/dropdown';
-
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { LoginComponent } from './login/login.component';
 import { BuyListComponent } from './directives/buy-list/buy-list.component';
+import { SellHistoryComponent } from './directives/sell-history/sell-history.component';
 import { JunkBuyComponent } from './components/junkyard-owner/junk-buy/junk-buy.component';
 import { TestComponent } from './test/test.component';
 import { HttpErrorHandler } from './services/http-error-handler.service';
@@ -43,13 +42,12 @@ import {AuthInterceptor} from './_helper/auth.interceptor'
   ResetPasswordComponent,
   WelcomPageComponent,
   SellInventoryComponent,
-  RegisterComponent
+  RegisterComponent,
+  SellHistoryComponent
   ],
 
   imports: [
-    CommonModule,
   BrowserModule,
-  AppRoutingModule,
   ReactiveFormsModule,
   DropdownModule,
   FormsModule,
@@ -57,11 +55,12 @@ import {AuthInterceptor} from './_helper/auth.interceptor'
   RatingModule,
   PaginatorModule,
   HttpClientModule,
-  ModalModule
+  ModalModule,
+  AppRoutingModule,
   ],
 
   providers: [MessageService, HttpErrorHandler,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   bootstrap: [AppComponent]
