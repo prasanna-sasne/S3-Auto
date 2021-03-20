@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from 'rxjs';
 import { map , catchError } from 'rxjs/operators';
 import { HttpErrorHandler, HandleError } from './http-error-handler.service';
+import { throwError } from 'rxjs';
 
 
 @Injectable()
@@ -48,22 +49,22 @@ export class BuyService{
         this.buyItems = [];
         res.forEach( (partItem, index) => {
             let partObject = {
-                    imageUri: partItem.imageUri,
-                    price : partItem.price,
-                    make  : partItem.make,
-                    model : partItem.model,
-                    part : partItem.part,
-                    year  : partItem.year,
-                    sellDate: partItem.soldDate,
-                    city: partItem.city,
-                    state: partItem.state,
-                    junkyardId: partItem.junkYardId,
-                    partId: partItem.partId,
-                    rating: partItem.junkYardRating,
-                    vehId: -1,
-                    userId: -1
-                };
-           this.buyItems.push(partObject);     
+                imageUri: partItem.imageUri,
+                price : partItem.price,
+                make  : partItem.make,
+                model : partItem.model,
+                part : partItem.part,
+                year  : partItem.year,
+                sellDate: partItem.soldDate,
+                city: partItem.city,
+                state: partItem.state,
+                junkyardId: partItem.junkYardId,
+                partId: partItem.partId,
+                rating: partItem.junkYardRating,
+                vehId: -1,
+                userId: -1
+            };
+            this.buyItems.push(partObject);     
         });
         this.itemResponseList = res;
     }
@@ -97,7 +98,7 @@ export class BuyService{
                     this.builtBuyPartsModel(response["Success"]["0"]["userSellParts"]);
                     return this.buyItems;
                 }
-               
+
             }),catchError(this.handleError('getBuyItemList', []))
             );//end pipe
     }
@@ -144,12 +145,44 @@ export class BuyService{
             );//end pipe
     }
 
+    getRating(ratingObj: {userId: number, partSellId: number}){
+        const url = `${this.appUrl}/uvp/rating/get/${ratingObj.userId}/${ratingObj.partSellId}`;
+        return this.http.get<{userId: number, partSellId: number}[]>(url)
+        .pipe(
+            map( response => {  
+                return response["Success"]["0"]; 
+            }),catchError(errorRes => {
+            let errorMessage = 'An unknown error occurred!';
+            if (errorRes.status !== 400) {
+                return throwError(errorMessage);
+            }else {
+                return throwError(errorRes.error.Error[0]);
+            }
+        })
+            );//end pipe
+    }
+
+    postRating(ratingObj: any){
+        const url = `${this.appUrl}/uvp/rating/add`;
+        return this.http.post(url, ratingObj)
+        .pipe(map( response => {  
+                return response["Success"]["0"]; 
+            }), catchError(errorRes => {
+            let errorMessage = 'An unknown error occurred!';
+            if (errorRes.status !== 400) {
+                return throwError(errorMessage);
+            }else {
+                return throwError(errorRes.error.Error[0]);
+            }
+        }) );
+    }
+
     getItemResponse(item: BuyItems){
         if(item.partId !== -1){ //get partDetails
-           let filteredArray = this.itemResponseList.filter(function( obj ) {
+            let filteredArray = this.itemResponseList.filter(function( obj ) {
                 return obj.partId === item.partId;    
             });
-           return filteredArray[0];
+            return filteredArray[0];
         } else { //get vehicle details
             let selectedVehicle = {};
             this.itemResponseList.forEach( (currentValue, index) => {

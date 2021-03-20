@@ -14,6 +14,20 @@
 	text-overflow: ellipsis;
 }
 
+.show{
+	background: #f8d7da; 
+	box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); 
+	z-index: 10;
+}
+
+.toast-header{
+	color: #721c24;
+    background-color: #f8d7da;
+}
+
+.disabled{
+	cursor: not-allowed;
+}
 @media only screen and (max-width: 600px) {
 	
 	.owner-info-header, .contact-seller-btn{

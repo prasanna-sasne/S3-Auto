@@ -37,11 +37,11 @@ export class BuyListComponent implements OnInit {
   itemDetails: any = [];
   stars: number[] = [];
 
-  role: string = "JUNK_YARD_OWNER";
-  //role: string = "USER";
+  role: string = "";
  
   constructor(private buyService: BuyService) { 
     this.stars = Array(5).fill(0).map((x,i)=>i);
+    this.role = JSON.parse(sessionStorage.getItem('ROLE') || '{}');
   }
 
   // Generate list of past 50 years from current year
