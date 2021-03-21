@@ -1,12 +1,13 @@
 <div class="item-details-container mt-3 p-3">
     <h4 class="content-space">
-    	<span class="badge badge-pill badge-primary" style="cursor: pointer;" (click)="goToBuySection()">
+    	<span class="badge badge-pill badge-primary sm-button" style="cursor: pointer;" (click)="goToBuySection()">
     		<i class="bi bi-backspace pr-2"></i>Back
     	</span>
         <span *ngIf="selectedItemDetail.junkYardRating !== undefined">
             <span class="mr-1 h6 d-none d-md-inline">Overall Rating</span>
-            <span class="badge badge-pill badge-primary">
-                {{selectedItemDetail.junkYardRating}}<i class="bi bi-heart-fill ml-2"></i></span>
+            <span class="badge badge-pill badge-primary sm-button">
+                {{selectedItemDetail.junkYardRating}}<i class="bi bi-heart-fill ml-2"></i>
+            </span>
         </span>
     </h4>	
     <section class="container-fluid px-0">
@@ -115,7 +116,7 @@
                     <label for="" class="mr-3"
                     [ngStyle]="{'display': postRequestAlert ? 'none': 'block'}">Rate JunkYard </label>
                     <p-rating [(ngModel)]="rating" [cancel]="false"></p-rating>
-                    <button type="button" class="btn btn-primary btn-sm ml-1" 
+                    <button type="button" class="btn btn-primary btn-sm ml-1 sm-button" 
                     data-toggle="popover" title="Rate JunkYard" style="margin-top: -3px;"
                     (click)="showToast = rating == 0? showToast: !showToast;"
                     [ngClass]="{'disabled': rating == 0}">Rate</button>
@@ -158,7 +159,7 @@
      <div class="row card-title">
         <div class="col-6"><h5 class="font-weight-bold owner-info-header">
         {{selectedItemDetail.vehId !== undefined? 'USER' : 'JUNKYARD'}} INFORMATION</h5></div> 
-        <div class="col-6"><button type="button" class="btn btn-primary btn-sm btn-block contact-seller-btn">Contact Seller</button></div>   
+        <div class="col-6"><button type="button" class="btn btn-primary btn-sm btn-block contact-seller-btn sm-button">Contact Seller</button></div>   
     </div>
     <div class="row">
         <div class="col-6"><h2><i class="bi bi-person"></i>                     

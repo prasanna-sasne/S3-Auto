@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup} from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+
 import { BuyItems } from '../../shared/models/buyItems.model';
 import { BuyService } from '../../services/buy.service';
 
@@ -17,8 +19,7 @@ export class BuyListComponent implements OnInit {
   parts: {"partId": number, "part": string}[] = [];
   states: {"stateId": number, "state": string}[] = [];
   buyItems: BuyItems[] = [];
-
-  showLandingPage: boolean = true;
+  isLoading: boolean = true;
 
   //Initial values for select
   selectedMake: {"makeId": number, "make": string} = {"makeId": -1, "make": ""};
@@ -38,8 +39,10 @@ export class BuyListComponent implements OnInit {
   stars: number[] = [];
 
   role: string = "";
- 
-  constructor(private buyService: BuyService) { 
+
+  constructor(private buyService: BuyService,
+    private router: Router,
+    private route: ActivatedRoute) { 
     this.stars = Array(5).fill(0).map((x,i)=>i);
     this.role = JSON.parse(sessionStorage.getItem('ROLE') || '{}');
   }
@@ -59,11 +62,6 @@ export class BuyListComponent implements OnInit {
 
   onChangeMake(event: any) {
     if(event.value == null){
-      this.selectedModel = {"modelId": 0, "model": ""};
-      this.selectedstate = {"stateId": "*", "state": ""};
-      this.selectedYear = {"yearId": 0, "year": "*"};
-      this.modelFlag = true;
-      this.yearStateFlag = true;
       this.resetFilters();
     } else {
       this.buyService.getModels(this.selectedMake.makeId)
@@ -77,7 +75,7 @@ export class BuyListComponent implements OnInit {
     if(event.value == null){
       this.yearStateFlag = true;
       this.selectedstate = {"stateId": "*", "state": ""};
-      this.selectedYear = {"yearId": 0, "year": "*"};
+      this.selectedYear = {"yearId": -1, "year": "*"};
     } else {
       if(this.role.localeCompare("USER") === 0){
         if(this.selectedPart !== null && this.selectedPart.part !== "")
@@ -110,6 +108,23 @@ export class BuyListComponent implements OnInit {
     this.search();
   }
 
+  // To select the filter option by default on page load
+  storeFilterOpts(){
+    let filterOptions = {
+      make : this.selectedMake,
+      model : this.selectedModel,
+      year : this.selectedYear,
+      state: this.selectedstate,
+      startIdx: this.startIndex,
+      resultSize: 9,
+      currentPage : this.currentPageIndex
+    }
+    if(this.selectedPart.part != ""){
+      filterOptions["part"] = this.selectedPart;
+    }
+    sessionStorage.setItem('filterOptions', JSON.stringify(filterOptions));
+  }
+
   // Filter query for invetory buy
   search() : void {
     let filterQuery = {
@@ -124,7 +139,7 @@ export class BuyListComponent implements OnInit {
     if(this.selectedPart.part != ""){
       filterQuery["partId"] = this.selectedPart.partId;
     }
-
+    this.storeFilterOpts();
     this.buyService.getBuyItemList(filterQuery, this.role).subscribe(data => {
       this.handlePaginationOnRes(data);
     });
@@ -136,11 +151,16 @@ export class BuyListComponent implements OnInit {
     this.buyItems = JSON.parse(JSON.stringify(data));
     //trim last record
     this.buyItems.splice(8, 1);
-
-    // console.log(this.buyItems);
     if(data.length % 9 == 0){
       this.nextRecordFlag = false;
     } else this.nextRecordFlag = true;
+     this.isLoading = false;
+  }
+
+  populateFilterOptions(){
+    this.buyService.getMakers().subscribe(data => this.makers = data);
+    this.buyService.getStates().subscribe(data => this.states = data);
+    this.buyService.getParts().subscribe(data => this.parts = data);
   }
 
   // To reset all filterdata and load data without filter
@@ -153,29 +173,50 @@ export class BuyListComponent implements OnInit {
 
     this.modelFlag = true;
     this.yearStateFlag = true;
-    this.buyService.getMakers().subscribe(data => this.makers = data);
-    this.buyService.getStates().subscribe(data => this.states = data);
-    this.buyService.getParts().subscribe(data => this.parts = data);
-
+    this.populateFilterOptions();
     this.buyService.getBuyItemList({}, this.role).subscribe(data => {
       this.handlePaginationOnRes(data);
     });
     this.currentPageIndex > 1 ? this.previousRecordFlag = false: this.previousRecordFlag = true;
+    sessionStorage.removeItem('filterOptions');
   }
 
   navigateItemDetails(item: BuyItems) {
     this.itemDetails = this.buyService.getItemResponse(item);
     sessionStorage.setItem('itemDetails', JSON.stringify(this.itemDetails));
-    this.showLandingPage = !this.showLandingPage;
+    // this.router.navigate(['../item-details'], {relativeTo: this.route});
+    this.router.navigate(['../../item-details'], {relativeTo: this.route});
   }
 
-  backTriggerFromChild(flag: boolean) {
-    this.showLandingPage = true;
+  setFilterData(filterOpts: any){
+    this.selectedMake = filterOpts.make;
+    this.buyService.getModels(this.selectedMake.makeId)
+    .subscribe(data => {
+      this.models = data;
+      this.selectedModel = filterOpts.model;
+      this.modelFlag = false;
+      this.selectedstate = filterOpts.state;
+      this.selectedYear = filterOpts.year;
+      this.yearStateFlag = false;
+      if(filterOpts.part != undefined){
+        this.selectedPart = filterOpts.part;
+      }
+      this.startIndex = filterOpts.startIdx;
+      this.currentPageIndex = filterOpts.currentPage;
+      this.search();    
+    });
+    
   }
 
   ngOnInit(): void { 
     this.generateYears();
-    this.resetFilters();
+    let filterOpts = JSON.parse(`${sessionStorage.getItem("filterOptions")}`);
+    if(filterOpts !== null && filterOpts !== undefined){
+      this.populateFilterOptions();
+      this.setFilterData(filterOpts);
+    } else {
+      this.resetFilters();
+    }
   }
 
 }

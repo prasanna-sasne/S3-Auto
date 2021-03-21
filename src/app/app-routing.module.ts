@@ -9,11 +9,12 @@ import {SellInventoryComponent} from './directives/sell-inventory/sell-inventory
 import { JunkBuyComponent } from './components/junkyard-owner/junk-buy/junk-buy.component';
 import { WelcomPageComponent } from './shared/welcom-page/welcom-page.component';
 import { ResetPasswordComponent } from './shared/reset-password/reset-password.component';
+import { ItemDetailsComponent } from './directives/buy-list/item-details/item-details.component';
 
 const routes: Routes = [
 { path: 'welcome', component: WelcomPageComponent },
 {
-	path: 'junk-yard',
+	path: 's3-auto',
 	component: JunkBuyComponent,
 	children: [
 	{ path: 'buy-list', component: BuyListComponent },
@@ -21,7 +22,7 @@ const routes: Routes = [
 	{ path: 'sell-history', component: SellHistoryComponent },
 	]
 },
-
+{ path: 'item-details', component: ItemDetailsComponent },
 { path: 'resetPassword/reset', component: ResetPasswordComponent },
 { path: '**', redirectTo: '' }
 

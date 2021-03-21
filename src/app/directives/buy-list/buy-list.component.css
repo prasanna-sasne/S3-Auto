@@ -58,11 +58,15 @@
   margin-top: 20px;
 }
 
+.filter-dropdown{
+  display: flex;
+  color: red;
+}
+
 .select-style{
   flex-wrap: wrap;
   width: 13%;
 }
-
 
 button.btn.btn-primary.filter-btn:disabled {
     cursor: not-allowed;

@@ -11,6 +11,7 @@ export class SellHistoryComponent implements OnInit {
 	soldItems: any[] = [];
 	private userId: number;
 	private role: string;
+	isLoading: boolean = true;
 
 	nextRecordFlag: boolean = true;
 	previousRecordFlag: boolean = true;
@@ -45,7 +46,11 @@ export class SellHistoryComponent implements OnInit {
 		}
 		this.sellService.getSoldInventory(sellHistoryHeader).subscribe(data => {
 			this.paginateView(data);
+			this.isLoading = false;
+		}, error=> {
+			this.isLoading = false;
 		});
+		
 		this.currentPageIndex > 1 ? this.previousRecordFlag = false: this.previousRecordFlag = true;
 	}
 
@@ -62,6 +67,7 @@ export class SellHistoryComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.getSellHistory();
+		sessionStorage.removeItem('filterOptions');
 	}
 
 }

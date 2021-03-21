@@ -37,7 +37,8 @@ export class BuyService{
                     part: "",
                     junkyardId: -1,
                     partId: -1,
-                    rating: -1 
+                    rating: -1,
+                    partSellId: -1 
                 };
                 this.buyItems.push(vehicleObject);
             })
@@ -62,7 +63,8 @@ export class BuyService{
                 partId: partItem.partId,
                 rating: partItem.junkYardRating,
                 vehId: -1,
-                userId: -1
+                userId: -1,
+                partSellId: partItem.partSellId
             };
             this.buyItems.push(partObject);     
         });
@@ -180,7 +182,7 @@ export class BuyService{
     getItemResponse(item: BuyItems){
         if(item.partId !== -1){ //get partDetails
             let filteredArray = this.itemResponseList.filter(function( obj ) {
-                return obj.partId === item.partId;    
+                return obj.partSellId === item.partSellId;    
             });
             return filteredArray[0];
         } else { //get vehicle details

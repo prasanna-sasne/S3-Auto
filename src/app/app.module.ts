@@ -26,7 +26,8 @@ import { ResetPasswordComponent } from './shared/reset-password/reset-password.c
 import { WelcomPageComponent } from './shared/welcom-page/welcom-page.component';
 import { SellInventoryComponent } from './components/sell-inventory/sell-inventory.component';
 import { RegisterComponent } from './register/register.component';
-import {AuthInterceptor} from './_helper/auth.interceptor'
+import {AuthInterceptor} from './_helper/auth.interceptor';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component'
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import {AuthInterceptor} from './_helper/auth.interceptor'
   WelcomPageComponent,
   SellInventoryComponent,
   RegisterComponent,
-  SellHistoryComponent
+  SellHistoryComponent,
+  LoadingSpinnerComponent
   ],
 
   imports: [

@@ -65,12 +65,12 @@ export class LoginComponent implements OnInit {
 
           // reditecting according to the role....
           if(this.responseData.role === "JUNK_YARD_OWNER" || this.responseData.role === "USER"){
-            this.router.navigate(['junk-yard/buy-list']);
+            this.router.navigate(['s3-auto/buy-list']);
             this.modalService.close('signUp_modal');
           }else {
             debugger;
             this.modalService.close('signUp_modal');
-            // this.router.navigate(['/junkYard']);
+            // this.router.navigate(['/s3-auto']);
           }
         }
 

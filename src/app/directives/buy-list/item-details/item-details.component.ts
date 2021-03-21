@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+
 import { BuyService } from '../../../services/buy.service';
 
 @Component({
@@ -18,14 +20,18 @@ export class ItemDetailsComponent implements OnInit {
 	ratingFound: boolean = true;
 	showToast: boolean = false;
 
-	constructor(private buyService: BuyService) { 
+	constructor(private buyService: BuyService,
+		private router: Router,
+		private route: ActivatedRoute) { 
 		this.selectedItemDetail = JSON.parse(`${sessionStorage.getItem("itemDetails")}`);
 		this.userId = JSON.parse(`${sessionStorage.getItem("ID")}`);
 	}
 
 	goToBuySection(){
 		sessionStorage.removeItem('itemDetails');
-		this.flag.emit(false);
+		//this.flag.emit(false);
+		//this.router.navigate(['../buy-list'], {relativeTo: this.route});
+		this.router.navigate(['../s3-auto/buy-list'], {relativeTo: this.route});
 	}
 	
 	getPreviousRating(){
@@ -75,6 +81,8 @@ export class ItemDetailsComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.getPreviousRating();
+		if(this.selectedItemDetail.partSellId !== undefined){
+			this.getPreviousRating();
+		}	
 	}
 }
