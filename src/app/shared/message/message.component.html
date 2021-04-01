@@ -1,0 +1,86 @@
+
+<!-- side navbar -->
+<div class="sidenav" [ngStyle]="{'width': sideNavClicked == true? '550px' : '0px'}">
+  <div class="container"  >
+
+    <div class="messaging ">
+      <div class="inbox_msg ">
+        <h3 class=" text-center "><span style="color:white; font-style: italic;">Chat<a href="javascript:void(0)" class="closebtn" (click)="closeNav()">    &times;</a></span></h3>
+        <div class="inbox_people">
+          <div class="headind_srch">
+
+            <div class="srch_bar">
+              <div class="stylish-input-group">
+                <input type="text" class="search-bar" style="border-radius: 5px;font-style: italic"  placeholder="Search" >
+                <span class="input-group-addon">
+                  <i class="bi bi-search"></i>
+                  <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+                </span> </div>
+              </div>
+            </div>
+            <div class="inbox_chat">
+              <!-- add active_chat class to highlight also need to add
+                condition if conversations are empty.
+                empty- add selected user name to the conversations array in
+                mentioned format-->
+              <div class="chat_list" *ngFor="let item of conversations"
+              (click)="getSelectedChat(item)"
+              [ngClass]="{'active_chat': item.receiver == toUserName}">
+                <div class="chat_people">
+                  <div class="chat_img"> <i class="bi bi-person-bounding-box"></i> </div>
+                  <div class="chat_ib">
+                    <h5 style="color: black;font-style: italic;" >{{item.receiver}} <span><i class="fafa bi-trash" style="font-size:17px; color: black"></i></span>
+                      <!-- <span *ngIf="item.notification !== 0"class="badge badge-pill badge-success">{{item.notification}}</span>  -->
+                      <span class="deletingContact" *ngIf="!item.read" class="badge badge-pill  ">
+                           <i class="bell bi-bell-fill" style="font-size:17px;color:blue;" ></i>
+                      </span>
+                      </h5>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="mesgs">
+            <div class="msghead " >
+              <h4 style="color: white;font-style: italic; font-size: 20px">{{toUserName}}</h4>
+            </div>
+            <div class="msg_history ">
+
+              <div *ngFor="let item of chatArray">
+                <div class="incoming_msg" *ngIf="item.from !== username">
+                  <div class="incoming_msg_img"> <i class="personicon bi-person-bounding-box ml-2"></i> </div>
+                  <div class="received_msg" style="color: blue">
+                    <div class="received_withd_msg ml-0">
+                      <p><span style="color:black;">{{item.msg}}</span></p>
+                      <span class="time_date" style="color:black">{{item.ts| date: "short"}}</span></div>
+                    </div>
+                  </div>
+
+                  <div class="outgoing_msg" *ngIf="item.from === username">
+                    <div class="sent_msg" >
+                      <p><span style="color:black;">{{item.msg}}</span></p>
+                      <span class="time_date" style="color:black">{{item.ts| date: "short"}}</span> </div>
+                    </div>
+
+
+                  </div>
+
+                </div>
+
+          <form class="type_msg">
+            <div class="" >
+              <input  type="text" [(ngModel)]="message" class="form-control" name="message" required>
+              <button class="msg_send_btn " type="button"
+              (click)="send(message)"
+              [disabled]="message == ''">Send</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+</div>
+</div>

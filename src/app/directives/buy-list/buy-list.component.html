@@ -1,54 +1,55 @@
- <div *ngIf="isLoading" style="text-align: center;">
+ <div *ngIf="isLoading" class="content-position">
     <app-loading-spinner></app-loading-spinner>
   </div>
 
 <div class="filter-row row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-5"
 *ngIf="!isLoading">
-  <span class="filter-dropdown mb-2">
-    <p-dropdown [options]="makers" [(ngModel)]="selectedMake" 
-    optionLabel="make" [filter]="true" filterBy="make"
-    [showClear]="true" placeholder="Select Make" class="select-style"
-    (onChange)="onChangeMake($event)" class="">
-    <ng-template pTemplate="selectedItem">
-      <div class="country-item country-item-value" *ngIf="selectedMake">
-        <div>{{selectedMake.make}}</div>
-      </div>
-    </ng-template>
-    <ng-template let-maker pTemplate="item">
-      <div class="country-item">
-        <div>{{maker.make}}</div>
-      </div>
-    </ng-template>
-  </p-dropdown>
-  <span><small><i class="bi bi-asterisk"></i></small></span>
-</span>
-
-<span class="filter-dropdown mb-2">
-  <p-dropdown [options]="models" [(ngModel)]="selectedModel" optionLabel="model" [filter]="true" filterBy="model"
-  [showClear]="true" placeholder="Select Model" class="select-style"
-  (onChange)="onChangeModel($event)" [disabled]="modelFlag"
-  class="">
-  <ng-template pTemplate="selectedItem">
-    <div class="country-item country-item-value" *ngIf="selectedModel">
-      <div>{{selectedModel.model}}</div>
-    </div>
-  </ng-template>
-  <ng-template let-model pTemplate="item">
-    <div class="country-item">
-      <div>{{model.model}}</div>
-    </div>
-  </ng-template>
+  
+<p-dropdown [options]="makers" [(ngModel)]="selectedMake" 
+optionLabel="make" [filter]="true" filterBy="make"
+[showClear]="true" placeholder="Select Make" class="select-style "
+(onChange)="onChangeMake($event)"
+[ngClass]="{'ng-valid ng-dirty': selectedMake.make !== ''}"
+[ngClass]="{'ng-invalid ng-dirty': selectedMake.make == ''}">
+<ng-template pTemplate="selectedItem">
+  <div class="country-item country-item-value" *ngIf="selectedMake">
+    <div>{{selectedMake.make}}</div>
+  </div>
+</ng-template>
+<ng-template let-maker pTemplate="item">
+  <div class="country-item">
+    <div>{{maker.make}}</div>
+  </div>
+</ng-template>
 </p-dropdown>
-<span><small><i class="bi bi-asterisk"></i></small></span>
-</span>
+
+<p-dropdown [options]="models" [(ngModel)]="selectedModel" optionLabel="model" [filter]="true" filterBy="model"
+[showClear]="true" placeholder="Select Model" class="select-style"
+(onChange)="onChangeModel($event)" [disabled]="modelFlag"
+[ngClass]="{'ng-valid ng-dirty': selectedModel !== null}"
+[ngClass]="{'ng-invalid ng-dirty': selectedModel == null}">
+<ng-template pTemplate="selectedItem">
+  <div class="country-item country-item-value" *ngIf="selectedModel">
+    <div>{{selectedModel.model}}</div>
+  </div>
+</ng-template>
+<ng-template let-model pTemplate="item">
+  <div class="country-item">
+    <div>{{model.model}}</div>
+  </div>
+</ng-template>
+</p-dropdown>
+
 
 <!-- use this for parts -->
-<span class="filter-dropdown" *ngIf="role === 'USER'" >
-<p-dropdown [options]="parts" [(ngModel)]="selectedPart" optionLabel="part" [filter]="true" filterBy="part"
+<p-dropdown [options]="parts" [(ngModel)]="selectedPart" optionLabel="part" 
+[filter]="true" filterBy="part"
 [showClear]="true" placeholder="Select Part" class="select-style" 
 [disabled]="modelFlag"
 (onChange)="onChangePart($event)"
-class="">
+*ngIf="role === 'USER'" 
+[ngClass]="{'ng-valid ng-dirty': selectedPart !== null}"
+[ngClass]="{'ng-invalid ng-dirty': selectedPart == null}">
 <ng-template pTemplate="selectedItem">
   <div class="country-item country-item-value" *ngIf="selectedPart">
     <div>{{selectedPart.part}}</div>
@@ -60,8 +61,7 @@ class="">
   </div>
 </ng-template>
 </p-dropdown>
-<span><small><i class="bi bi-asterisk"></i></small></span>
-</span>
+
 
 <p-dropdown [options]="years" [(ngModel)]="selectedYear" optionLabel="year" [filter]="true" filterBy="year"
 [showClear]="true" placeholder="Select Year" class="select-style"
@@ -90,25 +90,21 @@ class="">
     <div>{{stateObj.state}}</div>
   </div>
 </ng-template>
+
 </p-dropdown>
 <span *ngIf="role === 'USER'; else junkyardSearch">
-  <button type="button" class="btn btn-primary mr-2 mt-3 sm-button"
+  <button type="button" class="btn btn-primary mr-2 mt-3 sm-button filter-btn"
   (click)="search()" [disabled]="yearStateFlag">Search</button>
   <button class="btn btn-secondary mr-2 mt-3" (click)="resetFilters()">Reset</button>
 </span>
 <ng-template #junkyardSearch>
   <span>
-   <button type="button" class="btn btn-primary mr-2 filter-btn"
+   <button type="button" class="btn btn-primary sm-button mr-2 filter-btn"
    (click)="search()" [disabled]="yearStateFlag">Search</button>
    <button class="btn btn-secondary mr-2 filter-btn" (click)="resetFilters()">Reset</button>
  </span>
 </ng-template>
-
-<!-- [ngClass]="{'filter-btn': role !== 'USER'}" -->
-<!-- [ngClass]="{'filter-btn': role !== 'USER'}" -->
 </div>
-
-
 
 <!-- Display card content -->
 <div class="buy-list">
@@ -140,13 +136,17 @@ class="">
             </div>
             <div><span *ngIf="item.part !== ''"><strong>{{item.part}}</strong></span> {{item.make}} {{item.model}} {{item.year}}</div>
             <div class="card-content"><span>{{item.sellDate | date: 'dd/MM/yyyy'}}</span>
-              <span style="color:#007bff;" *ngIf="item.rating !== -1">Contact Junkyard
+              <span *ngIf="item.rating !== -1"
+              (click)="connectWithSeller(item.username)"
+              class="contact-seller">Contact Junkyard
                 <span><i class="bi bi-chat-left-fill"> </i> </span>
               </span>
             </div>
             <div class="card-content">
               <span>{{item.city}}, {{item.state}}</span>
-              <span style="color:#007bff;" *ngIf="item.rating == -1">Contact Seller
+              <span class="contact-seller" 
+              (click)="connectWithSeller(item.username)"
+              *ngIf="item.rating == -1">Contact Seller
                 <span><i class="bi bi-chat-left-fill"> </i> </span>
               </span>
             </div>
@@ -157,7 +157,7 @@ class="">
   </div>
 </div>
 </div>
-<div class="no-data-found" *ngIf="buyItems?.length == 0 && !isLoading">
+<div class="no-data-found content-position" *ngIf="buyItems?.length == 0 && !isLoading">
   <div>
     <img class="img-thumbnail" src=".././assets/sorry.png" alt="">
   </div>
@@ -180,3 +180,8 @@ class="">
   </ul>
 </nav>
 
+      
+<app-message *ngIf="contactSeller"
+(closeNavFlag)="closeNav($event)"
+[name]="username"
+></app-message>

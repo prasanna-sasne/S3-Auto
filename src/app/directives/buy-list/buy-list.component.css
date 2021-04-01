@@ -68,6 +68,14 @@
   width: 13%;
 }
 
+.content-position{
+  text-align: center;
+}
+
+.contact-seller{
+  color:#007bff;
+  cursor: pointer;
+}
 button.btn.btn-primary.filter-btn:disabled {
     cursor: not-allowed;
 }

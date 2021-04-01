@@ -38,7 +38,8 @@ export class BuyService{
                     junkyardId: -1,
                     partId: -1,
                     rating: -1,
-                    partSellId: -1 
+                    partSellId: -1,
+                    username: currentValue.username
                 };
                 this.buyItems.push(vehicleObject);
             })
@@ -64,7 +65,8 @@ export class BuyService{
                 rating: partItem.junkYardRating,
                 vehId: -1,
                 userId: -1,
-                partSellId: partItem.partSellId
+                partSellId: partItem.partSellId,
+                username: partItem.username
             };
             this.buyItems.push(partObject);     
         });
