@@ -19,6 +19,7 @@ export class ItemDetailsComponent implements OnInit {
 	postRatingMessage: string;
 	ratingFound: boolean = true;
 	showToast: boolean = false;
+	contactSeller: boolean = false;
 
 	constructor(private buyService: BuyService,
 		private router: Router,
@@ -78,6 +79,14 @@ export class ItemDetailsComponent implements OnInit {
 	doNotRate(){
 		this.showToast = false;
 		this.rating = 0;
+	}
+
+	closeNav(closeChatWindow: {closeNav:boolean}){
+		this.contactSeller = closeChatWindow.closeNav;
+	}
+
+	connectWithSeller(){
+		this.contactSeller = true;
 	}
 
 	ngOnInit(): void {

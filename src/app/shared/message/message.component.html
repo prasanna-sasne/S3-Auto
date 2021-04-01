@@ -46,7 +46,7 @@
             <div class="msghead " >
               <h4 style="color: white;font-style: italic; font-size: 20px">{{toUserName}}</h4>
             </div>
-            <div class="msg_history ">
+            <div class="msg_history" #divToScroll>
 
               <div *ngFor="let item of chatArray">
                 <div class="incoming_msg" *ngIf="item.from !== username">

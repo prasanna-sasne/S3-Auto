@@ -1,4 +1,7 @@
-import {Component, OnInit, EventEmitter, Output, Input} from '@angular/core';
+import {Component, OnInit, 
+	    EventEmitter, Output, 
+	    Input, ViewChild, ElementRef,
+		AfterViewChecked } from '@angular/core';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import {ChatMessageService} from '../../services/chat-message.service';
@@ -9,14 +12,16 @@ import {ChatMessageService} from '../../services/chat-message.service';
 	styleUrls: ['./message.component.css'],
 	providers: [ChatMessageService]
 })
-export class MessageComponent implements OnInit {
+export class MessageComponent implements OnInit, AfterViewChecked{
+	//Emit the flag to parent component by sending alert
 	@Output() closeNavFlag = new EventEmitter<{closeNav: boolean}>();
+
+	//Property binding from parent componant 
 	@Input('name') toUserName: string;
+	@ViewChild('divToScroll') private divToScroll: ElementRef;
 
 	public sideNavClicked : boolean = true;
 	public username: any;
-	//public sender: any;
-	//public receiver: any;
 	public message: string="";
 	public chatMessage: any;
 	private webSocketEndPoint: any;
@@ -43,6 +48,11 @@ export class MessageComponent implements OnInit {
 		this.connect();
 		this.getUserChatHistory();
 	}
+	
+	//The AfterViewChecked triggers every time the view was checked
+	ngAfterViewChecked() {        
+        this.scrollToBottom();        
+    } 
 
 	public connect(): void {
 		this.stompClient = Stomp.over(new SockJS(this.webSocketEndPoint));
@@ -53,6 +63,7 @@ export class MessageComponent implements OnInit {
 		});
 	}
 
+	//Get selected user chat record
 	getSelectedChat(item: any){
 		console.log(item);
 		this.toUserName = item.receiver;
@@ -71,11 +82,9 @@ export class MessageComponent implements OnInit {
 				})
 			}
 		})
-
-
-		//call the service and mark as read -- send 1
 	}
 
+	//Send new message to the user
 	public send(formMsg: string): void {
 		console.log(this.toUserName);
 		let sendObj = {
@@ -123,6 +132,7 @@ export class MessageComponent implements OnInit {
 						});
 
 					}
+					this.scrollToBottom();
 				});
 				if(!itemExist){
 					this.pushNewUser();
@@ -174,7 +184,6 @@ export class MessageComponent implements OnInit {
 						}, error => {
 							console.log("Error occured in put");
 						});
-
 				} else {
 					if(ele.notification != undefined && ele.notification !== NaN)
 						ele.notification++;
@@ -202,6 +211,12 @@ export class MessageComponent implements OnInit {
 			}
 		}
 	}
+
+	scrollToBottom(): void {
+        try {
+            this.divToScroll.nativeElement.scrollTop = this.divToScroll.nativeElement.scrollHeight;
+        } catch(err) { }                 
+    }
 
 	//side navbar hide and show
 	openNav(){
