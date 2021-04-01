@@ -33,7 +33,7 @@
     </div>
   </div>
 
-<div class="alert alert-info text-center" role="alert" *ngIf="soldItems?.length == 0">
+<div class="alert alert-info text-center" role="alert" *ngIf="soldItems?.length == 0 && !isLoading">
   NO SOLD DATA TO SHOW!!!
 </div>
 
