@@ -32,6 +32,7 @@ import {SellInputFormService} from './services/sell-input-form.service';
 import {SellInventoryService} from './services/sell-inventiry.service';
 import { MessageService } from './services/message.service';
 import { HttpErrorHandler } from './services/http-error-handler.service';
+import { MessageComponent } from './shared/message/message.component'
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { HttpErrorHandler } from './services/http-error-handler.service';
   SellHistoryComponent,
   LoadingSpinnerComponent,
   SellInventoryComponent,
-  SellInputFormComponent
+  SellInputFormComponent,
+  MessageComponent
   ],
 
   imports: [

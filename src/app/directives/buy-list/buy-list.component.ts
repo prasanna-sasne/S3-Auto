@@ -20,6 +20,8 @@ export class BuyListComponent implements OnInit {
   states: {"stateId": number, "state": string}[] = [];
   buyItems: BuyItems[] = [];
   isLoading: boolean = true;
+  contactSeller: boolean = false;
+  username: string = "";
 
   //Initial values for select
   selectedMake: {"makeId": number, "make": string} = {"makeId": -1, "make": ""};
@@ -127,6 +129,9 @@ export class BuyListComponent implements OnInit {
 
   // Filter query for invetory buy
   search() : void {
+    //sessionStorage.removeItem('filterOptions');
+    //startIndex = 0;
+    //currentPageIndex = 1;
     let filterQuery = {
       makeId : this.selectedMake.makeId,
       modelId: this.selectedModel.modelId,
@@ -149,6 +154,7 @@ export class BuyListComponent implements OnInit {
   handlePaginationOnRes(data: BuyItems[]){
     //deep-copy of data array to buyItems
     this.buyItems = JSON.parse(JSON.stringify(data));
+   
     //trim last record
     this.buyItems.splice(8, 1);
     if(data.length % 9 == 0){
@@ -206,6 +212,16 @@ export class BuyListComponent implements OnInit {
       this.search();    
     });
     
+  }
+
+  closeNav(closeChatWindow: {closeNav:boolean}){
+    this.contactSeller = closeChatWindow.closeNav;
+  }
+
+  connectWithSeller(user: string){
+    this.contactSeller = true;
+    console.log(user);
+    this.username = user;
   }
 
   ngOnInit(): void { 
