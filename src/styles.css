@@ -64,3 +64,7 @@
     .disabled {
       cursor: not-allowed;
     }
+.required{
+  content:"*";
+  color:red;
+}

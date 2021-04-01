@@ -11,6 +11,7 @@ import { WelcomPageComponent } from './shared/welcom-page/welcom-page.component'
 import { ResetPasswordComponent } from './shared/reset-password/reset-password.component';
 import { ItemDetailsComponent } from './directives/buy-list/item-details/item-details.component';
 
+import {SellInputFormComponent} from './directives/sell-input-form/sell-input-form.component'
 const routes: Routes = [
 { path: 'welcome', component: WelcomPageComponent },
 {
@@ -18,7 +19,7 @@ const routes: Routes = [
 	component: JunkBuyComponent,
 	children: [
 	{ path: 'buy-list', component: BuyListComponent },
-	{ path: 'sell-inventory', component: SellInventoryComponent },
+	{ path: 'sell-form', component: SellInputFormComponent },
 	{ path: 'sell-history', component: SellHistoryComponent },
 	]
 },

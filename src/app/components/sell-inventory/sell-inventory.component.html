@@ -3,7 +3,7 @@
 <div class="card">
   <h5></h5>
   <p-table [columns]="cols" [value]="products" sortMode="multiple" #dt [paginator]="true" [rows]="4" styleClass="responsive">
-&lt;!&ndash;    <ng-template pTemplate="header" let-columns>
+ <ng-template pTemplate="header" let-columns>
       <tr>
         <th>Image </th>
         <th pSortableColumn="partname">Part Name <p-sortIcon field="partname"></p-sortIcon>
@@ -19,13 +19,13 @@
         <th></th>
         <p-columnFilter type="text" field="Part Name"></p-columnFilter>
                 <th *ngFor="let col of columns" [ngSwitch]="col.field">
-                  <input *ngSwitchCase="Part name" pInputText type="text"
+                  <input *ngSwitchCase="partname" pInputText type="text"
                          (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
                 </th>
       </tr>
 
-    </ng-template>&ndash;&gt;
-   &lt;!&ndash; <ng-template pTemplate="body" let-prod>
+    </ng-template>
+ <ng-template pTemplate="body" let-prod>
       <tr>
 
 
@@ -41,7 +41,7 @@
           <p-dropdown [options]="actions" [(ngModel)]="selectedaction" optionLabel="name"></p-dropdown>
         </td>
       </tr>
-    </ng-template>&ndash;&gt;
+    </ng-template>
 
     <ng-template pTemplate="header" let-columns>
 
@@ -64,7 +64,7 @@
  <ng-template pTemplate="body" let-user  let-columns="columns" let-prod>
    <tr>
      <td><div >
-&lt;!&ndash;          <img class="img-responsive embed-responsive-item " [src]="prod.imageUrl">>&ndash;&gt;
+ <img class="img-responsive embed-responsive-item " [src]="prod.imageUrl">>&ndash;&gt;
        <div class="embed-responsive embed-responsive-16by9">
              <input class="img-responsive embed-responsive-item " type="image" [src]="prod.imageUrl" alt="Part Image" />
        </div>

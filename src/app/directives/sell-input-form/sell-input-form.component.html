@@ -1,0 +1,198 @@
+<div class="row fileUpload">
+ <div class=" col-md-1" ></div>
+  <div class="card col-md-10" style="margin-top: 40px;margin-block-end: 40px;">
+    <div class="container rounded bg-white mt-5">
+      <form [formGroup]="sellForm" (ngSubmit)="onSubmitForm()">
+        <div class="card">
+          <h1 style= "color:blueviolet">
+             Sell Form
+           <a> <img style="width: 100px;align-items: center;" src="assets/sell1.PNG"></a>
+          </h1>
+          <!-- <img src="assets/carpart1.jpg" class="rounded float-left" alt="...">
+          <h2 style="font-family:Times New Roman"><strong>Sell Form</strong></h2> -->
+        </div>
+        <div class="row">
+
+          <div class="col-md-6">
+            <div class="p-0 py-0">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="d-flex flex-row align-items-center back">
+                  <i class="fa fa-long-arrow-left mr-1 mb-1"></i>
+                </div>
+              </div>
+              <div class="row mt-3" style="width: 600px;">
+                <div class="col-md-4">
+                  <h5>MAKE</h5>
+                  <p-dropdown formControlName="makers" [options]="makers" [(ngModel)]="selectedMake" optionLabel="make"
+                    [filter]="true" filterBy="make" [showClear]="true" placeholder="Select Make" class="select-style"
+                    (onChange)="onChangeMake($event)">
+                    <ng-template pTemplate="selectedItem">
+                      <div class="country-item country-item-value" *ngIf="selectedMake">
+                        <div>{{selectedMake.make}}</div>
+                      </div>
+                    </ng-template>
+                    <ng-template let-maker pTemplate="item">
+                      <div class="country-item">
+                        <div>{{maker.make}}</div>
+                      </div>
+                    </ng-template>
+                  </p-dropdown>
+                </div>
+
+                <div class="col-md-4">
+                  <h5 class= "required">MODEL</h5>
+                  <p-dropdown formControlName="models" [options]="models" [(ngModel)]="selectedModel"
+                    optionLabel="model" [filter]="true" filterBy="model" [showClear]="true" placeholder="Select Model"
+                    class="select-style" (onChange)="onChangeModel($event)" [disabled]="modelFlag">
+                    <ng-template pTemplate="selectedItem">
+                      <div class="country-item country-item-value" *ngIf="selectedModel">
+                        <div>{{selectedModel.model}}</div>
+                      </div>
+                    </ng-template>
+                    <ng-template let-model pTemplate="item">
+                      <div class="country-item">
+                        <div>{{model.model}}</div>
+                      </div>
+                    </ng-template>
+                  </p-dropdown>
+                </div>
+
+                <!-- <div class="col-md-4">
+                  <h5>PART NAME</h5>
+                  <p-dropdown formControlName="partName" [options]="parts" [(ngModel)]="selectedPart" optionLabel="part"
+                    [filter]="true" filterBy="part" [showClear]="true" placeholder="Select Part" class="select-style"
+                    [disabled]="modelFlag" (onChange)="onChangePart($event)">
+                    <ng-template pTemplate="selectedItem">
+                      <div class="country-item country-item-value" *ngIf="selectedPart">
+                        <div>{{selectedPart.part}}</div>
+                      </div>
+                    </ng-template>
+                    <ng-template let-partName pTemplate="item">
+                      <div class="country-item">
+                        <div>{{partName.part}}</div>
+                      </div>
+                    </ng-template>
+                  </p-dropdown>
+                </div> -->
+
+              </div>
+              <!--Parts related parameter-->
+              <div *ngIf="!roleStatus" class="row mt-3" style="width: 600px;">
+                <div  class="col-md-4">
+                  <h5>PART NAME</h5>
+                  <p-dropdown formControlName="partName" [options]="parts" [(ngModel)]="selectedPart" optionLabel="part"
+                    [filter]="true" filterBy="part" [showClear]="true" placeholder="Select Part" class="select-style"
+                    [disabled]="modelFlag" (onChange)="onChangePart($event)">
+                    <ng-template pTemplate="selectedItem">
+                      <div class="country-item country-item-value" *ngIf="selectedPart">
+                        <div>{{selectedPart.part}}</div>
+                      </div>
+                    </ng-template>
+                    <ng-template let-partName pTemplate="item">
+                      <div class="country-item">
+                        <div>{{partName.part}}</div>
+                      </div>
+                    </ng-template>
+                  </p-dropdown>
+                </div>
+                <div class="col-md-4">
+                  <h5>Shipping </h5>
+                  <p-dropdown formControlName="shipping" [options]="shippingStatus" [(ngModel)]="selectedShippingOption"
+                    placeholder="YES/NO" optionLabel="shipping" [showClear]="true"></p-dropdown>
+                </div>
+              </div>
+               <!--VEHICLE parameters-->
+              <div *ngIf="roleStatus" class="row mt-3" style="width: 600px;">
+
+                <div  class="col-md-4">
+                  <h5>VIN </h5>
+                  <input type="text" class="form-control" formControlName="vinValue" id="vinValue"
+                  placeholder="VIN">
+                </div>
+                <div class="col-md-4">
+                  <h5>MILEAGE</h5>
+                  <input type="text" class="form-control" formControlName="mileage" id="mileage"
+                  placeholder="Mileage">
+                </div>
+              </div>
+               <!--VEHICLE para meters end-->
+              <div class="row mt-3" style="width: 600px;">
+                <div class="col-md-4">
+                  <h5>Year</h5>
+                  <p-dropdown formControlName="years" [options]="years" [(ngModel)]="selectedYear" optionLabel="year"
+                    [filter]="true" filterBy="year" [showClear]="true" placeholder="Select Year" class="select-style"
+                    [disabled]="yearStateFlag">
+                    <ng-template pTemplate="selectedItem">
+                      <div class="country-item country-item-value" *ngIf="selectedYear">
+                        <div>{{selectedYear.year}}</div>
+                      </div>
+                    </ng-template>
+                    <ng-template let-yearNum pTemplate="item">
+                      <div class="country-item">
+                        <div>{{yearNum.year}}</div>
+                      </div>
+                    </ng-template>
+                  </p-dropdown>
+                </div>
+
+                <div class="col-md-4">
+                  <h5>Price </h5>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">$</span>
+                      <!-- <span class="input-group-text">0.00</span> -->
+                    </div>
+                    <input formControlName="price" type="number" [(ngModel)]="priceValue" value="0.00" min="0"
+                      step="1.01" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"
+                      id="c2" />
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="row mt-8" style="column-width: 900px">
+                <div class=" col-md-10">
+
+                  <h5>Description</h5>
+                  <textarea class="form-control" rows="4" id="comment" formControlName="description"></textarea>
+
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-10">
+                  <div class="mt-5 text-left">
+                    <button class="btn btn-primary profile-button button" type="submit">Submit</button>
+                    <button class="btn btn-primary profile-button button" type="button">Check Inventory</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class=" col-md-6" style="margin-top: 50px;">
+            <div class="p-0 py-0 row mt-8"></div>
+            <div class="card bg-light text-white row mt-8" style="text-align:center">
+
+              <div [innerHtml]='msg' *ngIf="msg" style="color: red;"></div>
+
+              <label class ="lableDetail" *ngIf="roleStatus">Please upload picture(front view,left view,back view,back view) you vehicle</label>
+              <label class ="lableDetail" *ngIf="!roleStatus">Please upload picture you vehicle part </label>
+              <input id="file" type="file" class="form-control fileUpload" multiple="" (change)="onFileChange($event)">
+              <!-- <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">
+                <div *ngIf="f.file.errors.required">File is required.</div>
+            </div> -->
+            <div>
+
+              <img *ngFor='let url of images' [src]="url" height="150" width="200px" style="margin: 3px;"> <br />
+            </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class=" col-md-1" ></div>
+</div>
+
+
+
+<!-- <app-sell-inventory></app-sell-inventory> -->

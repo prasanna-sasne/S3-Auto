@@ -14,7 +14,7 @@ export class AppComponent implements OnInit{
   constructor(private router:Router) {}
 
   ngOnInit(): void {
-    this.router.navigate(['welcome']);
+  //  this.router.navigate(['welcome']);
     this.flagresetForm = false;
     if(this.url.searchParams.get('token') !== null || undefined){
         console.log(this.url.searchParams.get('token'));
