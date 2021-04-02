@@ -23,28 +23,38 @@
                 condition if conversations are empty.
                 empty- add selected user name to the conversations array in
                 mentioned format-->
-              <div class="chat_list" *ngFor="let item of conversations"
+              <!-- <div class="chat_list" *ngFor="let item of conversations"
               (click)="getSelectedChat(item)"
               [ngClass]="{'active_chat': item.receiver == toUserName}">
                 <div class="chat_people">
                   <div class="chat_img"> <i class="bi bi-person-bounding-box"></i> </div>
                   <div class="chat_ib">
-                    <h5 style="color: black;font-style: italic;" >{{item.receiver}} <span><i class="fafa bi-trash" style="font-size:17px; color: black"></i></span>
-                      <!-- <span *ngIf="item.notification !== 0"class="badge badge-pill badge-success">{{item.notification}}</span>  -->
+                    <h5>{{item.receiver}} <span><i class="fafa bi-trash"></i></span>
                       <span class="deletingContact" *ngIf="!item.read" class="badge badge-pill  ">
                            <i class="bell bi-bell-fill" style="font-size:17px;color:blue;" ></i>
                       </span>
                       </h5>
                   </div>
-
                 </div>
+              </div> -->
+              <div *ngFor="let item of conversations"  
+              [ngClass]="{'active_chat': item.receiver === toUserName, 
+              'deactive_chat': item.receiver !== toUserName}"
+              (click)="getSelectedChat(item)">
+                  <i class="bi bi-person-bounding-box mt-2 ml-1"></i>
+                  <span class="mt-2 ml-3"><h5>{{item.receiver}}
+                  <!-- {{item.receiver.charAt(0).toUpperCase() +
+                    item.receiver.slice(1).toLowerCase()}} --></h5></span>
+                  <span *ngIf="!item.read" class="badge badge-pill mt-2">
+                    <i class="bell bi-bell-fill h6"></i>
+                  </span>
               </div>
 
             </div>
           </div>
           <div class="mesgs">
-            <div class="msghead " >
-              <h4 style="color: white;font-style: italic; font-size: 20px">{{toUserName}}</h4>
+            <div class="msghead">
+              <h4>{{toUserName}}</h4>
             </div>
             <div class="msg_history" #divToScroll>
 
@@ -60,7 +70,7 @@
 
                   <div class="outgoing_msg" *ngIf="item.from === username">
                     <div class="sent_msg" >
-                      <p><span style="color:black;">{{item.msg}}</span></p>
+                      <p><span>{{item.msg}}</span></p>
                       <span class="time_date" style="color:black">{{item.ts| date: "short"}}</span> </div>
                     </div>
 
@@ -72,9 +82,10 @@
           <form class="type_msg">
             <div class="" >
               <input  type="text" [(ngModel)]="message" class="form-control" name="message" required>
-              <button class="msg_send_btn " type="button"
+              <button class="msg_send_btn badge badge-pill badge-primary sm-button" type="button"
               (click)="send(message)"
               [disabled]="message == ''">Send</button>
+              
             </div>
           </form>
 

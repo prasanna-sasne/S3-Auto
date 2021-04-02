@@ -76,6 +76,17 @@
   color:#007bff;
   cursor: pointer;
 }
+
+jw-modal .jw-modal{
+    position: fixed;
+    Right: -82% !important;
+    top: 28% !important;
+    left: 78% !important;
+    width: 42% !important;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
 button.btn.btn-primary.filter-btn:disabled {
     cursor: not-allowed;
 }
