@@ -220,8 +220,11 @@ export class BuyListComponent implements OnInit {
 
   connectWithSeller(user: string){
     this.contactSeller = true;
-    console.log(user);
     this.username = user;
+  }
+
+  newMsgPresent(showBell: {notificationPresent: boolean}){
+    console.log(showBell.notificationPresent);
   }
 
   ngOnInit(): void { 

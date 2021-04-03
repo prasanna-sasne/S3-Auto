@@ -184,4 +184,6 @@ optionLabel="make" [filter]="true" filterBy="make"
 <app-message *ngIf="contactSeller"
 (closeNavFlag)="closeNav($event)"
 [name]="username"
+[showChat]="true"
+(showBell)="newMsgPresent($event)"
 ></app-message>

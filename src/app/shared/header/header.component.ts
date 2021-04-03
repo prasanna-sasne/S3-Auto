@@ -11,13 +11,20 @@ export class HeaderComponent implements OnInit {
 
   isLoginMode = true;
   email;
+  openChat: boolean = false; //after showing notifiacation if user clicks on view then only openChat
+  //window should get opened
+  showBell: boolean = false; //show bell only on notifiacation
+  triggerMsg: boolean = false; //call message component only after user logs in
+
   constructor(public modalService:ModalService, private router:Router) { }
 
   ngOnInit(): void {
     if(window.sessionStorage.getItem('EMAIL') != ""){
       this.email = window.sessionStorage.getItem('EMAIL');
     }
-    //  console.log(window.sessionStorage.getItem('EMAIL'));
+    if(this.email !== undefined && this.email !== null){
+      this.triggerMsg = true;
+    }
   }
 
   onSwitchMode(set){
@@ -34,6 +41,22 @@ export class HeaderComponent implements OnInit {
   logedinUserEmail(el) {
     console.log('email',el);
     this.email = el;
+    if(this.email !== undefined && this.email !== null){
+      this.triggerMsg = true;
+    }
+  }
+
+  closeNav(closeChatWindow: {closeNav:boolean}){
+    this.openChat = closeChatWindow.closeNav;
+  }
+
+  newMsgPresent(showBell: {notificationPresent: boolean}){
+    console.log("+++++++++"+ showBell.notificationPresent);
+    this.showBell = showBell.notificationPresent;
+  }
+
+  checkNotification(){
+    this.openChat = true;
   }
 
   signOut(){

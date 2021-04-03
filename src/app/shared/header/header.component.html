@@ -12,8 +12,14 @@
 
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <div class="header-menu navbar-nav">
-      <div class="nav-item" *ngIf="email !== undefined && email !== null">
-        <h4><span class="badge badge-pill badge-light">2<i class="bi bi-bell-fill"></i></span></h4>
+      <div class="nav-item pt-1" *ngIf="email !== undefined && email !== null">
+        <span class="notification mr-3">
+        <h4 (click)="checkNotification()">
+          <i class="bi bi-envelope"></i>
+        </h4>
+        <span class="dot" *ngIf="showBell"></span>
+        </span>
+
       </div>
 
       <div class="nav-item" *ngIf="email !== undefined && email !== null">        
@@ -57,3 +63,10 @@
 </jw-modal>
 
 </div>
+
+<app-message *ngIf="triggerMsg"
+(closeNavFlag)="closeNav($event)"
+[showChat] = "openChat"
+[parent]="true"
+(showBell)="newMsgPresent($event)"
+></app-message>
