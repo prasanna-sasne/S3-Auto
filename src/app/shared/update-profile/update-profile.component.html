@@ -25,7 +25,7 @@
             <!----PASSWORD----->
             <div class="form-group">
               <label></label>
-              <input type="text" class="form-control" formControlName="password" id="password" placeholder="Password">
+              <input type="text" class="form-control" formControlName="password" id="password" placeholder="OLD Password">
 
               <div *ngIf="isValidInput('password')" class="error-messages">
                 <div *ngIf="updateProfileForm.controls['password'].errors!.required">
@@ -77,7 +77,7 @@
               <div class="form-group">
                 <label></label>
                 <input type="text" class="form-control" id="confirmPassword" formControlName="confirmPassword"
-                  placeholder="Confirm Password">
+                  placeholder="NEW Password">
 
                 <div *ngIf="isValidInput('confirmPassword')" class="error-messages">
                   <div *ngIf="updateProfileForm.controls['confirmPassword'].errors!.required">
@@ -90,7 +90,7 @@
               </div>
               <!---------Select for ROLE-------->
               <label></label>
-              <div class="form-group col-md-12" style="border: 5px solid rgb(184, 207, 238);">
+              <!-- <div class="form-group col-md-12" style="border: 5px solid rgb(184, 207, 238);">
                 <h5>Select Your Role:</h5>
                 <div class="row">
                   <h6>User</h6>
@@ -101,7 +101,7 @@
                   <h6>Junk Yard Owner</h6>
                 </div>
 
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
