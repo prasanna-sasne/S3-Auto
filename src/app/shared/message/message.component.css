@@ -157,7 +157,7 @@
 
       /*background-image: linear-gradient(to right, #a782df, #8bc5ff);*/
     }
-    .inbox_chat { height: 323px; overflow-y: scroll;scrollbar-color: B0C4DE;background: white}
+    .inbox_chat { height: 355px; overflow-y: scroll;scrollbar-color: B0C4DE;background: white}
 
     .incoming_msg_img {
       display: inline-block;
