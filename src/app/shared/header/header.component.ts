@@ -51,7 +51,6 @@ export class HeaderComponent implements OnInit {
   }
 
   newMsgPresent(showBell: {notificationPresent: boolean}){
-    console.log("+++++++++"+ showBell.notificationPresent);
     this.showBell = showBell.notificationPresent;
   }
 

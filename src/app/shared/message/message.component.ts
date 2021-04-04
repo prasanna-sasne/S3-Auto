@@ -75,7 +75,7 @@ import {Component, OnInit,
                 this.toUserName = ele.receiver;
                 this.chatArray = ele.msg;
                 if(!ele.read){
-                    this.markChatAsRead(ele);
+                    this.markChatAsRead(0);
                 }	
             }
         }
@@ -123,14 +123,26 @@ import {Component, OnInit,
             this.message = "";
         }
 
-        private markChatAsRead(ele: any){
+        private markChatAsRead(index: any){
             this.chatService.markConvAsRead(
                 {sender: this.username, receiver: this.toUserName, read: true})
                 .subscribe(data => {
-                ele.read = true;
-                console.log(this.conversations);
+                this.conversations[index].read = true;
+                if(this.sideNavClicked == false) this.emitEventToHeader();
             }, error => {
                 console.log("Error occured in put");
+            });
+        }
+        
+        private emitEventToHeader(){
+            let notifyCheckFlag = true;
+            this.conversations.forEach((chatRecord) =>{
+                if(!chatRecord.read) notifyCheckFlag = false; 
+            });
+
+            //emit event to header if any new notification is present when screen is closed
+            this.showBell.emit({
+                notificationPresent: !notifyCheckFlag
             });
         }
 
@@ -147,7 +159,7 @@ import {Component, OnInit,
                 });
 
                 //emit event to header if any new notification is present when screen is closed
-                if(!notifyCheckFlag && !this.showChat){
+                if(!notifyCheckFlag && (this.sideNavClicked == false)){
                     this.showBell.emit({
                         notificationPresent: true
                     });
@@ -158,14 +170,14 @@ import {Component, OnInit,
                 if(this.conversations.length !== 0){
                     let itemExist = false;
 
-                    this.conversations.forEach((ele) => {
+                    this.conversations.forEach((ele, index) => {
                         //if previous conversations exist, update chatArray
                         if(ele.receiver == this.toUserName){
                             itemExist = true;
                             this.chatArray = ele.msg;
 
-                            if(!ele.read){
-                                this.markChatAsRead(ele);
+                            if(!ele.read && this.parent == undefined){
+                                this.markChatAsRead(index);
                             }	
                         }
                         this.scrollToBottom();
@@ -197,7 +209,7 @@ import {Component, OnInit,
             this.chatMessage = messageObj.message;
 
             //show notification only when chat window is closed
-            if(!this.sideNavClicked){
+            if(this.sideNavClicked === false){
                 this.showBell.emit({
                     notificationPresent: true
                 });
@@ -219,7 +231,7 @@ import {Component, OnInit,
                         //ele.read = false;//need to push new array	
 
                         this.chatService.markConvAsRead(
-                            {sender: this.messageFrom, receiver: this.messageTo, read: true})
+                            {sender: this.messageTo, receiver: this.messageFrom, read: true})
                         .subscribe(data => {
                             ele.read = true;
                         }, error => {
@@ -265,21 +277,13 @@ import {Component, OnInit,
         }
 
         closeNav(): void {
-            let notifyCheckFlag = true;
-            this.conversations.forEach((chatRecord) =>{
-                if(!chatRecord.read) notifyCheckFlag = false; 
-            });
-
-            //emit event to header if any new notification is present when screen is closed
-            this.showBell.emit({
-                notificationPresent: !notifyCheckFlag
-            });
-
+            this.emitEventToHeader();
+            this.sideNavClicked = false;
+         
             if(this.parent === undefined){
                 //console.log("need to emit notifyCheckFlag to header from here if called from buy section")
             }
 
-            this.sideNavClicked = false;
             this.closeNavFlag.emit({
                 closeNav: false
             });
