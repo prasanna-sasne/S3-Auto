@@ -231,7 +231,8 @@ import {Component, OnInit,
                         //ele.read = false;//need to push new array	
 
                         this.chatService.markConvAsRead(
-                            {sender: this.messageTo, receiver: this.messageFrom, read: true})
+                            //{sender: this.messageTo, receiver: this.messageFrom, read: true}
+                            {sender: this.messageFrom, receiver: this.messageTo, read: true})
                         .subscribe(data => {
                             ele.read = true;
                         }, error => {
