@@ -58,8 +58,8 @@ export class UpdateProfileComponent {
       phoneNumber: result.phone,
       email: result.email,
       show: false,
-      selectedstate: ['', Validators.required],
-      selectedcity: ['', Validators.required],
+      selectedstate: result.stateId,
+      selectedcity: result.cityId,
       //junkYardName: result.junkYardName,
       zipCode: result.zip,
       address: result.street,
@@ -77,8 +77,8 @@ export class UpdateProfileComponent {
       phoneNumber: result.phone,
       email: result.email,
       show: true,
-      selectedstate: ['', Validators.required],
-      selectedcity: ['', Validators.required],
+      selectedstate: result.stateId,
+      selectedcity: result.cityId,
       junkYardName: result.junkYardName,
       zipCode: result.zip,
       address: result.street,
@@ -165,19 +165,21 @@ export class UpdateProfileComponent {
       "firstName": this.updateProfileForm.value.fname,
       "lastName": this.updateProfileForm.value.lastName,
       "email": this.updateProfileForm.value.email,
-     // "password": this.updateProfileForm.value.password,
+      "password": this.updateProfileForm.value.password,
+      "newPassword": this.updateProfileForm.value.confirmPassword,
       "role": this.roleValue,
       "phoneNumber": this.updateProfileForm.value.phoneNumber,
       "street": this.updateProfileForm.value.address,
-     // "stateId": this.selectedstate.stateId.toString(),
-     // "cityId": this.selectedcity.cityId.toString(),    
-      "state": "Michigan",//this.selectedstate.stateId.toString(),
-      "city": "Macomb",//this.selectedcity.cityId.toString(),
+      "stateId": this.selectedstate.stateId.toString(),
+      "cityId": this.selectedcity.cityId.toString(),    
+      //"state": this.selectedstate.stateId.toString(),
+      //"city": this.selectedcity.cityId.toString(),
       "zipCode": this.updateProfileForm.value.zipCode
     }
 
     if (this.show) {
-      data['junkYardName'] = this.updateProfileForm.value.junkYardName;
+      data['junkYardName'] = this.updateProfileForm.value.junkYardName; //old version
+      data['newJunkYardName'] = this.updateProfileForm.value.junkYardName;
     }
     console.log(data);
     const junkYardName = this.updateProfileForm.value.junkYardName;

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SellInputFormService } from './../../services/sell-input-form.service';
 import { FormBuilder, FormControlName, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
 interface ShipingOption {
   shipping: string,
   shippingValue :boolean
@@ -39,7 +41,7 @@ export class SellInputFormComponent implements OnInit {
   images :any[] =[];
   multiImages:any[]=[];
 
-  constructor( private sellInputFormService:SellInputFormService, private fb:FormBuilder) {
+  constructor( private sellInputFormService:SellInputFormService, private fb:FormBuilder, private router:Router) {
     this.shippingStatus = [
       {shipping: 'YES', shippingValue: true},
       {shipping: 'NO', shippingValue: false}
@@ -165,6 +167,11 @@ export class SellInputFormComponent implements OnInit {
     }
   }
 
+  sellInvenPage(){
+    //navigate to homepage
+    this.router.navigate(['sellInventory']);
+  }
+
   // submit form ..
   onSubmitForm() {
     console.log(this.sellForm.value);
@@ -204,6 +211,7 @@ export class SellInputFormComponent implements OnInit {
       //   this.isLoading = false;
     }
   );
+
 
 
   }

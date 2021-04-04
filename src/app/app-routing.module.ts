@@ -16,6 +16,7 @@ import {SellInputFormComponent} from './directives/sell-input-form/sell-input-fo
 const routes: Routes = [
 { path: 'welcome', component: WelcomPageComponent },
 { path: 'updateProfile', component: UpdateProfileComponent },
+{ path: 'sellInventory', component: SellInventoryComponent },
 {
 	path: 's3-auto',
 	component: JunkBuyComponent,
