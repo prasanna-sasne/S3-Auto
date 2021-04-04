@@ -1,0 +1,175 @@
+<div class="row">
+  <div class="col-md-12 p-4">
+    <h3 class="mb-3"></h3>
+    <div *ngIf="error.length >0" class="alert alert-danger">
+      <span *ngFor="let item of error">{{item}} </span>
+    </div>
+    <form [formGroup]="updateProfileForm" (ngSubmit)="onSubmit()">
+      <div class="form-row my-2">
+        <div class="form-group col-md-6">
+          <input type="text" class="form-control" formControlName="fname" id="fName" required minlength="4"
+            placeholder="First Name">
+          <div *ngIf="isValidInput('fname')" class="error-messages">
+            <div *ngIf="updateProfileForm.controls['fname'].errors!.required">
+              First Name is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label></label>
+            <input type="text" class="form-control" formControlName="username" id="username" placeholder="User Name">
+            <div *ngIf="isValidInput('username')" class="error-messages">
+              <div *ngIf="updateProfileForm.controls['username'].errors!.required">
+                User Name is required.
+              </div>
+            </div>
+            <!----PASSWORD----->
+            <div class="form-group">
+              <label></label>
+              <input type="text" class="form-control" formControlName="password" id="password" placeholder="Password">
+
+              <div *ngIf="isValidInput('password')" class="error-messages">
+                <div *ngIf="updateProfileForm.controls['password'].errors!.required">
+                  Password is required.
+                </div>
+              </div>
+              <!--EMAIL-->
+              <div class="form-group">
+                <label></label>
+                <input type="email" class="form-control" formControlName="email" id="email" placeholder="Email">
+
+                <div *ngIf="isValidInput('email')" class="error-messages">
+                  <div *ngIf="updateProfileForm.controls['email'].errors!.required">
+                    User Name is required.
+                  </div>
+                </div>
+                <label class="text-danger" *ngIf="updateProfileForm.controls['email'].hasError('email')">
+                  Enter a valid email address!
+                </label>
+
+                <!--JUNK-YARD OWNER NAME-->
+                <div class="form-group" *ngIf="show">
+                  <label></label>
+                  <input type="text" class="form-control" id="junkYardName" formControlName="junkYardName"
+                    placeholder="Junk Yard Name">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <input type="text" class="form-control" formControlName="lastName" id="lastName" placeholder="Last Name">
+          <!----Phone number input value----->
+          <div class="form-group">
+            <label></label>
+            <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber"
+              placeholder="Phone Number">
+            <div
+              *ngIf="updateProfileForm.controls.phoneNumber.touched && updateProfileForm.controls.phoneNumber.invalid"
+              class="error-messages">
+              <div *ngIf="updateProfileForm.controls.phoneNumber.errors!.required">Mobile Number is required.</div>
+            </div>
+            <div class="error-messages" *ngIf="updateProfileForm.controls.phoneNumber.errors?.pattern">Please, Enter 10
+              digit Phone Number.</div>
+
+            <div class="form-group">
+
+              <!----Confirm Password input value----->
+              <div class="form-group">
+                <label></label>
+                <input type="text" class="form-control" id="confirmPassword" formControlName="confirmPassword"
+                  placeholder="Confirm Password">
+
+                <div *ngIf="isValidInput('confirmPassword')" class="error-messages">
+                  <div *ngIf="updateProfileForm.controls['confirmPassword'].errors!.required">
+                    Please confirm your password.
+                  </div>
+                </div>
+                <div class="error-messages"
+                  *ngIf="updateProfileForm.controls.confirmPassword.errors?.confirmedValidator">
+                  Password and Confirm Password does not match.</div>
+              </div>
+              <!---------Select for ROLE-------->
+              <label></label>
+              <div class="form-group col-md-12" style="border: 5px solid rgb(184, 207, 238);">
+                <h5>Select Your Role:</h5>
+                <div class="row">
+                  <h6>User</h6>
+                  <label class="switch">
+                    <input type="checkbox" [checked]=show (change)="toggle()" checked>
+                    <span class="slider round"></span>
+                  </label>
+                  <h6>Junk Yard Owner</h6>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <!-----STATE DATA----->
+        <div class="form-group col-md-3">
+          <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
+          <p-dropdown [options]="states" formGroupName="selectedstate" optionLabel="state" [filter]="true"
+            filterBy="state" (onChange)="selectChange($event)" [showClear]="true" placeholder="Select State">
+            <ng-template pTemplate="selectedItem">
+              <div class="country-item country-item-value" *ngIf="selectedstate">
+                <div>{{selectedstate.state}}</div>
+              </div>
+            </ng-template>
+            <ng-template let-stateObj pTemplate="item">
+              <div class="country-item">
+                <div>{{stateObj.state}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+        <!---CITY VALUE---->
+        <div class="form-group col-md-3">
+          <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
+          <p-dropdown [options]="citiesList" formGroupName="selectedcity" optionLabel="city" [filter]="true"
+            filterBy="city" (onChange)="selectCityChange($event)" [showClear]="true" placeholder="Select City"
+            class="select-style">
+            <ng-template pTemplate="selectedItem">
+              <div class="country-item country-item-value" *ngIf="selectedcity">
+                <div>{{selectedcity.city}}</div>
+              </div>
+            </ng-template>
+            <ng-template let-cityObj pTemplate="item">
+              <div class="country-item">
+                <div>{{cityObj.city}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+
+        <!-- <div class="form-group col-md-3"> <input type="text" class="form-control" id="form41" placeholder="City">
+        </div>-->
+        <div class="form-group col-md-3">
+          <div class="form-group">
+            <input type="text" class="form-control" formControlName="zipCode" id="zipCode" placeholder="Zip Code">
+            <div class="error-messages" *ngIf="updateProfileForm.controls.zipCode.errors?.pattern">Please, Enter valid 5
+              digit Zip Code.</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group"> <textarea class="form-control" id="address" formControlName="address" rows="3"
+          placeholder="Address"></textarea>
+      </div>
+      <div class="d-flex justify-content-center">
+      <div class="btn-group" role="group" aria-label="Basic example">
+        
+
+          <div class="btn-group mr-2" role="group" aria-label="First group">
+
+            <button type="submit" class="btn btn-primary button">Update Profile</button><br>
+          </div>
+          <div class="btn-group mr-2" role="group" aria-label="Second group">
+            <button type="cancel" class="btn btn-primary button" (click)=cancelPageR()>Cancel</button><br>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>

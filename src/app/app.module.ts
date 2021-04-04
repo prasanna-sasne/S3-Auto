@@ -24,6 +24,7 @@ import { AuthComponent } from './auth/auth.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './shared/reset-password/reset-password.component';
 import { WelcomPageComponent } from './shared/welcom-page/welcom-page.component';
+import { UpdateProfileComponent } from './shared/update-profile/update-profile.component';
 import { RegisterComponent } from './register/register.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component'
 import { SellInputFormComponent } from './directives/sell-input-form/sell-input-form.component';
@@ -53,7 +54,8 @@ import { MessageComponent } from './shared/message/message.component'
   LoadingSpinnerComponent,
   SellInventoryComponent,
   SellInputFormComponent,
-  MessageComponent
+  MessageComponent,
+  UpdateProfileComponent
   ],
 
   imports: [

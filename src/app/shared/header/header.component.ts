@@ -65,4 +65,8 @@ export class HeaderComponent implements OnInit {
     this.ngOnInit();
     this.router.navigate(['welcome']);
   }
+
+  updateProfile(){
+    this.router.navigate(['updateProfile']);
+  }
 }

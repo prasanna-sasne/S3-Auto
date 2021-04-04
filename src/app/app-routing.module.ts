@@ -8,12 +8,14 @@ import { SellHistoryComponent } from './directives/sell-history/sell-history.com
 import {SellInventoryComponent} from './directives/sell-inventory/sell-inventory.component'
 import { JunkBuyComponent } from './components/junkyard-owner/junk-buy/junk-buy.component';
 import { WelcomPageComponent } from './shared/welcom-page/welcom-page.component';
+import { UpdateProfileComponent } from './shared/update-profile/update-profile.component';
 import { ResetPasswordComponent } from './shared/reset-password/reset-password.component';
 import { ItemDetailsComponent } from './directives/buy-list/item-details/item-details.component';
 
 import {SellInputFormComponent} from './directives/sell-input-form/sell-input-form.component'
 const routes: Routes = [
 { path: 'welcome', component: WelcomPageComponent },
+{ path: 'updateProfile', component: UpdateProfileComponent },
 {
 	path: 's3-auto',
 	component: JunkBuyComponent,
