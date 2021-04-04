@@ -127,27 +127,8 @@
 
 
   .recent_heading {float: left; width:40%;}
-  .srch_bar {
 
-    text-align: center;
-    padding:8px;
-    padding-left: 2px;
-    border-bottom: black;
-    border-radius: 5px;
-    font-style: italic;
-
-  }
   .headind_srch{ padding:1px 1px 1px 1px; overflow:hidden; border-bottom:1px solid #c4c4c4;background: white;}
-
-  .srch_bar input{ padding-left: 0px; border-color: black; border-width:1px 1px 1px 1px; width:80%;  background: white;}
-  .srch_bar .input-group-addon button {
-    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-    border: medium none;
-    border-radius: 5px;
-    color: #707070;
-    font-size: 18px;
-  }
-  .srch_bar .input-group-addon { margin: 0 0 0 -27px;}
 
   .chat_ib h5{ font-size:12px; color:#464646; margin:0 0 8px 0; color: black}
   /*.chat_ib h5:hover {
