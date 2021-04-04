@@ -1,7 +1,7 @@
 import {Component, OnInit, 
 	EventEmitter, Output, 
 	Input, ViewChild, ElementRef,
-	AfterViewChecked, OnChanges } from '@angular/core';
+	AfterViewChecked, OnChanges} from '@angular/core';
 	import * as Stomp from 'stompjs';
 	import * as SockJS from 'sockjs-client';
 	import {ChatMessageService} from '../../services/chat-message.service';
@@ -126,9 +126,11 @@ import {Component, OnInit,
         private markChatAsRead(index: any){
             this.chatService.markConvAsRead(
                 {sender: this.username, receiver: this.toUserName, read: true})
-                .subscribe(data => {
-                this.conversations[index].read = true;
-                if(this.sideNavClicked == false) this.emitEventToHeader();
+            .subscribe(data => {
+                if(this.conversations.length !== 0){
+                    this.conversations[index].read = true;
+                    if(this.sideNavClicked == false) this.emitEventToHeader();
+                }
             }, error => {
                 console.log("Error occured in put");
             });
@@ -151,11 +153,11 @@ import {Component, OnInit,
             this.conversations = [];
             this.chatService.getUserChat(this.username)
             .subscribe(data => {
-               let notifyCheckFlag = true;
+                let notifyCheckFlag = true;
                 data.conversations.forEach((chatRecord) =>{
                     chatRecord.msg = JSON.parse(chatRecord.msg);
                     this.conversations.push(chatRecord);
-                if(!chatRecord.read) notifyCheckFlag = false; 
+                    if(!chatRecord.read) notifyCheckFlag = false; 
                 });
 
                 //emit event to header if any new notification is present when screen is closed
@@ -279,14 +281,14 @@ import {Component, OnInit,
 
         closeNav(): void {
             this.emitEventToHeader();
-            this.sideNavClicked = false;
-         
-            if(this.parent === undefined){
-                //console.log("need to emit notifyCheckFlag to header from here if called from buy section")
-            }
-
+            this.sideNavClicked = false;            
+            this.conversations.forEach((ele, index) =>{
+                if(ele.receiver == this.toUserName) this.markChatAsRead(index);
+            })
+            
             this.closeNavFlag.emit({
                 closeNav: false
             });
         }
+        
     }
