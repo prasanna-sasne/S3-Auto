@@ -1,201 +1,203 @@
 <div class="item-details-container mt-3 p-3">
-    <h4 class="content-space">
-    	<span class="badge badge-pill badge-primary sm-button" style="cursor: pointer;" (click)="goToBuySection()">
-    		<i class="bi bi-backspace pr-2"></i>Back
-    	</span>
-        <span *ngIf="selectedItemDetail.junkYardRating !== undefined">
-            <span class="mr-1 h6 d-none d-md-inline">Overall Rating</span>
-            <span class="badge badge-pill badge-primary sm-button">
-                {{selectedItemDetail.junkYardRating}}<i class="bi bi-heart-fill ml-2"></i>
-            </span>
-        </span>
-    </h4>	
-    <section class="container-fluid px-0">
-        <div class="row">
-            <div class="col-12 col-lg-6">
-                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel"
-                *ngIf="selectedItemDetail.vehicleImages !== undefined; else partImage">
-                <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" 
-                    *ngFor="let item of selectedItemDetail.vehicleImages;"
-                    data-slide-to="0" class="active"></li>
-                </ol>
+  <h4 class="content-space">
+    <span class="badge badge-pill badge-primary sm-button" style="cursor: pointer;" (click)="goToBuySection()">
+      <i class="bi bi-backspace pr-2"></i>Back
+    </span>
+    <span *ngIf="selectedItemDetail.junkYardRating !== undefined">
+      <span class="mr-1 h6 d-none d-md-inline">Overall Rating</span>
+      <span class="badge badge-pill badge-primary sm-button">
+        {{selectedItemDetail.junkYardRating}}<i class="bi bi-heart-fill ml-2"></i>
+      </span>
+    </span>
+  </h4>
+  <section class="container-fluid px-0">
+    <div class="row">
+      <div class="col-12 col-lg-6">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel"
+          *ngIf="selectedItemDetail.vehicleImages !== undefined; else partImage">
+          <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" *ngFor="let item of selectedItemDetail.vehicleImages;"
+              data-slide-to="0" class="active"></li>
+          </ol>
 
-                <div class="carousel-inner">
-                    <div class="carousel-item active" *ngFor="let item of selectedItemDetail.vehicleImages; let index = index; let isFirst = first" [ngClass]="{active:isFirst}">
-                        <img [src]="item.imageUri" class="d-block w-100" alt="...">
-                    </div>
-                </div>
-
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
+          <div class="carousel-inner">
+            <div class="carousel-item active"
+              *ngFor="let item of selectedItemDetail.vehicleImages; let index = index; let isFirst = first"
+              [ngClass]="{active:isFirst}">
+              <img [src]="item.imageUri" class="d-block w-100" alt="...">
             </div>
-            <ng-template #partImage>
-                <div class="card" style="cursor: pointer;">
-                    <div class="embed-responsive embed-responsive-16by9">
-                      <img [src]="selectedItemDetail.imageUri" class="card-img-top img-thumbnail embed-responsive-item" alt="Salvage Car">
-                  </div></div>
-              </ng-template>
-              <div class="card mt-2">
-                <div class="card-body">
-                    <h5 class="card-title font-weight-bold">
-                    {{selectedItemDetail.partId !== undefined? 'PART' : 'VEHICLE'}} DETAILS</h5>
-                    <div class="row">
-                        <div class="col-12 col-md-6 content-space">
-                            <label for="make" class=" text-muted">Make </label>
-                            <div id="make" class="mr-4 ">{{selectedItemDetail.make}}</div> 
-                        </div>
-                        <div class="col-12 col-md-6 content-space">
-                            <label for="model" class=" text-muted">Model </label>
-                            <div id="model" class="mr-4 ">{{selectedItemDetail.model}}</div> 
-                        </div>
-                        <div class="col-12 col-md-6 content-space">
-                            <label for="year" class=" text-muted">Year </label>
-                            <div id="year" class="mr-4 ">{{selectedItemDetail.year}}</div> 
-                        </div>
-                        <div class="col-12 col-md-6 content-space" 
-                        *ngIf="selectedItemDetail.part !== undefined">
-                        <label for="part" class=" text-muted">Part</label>
-                        <div id="part" class="mr-4 ">{{selectedItemDetail.part}}</div> 
-                    </div>
-                    <div class="col-12 col-md-6 content-space" 
-                    *ngIf="selectedItemDetail.vin !== undefined">
-                    <label for="vin" class=" text-muted">VIN </label>
-                    <div id="vin" class="mr-4 ">{{selectedItemDetail.vin}}</div> 
-                </div>
-                <div class="col-12 col-md-6 content-space"
-                *ngIf="selectedItemDetail.shipping !== undefined">
+          </div>
+
+          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+        <ng-template #partImage>
+          <div class="card" style="cursor: pointer;">
+            <div class="embed-responsive embed-responsive-16by9">
+              <img [src]="selectedItemDetail.imageUri" class="card-img-top img-thumbnail embed-responsive-item"
+                alt="Salvage Car">
+            </div>
+          </div>
+        </ng-template>
+        <div class="card mt-2">
+          <div class="card-body">
+            <h5 class="card-title font-weight-bold">
+              {{selectedItemDetail.partId !== undefined? 'PART' : 'VEHICLE'}} DETAILS</h5>
+            <div class="row">
+              <div class="col-12 col-md-6 content-space">
+                <label for="make" class=" text-muted">Make </label>
+                <div id="make" class="mr-4 ">{{selectedItemDetail.make}}</div>
+              </div>
+              <div class="col-12 col-md-6 content-space">
+                <label for="model" class=" text-muted">Model </label>
+                <div id="model" class="mr-4 ">{{selectedItemDetail.model}}</div>
+              </div>
+              <div class="col-12 col-md-6 content-space">
+                <label for="year" class=" text-muted">Year </label>
+                <div id="year" class="mr-4 ">{{selectedItemDetail.year}}</div>
+              </div>
+              <div class="col-12 col-md-6 content-space" *ngIf="selectedItemDetail.part !== undefined">
+                <label for="part" class=" text-muted">Part</label>
+                <div id="part" class="mr-4 ">{{selectedItemDetail.part}}</div>
+              </div>
+              <div class="col-12 col-md-6 content-space" *ngIf="selectedItemDetail.vin !== undefined">
+                <label for="vin" class=" text-muted">VIN </label>
+                <div id="vin" class="mr-4 ">{{selectedItemDetail.vin}}</div>
+              </div>
+              <div class="col-12 col-md-6 content-space" *ngIf="selectedItemDetail.shipping !== undefined">
 
                 <label for="shipping" class=" text-muted">Shipping </label>
                 <div id="shipping" class="mr-4 ">
-                {{selectedItemDetail.shipping === true? 'Available' : 'Not Available'}}</div> 
+                  {{selectedItemDetail.shipping === true? 'Available' : 'Not Available'}}</div>
+              </div>
+
+              <div class="col-12 col-md-6 content-space" *ngIf="selectedItemDetail.mileage !== undefined">
+                <label for="shipping" class=" text-muted">Miles Driven</label>
+                <div id="shipping" class="mr-4 ">
+                  {{selectedItemDetail.mileage}} miles</div>
+              </div>
+
+              <div class="col-10 content-space">
+                <label for="location" class=" text-muted">Address </label>
+                <div id="location" class="mr-4 ">{{selectedItemDetail.street}}, {{selectedItemDetail.city}}
+                  {{selectedItemDetail.state}} {{selectedItemDetail.zip}}</div>
+              </div>
             </div>
-
-            <div class="col-12 col-md-6 content-space"
-            *ngIf="selectedItemDetail.mileage !== undefined">
-            <label for="shipping" class=" text-muted">Miles Driven</label>
-            <div id="shipping" class="mr-4 ">
-            {{selectedItemDetail.mileage}} miles</div> 
+          </div>
         </div>
 
-        <div class="col-10 content-space">
-            <label for="location" class=" text-muted">Address </label>
-            <div id="location" class="mr-4 ">{{selectedItemDetail.street}}, {{selectedItemDetail.city}} {{selectedItemDetail.state}} {{selectedItemDetail.zip}}</div> 
-        </div>
-    </div>  
-</div>
-</div> 
-
-</div>
-<div class="col-12 col-lg-6 mt-2 mt-lg-0">
-    <div class="card">
-        <div class="card-body">
+      </div>
+      <div class="col-12 col-lg-6 mt-2 mt-lg-0">
+        <div class="card">
+          <div class="card-body">
             <div class="content-space">
-                <h5 class="card-title font-weight-bold mb-0">{{ selectedItemDetail.price | currency}}</h5>
-                <span class="alert alert-success my-0 py-0" role="alert" *ngIf="postRequestAlert">
-                    {{postRatingMessage}}
-                </span> 
-                <span class="content-space" *ngIf="selectedItemDetail.junkYardRating !== undefined" >
-                    <span *ngIf="ratingFound; else allowToPostRating" class="disabled">
-                       <span *ngFor="let item of [1, 2, 3, 4, 5]; let i = index;">
-                        <i *ngIf="i < rating; else badRating"class="bi bi-star-fill mr-1" style="color: #007bff;">
-                        </i>
-                        <ng-template #badRating>
-                            <i class="bi bi-star mr-1"></i>
-                        </ng-template>
-                    </span>
+              <h5 class="card-title font-weight-bold mb-0">{{ selectedItemDetail.price | currency}}</h5>
+              <span class="alert alert-success my-0 py-0" role="alert" *ngIf="postRequestAlert">
+                {{postRatingMessage}}
+              </span>
+              <span class="content-space" *ngIf="selectedItemDetail.junkYardRating !== undefined">
+                <span *ngIf="ratingFound; else allowToPostRating" class="disabled">
+                  <span *ngFor="let item of [1, 2, 3, 4, 5]; let i = index;">
+                    <i *ngIf="i < rating; else badRating" class="bi bi-star-fill mr-1" style="color: #007bff;">
+                    </i>
+                    <ng-template #badRating>
+                      <i class="bi bi-star mr-1"></i>
+                    </ng-template>
+                  </span>
                 </span>
 
                 <ng-template #allowToPostRating>
-                    <label for="" class="mr-3"
-                    [ngStyle]="{'display': postRequestAlert ? 'none': 'block'}">Rate JunkYard </label>
-                    <p-rating [(ngModel)]="rating" [cancel]="false"></p-rating>
-                    <button type="button" class="btn btn-primary btn-sm ml-1 sm-button" 
-                    data-toggle="popover" title="Rate JunkYard" style="margin-top: -3px;"
+                  <label for="" class="mr-3" [ngStyle]="{'display': postRequestAlert ? 'none': 'block'}">Rate JunkYard
+                  </label>
+                  <p-rating [(ngModel)]="rating" [cancel]="false"></p-rating>
+                  <button type="button" class="btn btn-primary btn-sm ml-1 sm-button" data-toggle="popover"
+                    title="Rate JunkYard" style="margin-top: -3px;"
                     (click)="showToast = rating == 0? showToast: !showToast;"
                     [ngClass]="{'disabled': rating == 0}">Rate</button>
                 </ng-template>
-            </span>
-        </div>
-        <div style="position: relative;">
-
-            <div style="position: absolute; top: 0; right: 0;">
-                <div class="toast alert" 
-                [ngClass]="{'show': showToast}">
-                <div class="toast-header">
-                    <strong class="mr-auto"><i class="fa fa-globe"></i>
-                        <i class="bi bi-exclamation-triangle mr-2"></i>You are about to rate {{rating}} <span 
-                        [innerHTML]="rating > 1? 'stars': 'star'"></span> 
-                    to {{selectedItemDetail.junkYardName}}</strong>
-                </div>
-                <div class="d-flex justify-content-center mt-2">
-                    <button type="button" class="btn btn-success btn-sm mx-2"
-                    (click)="postRating()">OK</button>
-                    <button type="button" class="btn btn-info btn-sm mx-2"
-                    (click)="doNotRate()">NO</button>
-                </div>
+              </span>
             </div>
-        </div>    
-    </div>
+            <div style="position: relative;">
 
-    <p class="text-muted mb-0">{{selectedItemDetail.make}} {{selectedItemDetail.model}} {{selectedItemDetail.year}} 
-        <span *ngIf="selectedItemDetail.mileage !== undefined">
-            - {{selectedItemDetail.mileage}} miles
-        </span></p>
-        <div class="content-space"><span class="card-text">{{selectedItemDetail.city}} {{selectedItemDetail.state}} {{selectedItemDetail.zip}}</span>
-            <span>{{selectedItemDetail.soldDate | date}}</span>
-        </div>  
-    </div>
-</div>
-<div class="card mt-2">
-    <div class="card-body">
+              <div style="position: absolute; top: 0; right: 0;">
+                <div class="toast alert" [ngClass]="{'show': showToast}">
+                  <div class="toast-header">
+                    <strong class="mr-auto"><i class="fa fa-globe"></i>
+                      <i class="bi bi-exclamation-triangle mr-2"></i>You are about to rate {{rating}} <span
+                        [innerHTML]="rating > 1? 'stars': 'star'"></span>
+                      to {{selectedItemDetail.junkYardName}}</strong>
+                  </div>
+                  <div class="d-flex justify-content-center mt-2">
+                    <button type="button" class="btn btn-success btn-sm mx-2" (click)="postRating()">OK</button>
+                    <button type="button" class="btn btn-info btn-sm mx-2" (click)="doNotRate()">NO</button>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-     <div class="row card-title">
-        <div class="col-6"><h5 class="font-weight-bold owner-info-header">
-        {{selectedItemDetail.vehId !== undefined? 'USER' : 'JUNKYARD'}} INFORMATION</h5></div> 
-        <div class="col-6"><button type="button" (click)="connectWithSeller()"
-            class="btn btn-primary btn-sm btn-block contact-seller-btn sm-button">
-            Contact Seller</button>
-        </div>   
-    </div>
-    <div class="row">
-        <div class="col-6"><h2><i class="bi bi-person"></i>                     
-            <span class="h5" *ngIf="selectedItemDetail.junkYardName !== undefined; else username">
-                {{selectedItemDetail.junkYardName.charAt(0).toUpperCase() +
+            <p class="text-muted mb-0">{{selectedItemDetail.make}} {{selectedItemDetail.model}}
+              {{selectedItemDetail.year}}
+              <span *ngIf="selectedItemDetail.mileage !== undefined">
+                - {{selectedItemDetail.mileage}} miles
+              </span>
+            </p>
+            <div class="content-space"><span class="card-text">{{selectedItemDetail.city}} {{selectedItemDetail.state}}
+                {{selectedItemDetail.zip}}</span>
+              <span>{{selectedItemDetail.soldDate | date}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="card mt-2">
+          <div class="card-body">
+
+            <div class="row card-title">
+              <div class="col-6">
+                <h5 class="font-weight-bold owner-info-header">
+                  {{selectedItemDetail.vehId !== undefined? 'USER' : 'JUNKYARD'}} INFORMATION</h5>
+              </div>
+              <div class="col-6"><button type="button" (click)="connectWithSeller()"
+                  class="btn btn-primary btn-sm btn-block contact-seller-btn sm-button">
+                  Contact Seller</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <h2><i class="bi bi-person"></i>
+                  <span class="h5" *ngIf="selectedItemDetail.junkYardName !== undefined; else username">
+                    {{selectedItemDetail.junkYardName.charAt(0).toUpperCase() +
                     selectedItemDetail.junkYardName.slice(1)}}
-                </span>
-                <ng-template #username>
-                    <span class="h5">{{selectedItemDetail.username.charAt(0).toUpperCase() + selectedItemDetail.username.slice(1)}}</span>
-                </ng-template>
-            </h2></div> 
-            <div class="col-6">
+                  </span>
+                  <ng-template #username>
+                    <span class="h5">{{selectedItemDetail.username.charAt(0).toUpperCase() +
+                      selectedItemDetail.username.slice(1)}}</span>
+                  </ng-template>
+                </h2>
+              </div>
+              <div class="col-6">
                 <div class="junk-email">{{selectedItemDetail.email}}</div>
                 <div>{{selectedItemDetail.phone}}</div>
+              </div>
             </div>
+
+          </div>
         </div>
-
-    </div>   
-</div>
-<div class="card mt-2">
-    <div class="card-body">
-        <h5 class="card-title font-weight-bold">DESCRIPTION</h5>
-        <p class="card-text">{{selectedItemDetail.description}}</p>  
+        <div class="card mt-2">
+          <div class="card-body">
+            <h5 class="card-title font-weight-bold">DESCRIPTION</h5>
+            <p class="card-text">{{selectedItemDetail.description}}</p>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
-</div>
+
+  </section>
 </div>
 
-</section>
-</div>
-
-<app-message *ngIf="contactSeller"
-(closeNavFlag)="closeNav($event)"
-[name]="selectedItemDetail.username"
-[showChat]="true"
-></app-message>
+<app-message *ngIf="contactSeller" (closeNavFlag)="closeNav($event)" [name]="selectedItemDetail.username"
+  [showChat]="true"></app-message>

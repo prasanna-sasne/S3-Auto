@@ -1,61 +1,265 @@
-<p-table [value]="customers" [lazy]="true"  [paginator]="true" [rows]="10"
-[totalRecords]="totalRecords" [loading]="loading" [globalFilterFields]="['name','country.name', 'company', 'representative.name']">
-  <ng-template pTemplate="header">
-    <tr>
-      <th>Image </th>
-      <th pSortableColumn="partname">Part Name <p-sortIcon field="partname"></p-sortIcon>
-      </th>
-      <th pSortableColumn="name">Make <p-sortIcon field="name"></p-sortIcon>
-      </th>
-      <th pSortableColumn="country.name">Model <p-sortIcon field="country.name"></p-sortIcon>
-      </th>
-      <th pSortableColumn="company">Year <p-sortIcon field="company"></p-sortIcon>
-      </th>
-      <th pSortableColumn="company">Description <p-sortIcon field="company"></p-sortIcon>
-      </th>
-      <th pSortableColumn="company">Action <p-sortIcon field="company"></p-sortIcon>
-      </th>
-    </tr>
-    <tr>
-      <th>
+<div class="child-container">
+  <div class="filter-row row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-5" *ngIf="!isLoading">
 
-      </th>
-      <th>
-        <p-columnFilter type="text" field="country.name"></p-columnFilter>
-      </th>
-      <th>
-        <p-columnFilter type="text" field="company"></p-columnFilter>
-      </th>
-      <th>
-        <p-columnFilter type="text" field="company"></p-columnFilter>
-      </th>
-        <th>
-          <p-columnFilter type="text" field="company"></p-columnFilter>
-        </th>
+    <!--Search fields-->
+    <p-dropdown [options]="makers" [(ngModel)]="selectedMake" optionLabel="make" [filter]="true" filterBy="make"
+      [showClear]="true" placeholder="Select Make" class="select-style " (onChange)="onChangeMake($event)"
+      [ngClass]="{'ng-valid ng-dirty': selectedMake.make !== ''}"
+      [ngClass]="{'ng-invalid ng-dirty': selectedMake.make == ''}">
+      <ng-template pTemplate="selectedItem">
+        <div class="country-item country-item-value" *ngIf="selectedMake">
+          <div>{{selectedMake.make}}</div>
+        </div>
+      </ng-template>
+      <ng-template let-maker pTemplate="item">
+        <div class="country-item">
+          <div>{{maker.make}}</div>
+        </div>
+      </ng-template>
+    </p-dropdown>
 
-        <!-- <p-columnFilter field="representative" matchMode="in" [showMenu]="false">
-          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-            <p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any"
-              (onChange)="filter($event)" optionLabel="name">
-              <ng-template let-option pTemplate="item">
-                <div class="p-multiselect-representative-option">
-                  <img [alt]="option.label" src="assets/showcase/images/demo/avatar/{{option.image}}" width="32"
-                    style="vertical-align: middle" />
-                  <span class="p-ml-1">{{option.name}}</span>
-                </div>
-              </ng-template>
-            </p-multiSelect>
+    <p-dropdown [options]="models" [(ngModel)]="selectedModel" optionLabel="model" [filter]="true" filterBy="model"
+      [showClear]="true" placeholder="Select Model" class="select-style" (onChange)="onChangeModel($event)"
+      [disabled]="modelFlag" [ngClass]="{'ng-valid ng-dirty': selectedModel !== null}"
+      [ngClass]="{'ng-invalid ng-dirty': selectedModel == null}">
+      <ng-template pTemplate="selectedItem">
+        <div class="country-item country-item-value" *ngIf="selectedModel">
+          <div>{{selectedModel.model}}</div>
+        </div>
+      </ng-template>
+      <ng-template let-model pTemplate="item">
+        <div class="country-item">
+          <div>{{model.model}}</div>
+        </div>
+      </ng-template>
+    </p-dropdown>
+
+
+    <!-- use this for parts -->
+    <p-dropdown [options]="parts" [(ngModel)]="selectedPart" optionLabel="part" [filter]="true" filterBy="part"
+      [showClear]="true" placeholder="Select Part" class="select-style" [disabled]="modelFlag"
+      (onChange)="onChangePart($event)" *ngIf="role === 'USER'" [ngClass]="{'ng-valid ng-dirty': selectedPart !== null}"
+      [ngClass]="{'ng-invalid ng-dirty': selectedPart == null}">
+      <ng-template pTemplate="selectedItem">
+        <div class="country-item country-item-value" *ngIf="selectedPart">
+          <div>{{selectedPart.part}}</div>
+        </div>
+      </ng-template>
+      <ng-template let-partName pTemplate="item">
+        <div class="country-item">
+          <div>{{partName.part}}</div>
+        </div>
+      </ng-template>
+    </p-dropdown>
+
+
+    <p-dropdown [options]="years" [(ngModel)]="selectedYear" optionLabel="year" [filter]="true" filterBy="year"
+      [showClear]="true" placeholder="Select Year" class="select-style" [disabled]="yearStateFlag">
+      <ng-template pTemplate="selectedItem">
+        <div class="country-item country-item-value" *ngIf="selectedYear">
+          <div>{{selectedYear.year}}</div>
+        </div>
+      </ng-template>
+      <ng-template let-yearNum pTemplate="item">
+        <div class="country-item">
+          <div>{{yearNum.year}}</div>
+        </div>
+      </ng-template>
+    </p-dropdown>
+
+    <span *ngIf="role === 'USER'; else junkyardSearch">
+      <button type="button" class="btn btn-primary mr-2 mt-3 sm-button filter-btn" (click)="search()"
+        [disabled]="yearStateFlag">Search</button>
+      <button class="btn btn-secondary mr-2 mt-3" (click)="resetFilters()">Reset</button>
+    </span>
+    <ng-template #junkyardSearch>
+      <span>
+        <button type="button" class="btn btn-primary sm-button mr-2 filter-btn" (click)="search()"
+          [disabled]="yearStateFlag">Search</button>
+        <button class="btn btn-secondary mr-2 filter-btn" (click)="resetFilters()">Reset</button>
+      </span>
+    </ng-template>
+  </div>
+  <div style='margin-bottom: 20px'></div>
+  <!--Spinner-->
+  <div *ngIf="isLoading" style="text-align: center;">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+  <!--Cards to display the inventory-->
+  <div class=" row col-md-12">
+    <div class="card mt-3" *ngFor="let item of inventoryList; let parentIndx = index;">
+      <div class="row no-gutters" style="height:151px">
+        <div class="embed-responsive embed-responsive-16by9 col-md-4" style="height:151px">
+          <span *ngIf="item.vehicleImages !== undefined; else soldPartImage">
+            <img class="img-thumbnail embed-responsive-item" style="height:151px"
+              *ngFor="let itemImages of item.vehicleImages;let aIndex= index;" [src]="itemImages.imageUri"
+              alt="sell-history">
+          </span>
+          <ng-template #soldPartImage>
+            <img class="img-thumbnail embed-responsive-item" [src]="item.imageUri" alt="sell-history">
           </ng-template>
-        </p-columnFilter> -->
-      <!-- </th> -->
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-customer>
-    <tr>
-      <td>aaatd></td>
-      <td>bbb</td>
-      <td>cccc</td>
-      <td>ddd</td>
-    </tr>
-  </ng-template>
-</p-table>
+        </div>
+        <div class="col-md-8">
+          <div class="card-body" style="height:151px">
+            <h6 class="card-title"><strong><span *ngIf="item.partId !== undefined">{{item.part}} - </span> {{item.make}}
+                {{ item.model }} {{item.year}}</strong></h6>
+
+            <h6 class="card-subtitle mb-2 text-muted"><strong>{{ item.price | currency }}</strong></h6>
+            <div class="row row-cols-xs-1 row-cols-sm-2">
+              <div class="col" *ngIf="item.mileage !== undefined"><span class="text-muted">Miles Driven:</span>
+                {{item.mileage}} miles</div>
+              <div class="col" *ngIf="item.vin !== undefined"><span class="text-muted">Vin: </span>{{ item.vin }}</div>
+              <div class="col mb-2" *ngIf="item.shipping !== undefined">
+                <span class="text-muted">Shipping:</span> {{ item.shipping == true ? 'Available': 'Not Available'}}
+              </div>
+            </div>
+            <p class="card-text mt-2"><span class="text-muted">Description: </span>{{ item.description }}</p>
+            <!-- <footer class="blockquote-footer">Sold Date: <cite title="Source Title">{{item.soldDate | date}}</cite></footer> -->
+
+          </div>
+
+        </div>
+      </div>
+      <div class="dropdown btn float-left">
+        <button class="btn btn-secondary dropdown-toggle button dropup" type="button" id="dropdownMenuButton"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Actions
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">Edit</a>
+          <a class="dropdown-item" href="#">Sold</a>
+          <a class="dropdown-item" (click)="openModal('duplicate_modal',parentIndx)">Duplicate</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-info text-center" role="alert" *ngIf="inventoryList?.length == 0 && !isLoading">
+    NO SOLD DATA TO SHOW!!!
+  </div>
+
+  <nav aria-label="Page navigation example" *ngIf="inventoryList?.length !== 0">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [ngClass]="{'disabled': previousRecordFlag}" style="cursor: pointer;">
+        <a class="page-link" (click)="previousPage()">Previous</a>
+      </li>
+
+      <li class="page-item disabled">
+        <a class="page-link">{{currentPageIndex}}</a>
+      </li>
+
+      <li class="page-item" [ngClass]="{'disabled': nextRecordFlag}" style="cursor: pointer;">
+        <a class="page-link" (click)="nextPage()">Next</a>
+      </li>
+    </ul>
+  </nav>
+
+</div>
+
+
+<!--Modal to duplicate form -->
+<div>
+  <jw-modal id="duplicate_modal" style="margin-top: 50px;">
+    <div class="modal-header custumheader">Duplicate you form</div>
+    <div *ngIf="selectedPartList !== undefined" class=" col-md-12" style="margin-top: 50px;">
+      <div class="p-0 py-0 row mt-8"></div>
+      <class class="cardDup bg-light col-md-12" style="text-align:center">
+        <div class="card-body row">
+                <!--Image rendering -->
+              <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel"
+                  *ngIf="selectedPartList.vehicleImages !== undefined; else partImage">
+                  <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" *ngFor="let item of selectedPartList.vehicleImages;"
+                      data-slide-to="0" class="active"></li>
+                  </ol>
+
+                  <div class="carousel-inner">
+                    <div class="carousel-item active"
+                      *ngFor="let item of selectedPartList.vehicleImages; let index = index; let isFirst = first"
+                      [ngClass]="{active:isFirst}">
+                      <img [src]="item.imageUri" class="d-block w-100" alt="...">
+                    </div>
+                  </div>
+
+                  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>
+                <ng-template #partImage>
+                  <div class="cardForDetail" style="cursor: pointer;">
+                    <div class="embed-responsive embed-responsive-16by9">
+                      <img [src]="selectedPartList.imageUri" class="card-img-top img-thumbnail embed-responsive-item"
+                        alt="Salvage Car">
+                    </div>
+                  </div>
+                </ng-template>
+                <!--Detail-->
+                <div class="card-body col-sm ">
+                      Price:{{ selectedPartList.price | currency}}<br>
+                      Make:{{selectedPartList.make}}<br>
+
+                      Model:{{selectedPartList.model}}<br>
+
+                      Year:{{selectedPartList.year}}<br>
+                      <span *ngIf="selectedPartList.mileage !== undefined">
+                        - {{selectedPartList.mileage}} miles
+                      </span><br>
+                      <span class="card-text">Address:{{selectedPartList.city}}
+                        {{selectedPartList.state}}
+                        {{selectedPartList.zip}}</span><br>
+                      <span>Sold Date:{{selectedPartList.soldDate | date}}</span><br>
+
+                </div>
+              </div>
+              <div class="col-sm">
+
+                <div style="position: relative;">
+              </div>
+
+
+          <!-- <p class="text-muted mb-0">
+            Make:{{selectedPartList.make}}<br>
+            Model:{{selectedPartList.model}}<br>
+            Year:{{selectedPartList.year}}
+            <span *ngIf="selectedPartList.mileage !== undefined">
+              - {{selectedPartList.mileage}} miles
+            </span>
+          </p> -->
+          <!-- <div class="content-space"><span class="card-text">Address:{{selectedPartList.city}}
+              {{selectedPartList.state}}
+              {{selectedPartList.zip}}</span><br>
+            <span>Sold Date:{{selectedPartList.soldDate | date}}</span>
+          </div> -->
+          <div class="card mt-2">
+            <div class="card-body" >
+              <h5 class="card-title font-weight-bold">DESCRIPTION</h5>
+              <p class="card-text">{{selectedPartList.description}}</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <label class="fontColor">You can duplicate your form upto 10 dataset</label>
+          <div class="mt-8">
+            <input type="number" name="" id="" maxlength="10" minlength="0">
+          </div>
+          <div class="row">
+            <div class="col-md-10">
+              <div class="mt-5 text-left">
+                <button class="btn btn-primary profile-button button" type="submit">Duplicate</button>
+                <button type="cancel" class="btn btn-primary button"
+                  (click)="closeModal('duplicate_modal')">cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </class>
+      </div>
+
+
+  </jw-modal>
+</div>

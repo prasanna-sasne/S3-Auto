@@ -13,7 +13,7 @@ interface ResponseData {
 export class SellInputFormService {
   private appUrl = 'http://s3auto-env.eba-dqkeutck.us-east-2.elasticbeanstalk.com';  // URL to web api
   private handleError: HandleError;
-  private itemResponseList: any[];
+
 
   constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) {
     this.handleError = httpErrorHandler.createHandleError('BuyService');

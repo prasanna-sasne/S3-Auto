@@ -1,0 +1,28 @@
+.child-container {
+	margin-top: 20px;
+}
+
+.card {
+  width: 500px;
+  height: auto ;
+  margin-right: 10px;
+	box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+}
+
+.fontColor{
+  color: blue;
+}
+
+.cardDup{
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+}
+
+.text {
+  color: black;
+}
+.cardForDetail{
+  width: 300px;
+  height: 200px ;
+  margin-right: 10px;
+	box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+}
