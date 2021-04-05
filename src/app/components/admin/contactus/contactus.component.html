@@ -1,0 +1,47 @@
+<div class="py-3 text-center">
+  <div class="container">
+    <div class="row  mx-auto " style="background: #f1f5fb;	background-position: top left;max-width: 600px;	background-size: 100%;	background-repeat: repeat;">
+
+      <div class="mx-auto p-4 col-lg-9">
+        <span class="badge badge-pill badge-primary sm-button mb-2 float-left"  routerLink="../s3-auto/buy-list">
+    		  <i class="bi bi-backspace pr-2"></i>Back
+    	  </span>
+        <h1 class="mb-4">Contact Us</h1>
+        <div *ngIf="alert" class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Success!</strong> Your ticket is submitted.
+          <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form [formGroup]="contactusForm" #userPost="ngForm" (ngSubmit)="onSubmit(userPost.value)">
+          <div class="form-group">
+            <input   type="email" class="form-control " formControlName="email" [(ngModel)]="email"  name="email" id="email" placeholder="Email" >
+          </div>
+          <div *ngIf="isValidInput('email')" >
+            <div *ngIf="contactusForm.controls['email'].errors!.required" class="alert alert-danger">
+              Email is required.
+            </div>
+          </div>
+          <label class="alert alert-danger" *ngIf="contactusForm.controls['email'].hasError('email')">
+            Enter a valid email address!
+          </label>
+          <p></p>
+          <div class="form-group">
+            <textarea   class="form-control"  formControlName="description" id="description" rows="5" [(ngModel)]="description"    name="description"   placeholder="Your description"></textarea>
+          </div>
+          <div *ngIf="isValidInput('description')" class="alert alert-danger">
+            <div *ngIf="contactusForm.controls['description'].errors!.required">
+              Description is required.
+            </div>
+          </div>
+          <br>
+          <button type="submit" [disabled]="!userPost.form.valid" class="btn btn-primary sm-button">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

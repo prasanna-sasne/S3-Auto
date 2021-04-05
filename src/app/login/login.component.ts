@@ -15,9 +15,11 @@ export class LoginComponent implements OnInit {
   error = [];
   responseData;
   @Output() userEmail: EventEmitter<any> = new EventEmitter();
+  @Output() userRole: EventEmitter<string> = new EventEmitter();
+
   constructor(private fb: FormBuilder,private modalService:ModalService,
-     private loginService: LoginService,
-     private router:Router) {
+    private loginService: LoginService,
+    private router:Router) {
   }
 
   ngOnInit(): void {
@@ -33,8 +35,8 @@ export class LoginComponent implements OnInit {
 
   isValidInput(fieldName): boolean {
     return this.loginForm.controls[fieldName].invalid &&
-      (this.loginForm.controls[fieldName].dirty ||
-        this.loginForm.controls[fieldName].touched);
+    (this.loginForm.controls[fieldName].dirty ||
+      this.loginForm.controls[fieldName].touched);
 
   }
 
@@ -62,12 +64,16 @@ export class LoginComponent implements OnInit {
 
           // Update email on header....
           this.userEmail.emit(this.responseData.email);
+          this.userRole.emit(this.responseData.role);
 
           // reditecting according to the role....
           if(this.responseData.role === "JUNK_YARD_OWNER" || this.responseData.role === "USER"){
             this.router.navigate(['s3-auto/buy-list']);
             this.modalService.close('signUp_modal');
-          }else {
+          } else if(this.responseData.role === "ADMIN") {
+            this.router.navigate(['tickets']);
+            this.modalService.close('signUp_modal');
+          } else {
             debugger;
             this.modalService.close('signUp_modal');
             // this.router.navigate(['/s3-auto']);
@@ -81,7 +87,7 @@ export class LoginComponent implements OnInit {
         this.error = errorMessage;
         //   this.isLoading = false;
       }
-    );
+      );
   }
 
   closeModal(id: string) {
@@ -91,7 +97,7 @@ export class LoginComponent implements OnInit {
   openModal(id: string) {
     this.closeModal('signUp_modal')
     this.modalService.open(id);
-}
+  }
 }
 
 

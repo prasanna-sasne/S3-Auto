@@ -20,6 +20,10 @@
 
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <div class="header-menu navbar-nav">
+      <div class="nav-item mt-2" *ngIf="roleflag">
+        <div class="contact" style="cursor: pointer;" routerLink="contactus">Contact Us</div>
+      </div>
+
       <div class="nav-item pt-1" *ngIf="email !== undefined && email !== null">
         <span class="notification mr-3">
         <h4 (click)="checkNotification()">
@@ -66,7 +70,8 @@
   </div>
   <app-auth *ngIf="!isLoginMode"></app-auth>
   <br>
-  <app-login (userEmail)="logedinUserEmail($event)" *ngIf="isLoginMode"></app-login>
+  <app-login (userEmail)="logedinUserEmail($event)" 
+  (userRole)="loggedInUserRole($event)" *ngIf="isLoginMode"></app-login>
   <!-- <button (click)="closeModal('signUp_modal');">Close</button> -->
 </jw-modal>
 

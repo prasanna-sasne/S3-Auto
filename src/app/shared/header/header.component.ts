@@ -12,10 +12,14 @@ export class HeaderComponent implements OnInit {
 
   isLoginMode = true;
   email;
-  openChat: boolean = false; //after showing notifiacation if user clicks on view then only openChat
+  //after showing notifiacation if user clicks on view then only openChat
   //window should get opened
+  openChat: boolean = false; 
   showBell: boolean = false; //show bell only on notifiacation
   triggerMsg: boolean = false; //call message component only after user logs in
+  
+  roleflag: boolean = false;  
+  role;
 
   constructor(public modalService:ModalService, private router:Router,
     private getChildNotification: NotifyHeaderService) {
@@ -31,6 +35,17 @@ export class HeaderComponent implements OnInit {
     if(this.email !== undefined && this.email !== null){
       this.triggerMsg = true;
     }
+    this.showContactUs();  
+    console.log(this.role);
+  }
+
+  showContactUs(){  
+    this.role = JSON.parse(sessionStorage.getItem('ROLE') || '{}');  
+    if(this.role !== undefined && this.role !== null && JSON.stringify(this.role) !== '{}'){  
+      if(this.role.localeCompare("ADMIN") !== 0) this.roleflag = true;  
+    } else {  
+      this.roleflag = false;  
+    }  
   }
 
   onSwitchMode(set){
@@ -50,6 +65,12 @@ export class HeaderComponent implements OnInit {
     if(this.email !== undefined && this.email !== null){
       this.triggerMsg = true;
     }
+    this.role = JSON.parse(sessionStorage.getItem('ROLE') || '{}');  
+    this.showContactUs();  
+  }
+  
+  loggedInUserRole(role){  
+    this.role = role;  
   }
 
   closeNav(closeChatWindow: {closeNav:boolean}){
