@@ -5,5 +5,6 @@ import { Injectable, EventEmitter} from '@angular/core';
 })
 export class NotifyHeaderService {
   bellFlag = new EventEmitter<boolean>();
+  cloaseChatWindow = new EventEmitter<boolean>();
   constructor() { }
 }

@@ -5,7 +5,8 @@ import {Component, OnInit,
 	import * as Stomp from 'stompjs';
 	import * as SockJS from 'sockjs-client';
 	import {ChatMessageService} from '../../services/chat-message.service';
-
+    import { NotifyHeaderService } from '../../services/notify-header.service';
+    
 	@Component({
 		selector: 'app-message',
 		templateUrl: './message.component.html',
@@ -40,9 +41,15 @@ import {Component, OnInit,
             ts:number, read: boolean}[],
             read: boolean, receiver: string, sender: string, notification: number}[] = []
 
-            public constructor(private chatService: ChatMessageService) {
+            public constructor(private chatService: ChatMessageService,
+                private notifyService: NotifyHeaderService) {
                 this.token = sessionStorage.getItem('TOKEN');
                 this.username = sessionStorage.getItem('USERNAME');
+                this.notifyService.cloaseChatWindow.subscribe(
+                    (flag: boolean) => {
+                        this.sideNavClicked = flag;
+                        this.showChat = flag; 
+                    });
             }
 
             public ngOnChanges(): void{

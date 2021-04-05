@@ -66,9 +66,11 @@ export class HeaderComponent implements OnInit {
 
   signOut(){
     sessionStorage.clear();
-    //navigate to homepage
     this.ngOnInit();
-    this.router.navigate(['welcome']);
+    
+    //close chat window when chat is opened from header
+    this.getChildNotification.cloaseChatWindow.emit(false);
+    this.router.navigate(['welcome']); //Navigate to welcome page
   }
 
   updateProfile(){
