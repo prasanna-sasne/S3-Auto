@@ -4,6 +4,12 @@
     <div class="h4 my-0 text-light">S3 Auto</div>
     <div id="long-form">Sell Salvage Save</div>
   </div>
+    <div class="nav-item mx-4"
+       style="cursor: pointer;"
+       *ngIf="email === undefined || email === null"
+       routerLink="about-us">
+    About Us
+  </div>
   <div class="spacer"></div>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
