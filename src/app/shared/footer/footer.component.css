@@ -7,3 +7,12 @@
   color: white;
   text-align: center;
 }
+.row{
+  background-image: linear-gradient(to right, #563d7c, #1976d2);
+}
+.image{
+  padding-left: 10px;
+}
+.box{
+  padding-left: 10px;
+}
