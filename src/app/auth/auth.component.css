@@ -25,6 +25,24 @@
   transition: .4s;
 }
 
+#drop-down.ng-invalid:not(form) > div {
+  border: 1px solid #D40000;
+   }
+#drop-down.ng-invalid.ng-touched.ui-inputwrapper-focus:not(form) > div {
+        box-shadow: 0 0 0 0.05em #F40000;
+         border: 1px solid #D40000;
+         border-radius: 2px;
+       }
+
+#drop-down.ng-invalid.ng-untouched.ui-inputwrapper-focus:not(form) > div {
+     box-shadow: 0 0 0 0.05em #F40000;
+     border: 1px solid #D40000;
+     border-radius: 2px;
+   }
+   
+input.ng-valid {
+  border-color:lightgreen;
+}
 .slider:before {
   position: absolute;
   content: "";
@@ -41,8 +59,17 @@ input:checked + .slider {
   background-color: #2196F3;
 }
 
+
+
 input:focus + .slider {
   box-shadow: 0 0 1px #2196F3;
+}
+
+
+
+input.ng-valid.ng-touched {
+  border-color: #78FA89;
+
 }
 
 input:checked + .slider:before {
@@ -66,3 +93,4 @@ label.switch {
   margin-left: 18px;
 
 }
+

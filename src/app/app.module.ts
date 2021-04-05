@@ -1,4 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
+import {MatFormFieldModule} from '@angular/material/form-field';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule,NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -70,7 +72,8 @@ import { NotifyHeaderService } from './services/notify-header.service';
   HttpClientModule,
   ModalModule,
   AppRoutingModule,
-  TableModule
+  TableModule,
+  MatFormFieldModule
   ],
 
   providers: [MessageService, HttpErrorHandler,SellInventoryService,SellInputFormService,

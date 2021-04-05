@@ -33,8 +33,8 @@ export class AuthComponent {
   /**... form controller parameter... */
   initForm(): void {
     this.registrationForm = this.fb.group({
-      fname: ['', [Validators.required, Validators.maxLength(15), Validators.minLength(5)]],
-      password: ['', Validators.required],
+      fname: ['', [Validators.required,  Validators.minLength(5)]],
+      password: ['', [Validators.required,  Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]],
       confirmPassword: ['', Validators.required],
       username: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -42,10 +42,10 @@ export class AuthComponent {
       email: [null, Validators.compose([
         Validators.email,
         Validators.required])],
-      selectedstate: ['', Validators.required],
-      selectedcity: ['', Validators.required],
+      selectedstate: ['',[ Validators.required]],
+      selectedcity: ['', [Validators.required]],
       junkYardName: ['', Validators.required],
-      zipCode: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{5}$")]],
+      zipCode: ['', [Validators.required, Validators.pattern("^[0-9]{5}(?:-[0-9]{4})?$") ]],
       address: ['', Validators.required],
     }, {
       validator: this.ConfirmedValidator('password', 'confirmPassword')
@@ -140,6 +140,11 @@ export class AuthComponent {
     });
   }
 
+
+  onBlurevent(event: any){
+    //if( event.value == undefined)
+   // this.state.
+  }
   /*....Fetch the selected state and call list of city service....*/
   selectChange(event: any) {
     console.log("selected State", event.value);
