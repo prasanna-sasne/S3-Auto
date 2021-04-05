@@ -24,7 +24,7 @@ export class AuthService {
     console.log( 'request data ',reqData);
     return this.http
       .post<AuthResponseData>(
-        `${this.appUrl}/uvp/authentication/signup////`,
+        `${this.appUrl}/uvp/authentication/signup`,
         reqData
       )
       .pipe(
