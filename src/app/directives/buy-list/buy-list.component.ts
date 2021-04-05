@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { BuyItems } from '../../shared/models/buyItems.model';
 import { BuyService } from '../../services/buy.service';
+import { NotifyHeaderService } from '../../services/notify-header.service';
 
 @Component({
   selector: 'app-buy-list',
@@ -44,7 +45,8 @@ export class BuyListComponent implements OnInit {
 
   constructor(private buyService: BuyService,
     private router: Router,
-    private route: ActivatedRoute) { 
+    private route: ActivatedRoute,
+    private notifyHeaderService: NotifyHeaderService) { 
     this.stars = Array(5).fill(0).map((x,i)=>i);
     this.role = JSON.parse(sessionStorage.getItem('ROLE') || '{}');
   }
@@ -225,6 +227,7 @@ export class BuyListComponent implements OnInit {
 
   newMsgPresent(showBell: {notificationPresent: boolean}){
     console.log(showBell.notificationPresent);
+    this.notifyHeaderService.bellFlag.emit(showBell.notificationPresent);
   }
 
   ngOnInit(): void { 

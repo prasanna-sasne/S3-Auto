@@ -33,7 +33,8 @@ import {SellInputFormService} from './services/sell-input-form.service';
 import {SellInventoryService} from './services/sell-inventiry.service';
 import { MessageService } from './services/message.service';
 import { HttpErrorHandler } from './services/http-error-handler.service';
-import { MessageComponent } from './shared/message/message.component'
+import { MessageComponent } from './shared/message/message.component';
+import { NotifyHeaderService } from './services/notify-header.service';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { MessageComponent } from './shared/message/message.component'
   ],
 
   providers: [MessageService, HttpErrorHandler,SellInventoryService,SellInputFormService,
+    NotifyHeaderService,
   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   schemas: [

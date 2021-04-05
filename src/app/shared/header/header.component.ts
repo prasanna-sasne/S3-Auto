@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ModalService } from '../../_modal/modal.service';
 import { Router } from '@angular/router';
+import { NotifyHeaderService } from '../../services/notify-header.service';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +17,12 @@ export class HeaderComponent implements OnInit {
   showBell: boolean = false; //show bell only on notifiacation
   triggerMsg: boolean = false; //call message component only after user logs in
 
-  constructor(public modalService:ModalService, private router:Router) { }
+  constructor(public modalService:ModalService, private router:Router,
+    private getChildNotification: NotifyHeaderService) {
+    this.getChildNotification.bellFlag.subscribe(
+      (flag: boolean) => {
+        this.showBell = flag});
+  }
 
   ngOnInit(): void {
     if(window.sessionStorage.getItem('EMAIL') != ""){
