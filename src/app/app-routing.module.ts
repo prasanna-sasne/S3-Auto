@@ -10,6 +10,8 @@ import { JunkBuyComponent } from './components/junkyard-owner/junk-buy/junk-buy.
 import { WelcomPageComponent } from './shared/welcom-page/welcom-page.component';
 import { UpdateProfileComponent } from './shared/update-profile/update-profile.component';
 import { AboutUsComponent} from './shared/about-us/about-us.component';
+import { ContactusComponent} from './components/admin/contactus/contactus.component';
+import { TicketsComponent} from './components/admin/tickets/tickets.component';
 import { ResetPasswordComponent } from './shared/reset-password/reset-password.component';
 import { ItemDetailsComponent } from './directives/buy-list/item-details/item-details.component';
 
@@ -19,6 +21,8 @@ const routes: Routes = [
    { path: 'about-us', component: AboutUsComponent },
 { path: 'updateProfile', component: UpdateProfileComponent },
 { path: 'sellInventory', component: SellInventoryComponent },
+    {path: 'contactus', component: ContactusComponent },
+  {path: 'tickets', component: TicketsComponent},
 {
 	path: 's3-auto',
 	component: JunkBuyComponent,
