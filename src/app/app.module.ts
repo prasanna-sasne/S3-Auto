@@ -37,6 +37,10 @@ import { MessageService } from './services/message.service';
 import { HttpErrorHandler } from './services/http-error-handler.service';
 import { MessageComponent } from './shared/message/message.component';
 import { NotifyHeaderService } from './services/notify-header.service';
+import { ContactusComponent } from './components/admin/contactus/contactus.component';
+import { TicketsComponent } from './components/admin/tickets/tickets.component';
+import { AboutUsComponent } from './shared/about-us/about-us.component';
+import { FooterComponent} from "./shared/footer/footer.component";
 
 @NgModule({
   declarations: [
@@ -58,7 +62,11 @@ import { NotifyHeaderService } from './services/notify-header.service';
   SellInventoryComponent,
   SellInputFormComponent,
   MessageComponent,
-  UpdateProfileComponent
+  UpdateProfileComponent,
+  ContactusComponent,
+  TicketsComponent,
+  AboutUsComponent,
+  FooterComponent
   ],
 
   imports: [
