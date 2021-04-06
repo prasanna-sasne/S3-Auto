@@ -1,0 +1,31 @@
+<div *ngIf="alert" class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong>Success!</strong> Your ticket is deleted.
+  <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<p-table [value]="ticketItems" sortMode="multiple"  [paginator]="true" [rows]="5">>
+  <ng-template pTemplate="caption">
+    <div class="ticketheading" style="text-align: center">
+      <strong>TICKETS</strong>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Email</th>
+      <th>Ticket Number</th>
+      <th>Description</th>
+      <th>Ticket Closed(?)</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td>{{item.email}}</td>
+      <td>{{item.ticketNumber}}</td>
+      <td>{{item.description}}</td>
+      <td>
+        <button type="button" class="btn btn-danger" (click)="delete(item.issueId)">Delete</button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
