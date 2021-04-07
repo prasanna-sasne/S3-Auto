@@ -35,10 +35,10 @@ export class AuthComponent {
   /**... form controller parameter... */
   initForm(): void {
     this.registrationForm = this.fb.group({
-      fname: ['', [Validators.required,  Validators.minLength(5)]],
+      fname: ['', [Validators.required  ]],
       password: ['', [Validators.required,  Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]],
       confirmPassword: ['', Validators.required],
-      username: ['', Validators.required],
+      username: ['', Validators.required, Validators.minLength(5)],
       lastName: ['', Validators.required],
       phoneNumber: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       email: [null, Validators.compose([

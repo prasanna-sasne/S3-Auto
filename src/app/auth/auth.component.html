@@ -10,8 +10,6 @@
         <div class="form-group col-md-6">
           <input type="text" class="form-control" formControlName="fname" id="fName" placeholder="First Name">
           <div *ngIf="isValidInput('fname')" class="error-messages">
-            <div *ngIf="registrationForm.controls['fname'].errors?.minlength">The First Name needs to be of min length 5
-            </div>
             <div *ngIf="registrationForm.controls['fname'].errors!.required">First Name is required. </div>
           </div>
           <div class="form-group">
@@ -20,6 +18,8 @@
             <input type="text" class="form-control" formControlName="username" id="username" placeholder="User Name">
             <div *ngIf="isValidInput('username')" class="error-messages">
               <div *ngIf="registrationForm.controls['username'].errors!.required">User Name is required.</div>
+              <div *ngIf="registrationForm.controls['username'].errors?.minlength">The User Name needs to be of min length 5
+              </div>
             </div>
             <!----PASSWORD----->
             <div class="form-group">
