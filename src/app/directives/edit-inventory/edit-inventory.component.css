@@ -1,0 +1,51 @@
+body {
+  background: #BA68C8
+}
+
+h1 {
+  text-align:center;
+}
+h5{
+  color: rgb(54, 11, 245);
+}
+
+lableDetail{
+  font-style: italic!important;
+  color: rgb(11, 236, 199)!important;
+}
+
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: #BA68C8
+}
+
+.profile-button {
+  box-shadow: none;
+  border: none
+}
+
+.imageSetings{
+  width: 100%;
+}
+
+.profile-button:focus {
+  background: #682773;
+  box-shadow: none
+}
+
+.profile-button:active {
+  background: #682773;
+  box-shadow: none
+}
+
+.back:hover {
+  color: #682773;
+  cursor: pointer
+}
+
+.card {
+	box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+}
+
+

@@ -87,218 +87,238 @@
   </div>
   <!--Cards to display the inventory-->
 
-<div class="card mt-3">
+  <div class="card mt-3">
 
-  <div class="card mt-3" *ngFor="let item of inventoryList; let parentIndx = index;">
-    <div class="row no-gutters" style="height:151px">
-      <div class="embed-responsive embed-responsive-16by9 col-md-4" style="height:151px">
-        <span *ngIf="item.vehicleImages !== undefined; else soldPartImage">
-          <img class="img-thumbnail embed-responsive-item" style="height:151px"
-            *ngFor="let itemImages of item.vehicleImages;let aIndex= index;" [src]="itemImages.imageUri"
-            alt="sell-history">
-        </span>
-        <ng-template #soldPartImage>
-          <img class="img-thumbnail embed-responsive-item" [src]="item.imageUri" alt="sell-history">
-        </ng-template>
-      </div>
-      <div class="col-md-8">
-        <div class="card-body" style="height:151px">
-          <h6 class="card-title"><strong><span *ngIf="item.partId !== undefined">{{item.part}} - </span>
-              {{item.make}}
-              {{ item.model }} {{item.year}}</strong></h6>
-              <div class="dropdown btn float-right">
-                <button class="btn btn-secondary dropdown-toggle button dropup" type="button" id="dropdownMenuButton"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Actions
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#">Edit</a>
-                  <a class="dropdown-item" (click)="openModal('delete_item')">Delete</a>
-                  <a class="dropdown-item" (click)="openModal('sold_modal')">Sold</a>
-                  <a class="dropdown-item"  data-toggle="collapse" href="#{{ 'multiCollapseExample1' + parentIndx }}" role="button" (click)="openModal(parentIndx)" aria-expanded="false" aria-controls="multiCollapseExample1">Duplicate</a>
-                </div>
+    <div class="card mt-3" *ngFor="let item of inventoryList; let parentIndx = index;">
+      <div class="row no-gutters" style="height:151px">
+        <div class="embed-responsive embed-responsive-16by9 col-md-4" style="height:151px">
+          <span *ngIf="item.vehicleImages !== undefined; else soldPartImage">
+            <img class="img-thumbnail embed-responsive-item" style="height:151px"
+              *ngFor="let itemImages of item.vehicleImages;let aIndex= index;" [src]="itemImages.imageUri"
+              alt="sell-history">
+          </span>
+          <ng-template #soldPartImage>
+            <img class="img-thumbnail embed-responsive-item" [src]="item.imageUri" alt="sell-history">
+          </ng-template>
+        </div>
+        <div class="col-md-8">
+          <div class="card-body" style="height:151px">
+            <h6 class="card-title"><strong><span *ngIf="item.partId !== undefined">{{item.part}} - </span>
+                {{item.make}}
+                {{ item.model }} {{item.year}}</strong></h6>
+            <div class="dropdown btn float-right">
+              <button class="btn btn-secondary dropdown-toggle button dropup" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Actions
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" data-toggle="collapse" href="#{{ 'editForm' + parentIndx }}"
+                role="button" (click)="getIndex(parentIndx)" aria-expanded="false"
+                aria-controls="multiCollapseExample1">Edit</a>
+                <a class="dropdown-item" (click)="openModal('delete_item')">Delete</a>
+                <a class="dropdown-item" (click)="openModal('sold_modal')">Sold</a>
+                <a class="dropdown-item" data-toggle="collapse" href="#{{ 'multiCollapseExample1' + parentIndx }}"
+                  role="button" (click)="getIndex(parentIndx)" aria-expanded="false"
+                  aria-controls="multiCollapseExample1">Duplicate</a>
               </div>
+            </div>
 
-          <h6 class="card-subtitle mb-2 text-muted"><strong>{{ item.price | currency }}</strong></h6>
-          <div class="row row-cols-xs-1 row-cols-sm-2">
-            <div class="col" *ngIf="item.mileage !== undefined"><span class="text-muted">Miles Driven:</span>
-              {{item.mileage}} miles</div>
-            <div class="col" *ngIf="item.vin !== undefined"><span class="text-muted">Vin: </span>{{ item.vin }}
+            <h6 class="card-subtitle mb-2 text-muted"><strong>{{ item.price | currency }}</strong></h6>
+            <div class="row row-cols-xs-1 row-cols-sm-2">
+              <div class="col" *ngIf="item.mileage !== undefined"><span class="text-muted">Miles Driven:</span>
+                {{item.mileage}} miles</div>
+              <div class="col" *ngIf="item.vin !== undefined"><span class="text-muted">Vin: </span>{{ item.vin }}
+              </div>
+              <div class="col mb-2" *ngIf="item.shipping !== undefined">
+                <span class="text-muted">Shipping:</span> {{ item.shipping == true ? 'Available': 'Not Available'}}
+              </div>
             </div>
-            <div class="col mb-2" *ngIf="item.shipping !== undefined">
-              <span class="text-muted">Shipping:</span> {{ item.shipping == true ? 'Available': 'Not Available'}}
-            </div>
+            <p class="card-text mt-2"><span class="text-muted">Description: </span>{{ item.description }}</p>
+            <!-- <footer class="blockquote-footer">Sold Date: <cite title="Source Title">{{item.soldDate | date}}</cite></footer> -->
+
           </div>
-          <p class="card-text mt-2"><span class="text-muted">Description: </span>{{ item.description }}</p>
-          <!-- <footer class="blockquote-footer">Sold Date: <cite title="Source Title">{{item.soldDate | date}}</cite></footer> -->
 
         </div>
-
       </div>
-    </div>
-    <!--Collapsable Table content for duplicate -->
-    <div class="row">
-      <div class="col-md-12">
-        <div class="collapse" id="{{ 'multiCollapseExample1' + parentIndx }}">
-          <div class="card card-body">
+      <!--Collapsable Table content for duplicate -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="collapse" id="{{ 'multiCollapseExample1' + parentIndx }}">
+            <div class="card card-body">
 
-            <p-toast></p-toast>
-            <div></div>
-            <div>
-              <h5>Duplicate Form Data</h5>
-              <p-table [value]="duplicateArray" dataKey="id" editMode="row">
-                <ng-template pTemplate="header">
-                  <tr>
-                    <th>Sl.No.</th>
-                    <th>Image</th>
-                    <th>Make</th>
-                    <th>Modal</th>
-                    <th>year</th>
-                    <th>Price</th>
-                    <th>Description</th>
-                    <th style="width:8rem"></th>
-                  </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-product let-editing="editing" let-ri="rowIndex">
-                  <tr [pEditableRow]="product">
-                    {{product.id +1}}
-                    <td>
-                      <input id={{product.id}}  type="file" class="form-control" style=" width:10px;
+              <p-toast></p-toast>
+              <div></div>
+              <div>
+                <h5>Duplicate Form Data</h5>
+                <p-table [value]="duplicateArray" dataKey="id" editMode="row">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th>Sl.No.</th>
+                      <th>Image</th>
+                      <th>Make</th>
+                      <th>Modal</th>
+                      <th>year</th>
+                      <th>Price</th>
+                      <th>Description</th>
+                      <th style="width:8rem"></th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-product let-editing="editing" let-ri="rowIndex">
+                    <tr [pEditableRow]="product">
+                      {{product.id +1}}
+                      <td>
+                        <input id={{product.id}} type="file" class="form-control" style=" width:10px;
                             height:10px; background-color: indigo;" placeholder="+" multiple=""
-                        (change)="onFileChange($event,product.id)">
+                          (change)="onFileChange($event,product.id)">
 
-                      <div *ngIf="showexistingImage[product.id]==true">
-                        <img [src]="images[product.id]" [alt]="product.name" id={{product.id}} width="100" class="p-shadow-4" />
-                      </div>
-                      <div *ngIf="showexistingImage[product.id]==false">
-                        <img [src]="product.imageUri" [alt]="product.name" width="100" class="p-shadow-4" />
-                      </div>
-                    </td>
-                    <td>
-                      <p>
-                        {{product.make}}
-                      </p>
-                    </td>
-                    <td>
-                      <p>
-                        {{product.model}}
-                      </p>
-                    </td>
-                    <td>
-                      <p>{{product.year}}</p>
-                    </td>
-                    <td>
-                      <p-cellEditor>
-                        <ng-template pTemplate="input">
-                          <input pInputText type="text" [(ngModel)]="product.price">
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                          {{product.price | currency: 'USD'}}
-                        </ng-template>
-                      </p-cellEditor>
-                    </td>
-                    <td>
-                      <p-cellEditor>
-                        <ng-template pTemplate="input">
-                          <input pInputText type="text" [(ngModel)]="product.description">
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                          {{product.description}}
-                        </ng-template>
-                      </p-cellEditor>
-                    </td>
+                        <div *ngIf="showexistingImage[product.id]==true">
+                          <img [src]="images[product.id]" [alt]="product.name" id={{product.id}} width="100"
+                            class="p-shadow-4" />
+                        </div>
+                        <div *ngIf="showexistingImage[product.id]==false">
+                          <img [src]="product.imageUri" [alt]="product.name" width="100" class="p-shadow-4" />
+                        </div>
+                      </td>
+                      <td>
+                        <p>
+                          {{product.make}}
+                        </p>
+                      </td>
+                      <td>
+                        <p>
+                          {{product.model}}
+                        </p>
+                      </td>
+                      <td>
+                        <p>{{product.year}}</p>
+                      </td>
+                      <td>
+                        <p-cellEditor>
+                          <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="product.price">
+                          </ng-template>
+                          <ng-template pTemplate="output">
+                            {{product.price | currency: 'USD'}}
+                          </ng-template>
+                        </p-cellEditor>
+                      </td>
+                      <td>
+                        <p-cellEditor>
+                          <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="product.description">
+                          </ng-template>
+                          <ng-template pTemplate="output">
+                            {{product.description}}
+                          </ng-template>
+                        </p-cellEditor>
+                      </td>
 
-                    <td style="text-align:center">
-                      <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
-                        (click)="onRowEditInit(product)" class="p-button-rounded p-button-text"></button>
-                      <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
-                        (click)="onRowEditSave(product)"
-                        class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
-                      <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
-                        (click)="onRowEditCancel(product, ri)"
-                        class="p-button-rounded p-button-text p-button-danger"></button>
-                    </td>
-                  </tr>
-                </ng-template>
-              </p-table>
-            </div>
-            <div>
-              <label class="fontColor">You can duplicate your form upto 10 dataset</label>
-              <div class="mt-8">
-                <input type="number" [(ngModel)]="numberOfValue" name="" id="" maxlength="10" minlength="0">
-                <button type="button" class="btn btn-outline-primary"
-                  (click)="createDuplicateList(numberOfValue)">+</button>
-
+                      <td style="text-align:center">
+                        <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                          (click)="onRowEditInit(product)" class="p-button-rounded p-button-text"></button>
+                        <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                          (click)="onRowEditSave(product)"
+                          class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+                        <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                          (click)="onRowEditCancel(product, ri)"
+                          class="p-button-rounded p-button-text p-button-danger"></button>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
               </div>
-              <div class="row">
-                <div class="col-md-10">
-                  <div class="mt-5 text-left">
-                    <button class="btn btn-primary profile-button button" (click)="submitDuplicateData()"
-                      type="submit">Duplicate</button>
-                    <button type="cancel" class="btn btn-primary button"
-                      (click)="closeModal('duplicate_modal')">cancel</button>
+              <div>
+                <label class="fontColor">You can duplicate your form upto 10 dataset</label>
+                <div class="mt-8">
+                  <input type="number" [(ngModel)]="numberOfValue" name="" id="" maxlength="10" minlength="0">
+                  <button type="button" class="btn btn-outline-primary"
+                    (click)="createDuplicateList(numberOfValue)">+</button>
+
+                </div>
+                <div class="row">
+                  <div class="col-md-10">
+                    <div class="mt-5 text-left">
+                      <button class="btn btn-primary profile-button button" (click)="submitDuplicateData()"
+                        type="submit">Duplicate</button>
+                      <button type="cancel" class="btn btn-primary button"
+                        (click)="closeModal('duplicate_modal')">cancel</button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--popup for sold data -->
+      <jw-modal id="sold_modal">
+        <div class=cardboarder>
+          <div class="modal-header">
+            <!-- <a class="close closeColor bi bi-x-octagon" style="align-content:flex-end;" (click)="closeModal('sold_modal')" data-dismiss="modal" aria-label="Close"></a> -->
+          </div>
+          <div class="alert alert-primary" role="alert" style="text-align: center;">
+            You are going to mark this item as SOLD.
+          </div>
+
+          <ul class="nav nav-pills nav-fill mx-auto">
+            <li class="nav-item">
+              <button type="button" class="btn btn-outline-light btnHeadr btnRadius button"
+                (click)="markDataSold(item.partSellId)">Yes</button>
+
+              <button type="button" class="btn btn-outline-light btnHeadr btnRadius button"
+                (click)="closeModal('sold_modal')">No</button>
+            </li>
+          </ul>
+        </div>
+
+
+        <!-- </div> -->
+        <br>
+        <!-- <button (click)="closeModal('signUp_modal');">Close</button> -->
+      </jw-modal>
+
+      <!--Popup for delete-->
+      <jw-modal id="delete_item">
+        <div class=cardboarder>
+          <div class="modal-header">
+            <!-- <a class="close closeColor bi bi-x-octagon" style="align-content:flex-end;" (click)="closeModal('sold_modal')" data-dismiss="modal" aria-label="Close"></a> -->
+          </div>
+          <div class="alert alert-primary" role="alert" style="text-align: center;">
+            Are you sure you want to delete this item form inventory?
+          </div>
+
+          <ul class="nav nav-pills nav-fill mx-auto">
+            <li class="nav-item">
+              <button type="button" class="btn btn-outline-light btnHeadr btnRadius button"
+                (click)="markDeleteItem(item.partSellId)">Yes</button>
+
+              <button type="button" class="btn btn-outline-light btnHeadr btnRadius button"
+                (click)="closeModal('delete_item')">No</button>
+            </li>
+          </ul>
+        </div>
+
+
+        <!-- </div> -->
+        <br>
+        <!-- <button (click)="closeModal('signUp_modal');">Close</button> -->
+      </jw-modal>
+
+      <!--Collapsable Edit form for inventory-->
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="collapse" id="{{ 'editForm' + parentIndx }}">
+            <div class="card card-body">
+              <app-edit-inventory></app-edit-inventory>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-    <!--popup for sold data -->
-    <jw-modal id="sold_modal">
-      <div class = cardboarder>
-        <div class="modal-header">
-          <!-- <a class="close closeColor bi bi-x-octagon" style="align-content:flex-end;" (click)="closeModal('sold_modal')" data-dismiss="modal" aria-label="Close"></a> -->
-        </div>
-         <div class="alert alert-primary" role="alert" style="text-align: center;">
-                 You are going to mark this item as SOLD.
-         </div>
-
-         <ul class="nav nav-pills nav-fill mx-auto">
-           <li class="nav-item">
-             <button type="button" class="btn btn-outline-light btnHeadr btnRadius button" (click)="markDataSold()" >Yes</button>
-
-             <button type="button" class="btn btn-outline-light btnHeadr btnRadius button" (click)="closeModal('sold_modal')">No</button>
-           </li>
-         </ul>
-      </div>
-
-
-      <!-- </div> -->
-      <br>
-      <!-- <button (click)="closeModal('signUp_modal');">Close</button> -->
-    </jw-modal>
-
-    <!--Popup for delete-->
-    <jw-modal id="delete_item">
-      <div class = cardboarder>
-        <div class="modal-header">
-          <!-- <a class="close closeColor bi bi-x-octagon" style="align-content:flex-end;" (click)="closeModal('sold_modal')" data-dismiss="modal" aria-label="Close"></a> -->
-        </div>
-         <div class="alert alert-primary" role="alert" style="text-align: center;">
-                 Are you sure you want to delete this item form inventory?
-         </div>
-
-         <ul class="nav nav-pills nav-fill mx-auto">
-           <li class="nav-item">
-             <button type="button" class="btn btn-outline-light btnHeadr btnRadius button" (click)="markDataSold()" >Yes</button>
-
-             <button type="button" class="btn btn-outline-light btnHeadr btnRadius button" (click)="closeModal('delete_item')">No</button>
-           </li>
-         </ul>
-      </div>
-
-
-      <!-- </div> -->
-      <br>
-      <!-- <button (click)="closeModal('signUp_modal');">Close</button> -->
-    </jw-modal>
-
   </div>
-</div>
 
 
 
@@ -322,4 +342,3 @@
     </ul>
   </nav>
 </div>
-

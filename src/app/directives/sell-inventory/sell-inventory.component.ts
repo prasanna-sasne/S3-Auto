@@ -235,6 +235,14 @@ export class SellInventoryComponent implements OnInit {
     // console.log(this.selectedPartList);
   }
 
+  getIndex(indexValue){
+     this.actionIndex = indexValue;
+    console.log(indexValue);
+    console.log(this.inventoryList[indexValue]);
+    this.selectedPartList.push(this.inventoryList[indexValue]);
+    console.log(this.selectedPartList);
+  }
+
   /**Close modal using id */
   closeModal(id: string) {
     this.modalService.close(id);
@@ -334,6 +342,7 @@ export class SellInventoryComponent implements OnInit {
         console.log("resData", resData);
         // setting data to session .........
         alert('Uploaded Successfully.');
+        location.reload(true);
       },
       errorMessage => {
         console.log(errorMessage);
@@ -364,12 +373,39 @@ export class SellInventoryComponent implements OnInit {
   }
 
   /**Sold service call.. */
-  markDataSold(){
-
+  markDataSold(partSellId){
+    this.sellInventoryService.markDataSold(partSellId).subscribe(
+      resData => {
+        console.log("resData", resData);
+        // setting data to session .........
+        alert('Item sold and moved to sell history');
+        this.closeModal('sold_modal');
+        location.reload(true);
+      },
+      errorMessage => {
+        console.log(errorMessage);
+        //   this.error = errorMessage;
+        //   this.isLoading = false;
+      }
+    );
   }
-/**Cancel sold process.. */
-  cancelSoldProcess(){
 
+   /**Delete service call.. */
+   markDeleteItem(partSellId){
+    this.sellInventoryService.deleteFromInventory(partSellId).subscribe(
+      resData => {
+        console.log("resData", resData);
+        // setting data to session .........
+        alert('Deleted Successfully.');
+        this.closeModal('delete_item');
+        location.reload(true);
+      },
+      errorMessage => {
+        console.log(errorMessage);
+        //   this.error = errorMessage;
+        //   this.isLoading = false;
+      }
+    );
   }
 
 

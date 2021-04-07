@@ -40,6 +40,7 @@ import { ContactusComponent } from './components/admin/contactus/contactus.compo
 import { TicketsComponent } from './components/admin/tickets/tickets.component';
 import { AboutUsComponent } from './shared/about-us/about-us.component';
 import { FooterComponent} from "./shared/footer/footer.component";
+import { EditInventoryComponent } from './directives/edit-inventory/edit-inventory.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { FooterComponent} from "./shared/footer/footer.component";
   ContactusComponent,
   TicketsComponent,
   AboutUsComponent,
-  FooterComponent
+  FooterComponent,
+  EditInventoryComponent
   ],
 
   imports: [

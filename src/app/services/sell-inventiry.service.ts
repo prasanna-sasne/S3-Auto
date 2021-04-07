@@ -96,5 +96,45 @@ export class SellInventoryService{
 }
 
 
+deleteFromInventory(partSellId){
+  let headers = new Headers();
+	//	headers.append('Content-Type', 'application/json');
+    //headers.append('Access-Control-Allow-Origin','*');
+		const url = `${this.appUrl}/uvp/parts/delete/${partSellId}`;
+		return this.http.delete(url)
+		.pipe(map(response => {
+      console.log(response);
+			return response;
+		}), catchError(errorRes => {
+			let errorMessage = 'An unknown error occurred!';
+			if (errorRes.status !== 400) {
+				return throwError(errorMessage);
+			} else {
+				return throwError(errorRes.error.Error[0]);
+			}
+		})
+		);
+	}
+
+  markDataSold(partSellId){
+    console.log(partSellId);
+		let headers = new Headers();
+		headers.append('Content-Type', 'application/json');
+
+		const url = `${this.appUrl}/uvp/parts/sold/${partSellId}`;
+		return this.http.put(url, {headers: headers})
+		.pipe(map(response => {
+      console.log(response);
+			return response;
+		}), catchError(errorRes => {
+			let errorMessage = 'An unknown error occurred!';
+			if (errorRes.status !== 400) {
+				return throwError(errorMessage);
+			} else {
+				return throwError(errorRes.error.Error[0]);
+			}
+		})
+		);
+	}
 
 }
