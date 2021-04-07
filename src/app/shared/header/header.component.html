@@ -1,10 +1,10 @@
 <div class="toolbar navbar navbar-expand-sm py-0 navbar-dark" role="banner">
-  <span routerLink="welcome" style="display:flex">
-  <img width="60" alt="S3-Auto Logo" src="./assets/logo.png" />
-  <div class="box mt-2 ml-2">
-    <div class="h4 my-0 text-light">S3 Auto</div>
-    <div id="long-form">Sell Salvage Save</div>
-  </div>
+  <span routerLink="welcome" style="display:flex; cursor: pointer;">
+    <img width="60" alt="S3-Auto Logo" src="./assets/logo.png" />
+    <div class="box mt-2 ml-1">
+      <div class="h4 my-0 text-light">S3 Auto</div>
+      <div id="long-form">Sell Salvage Save</div>
+    </div>
   </span>
   <div class="spacer"></div>
 
@@ -17,41 +17,42 @@
       <div class="nav-item mt-2" *ngIf="roleflag">
         <div class="contact" style="cursor: pointer;" routerLink="contactus">Contact Us</div>
       </div>
-     <div class="nav-item mx-4"
-           style="cursor: pointer;"
-           *ngIf="email === undefined || email === null"
-           routerLink="about-us">
-        About Us
-      </div>
-      <div class="nav-item pt-1" *ngIf="email !== undefined && email !== null">
-        <span class="notification mr-3">
+      <div class="nav-item mx-4"
+      style="cursor: pointer;"
+      *ngIf="email === undefined || email === null"
+      routerLink="about-us">
+      About Us
+    </div>
+
+    <div class="nav-item pt-1" *ngIf="roleflag">
+      <span class="notification mr-3">
         <h4 (click)="checkNotification()">
           <i class="bi bi-envelope"></i>
         </h4>
         <span class="dot" *ngIf="showBell"></span>
-        </span>
+      </span>
 
-      </div>
-
-      <div class="nav-item" *ngIf="email !== undefined && email !== null">        
-        <div class="btn-group">
-          <button type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{email}}
-          </button>
-          <div class="dropdown-menu dropdown-menu-right">
-            <button class="dropdown-item" type="button" (click)="updateProfile()">Profile<i class="bi bi-person-fill"></i></button>
-            <button class="dropdown-item" type="button" (click)="signOut()">Logout</button>
-          </div>
-        </div>
-      </div>  
-
-      <div class="nav-item mb-2 mb-md-0" 
-      style="cursor: pointer;" 
-      *ngIf="email === undefined || email === null"
-      (click)="openModal('signUp_modal')">
-      Sign Up/Login  
     </div>
+
+    <div class="nav-item" *ngIf="email !== undefined && email !== null">        
+      <div class="btn-group">
+        <button type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{email}}
+        </button>
+        <div class="dropdown-menu dropdown-menu-right">
+          <button class="dropdown-item" type="button" (click)="updateProfile()">Profile<i class="bi bi-person-fill"></i></button>
+          <button class="dropdown-item" type="button" (click)="signOut()">Logout</button>
+        </div>
+      </div>
+    </div>  
+
+    <div class="nav-item mb-2 mb-md-0" 
+    style="cursor: pointer;" 
+    *ngIf="email === undefined || email === null"
+    (click)="openModal('signUp_modal')">
+    Sign Up/Login  
   </div>
+</div>
 </div>
 
 <jw-modal id="signUp_modal">

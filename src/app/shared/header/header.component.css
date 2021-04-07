@@ -38,11 +38,11 @@
 .box {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /*justify-content: space-between;*/
 }
 #long-form{
-  margin-top: -4px;
   color: white;
+  margin-top: -7px;
 }
 
 .header-menu {

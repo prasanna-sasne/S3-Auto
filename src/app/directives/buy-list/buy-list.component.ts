@@ -52,18 +52,17 @@ export class BuyListComponent implements OnInit {
   }
 
   // Generate list of past 50 years from current year
-  generateYears():void {
-    let currentYear = new Date().getFullYear();
-    let startYear = (currentYear-50) || 1980;
-    let index = 0;
-    while ( currentYear >= startYear ) {
-      this.years.push({"year": currentYear--, "yearId": index++});
-    }
-  }
+  // generateYears():void {
+  //   let currentYear = new Date().getFullYear();
+  //   let startYear = (currentYear-50) || 1980;
+  //   let index = 0;
+  //   while ( currentYear >= startYear ) {
+  //     this.years.push({"year": currentYear--, "yearId": index++});
+  //   }
+  // }
 
 
   /* Clear all dropdowns and disable these fileds on clearing make */
-
   onChangeMake(event: any) {
     if(event.value == null){
       this.resetFilters();
@@ -231,7 +230,7 @@ export class BuyListComponent implements OnInit {
   }
 
   ngOnInit(): void { 
-    this.generateYears();
+    this.years = this.buyService.generateYears();
     let filterOpts = JSON.parse(`${sessionStorage.getItem("filterOptions")}`);
     if(filterOpts !== null && filterOpts !== undefined){
       this.populateFilterOptions();

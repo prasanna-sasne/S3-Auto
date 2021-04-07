@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { BuyService } from '../../../services/buy.service';
+import { NotifyHeaderService } from '../../../services/notify-header.service';
 
 @Component({
 	selector: 'app-item-details',
@@ -23,7 +24,8 @@ export class ItemDetailsComponent implements OnInit {
 
 	constructor(private buyService: BuyService,
 		private router: Router,
-		private route: ActivatedRoute) { 
+		private route: ActivatedRoute,
+		private notifyHeaderService: NotifyHeaderService) { 
 		this.selectedItemDetail = JSON.parse(`${sessionStorage.getItem("itemDetails")}`);
 		this.userId = JSON.parse(`${sessionStorage.getItem("ID")}`);
 	}
@@ -87,6 +89,11 @@ export class ItemDetailsComponent implements OnInit {
 
 	connectWithSeller(){
 		this.contactSeller = true;
+	}
+
+	newMsgPresent(showBell: {notificationPresent: boolean}){
+		console.log(showBell.notificationPresent);
+		this.notifyHeaderService.bellFlag.emit(showBell.notificationPresent);
 	}
 
 	ngOnInit(): void {

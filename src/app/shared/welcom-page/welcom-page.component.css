@@ -1,0 +1,126 @@
+button.btn.btn-warning:disabled {
+	cursor: not-allowed;
+}
+.search-header{
+	font-weight: lighter;
+	text-align: center;
+}
+#carouselExampleIndicators{
+	position: relative;
+}
+
+#search{
+	position: absolute;
+	right: 13%;
+	top: 29%;
+	background: #2959b9;
+	opacity: 0.9;
+	padding: 2%;
+	text-transform: uppercase;
+	width: 75%;
+}
+
+.search-btn{
+	margin-top: -4%;
+	margin-left: 85%;
+}
+
+.search-btn button{
+	text-transform: uppercase;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled):hover {
+	color: white;
+	background-image: linear-gradient(to right, #563d7c, #1976d2) !important; 
+}
+
+.content-position{
+	text-align: center;
+}
+
+.p-dropdown-item p-ripple{
+	color: white;
+	background-image: linear-gradient(to right, #563d7c, #1976d2);			
+}
+.ng-invalid.ng-dirty{
+	border-style: solid;
+}
+
+.card-container{
+	flex-wrap: wrap;
+}
+
+.custom-card{
+	border-top-right-radius: 40%;
+	border-top-left-radius: 40%;
+	color: black;
+	box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+}
+
+.filter-img img {
+	max-height: 100%;
+	max-width: 100%;
+	width: 300px;
+}
+
+.static-part img{
+	max-height: 94%;
+	max-width: 88%;
+	width: 200px;
+}
+
+.static-part{
+	width: 200px; 
+	text-align: center;
+	box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+}
+
+.item-details .row1{
+	display: flex;
+	justify-content: space-between;
+}
+
+.item-details .row2{
+	display: flex;
+	flex-direction:column;
+}
+
+p-dropdown.ng-dirty.ng-invalid > .p-dropdown {
+	border: 3px solid #dc3545;
+}
+
+.toast-header{
+	color: #721c24;
+	background-color: #f8d7da;
+}
+.show{
+	background: #f8d7da; 
+	box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); 
+	z-index: 10;
+}
+
+#trapezoid{
+	border-bottom: 27px solid #1976d2;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    height: 3px;
+    width: 100px;
+    cursor: pointer;
+}
+
+@media (min-width: 1200px)
+.row-cols-xl-4 > * {
+	flex: 0 0 25%;
+	max-width: 23% !mportant;
+}
+
+@media(max-width: 1125px){
+	.search-btn{
+		margin-top: 1%;
+		margin-left: 6%;
+	}
+	.p-fluid{
+		margin-top: 3px;
+		margin-left: 6%;
+	}
+}

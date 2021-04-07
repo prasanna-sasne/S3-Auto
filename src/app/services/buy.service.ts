@@ -13,6 +13,7 @@ export class BuyService{
     private appUrl = 'http://s3auto-env.eba-dqkeutck.us-east-2.elasticbeanstalk.com';  // URL to web api
     private handleError: HandleError;
     private itemResponseList : any[];
+    years: {"yearId": number, "year": number}[] = [];
 
     constructor(private http: HttpClient,  httpErrorHandler: HttpErrorHandler){
         this.handleError = httpErrorHandler.createHandleError('BuyService');
@@ -156,13 +157,13 @@ export class BuyService{
             map( response => {  
                 return response["Success"]["0"]; 
             }),catchError(errorRes => {
-            let errorMessage = 'An unknown error occurred!';
-            if (errorRes.status !== 400) {
-                return throwError(errorMessage);
-            }else {
-                return throwError(errorRes.error.Error[0]);
-            }
-        })
+                let errorMessage = 'An unknown error occurred!';
+                if (errorRes.status !== 400) {
+                    return throwError(errorMessage);
+                }else {
+                    return throwError(errorRes.error.Error[0]);
+                }
+            })
             );//end pipe
     }
 
@@ -170,8 +171,8 @@ export class BuyService{
         const url = `${this.appUrl}/uvp/rating/add`;
         return this.http.post(url, ratingObj)
         .pipe(map( response => {  
-                return response["Success"]["0"]; 
-            }), catchError(errorRes => {
+            return response["Success"]["0"]; 
+        }), catchError(errorRes => {
             let errorMessage = 'An unknown error occurred!';
             if (errorRes.status !== 400) {
                 return throwError(errorMessage);
@@ -209,4 +210,14 @@ export class BuyService{
         return this.itemResponseList;
     }
 
+    // Generate list of past 50 years from current year
+    generateYears(): any[]{
+        let currentYear = new Date().getFullYear();
+        let startYear = (currentYear-50) || 1980;
+        let index = 0;
+        while ( currentYear >= startYear ) {
+            this.years.push({"year": currentYear--, "yearId": index++});
+        }
+        return this.years;
+    }
 }

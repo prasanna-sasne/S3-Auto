@@ -199,5 +199,8 @@
   </section>
 </div>
 
-<app-message *ngIf="contactSeller" (closeNavFlag)="closeNav($event)" [name]="selectedItemDetail.username"
-  [showChat]="true"></app-message>
+<app-message *ngIf="contactSeller" 
+(closeNavFlag)="closeNav($event)" 
+[name]="selectedItemDetail.username"
+[showChat]="true"
+(showBell)="newMsgPresent($event)"></app-message>
