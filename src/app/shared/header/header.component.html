@@ -13,8 +13,12 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <div class="header-menu navbar-nav">
-      <div class="nav-item mt-2" *ngIf="roleflag">
-        <div class="contact" style="cursor: pointer;" routerLink="contactus">Contact Us</div>
+      <div class="nav-item mt-2 mr-2" *ngIf="roleflag">
+        <a class="contact" routerLink="s3-auto/buy-list">Home</a>
+      </div>
+
+      <div class="nav-item mt-2 mr-2" *ngIf="roleflag">
+        <a class="contact" routerLink="contactus">Contact Us</a>
       </div>
       <div class="nav-item mx-4"
       style="cursor: pointer;"

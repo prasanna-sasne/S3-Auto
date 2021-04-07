@@ -84,7 +84,7 @@ export class WelcomPageComponent implements OnInit, AfterViewChecked {
 			stateId: '*',
 			partId: this.selectedPart.partId,
 			startIdx: 0,
-			resultSize: 4
+			resultSize: 5
 		}
 
 		this.buyService.getBuyItemList(filterQuery, 'USER').subscribe(data => {

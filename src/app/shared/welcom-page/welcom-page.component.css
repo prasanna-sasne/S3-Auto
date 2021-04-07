@@ -46,23 +46,6 @@ button.btn.btn-warning:disabled {
 	border-style: solid;
 }
 
-.card-container{
-	flex-wrap: wrap;
-}
-
-.custom-card{
-	border-top-right-radius: 40%;
-	border-top-left-radius: 40%;
-	color: black;
-	box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
-}
-
-.filter-img img {
-	max-height: 100%;
-	max-width: 100%;
-	width: 300px;
-}
-
 .static-part img{
 	max-height: 94%;
 	max-width: 88%;
@@ -73,16 +56,6 @@ button.btn.btn-warning:disabled {
 	width: 200px; 
 	text-align: center;
 	box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
-}
-
-.item-details .row1{
-	display: flex;
-	justify-content: space-between;
-}
-
-.item-details .row2{
-	display: flex;
-	flex-direction:column;
 }
 
 p-dropdown.ng-dirty.ng-invalid > .p-dropdown {
@@ -119,6 +92,26 @@ p-dropdown.ng-dirty.ng-invalid > .p-dropdown {
 .make{
 	margin-left: 3%;
 }
+
+/*test*/
+.card-img-top {
+  flex-grow: 1;
+  object-fit:contain;
+}
+.card {
+	box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+}
+
+.card-body{
+	padding-bottom: 1rem;
+	flex-grow:0;
+}
+.card-content{
+	justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+}
+
 
 @media screen and (max-width: 690px) {
 	#search{

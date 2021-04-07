@@ -23,6 +23,10 @@
   margin: 0 10%;
 }
 
+.contact{
+  cursor: pointer;
+}
+
 .dot {
   height: 13px;
   width: 13px;
@@ -111,6 +115,14 @@
 
 .bi-envelope{
   cursor: pointer;
+}
+
+*[ng-reflect-router-link]:focus {
+   outline: none;
+}
+
+#navbarNavDropdown div div a{
+  color: white;
 }
 
 @media screen and (min-width: 0px) and (max-width: 461px) {

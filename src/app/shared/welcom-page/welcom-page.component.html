@@ -95,27 +95,30 @@
  <div *ngIf="isLoading" class="content-position">
     <app-loading-spinner></app-loading-spinner>
 </div>
-
-<div class="card-container row row-col-3" 
-*ngIf="filteredData.length !== 0; else noDataFound" style="z-index: -1;">
-<div class="mt-3 custom-card p-1 mx-3" *ngFor="let item of filteredData">
-  <div class="filter-img">
-    <img [src]="item.imageUri" class="img-fluid img-thumbnail rounded-pill">
+<div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 mt-4">
+    <div class="col mb-4" *ngFor="let item of filteredData; let parentIndx = index;">
+      <div class="card h-100">
+        <div class="embed-responsive embed-responsive-16by9">
+        <img [src]="item.imageUri" class="card-img-top img-thumbnail embed-responsive-item" alt="Auto Parts">
+      </div>
+      <div class="card-body">
+        <div class="card-text">
+          <div class="buy-item-box">
+            <div class="card-content">
+              <span><h3>{{ item.price | currency }}</h3> </span>
+              <span>{{item.city}}, {{item.state}}</span>
+            </div>
+            <div><strong>{{item.part}}</strong> {{item.make}} {{item.model}} {{item.year}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="item-details mx-1">
-    <span class="row1">
-      <strong>{{item.price | currency}}</strong> 
-      <span>{{item.city}}, {{item.state}}</span>
-    </span>
-    <span class="row2">
-      <span><strong>{{item.part}}</strong> {{item.make}} {{item.model}} {{item.year}}</span>
-      <span>Shipping Available <i style="color:green" class="bi bi-check-circle-fill"></i></span> 
-    </span> 
-  </div>
-</div>  
 </div>
+
+
 <span *ngIf="filteredData.length !== 0">
-  <button type="button" class="btn btn-primary sm-button my-3"
+  <button type="button" class="btn btn-primary sm-button"
   (click)="showToast = true">
   Load More...
   </button>
