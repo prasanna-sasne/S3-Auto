@@ -108,6 +108,14 @@ p-dropdown.ng-dirty.ng-invalid > .p-dropdown {
     cursor: pointer;
 }
 
+#divToScroll{
+	transition-delay: 0.5s
+}
+
+.p-disabled{
+	cursor: not-allowed !important;
+}
+
 @media (min-width: 1200px)
 .row-cols-xl-4 > * {
 	flex: 0 0 25%;

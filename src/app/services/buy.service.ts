@@ -79,7 +79,7 @@ export class BuyService{
         if(role.localeCompare("JUNK_YARD_OWNER") === 0){
             url = `${this.appUrl}/uvp/vehicles/get`;
             if(JSON.stringify(queryData) !== '{}'){
-                url += `/${queryData.makeId}/${queryData.modelId}/${queryData.year}/${queryData.stateId}/${queryData.startIdx}/${queryData.resultSize}`;
+                url += `/sell/${queryData.makeId}/${queryData.modelId}/${queryData.year}/${queryData.stateId}/${queryData.startIdx}/${queryData.resultSize}`;
             }
         } else if(role.localeCompare("USER") === 0){
             url = `${this.appUrl}/uvp/parts/get`;
