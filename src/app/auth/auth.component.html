@@ -1,8 +1,9 @@
 <div class="row">
   <div class="col-md-12 p-4">
-    <h3 class="mb-3"></h3>
-    <div *ngIf="error.length >0" class="alert alert-danger">
-     <!-- <span *ngFor="let item of error">{{item}} </span> -->
+    <div *ngIf="error.length >0" class="error-messages">
+      <span *ngFor="let item of error | slice:0:4 ; let i = index">
+        {{ i+1}}. {{ item }} <br>
+      </span>    
     </div>
     <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
       <div class="form-row my-2">
@@ -111,7 +112,9 @@
           <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
           <p-dropdown [options]="states" formGroupName="selectedstate" optionLabel="state" [filter]="true"
             filterBy="state" (onChange)="selectChange($event)" (onBlur)="onBlurevent($event)" [showClear]="true"
-            placeholder="Select State" class="select-style">
+            placeholder="Select State" class="select-style" 
+          
+                        >
             <ng-template pTemplate="selectedItem">
               <div class="country-item country-item-value" *ngIf="selectedstate">
                 <div>{{selectedstate.state}}</div>
@@ -130,7 +133,8 @@
           <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
           <p-dropdown [options]="citiesList" formGroupName="selectedcity" optionLabel="city" [filter]="true"
             filterBy="city" (onChange)="selectCityChange($event)" [showClear]="true" placeholder="Select City"
-            class="select-style">
+            class="select-style" 
+           > 
             <ng-template pTemplate="selectedItem">
               <div class="country-item country-item-value" *ngIf="selectedcity">
                 <div>{{selectedcity.city}}</div>

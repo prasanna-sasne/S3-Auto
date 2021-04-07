@@ -32,7 +32,7 @@ export class LoginService {
         catchError(errorRes => {
           console.log(errorRes.error.Error[0]);
           let errorMessage = 'An unknown error occurred!';
-          if (!errorRes.error.Error || !errorRes.error.Error) {
+          if (!errorRes.error.Error) {
             return throwError(errorMessage);
           }else {
             return throwError(errorRes.error.Error);

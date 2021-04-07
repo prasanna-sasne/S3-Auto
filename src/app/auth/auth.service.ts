@@ -26,18 +26,38 @@ export class AuthService {
         `${this.appUrl}/uvp/authentication/signup`,
         reqData
       )
+      // .pipe(
+      //   catchError(errorRes => {
+      //     console.log(errorRes.error.Error[0]);
+      //     let errorMessage = 'An unknown error occurred!';
+
+
+      //     if ( !errorRes.error.Error) {
+      //       return throwError(errorMessage);
+      //     }else {
+      //       switch (errorRes.error.error.message) {
+      //         case 'EMAIL_EXISTS':
+      //           errorMessage = 'This email exists already';
+      //       }
+      //       return throwError(errorRes.error.Error);
+      //     }
+      //   })
+      // );
       .pipe(
         catchError(errorRes => {
-          console.log('errorRes',errorRes);
+          console.log(errorRes.error.Error[0]);
           let errorMessage = 'An unknown error occurred!';
-          if (!errorRes.error || !errorRes.error.error) {
+          if (!errorRes.error.Error) {
             return throwError(errorMessage);
+          }else {
+            return throwError(errorRes.error.Error);
           }
-          switch (errorRes.error.error.message) {
-            case 'EMAIL_EXISTS':
-              errorMessage = 'This email exists already';
-          }
-          return throwError(errorRes.error);
+          // switch (errorRes.error.error.message) {
+          //   case 'EMAIL_EXISTS':
+          //     errorMessage = 'This email exists already';
+          // }
+
+
         })
       );
   }

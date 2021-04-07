@@ -17,7 +17,8 @@ import { ItemDetailsComponent } from './directives/buy-list/item-details/item-de
 
 import {SellInputFormComponent} from './directives/sell-input-form/sell-input-form.component'
 const routes: Routes = [
-{ path: 'welcome', component: WelcomPageComponent },
+	{ path: '', component: WelcomPageComponent },
+	{ path: 'welcome', component: WelcomPageComponent },
    { path: 'about-us', component: AboutUsComponent },
 { path: 'updateProfile', component: UpdateProfileComponent },
 { path: 'sellInventory', component: SellInventoryComponent },
