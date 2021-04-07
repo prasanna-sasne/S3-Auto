@@ -6,7 +6,7 @@ import { HttpErrorHandler, HandleError } from './http-error-handler.service';
 
 interface ResponseData {
   Success: [
-    "User successfully registered."
+    "Successfully Added."
   ]
 }
 @Injectable()

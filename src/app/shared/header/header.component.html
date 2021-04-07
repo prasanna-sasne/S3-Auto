@@ -11,7 +11,6 @@
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <div class="header-menu navbar-nav">
       <div class="nav-item mt-2" *ngIf="roleflag">
@@ -34,7 +33,7 @@
 
     </div>
 
-    <div class="nav-item" *ngIf="email !== undefined && email !== null">        
+    <div class="nav-item" *ngIf="email !== undefined && email !== null">
       <div class="btn-group">
         <button type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{email}}
@@ -44,13 +43,13 @@
           <button class="dropdown-item" type="button" (click)="signOut()">Logout</button>
         </div>
       </div>
-    </div>  
+    </div>
 
-    <div class="nav-item mb-2 mb-md-0" 
-    style="cursor: pointer;" 
+    <div class="nav-item mb-2 mb-md-0"
+    style="cursor: pointer;"
     *ngIf="email === undefined || email === null"
     (click)="openModal('signUp_modal')">
-    Sign Up/Login  
+    Sign Up/Login
   </div>
 </div>
 </div>
@@ -68,9 +67,9 @@
     <i class="close closeColor bi bi-x-octagon" (click)="closeModal('signUp_modal')" data-dismiss="modal" aria-label="Close"></i>
 
   </div>
-  <app-auth *ngIf="!isLoginMode"></app-auth>
+  <app-auth (successRegister)="successRegister($event)" *ngIf="!isLoginMode"></app-auth>
   <br>
-  <app-login (userEmail)="logedinUserEmail($event)" 
+  <app-login (userEmail)="logedinUserEmail($event)"
   (userRole)="loggedInUserRole($event)" *ngIf="isLoginMode"></app-login>
   <!-- <button (click)="closeModal('signUp_modal');">Close</button> -->
 </jw-modal>

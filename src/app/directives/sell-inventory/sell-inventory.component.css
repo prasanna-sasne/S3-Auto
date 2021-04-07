@@ -3,7 +3,7 @@
 }
 
 .card {
-  width: 500px;
+
   height: auto ;
   margin-right: 10px;
 	box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
@@ -11,6 +11,10 @@
 
 .fontColor{
   color: blue;
+}
+
+.thead{
+  background-color: darkgrey;
 }
 
 .cardDup{
@@ -21,8 +25,21 @@
   color: black;
 }
 .cardForDetail{
-  width: 300px;
-  height: 200px ;
   margin-right: 10px;
 	box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
 }
+
+.jw-modal-body .modal-lg{
+  width: 900px;
+  overflow-y: auto;
+}
+
+.cardboarder {
+  background-color: #fff;
+  border: 9px solid #4586db;
+  padding: 50px;
+  margin: 20px;
+}
+
+.i-am-centered { margin: auto; max-width: 990px;}
+

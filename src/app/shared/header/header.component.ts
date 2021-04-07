@@ -59,6 +59,11 @@ export class HeaderComponent implements OnInit {
     this.modalService.close(id);
   }
 
+  successRegister(event) {
+    console.log(event);
+    this.isLoginMode = true;
+  }
+
   logedinUserEmail(el) {
     console.log('email',el);
     this.email = el;

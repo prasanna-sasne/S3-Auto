@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component,Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 @Component({
   selector: 'app-auth',
@@ -21,7 +21,9 @@ export class AuthComponent {
   requestData: Object = {};
   error = [];
 
-  constructor(private authService: AuthService, private fb: FormBuilder) { }
+  @Output() successRegister: EventEmitter<any> = new EventEmitter();
+
+  constructor(private authService: AuthService, private fb: FormBuilder,private router:Router ) { }
 
 
 
@@ -116,6 +118,9 @@ export class AuthComponent {
     this.authService.signup(data).subscribe(
       resData => {
         console.log(resData);
+        alert('You have been registered successfully.Please proceed with login');
+       this.successRegister.emit(true);
+      //  this.router.navigate(['welcome']);
         //  this.isLoading = false;
       },
       errorMessage => {
@@ -124,8 +129,6 @@ export class AuthComponent {
         //   this.isLoading = false;
       }
     );
-
-
     //  this.registrationForm.reset();
   }
 

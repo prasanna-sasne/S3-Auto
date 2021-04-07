@@ -17,7 +17,6 @@ export class AuthService {
   appUrl = 'http://s3auto-env.eba-dqkeutck.us-east-2.elasticbeanstalk.com';  // URL to web api
   private handleError: HandleError;
   constructor(private http: HttpClient) {
-
    }
 
   signup(reqData) {
@@ -29,6 +28,7 @@ export class AuthService {
       )
       .pipe(
         catchError(errorRes => {
+          console.log('errorRes',errorRes);
           let errorMessage = 'An unknown error occurred!';
           if (!errorRes.error || !errorRes.error.error) {
             return throwError(errorMessage);
@@ -37,7 +37,7 @@ export class AuthService {
             case 'EMAIL_EXISTS':
               errorMessage = 'This email exists already';
           }
-          return throwError(errorMessage);
+          return throwError(errorRes.error);
         })
       );
   }

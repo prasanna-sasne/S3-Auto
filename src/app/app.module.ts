@@ -1,5 +1,4 @@
 import { BrowserModule } from '@angular/platform-browser';
-import {MatFormFieldModule} from '@angular/material/form-field';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -80,8 +79,7 @@ import { FooterComponent} from "./shared/footer/footer.component";
   HttpClientModule,
   ModalModule,
   AppRoutingModule,
-  TableModule,
-  MatFormFieldModule
+  TableModule
   ],
 
   providers: [MessageService, HttpErrorHandler,SellInventoryService,SellInputFormService,

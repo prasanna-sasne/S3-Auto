@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable } from 'rxjs';
-import { map , catchError } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { HttpErrorHandler, HandleError } from './http-error-handler.service';
-
+interface ResponseData {
+  Success: [
+    "Successfully added data."
+  ]
+}
 
 @Injectable()
 export class SellInventoryService{
@@ -67,5 +71,30 @@ export class SellInventoryService{
         }), catchError(this.handleError('getstates', []))
       );//end pipe
   }
+
+  submitDuplicateData(submitDuplicateData) {
+   // http://localhost:8080/uvp/parts/duplicate
+   console.log('submitDuplicateData--',submitDuplicateData);
+   return this.http
+   .post<ResponseData>(
+     `${this.appUrl}/uvp/parts/duplicate`,
+     submitDuplicateData
+   )
+   .pipe(
+     catchError(errorRes => {
+       let errorMessage = 'An unknown error occurred!';
+       if (!errorRes.error || !errorRes.error.error) {
+         return throwError(errorMessage);
+       }
+       switch (errorRes.error.error.message) {
+         case 'EMAIL_EXISTS':
+           errorMessage = 'This email exists already';
+       }
+       return throwError(errorMessage);
+     })
+   );
+}
+
+
 
 }
