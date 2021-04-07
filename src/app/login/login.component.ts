@@ -1,5 +1,5 @@
 import { Component, OnInit,Output, EventEmitter  } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators , FormControl} from '@angular/forms';
 import { LoginService } from './login.service';
 import { ModalService } from './../_modal/modal.service';
 import { Router }          from '@angular/router';
@@ -40,8 +40,28 @@ export class LoginComponent implements OnInit {
 
   }
 
+  validateAllFormFields(formGroup: FormGroup) {         //{1}
+    Object.keys(formGroup.controls).forEach(field => {  //{2}
+      const control = formGroup.get(field);             //{3}
+      if (control instanceof FormControl) {             //{4}
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {        //{5}
+        this.validateAllFormFields(control);            //{6}
+      }
+    });
+  }
+  
+
+    
   login(): void {
     this.error = [];
+    if (!this.loginForm.pristine) {
+      console.log('form submitted');
+    } else {
+      console.log(this.loginForm.valid);
+
+      this.validateAllFormFields (this.loginForm) 
+    return; }
     const userName = this.loginForm.value.userName;
     const password = this.loginForm.value.password;
 
