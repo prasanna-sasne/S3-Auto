@@ -25,6 +25,8 @@
   transition: .4s;
 }
 
+
+
 #drop-down.ng-invalid:not(form) > div {
   border: 1px solid #D40000;
    }

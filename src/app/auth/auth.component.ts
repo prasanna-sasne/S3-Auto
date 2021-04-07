@@ -1,5 +1,5 @@
 import { Component,Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 @Component({
@@ -11,7 +11,7 @@ export class AuthComponent {
   registrationForm: FormGroup;
   public show: boolean = false;
   public firstName: string = "";
-  yearStateFlag: boolean = false;
+  submitFlag: boolean = false;
   roleValue: string ="USER";
   roleStatus: boolean;
   states: { "stateId": number, "state": string }[] = [];
@@ -20,7 +20,7 @@ export class AuthComponent {
   selectedcity: { "cityId": string, "city": string } = { "cityId": "*", "city": "" };
   requestData: Object = {};
   error = [];
-
+  success;
   @Output() successRegister: EventEmitter<any> = new EventEmitter();
 
   constructor(private authService: AuthService, private fb: FormBuilder,private router:Router ) { }
@@ -48,7 +48,7 @@ export class AuthComponent {
       selectedcity: ['', [Validators.required]],
       junkYardName: ['', Validators.required],
       zipCode: ['', [Validators.required, Validators.pattern("^[0-9]{5}(?:-[0-9]{4})?$") ]],
-      address: ['', Validators.required],
+      address: ['', Validators.required]
     }, {
       validator: this.ConfirmedValidator('password', 'confirmPassword')
     });
@@ -86,12 +86,29 @@ export class AuthComponent {
     console.log(this.roleValue);
   }
 
+  validateAllFormFields(formGroup: FormGroup) {         //{1}
+    Object.keys(formGroup.controls).forEach(field => {  //{2}
+      const control = formGroup.get(field);             //{3}
+      if (control instanceof FormControl) {             //{4}
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {        //{5}
+        this.validateAllFormFields(control);            //{6}
+      }
+    });
+  }
+  
   /**......Registration service call... */
   onSubmit() {
     this.error = [];
-    // if (!this.registrationForm.valid) {
-    //   return;
-    // }
+    if (!this.registrationForm.pristine) {
+      console.log('form submitted');
+    } else {
+      console.log(this.registrationForm.valid);
+
+      this.validateAllFormFields (this.registrationForm) 
+    return;  }
+
+
 
     /*..InitiLize list of value from thr form..*/
     let data = {
@@ -160,6 +177,19 @@ export class AuthComponent {
     });
   }
 
+  save() {
+    console.log('Now we can save');
+    this.success = 'Yay! We can save now!'
+  }
+
+
+  // onFormChange(){
+  //   if   ( this.registrationForm.valid == true)
+  //   this.submitFlag = true;
+  //   else 
+  //   this.submitFlag = false;
+
+  // }
   /*........selected City Value.........*/
   selectCityChange(event: any) {
     console.log("selected City", event.value);
