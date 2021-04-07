@@ -101,11 +101,11 @@ p-dropdown.ng-dirty.ng-invalid > .p-dropdown {
 
 #trapezoid{
 	border-bottom: 27px solid #1976d2;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    height: 3px;
-    width: 100px;
-    cursor: pointer;
+	border-left: 8px solid transparent;
+	border-right: 8px solid transparent;
+	height: 3px;
+	width: 100px;
+	cursor: pointer;
 }
 
 #divToScroll{
@@ -116,13 +116,31 @@ p-dropdown.ng-dirty.ng-invalid > .p-dropdown {
 	cursor: not-allowed !important;
 }
 
+.make{
+	margin-left: 3%;
+}
+
+@media screen and (max-width: 690px) {
+	#search{
+		top: 5%;
+		right: 18%;
+	}
+	.make, .p-fluid{
+		margin-left: 0% !important;
+	}	
+	.search-btn{
+		margin-top: 2%;
+		margin-left: 25% !important;
+	}
+}
+
 @media (min-width: 1200px)
 .row-cols-xl-4 > * {
 	flex: 0 0 25%;
 	max-width: 23% !mportant;
 }
 
-@media(max-width: 1125px){
+@media(max-width: 1200px){
 	.search-btn{
 		margin-top: 1%;
 		margin-left: 6%;
