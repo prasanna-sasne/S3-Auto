@@ -1,3 +1,6 @@
+.carousel-inner > .item {
+   height: 400px;
+}
 button.btn.btn-warning:disabled {
 	cursor: not-allowed;
 }
@@ -21,8 +24,8 @@ button.btn.btn-warning:disabled {
 }
 
 .search-btn{
-	margin-top: -4%;
-	margin-left: 85%;
+	margin-top: -40px;
+    margin-left: 83%;
 }
 
 .search-btn button{
@@ -33,6 +36,12 @@ button.btn.btn-warning:disabled {
 	color: white;
 	background-image: linear-gradient(to right, #563d7c, #1976d2) !important; 
 }
+
+:host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled):hover{
+	color: white;
+	background-image: linear-gradient(to right, #563d7c, #1976d2) !important; 	
+}
+
 
 .content-position{
 	text-align: center;
@@ -90,7 +99,12 @@ p-dropdown.ng-dirty.ng-invalid > .p-dropdown {
 }
 
 .make{
-	margin-left: 3%;
+	margin-left: 2%;
+	display: flex;
+}
+
+p-dropdown{
+	width: 13rem !important;
 }
 
 /*test*/
@@ -106,12 +120,19 @@ p-dropdown.ng-dirty.ng-invalid > .p-dropdown {
 	padding-bottom: 1rem;
 	flex-grow:0;
 }
+
 .card-content{
 	justify-content: space-between;
   display: flex;
   flex-wrap: wrap;
 }
 
+.toast-confirm{
+	position: absolute;
+    right: 0;
+    right: 73%;
+    margin-top: -2%;
+}
 
 @media screen and (max-width: 690px) {
 	#search{
@@ -123,7 +144,19 @@ p-dropdown.ng-dirty.ng-invalid > .p-dropdown {
 	}	
 	.search-btn{
 		margin-top: 2%;
-		margin-left: 25% !important;
+		margin-left: 18% !important;
+	}
+	.carousel-item > img{
+		height: 18rem !important;
+	}
+	.p-dropdown-panel.p-component{
+		width: 20rem;
+	}
+
+	.toast-confirm{
+	right: -1rem;
+    margin-top: -11%;
+    width: 18rem;
 	}
 }
 

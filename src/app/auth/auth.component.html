@@ -8,14 +8,14 @@
     <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" >
       <div class="form-row my-2">
         <div class="form-group col-md-6">
-          <input type="text" class="form-control" formControlName="fname" id="fName" placeholder="First Name">
+          <input type="text" class="form-control" formControlName="fname" id="fName" placeholder="First Name" autocomplete="off" >
           <div *ngIf="isValidInput('fname')" class="error-messages">
             <div *ngIf="registrationForm.controls['fname'].errors!.required">First Name is required. </div>
           </div>
           <div class="form-group">
             <label></label>
 
-            <input type="text" class="form-control" formControlName="username" id="username" placeholder="User Name">
+            <input type="text" class="form-control" formControlName="username" id="username" placeholder="User Name" autocomplete="off" >
             <div *ngIf="isValidInput('username')" class="error-messages">
               <div *ngIf="registrationForm.controls['username'].errors!.required">User Name is required.</div>
               <div *ngIf="registrationForm.controls['username'].errors?.minlength">The User Name needs to be of min length 5
@@ -24,7 +24,7 @@
             <!----PASSWORD----->
             <div class="form-group">
               <label></label>
-              <input type="text" class="form-control" formControlName="password" id="password" placeholder="Password">
+              <input type="text" class="form-control" formControlName="password" id="password" placeholder="Password" autocomplete="off" >
 
               <div *ngIf="isValidInput('password')" class="error-messages">
                 <div *ngIf="registrationForm.controls['password'].errors!.required">Password is required.</div>
@@ -34,7 +34,7 @@
               <!--EMAIL-->
               <div class="form-group">
                 <label></label>
-                <input type="email" class="form-control" formControlName="email" id="email" placeholder="Email">
+                <input type="email" class="form-control" formControlName="email" id="email" placeholder="Email" autocomplete="off" >
 
                 <div *ngIf="isValidInput('email')" class="error-messages">
                   <div *ngIf="registrationForm.controls['email'].errors!.required">
@@ -49,14 +49,14 @@
                 <div class="form-group" *ngIf="show">
                   <label></label>
                   <input type="text" class="form-control" id="junkYardName" formControlName="junkYardName" style=""
-                    placeholder="Junk Yard Name">
+                    placeholder="Junk Yard Name" autocomplete="off" >
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div class="form-group col-md-6">
-          <input type="text" class="form-control" formControlName="lastName" id="lastName" placeholder="Last Name">
+          <input type="text" class="form-control" formControlName="lastName" id="lastName" placeholder="Last Name" autocomplete="off">
           <div *ngIf="isValidInput('lastName')" class="error-messages">
             <div *ngIf="registrationForm.controls['lastName'].errors!.required">Last Name is required. </div>
           </div>
@@ -64,7 +64,7 @@
           <div class="form-group">
             <label></label>
             <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber"
-              placeholder="Phone Number">
+              placeholder="Phone Number" autocomplete="off" >
             <div *ngIf="registrationForm.controls.phoneNumber.touched && registrationForm.controls.phoneNumber.invalid"              class="error-messages">
               <div *ngIf="registrationForm.controls.phoneNumber.errors!.required">Mobile Number is required.</div>
             </div>
@@ -77,7 +77,7 @@
               <div class="form-group">
                 <label></label>
                 <input type="text" class="form-control" id="confirmPassword" formControlName="confirmPassword"
-                  placeholder="Confirm Password">
+                  placeholder="Confirm Password" autocomplete="off" >
 
                 <div *ngIf="isValidInput('confirmPassword')" class="error-messages">
                   <div *ngIf="registrationForm.controls['confirmPassword'].errors!.required">
@@ -95,7 +95,7 @@
                 <div class="row">
                   <h6>User</h6>
                   <label class="switch">
-                    <input type="checkbox" [checked]=show (change)="toggle()" checked>
+                    <input type="checkbox" [checked]=show (change)="toggle()" checked autocomplete="off" >
                     <span class="slider round"></span>
                   </label>
                   <h6>Junk Yard Owner</h6>
@@ -151,7 +151,7 @@
         </div>-->
         <div class="form-group col-md-3">
           <div class="form-group">
-            <input type="text" class="form-control" formControlName="zipCode" id="zipCode" placeholder="Zip Code">
+            <input type="text" class="form-control" formControlName="zipCode" id="zipCode" placeholder="Zip Code" autocomplete="off" >
             <div *ngIf="registrationForm.controls.zipCode.touched && registrationForm.controls.zipCode.invalid"              class="error-messages">
               <div *ngIf="registrationForm.controls.zipCode.errors!.required">ZipCode is required.</div>
             </div>

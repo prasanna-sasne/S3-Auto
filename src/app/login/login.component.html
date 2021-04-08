@@ -19,7 +19,7 @@
           <form [formGroup]="loginForm" (ngSubmit)="login()">
             <div class="form-group">
               <label for="userName">User Name</label>
-              <input type="text" class="form-control" formControlName="userName">
+              <input type="text" class="form-control" formControlName="userName" autocomplete="off" >
             </div>
             <div *ngIf="isValidInput('userName')" class="error-messages">
               <div *ngIf="loginForm.controls['userName'].errors!.required">
@@ -32,7 +32,7 @@
 
             <div class="form-group">
               <label for="password">Password</label>
-              <input type="password" class="form-control" formControlName="password">
+              <input type="password" class="form-control" formControlName="password" autocomplete="off">
             </div>
             <div *ngIf="isValidInput('password')" class="error-messages">
               <div *ngIf="loginForm.controls['password'].errors!.required">

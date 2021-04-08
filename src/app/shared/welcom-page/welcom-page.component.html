@@ -1,19 +1,18 @@
-
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
     <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
   </ol>
-  <div class="carousel-inner" role="listbox">
+  <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="assets/carpart7.png" class="d-block carosalImage" alt="...">
+      <img src="assets/carpart7.png" class="d-block w-100" alt="...">
     </div>
     <div class="carousel-item">
-      <img src="assets/carpart5.jpg" class="d-block carosalImage" alt="...">
+      <img src="assets/carpart5.jpg" class="d-block w-100" alt="...">
     </div>
-    <div class="carousel-item">
-      <img src="assets/carpart1.png" class="d-block carosalImage" alt="...">
+    <div class="carousel-item img-fluid">
+      <img src="assets/carpart2.jpg" class="d-block w-100" alt="...">
     </div>
   </div>
   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -24,9 +23,8 @@
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="sr-only">Next</span>
   </a>
-
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 row-cols-xl-4 mt-4" id="search">
-    <div class="p-fluid mr-4 make">
+    <div class="p-fluid make">
       <p-dropdown [options]="makers" [(ngModel)]="selectedMake" 
       optionLabel="make" [filter]="true" filterBy="make"
       [showClear]="true" placeholder="Select Make" class="select-style "
@@ -43,10 +41,11 @@
           <div>{{maker.make}}</div>
         </div>
       </ng-template>
-    </p-dropdown>  
+    </p-dropdown>
+    <span style="color: yellow"><i class="bi bi-asterisk"></i></span>
   </div>
 
-  <div class="p-fluid mr-4">
+  <div class="p-fluid make">
     <p-dropdown [options]="models" [(ngModel)]="selectedModel" optionLabel="model" [filter]="true" filterBy="model"
     [showClear]="true" placeholder="Select Model" class="select-style"
     (onChange)="onChangeModel($event)" [disabled]="modelFlag"
@@ -63,9 +62,9 @@
       </div>
     </ng-template>
   </p-dropdown>
-
+  <span style="color: yellow"><i class="bi bi-asterisk"></i></span>
 </div>
-<div class="p-fluid mr-4">
+<div class="p-fluid make">
   <p-dropdown [options]="parts" [(ngModel)]="selectedPart" optionLabel="part" 
   [filter]="true" filterBy="part"
   [showClear]="true" placeholder="Select Part" class="select-style" 
@@ -84,6 +83,7 @@
     </div>
   </ng-template>
 </p-dropdown>
+<span style="color: yellow"><i class="bi bi-asterisk"></i></span>
 </div>
 <span class="search-btn"><button type="button" class="btn btn-warning mr-2"
  (click)="search()" [disabled]="yearStateFlag">Find Parts</button>
@@ -95,7 +95,7 @@
  <div *ngIf="isLoading" class="content-position">
     <app-loading-spinner></app-loading-spinner>
 </div>
-<div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 mt-2">
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 row-cols-xl-5 mt-2">
     <div class="col mb-4" *ngFor="let item of filteredData; let parentIndx = index;">
       <div class="card h-100">
         <div class="embed-responsive embed-responsive-16by9">
@@ -117,7 +117,7 @@
 </div>
 
 
-<span *ngIf="filteredData.length !== 0">
+<span *ngIf="filteredData.length !== 0; else noDataFound">
   <button type="button" class="btn btn-primary sm-button"
   (click)="showToast = true">
   Load More...
@@ -126,8 +126,7 @@
 </span>
 
 <div style="position: relative;">
-  <div style="position: absolute; right: 0; right: 67%;
-  margin-top: -7%;">
+  <div class="toast-confirm">
   <div class="toast alert" [ngClass]="{'show': showToast}">
     <div class="toast-header">
       <strong class="mr-auto"><i class="fa fa-globe"></i>
@@ -150,7 +149,7 @@
 
 <!-- To show car search operation -->
 <h1 class="search-header mt-3">Search by Make, to get required auto parts</h1>
-<div class="row row-col-sm-3 row-col-sm-5 ml-5">
+<div class="row row-col-sm-3 row-col-sm-6 ">
   <div class="static-part p-2 my-3 mx-4"> 
     <img src="assets/ac-hose.jpeg" />
     <span class="mx-3">Ac Hose</span>
