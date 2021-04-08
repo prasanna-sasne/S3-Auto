@@ -10,7 +10,7 @@ interface ResponseData {
 }
 
 @Injectable()
-export class SellInventoryService{
+export class SellInventoryService {
   private appUrl = 'http://s3auto-env.eba-dqkeutck.us-east-2.elasticbeanstalk.com';  // URL to web api
   private handleError: HandleError;
 
@@ -51,7 +51,7 @@ export class SellInventoryService{
       );//end pipe
   }
 
-//fetch part list ....
+  //fetch part list ....
   getParts() {
     const url = `${this.appUrl}/uvp/search/get/parts`;
     return this.http.get<{ stateId: number, state: string }[]>(url)
@@ -62,7 +62,7 @@ export class SellInventoryService{
       );//end pipe
   }
 
-  getInventoryData(){
+  getInventoryData() {
     const url = `${this.appUrl}/uvp/parts/get/75/Available/0/10`;
     return this.http.get<{}[]>(url)
       .pipe(
@@ -73,68 +73,79 @@ export class SellInventoryService{
   }
 
   submitDuplicateData(submitDuplicateData) {
-   // http://localhost:8080/uvp/parts/duplicate
-   console.log('submitDuplicateData--',submitDuplicateData);
-   return this.http
-   .post<ResponseData>(
-     `${this.appUrl}/uvp/parts/duplicate`,
-     submitDuplicateData
-   )
-   .pipe(
-     catchError(errorRes => {
-       let errorMessage = 'An unknown error occurred!';
-       if (!errorRes.error || !errorRes.error.error) {
-         return throwError(errorMessage);
-       }
-       switch (errorRes.error.error.message) {
-         case 'EMAIL_EXISTS':
-           errorMessage = 'This email exists already';
-       }
-       return throwError(errorMessage);
-     })
-   );
-}
+    // http://localhost:8080/uvp/parts/duplicate
+    console.log('submitDuplicateData--', submitDuplicateData);
+    return this.http
+      .post<ResponseData>(
+        `${this.appUrl}/uvp/parts/duplicate`,
+        submitDuplicateData
+      )
+      .pipe(
+        catchError(errorRes => {
+          let errorMessage = 'An unknown error occurred!';
+          if (!errorRes.error || !errorRes.error.error) {
+            return throwError(errorMessage);
+          }
+          switch (errorRes.error.error.message) {
+            case 'EMAIL_EXISTS':
+              errorMessage = 'This email exists already';
+          }
+          return throwError(errorMessage);
+        })
+      );
+  }
 
 
-deleteFromInventory(partSellId){
-  let headers = new Headers();
-	//	headers.append('Content-Type', 'application/json');
+  deleteFromInventory(partSellId) {
+    let headers = new Headers();
+    //	headers.append('Content-Type', 'application/json');
     //headers.append('Access-Control-Allow-Origin','*');
-		const url = `${this.appUrl}/uvp/parts/delete/${partSellId}`;
-		return this.http.delete(url)
-		.pipe(map(response => {
-      console.log(response);
-			return response;
-		}), catchError(errorRes => {
-			let errorMessage = 'An unknown error occurred!';
-			if (errorRes.status !== 400) {
-				return throwError(errorMessage);
-			} else {
-				return throwError(errorRes.error.Error[0]);
-			}
-		})
-		);
-	}
+    const url = `${this.appUrl}/uvp/parts/delete/${partSellId}`;
+    return this.http.delete(url)
+      .pipe(map(response => {
+        console.log(response);
+        return response;
+      }), catchError(errorRes => {
+        let errorMessage = 'An unknown error occurred!';
+        if (errorRes.status !== 400) {
+          return throwError(errorMessage);
+        } else {
+          return throwError(errorRes.error.Error[0]);
+        }
+      })
+      );
+  }
 
-  markDataSold(partSellId){
+  markDataSold(partSellId) {
     console.log(partSellId);
-		let headers = new Headers();
-		headers.append('Content-Type', 'application/json');
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
 
-		const url = `${this.appUrl}/uvp/parts/sold/${partSellId}`;
-		return this.http.put(url, {headers: headers})
-		.pipe(map(response => {
-      console.log(response);
-			return response;
-		}), catchError(errorRes => {
-			let errorMessage = 'An unknown error occurred!';
-			if (errorRes.status !== 400) {
-				return throwError(errorMessage);
-			} else {
-				return throwError(errorRes.error.Error[0]);
-			}
-		})
-		);
-	}
+    const url = `${this.appUrl}/uvp/parts/sold/${partSellId}`;
+    return this.http.put(url, { headers: headers })
+      .pipe(map(response => {
+        console.log(response);
+        return response;
+      }), catchError(errorRes => {
+        let errorMessage = 'An unknown error occurred!';
+        if (errorRes.status !== 400) {
+          return throwError(errorMessage);
+        } else {
+          return throwError(errorRes.error.Error[0]);
+        }
+      })
+      );
+  }
+
+  searchData(filterQuery, role) {
+    const url = `${this.appUrl}/uvp/parts/get/${filterQuery.userId}/${filterQuery.makeId}/${filterQuery.modelId}/${filterQuery.year}/${filterQuery.startIdx}/${filterQuery.resultSize}`;
+    return this.http.get<{}[]>(url)
+      .pipe(
+        map(response => {
+          console.log(response)
+          return response["Success"]["0"]["userSellParts"];
+        }), catchError(this.handleError('getstates', []))
+      );//end pipe
+  }
 
 }

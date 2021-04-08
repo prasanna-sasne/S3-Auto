@@ -12,12 +12,20 @@ export class ResetPasswordComponent implements OnInit {
   resetForm: FormGroup;
   error = [];
   responseData;
+  token;
 
   constructor(private fb: FormBuilder, private resetService:ResetService,
-     private router:Router) {
+     private router:Router,
+     private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
+    this.route
+    .queryParams.subscribe(params =>{
+      this.token=params['token'];
+    }
+      );
+      console.log("Token Rcv",this.token);
     this.initForm();
   }
 
@@ -41,11 +49,11 @@ export class ResetPasswordComponent implements OnInit {
     this.error = [];
     const url = new URL(window.location.href);
     console.log(url.searchParams.get('token'));
-    let token = url.searchParams.get('token');
+    //this.token = url.searchParams.get('token');
     const password = this.resetForm.value.password;
     var formData: any = new FormData();
     formData.append('password', password);
-    formData.append('token', token);
+    formData.append('token', this.token);
 
 
     // if (!this.resetForm.valid) {
@@ -54,6 +62,8 @@ export class ResetPasswordComponent implements OnInit {
     this.resetService.resetPassword(formData).subscribe(
       resData => {
         console.log("resData", resData);
+        alert("Your password has been successfully updated. You are being redirected to home page")
+        this.redirectHomePage();
         // setting data to session .........
       },
       errorMessage => {

@@ -1,5 +1,5 @@
 <div class="child-container">
-  <div class="filter-row row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-5" *ngIf="!isLoading">
+  <div class="filter-row row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-5" style="align-content: center;" *ngIf="!isLoading">
 
     <!--Search fields-->
     <p-dropdown [options]="makers" [(ngModel)]="selectedMake" optionLabel="make" [filter]="true" filterBy="make"
@@ -37,8 +37,7 @@
 
     <!-- use this for parts -->
     <p-dropdown [options]="parts" [(ngModel)]="selectedPart" optionLabel="part" [filter]="true" filterBy="part"
-      [showClear]="true" placeholder="Select Part" class="select-style" [disabled]="modelFlag"
-      (onChange)="onChangePart($event)" *ngIf="role === 'USER'" [ngClass]="{'ng-valid ng-dirty': selectedPart !== null}"
+      [showClear]="true" placeholder="Select Part" class="select-style" [disabled]="modelFlag" *ngIf="role === 'USER'" [ngClass]="{'ng-valid ng-dirty': selectedPart !== null}"
       [ngClass]="{'ng-invalid ng-dirty': selectedPart == null}">
       <ng-template pTemplate="selectedItem">
         <div class="country-item country-item-value" *ngIf="selectedPart">

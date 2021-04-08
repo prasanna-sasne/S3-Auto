@@ -10,7 +10,7 @@ export class AppComponent implements OnInit{
   title = 'S3Auto';
   flagresetForm = false;
   url = new URL(window.location.href);
-
+  tken;
   constructor(private router:Router) {}
 
   ngOnInit(): void {
@@ -18,8 +18,9 @@ export class AppComponent implements OnInit{
     this.flagresetForm = false;
     if(this.url.searchParams.get('token') !== null || undefined){
         console.log(this.url.searchParams.get('token'));
+        this.tken=this.url.searchParams.get('token');
         this.flagresetForm = true;
-        this.router.navigate(['/resetPassword/reset']);
+        this.router.navigate(['/resetPassword/reset'],{queryParams : {token: this.tken}});
       }
   }
 

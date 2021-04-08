@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core'
 import { LazyLoadEvent } from 'primeng/api'
 import { SellInventoryService } from './../../services/sell-inventiry.service'
-import { SellHistoryService } from './../../services/sell-history.service'
+import {SellInputFormService} from './../../services/sell-input-form.service'
 import { ModalService } from './../../_modal/modal.service'
+import { windowWhen } from 'rxjs/operators'
 
 interface inventoryObject {
 
@@ -83,7 +84,8 @@ export class SellInventoryComponent implements OnInit {
   showexistingImage:any[]=[false];
 
   //showexistingImage: false;
-  constructor(private sellService: SellHistoryService, private sellInventoryService: SellInventoryService,
+  constructor( private sellInventoryService: SellInventoryService,
+    private sellInputFormService:SellInputFormService,
     private modalService: ModalService) {
     this.userId = JSON.parse(`${sessionStorage.getItem("ID")}`)
     this.role = JSON.parse(sessionStorage.getItem('ROLE') || '{}')
@@ -92,6 +94,7 @@ export class SellInventoryComponent implements OnInit {
   ngOnInit(): void {
     this.getSellInventory();
     this.generateYears();
+    this.getMakers();
     sessionStorage.removeItem('filterOptions')
   }
   // To get previous page data
@@ -108,24 +111,7 @@ export class SellInventoryComponent implements OnInit {
     //	this.getSellHistory()
   }
 
-  //Fetch inventory list
-  getSellInventory(): void {
-    let sellHistoryHeader = {
-      userId: this.userId,
-      role: this.role,
-      startIdx: this.startIndex,
-      resultSize: 9
-    }
-    this.sellInventoryService.getInventoryData().subscribe(data => {
-      console.log('data', data)
-      this.paginateView(data)
-      this.isLoading = false
-    }, error => {
-      this.isLoading = false
-    })
 
-    this.currentPageIndex > 1 ? this.previousRecordFlag = false : this.previousRecordFlag = true
-  }
 
   paginateView(data: any[]) {
     //deep-copy of data array to buyItems
@@ -138,6 +124,13 @@ export class SellInventoryComponent implements OnInit {
     } else this.nextRecordFlag = true
   }
 
+  /**get make list  */
+  getMakers(){
+    this.sellInputFormService.getMakers().subscribe(data =>{
+      this.makers = data;
+      //  console.log(this.makers)
+    } );
+  }
   //Generate year list
   generateYears(): void {
     let currentYear = new Date().getFullYear()
@@ -148,6 +141,25 @@ export class SellInventoryComponent implements OnInit {
     }
   }
 
+    /**Fetch inventory list*/
+    getSellInventory(): void {
+      let sellHistoryHeader = {
+        userId: this.userId,
+        role: this.role,
+        startIdx: this.startIndex,
+        resultSize: 9
+      }
+      this.sellInventoryService.getInventoryData().subscribe(data => {
+        console.log('data', data)
+        this.paginateView(data)
+        this.isLoading = false
+      }, error => {
+        this.isLoading = false
+      })
+
+      this.currentPageIndex > 1 ? this.previousRecordFlag = false : this.previousRecordFlag = true
+    }
+
 
   /* Clear all dropdowns and disable these fileds on clearing make */
 
@@ -155,7 +167,7 @@ export class SellInventoryComponent implements OnInit {
     if (event.value == null) {
       // this.resetFilters();
     } else {
-      this.sellInventoryService.getModels(this.selectedMake.makeId)
+      this.sellInputFormService.getModels(this.selectedMake.makeId)
         .subscribe(data => this.models = data)
       this.modelFlag = false
     }
@@ -176,35 +188,38 @@ export class SellInventoryComponent implements OnInit {
     }
   }
 
-  onChangePart(event: any) {
-    if (event.value == null) {
-      this.yearStateFlag = true
-    } else {
-      if (this.selectedModel !== null && this.selectedModel.model !== "")
-        this.yearStateFlag = false
-    }
-  }
+  // onChangePart(event: any) {
+  //   if (event.value == null) {
+  //     this.yearStateFlag = true
+  //   } else {
+  //     if (this.selectedModel !== null && this.selectedModel.model !== "")
+  //       this.yearStateFlag = false
+  //   }
+  // }
 
   search(): void {
     //sessionStorage.removeItem('filterOptions');
     //startIndex = 0;
     //currentPageIndex = 1;
     let filterQuery = {
+      userId : window.sessionStorage.getItem('ID'),
       makeId: this.selectedMake.makeId,
       modelId: this.selectedModel.modelId,
       year: this.selectedYear == null ? '*' : this.selectedYear.year,
-      stateId: this.selectedstate == null ? '*' : this.selectedstate.stateId,
       startIdx: this.startIndex,
       resultSize: 9
     }
-
-    if (this.selectedPart.part != "") {
-      filterQuery["partId"] = this.selectedPart.partId;
-    }
-    // //  this.storeFilterOpts();
-    //   this.buyService.getBuyItemList(filterQuery, this.role).subscribe(data => {
-    // //    this.handlePaginationOnRes(data);
-    //   });
+    //  this.storeFilterOpts();
+      this.sellInventoryService.searchData(filterQuery, this.role).subscribe(data => {
+      //  console.log(data.Success);
+        console.log(JSON.parse(JSON.stringify(data)))
+        console.log('data', data)
+        this.paginateView(data)
+        this.isLoading = false
+      }, error => {
+        this.isLoading = false
+      //  this.handlePaginationOnRes(data);
+      });
     this.currentPageIndex > 1 ? this.previousRecordFlag = false : this.previousRecordFlag = true;
   }
 
@@ -225,16 +240,12 @@ export class SellInventoryComponent implements OnInit {
     sessionStorage.removeItem('filterOptions');
   }
 
-  // Open popup..
+  /* Open popup..*/
   openModal(modalName) {
      this.modalService.open(modalName);
-    // this.actionIndex = indexValue;
-    // console.log(indexValue);
-    // console.log(this.inventoryList[indexValue]);
-    // this.selectedPartList.push(this.inventoryList[indexValue]);
-    // console.log(this.selectedPartList);
   }
 
+  /**generate index value */
   getIndex(indexValue){
      this.actionIndex = indexValue;
     console.log(indexValue);
