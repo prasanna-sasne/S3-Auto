@@ -110,8 +110,13 @@
         <!-----STATE DATA----->
         <div class="form-group col-md-3">
           <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
-          <p-dropdown [options]="states" formGroupName="selectedstate" optionLabel="state" [filter]="true"
-            filterBy="state" (onChange)="selectChange($event)" [showClear]="true" placeholder="Select State">
+          <p-dropdown [options]="states" formGroupName="selectedstate" 
+          optionLabel="state" [filter]="true"
+            filterBy="state" (onChange)="selectChange($event)" [showClear]="true" placeholder="Select State"
+            [(ngModel)]="selectedstate" 
+            [ngModelOptions]="{standalone: true}"
+            [ngClass]="{'ng-valid ng-dirty': selectedstate !== null}"
+            [ngClass]="{'ng-invalid ng-dirty': selectedstate == null}">
             <ng-template pTemplate="selectedItem">
               <div class="country-item country-item-value" *ngIf="selectedstate">
                 <div>{{selectedstate.state}}</div>
@@ -129,7 +134,11 @@
           <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
           <p-dropdown [options]="citiesList" formGroupName="selectedcity" optionLabel="city" [filter]="true"
             filterBy="city" (onChange)="selectCityChange($event)" [showClear]="true" placeholder="Select City"
-            class="select-style">
+            class="select-style"
+            [(ngModel)]="selectedcity" 
+            [ngModelOptions]="{standalone: true}"
+            [ngClass]="{'ng-valid ng-dirty': selectedcity !== null}"
+            [ngClass]="{'ng-invalid ng-dirty': selectedcity == null}">
             <ng-template pTemplate="selectedItem">
               <div class="country-item country-item-value" *ngIf="selectedcity">
                 <div>{{selectedcity.city}}</div>
