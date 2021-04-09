@@ -29,11 +29,14 @@ export class SellInputFormComponent implements OnInit {
   selectedYear: {"yearId": number, "year": string} = {"yearId": -1, "year": "*"};
   selectedPart: {"partId": number, "part": string} = {"partId": -1, "part": ""};
   selectedShip: {"yes":'yes',}
+  selectedVin;
+  selectedMileage;
   modelFlag:boolean;
   makers: {"makeId": number, "make": string}[] = [];
   models: {"modelId": number, "model": string}[] = [];
   years: {"yearId": number, "year": number}[] = [];
   parts: {"partId": number, "part": string}[] = [];
+  description:String;
   role:String="";
   roleStatus:boolean = false;
   yearStateFlag:boolean = true;
@@ -55,15 +58,15 @@ export class SellInputFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.sellForm = new FormGroup({
-      makers: new FormControl(''),
-      models: new FormControl(''),
-      partName: new FormControl(''),
-      years: new FormControl(''),
-      shipping: new FormControl(''),
-      description: new FormControl(''),
-      price: new FormControl(''),
-      mileage: new FormControl(''),
-      vinValue:new FormControl('')
+      // makers: new FormControl(''),
+      // models: new FormControl(''),
+      // partName: new FormControl(''),
+      // years: new FormControl(''),
+      // shipping: new FormControl(''),
+      // description: new FormControl(''),
+      // price: new FormControl(''),
+      // mileage: new FormControl(''),
+      // vinValue:new FormControl('')
     });
 
 
@@ -186,17 +189,17 @@ export class SellInputFormComponent implements OnInit {
 
     submitPartForm(){
       let partAddRequest = {
-        "make": this.sellForm.value.makers.make,
-        "makeId": this.sellForm.value.makers.makeId,
-        "model": this.sellForm.value.models.model,
-        "modelId": this.sellForm.value.models.modelId,
-        "year": this.sellForm.value.years.year,
-        "partId":this.sellForm.value.partName.partId,
-        "part": this.sellForm.value.partName.part,
+        "make": this.selectedMake.make,
+        "makeId": this.selectedMake.makeId,
+        "model": this.selectedModel.model,
+        "modelId": this.selectedModel.modelId,
+        "year": this.selectedYear.year,
+        "partId":String(this.selectedPart.partId),
+        "part": this.selectedPart.part,
         "username": window.sessionStorage.getItem("USERNAME"),
-        "price": this.sellForm.value.price,
-        "description": this.sellForm.value.description,
-        "shipping":this.sellForm.value.shipping.shippingValue
+        "price": this.priceValue,
+        "description": this.description,
+        "shipping":String(this.selectedShippingOption.shippingValue)
       }
       this.sellInputFormService.submitSellFormPart(this.selectedFile,partAddRequest).subscribe(
         resData => {
@@ -216,16 +219,16 @@ export class SellInputFormComponent implements OnInit {
     }
     submitVheicleForm() {
       let  vehicleAddRequest = {
-        "make": this.sellForm.value.makers.make,
-        "makeId": this.sellForm.value.makers.makeId,
-        "model": this.sellForm.value.models.model,
-        "modelId": this.sellForm.value.models.modelId,
-        "year": this.sellForm.value.years.year,
-        "vin":this.sellForm.value.vinValue,
-        "mileage": this.sellForm.value.mileage,
+        "make": this.selectedMake.make,
+        "makeId": this.selectedMake.makeId,
+        "model": this.selectedModel.model,
+        "modelId": this.selectedModel.modelId,
+        "year": this.selectedYear.year,
+        "vin":this.selectedVin,
+        "mileage": this.selectedMileage,
         "username": window.sessionStorage.getItem("USERNAME"),
-        "price": this.sellForm.value.price,
-        "description": this.sellForm.value.description,
+        "price": this.priceValue,
+        "description": this.description
 
       }
       const frmdata = new FormData();

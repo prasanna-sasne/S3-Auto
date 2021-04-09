@@ -2,7 +2,7 @@
   <div class=" col-md-1"></div>
   <div class="card col-md-10" style="margin-top: 40px;margin-block-end: 40px;">
     <div class="container rounded bg-white mt-5">
-      <form [formGroup]="sellForm" (ngSubmit)="onSubmitForm()">
+      <!-- <form  (ngSubmit)="onSubmitForm()"> -->
 
         <div class="row">
 
@@ -16,7 +16,7 @@
               <div class="row mt-3">
                 <div class="col-md-4" style="column-width: auto;">
                   <h5>MAKE</h5>
-                  <p-dropdown formControlName="makers" [options]="makers" [(ngModel)]="selectedMake" optionLabel="make"
+                  <p-dropdown  [options]="makers" [(ngModel)]="selectedMake" optionLabel="make"
                     [filter]="true" filterBy="make" [showClear]="true" placeholder="Select Make" class="select-style"
                     (onChange)="onChangeMake($event)" [ngClass]="{'ng-valid ng-dirty': selectedMake.make !== ''}"
                     [ngClass]="{'ng-invalid ng-dirty': selectedMake.make == ''}">
@@ -35,7 +35,7 @@
 
                 <div class="col-md-4" style="column-width: auto;">
                   <h5 class="required">MODEL</h5>
-                  <p-dropdown formControlName="models" [options]="models" [(ngModel)]="selectedModel"
+                  <p-dropdown [options]="models" [(ngModel)]="selectedModel"
                     optionLabel="model" [filter]="true" filterBy="model" [showClear]="true" placeholder="Select Model"
                     class="select-style" (onChange)="onChangeModel($event)" [disabled]="modelFlag"
                     [ngClass]="{'ng-valid ng-dirty': selectedModel !== null}"
@@ -57,7 +57,7 @@
               <div *ngIf="!roleStatus" class="row mt-3">
                 <div class="col-md-4" style="column-width: auto;">
                   <h5>PART NAME</h5>
-                  <p-dropdown formControlName="partName" [options]="parts" [(ngModel)]="selectedPart" optionLabel="part"
+                  <p-dropdown  [options]="parts" [(ngModel)]="selectedPart" optionLabel="part"
                     [filter]="true" filterBy="part" [showClear]="true" placeholder="Select Part" class="select-style"
                     [disabled]="modelFlag" (onChange)="onChangePart($event)">
                     <ng-template pTemplate="selectedItem">
@@ -74,7 +74,7 @@
                 </div>
                 <div class="col-md-4" style="column-width: auto;">
                   <h5>Shipping </h5>
-                  <p-dropdown formControlName="shipping" [options]="shippingStatus" [(ngModel)]="selectedShippingOption"
+                  <p-dropdown  [options]="shippingStatus" [(ngModel)]="selectedShippingOption"
                     placeholder="YES/NO" optionLabel="shipping" [showClear]="true"></p-dropdown>
                 </div>
               </div>
@@ -83,12 +83,12 @@
 
                 <div class="col-md-4" style="column-width: auto;">
                   <h5>VIN </h5>
-                  <input type="text" class="form-control" formControlName="vinValue" id="vinValue"
+                  <input type="text" class="form-control"  id="vinValue" [(ngModel)]="selectedVin"
                     placeholder="e.g. 2GNAOXEX5E6235589">
                 </div>
                 <div class="col-md-4" style="column-width: auto;">
                   <h5>MILEAGE</h5>
-                  <input type="text" class="form-control" formControlName="mileage" id="mileage"
+                  <input type="text" class="form-control" [(ngModel)]="selectedMileage"  id="mileage"
                     placeholder="e.g. 1500 miles">
                 </div>
               </div>
@@ -96,7 +96,7 @@
               <div class="row mt-3">
                 <div class="col-md-4" style="column-width: auto;">
                   <h5>Year</h5>
-                  <p-dropdown formControlName="years" [options]="years" [(ngModel)]="selectedYear" optionLabel="year"
+                  <p-dropdown  [options]="years" [(ngModel)]="selectedYear" optionLabel="year"
                     [filter]="true" filterBy="year" [showClear]="true" placeholder="Select Year" class="select-style"
                     [disabled]="yearStateFlag" [ngClass]="{'ng-valid ng-dirty': selectedYear !== null}"
                     [ngClass]="{'ng-invalid ng-dirty': selectedYear == null}">
@@ -120,7 +120,7 @@
                       <span class="input-group-text">$</span>
                       <!-- <span class="input-group-text">0.00</span> -->
                     </div>
-                    <input formControlName="price" type="number" [(ngModel)]="priceValue" value="0.00" min="0"
+                    <input  type="number" [(ngModel)]="priceValue" value="0.00" min="0"
                       step="1.01" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"
                       id="c2" />
                   </div>
@@ -132,14 +132,14 @@
                 <div class=" col-md-10">
 
                   <h5>Description</h5>
-                  <textarea class="form-control" rows="4" id="comment" formControlName="description"></textarea>
+                  <textarea class="form-control" [(ngModel)]="description" rows="4" id="comment" ></textarea>
 
                 </div>
               </div>
               <div class="row mt-3">
                 <div class="col-md-4">
                   <div class="mt-5 text-left">
-                    <button class="btn btn-primary profile-button button mr-2" type="submit">Submit</button>
+                    <button class="btn btn-primary profile-button button mr-2" (click)=onSubmitForm() type="submit">Submit</button>
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -172,7 +172,7 @@
             </div>
           </div>
         </div>
-      </form>
+      <!-- </form> -->
     </div>
   </div>
   <div class=" col-md-1"></div>

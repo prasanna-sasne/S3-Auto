@@ -4,6 +4,7 @@ import { SellInventoryService } from './../../services/sell-inventiry.service'
 import {SellInputFormService} from './../../services/sell-input-form.service'
 import { ModalService } from './../../_modal/modal.service'
 import { windowWhen } from 'rxjs/operators'
+import { Router, ActivatedRoute } from '@angular/router';
 
 interface inventoryObject {
 
@@ -55,11 +56,12 @@ export class SellInventoryComponent implements OnInit {
   public role: string
   isLoading: boolean = true
   numberOfValue: number = 0;
-
+duplicateFlag:boolean;
   nextRecordFlag: boolean = true
   previousRecordFlag: boolean = true
-  startIndex = 0
-  currentPageIndex = 1
+  startIndex = 0;
+  currentPageIndex = 1;
+  msg:String;
 
   formdata;
   //Search parameters.....
@@ -88,6 +90,7 @@ export class SellInventoryComponent implements OnInit {
   //showexistingImage: false;
   constructor( private sellInventoryService: SellInventoryService,
     private sellInputFormService:SellInputFormService,
+    private router:Router,private route: ActivatedRoute,
     private modalService: ModalService) {
     this.userId = JSON.parse(`${sessionStorage.getItem("ID")}`)
     this.role = JSON.parse(sessionStorage.getItem('ROLE') || '{}')
@@ -306,15 +309,22 @@ export class SellInventoryComponent implements OnInit {
   createDuplicateList(numberOfValue) {
     this.duplicateArray = [];
     console.log(numberOfValue);
-    let tempo =this.inventoryList[this.actionIndex];
-    for (let i = 0; i < numberOfValue; i++) {
-      var temp ={id : i};
-      Object.assign(temp,tempo);
-      console.log(temp)
-     this.duplicateArray.push(temp);
-     this.showexistingImage[i]=false;
-    // this.images[0]
+    if(numberOfValue >0 && numberOfValue <11) {
+      this.duplicateFlag= true;
+      let tempo =this.inventoryList[this.actionIndex];
+      for (let i = 0; i < numberOfValue; i++) {
+        var temp ={id : i};
+        Object.assign(temp,tempo);
+        console.log(temp)
+       this.duplicateArray.push(temp);
+       this.showexistingImage[i]=false;
+      // this.images[0]
+      }
+    }else{
+      this.duplicateFlag= false;
+      this.msg= "Value is greater than 10 "
     }
+
 
   }
 
@@ -423,10 +433,13 @@ export class SellInventoryComponent implements OnInit {
   }
 
   editFormData(indexValue){
-    debugger;
     console.log(this.inventoryList[indexValue]);
     this.formdata=this.inventoryList;
     this.sellInventoryService.subject.emit(this.inventoryList[indexValue]);
+  }
+
+  goToSellSection(){
+    this.router.navigate(['../s3-auto/sell-form'], {relativeTo: this.route});
   }
 
 

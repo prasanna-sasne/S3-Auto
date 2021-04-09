@@ -118,7 +118,6 @@ imageToShow;
   }
 
   generateYears():void {
-debugger;
     /**pre-selected data */
  //   this.selectedYear= {yearId: event.yearId, year: event.year};
 
@@ -267,7 +266,6 @@ debugger;
 
     //edit form ..
     editForm(){
-      debugger;
       this.sellInventoryService.subject.subscribe(
         res=>{
           console.log('selected data', res);

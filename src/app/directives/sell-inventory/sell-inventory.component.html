@@ -1,6 +1,11 @@
 <div class="child-container">
-  <div class="filter-row row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-5" style="align-content: center;" *ngIf="!isLoading">
+  <div>
+    <span class="badge badge-pill badge-primary sm-button" style="cursor: pointer;" (click)="goToSellSection()">
+      <i class="bi bi-backspace pr-2"></i>Back
+    </span>
+  </div><br>
 
+  <div class="filter-row row  row-cols-xl-6" style="align-content: center;" *ngIf="!isLoading">
     <!--Search fields-->
     <p-dropdown [options]="makers" [(ngModel)]="selectedMake" optionLabel="make" [filter]="true" filterBy="make"
       [showClear]="true" placeholder="Select Make" class="select-style " (onChange)="onChangeMake($event)"
@@ -86,13 +91,13 @@
   </div>
   <!--Cards to display the inventory-->
 
-  <div class="card mt-3">
+  <div class="card mt-3 col-md-12">
 
-    <div class="card mt-3" *ngFor="let item of inventoryList; let parentIndx = index;">
-      <div class="row no-gutters" style="height:151px">
-        <div class="embed-responsive embed-responsive-16by9 col-md-4" style="height:151px">
+    <div class="card mt-3 col-md-12" *ngFor="let item of inventoryList; let parentIndx = index;">
+      <div class="row no-gutters" >
+        <div class="embed-responsive embed-responsive-16by9 col-md-4" >
           <span *ngIf="item.vehicleImages !== undefined; else soldPartImage">
-            <img class="img-thumbnail embed-responsive-item" style="height:151px"
+            <img class="img-thumbnail embed-responsive-item"
               *ngFor="let itemImages of item.vehicleImages;let aIndex= index;" [src]="itemImages.imageUri"
               alt="sell-history">
           </span>
@@ -101,7 +106,7 @@
           </ng-template>
         </div>
         <div class="col-md-8">
-          <div class="card-body" style="height:151px">
+          <div class="card-body" >
             <h6 class="card-title"><strong><span *ngIf="item.partId !== undefined">{{item.part}} - </span>
                 {{item.make}}
                 {{ item.model }} {{item.year}}</strong></h6>
@@ -149,10 +154,14 @@
               <div></div>
               <div>
                 <h5>Duplicate Form Data</h5>
-                <div class="mt-8">
-                  <input type="number" [(ngModel)]="numberOfValue" name="" id="" maxlength="10" minlength="0">
-                  <button type="button" class="btn btn-outline-primary"
-                    (click)="createDuplicateList(numberOfValue)">Add+</button>
+                <div class="row mt-8" style="align-content: center;">
+                  <div class="col-md-6">
+                    <label class="fontColor ">You can duplicate your form upto 10 dataset</label>
+                  </div>
+                 <div class="error-messages" *ngIf="!duplicateFlag">{{msg}}</div>
+                  <input type="number" [(ngModel)]="numberOfValue" name="" id="" max="10" min="0">
+                  <div class="col-md-4"><button type="button" class="btn btn-outline-primary"
+                    (click)="createDuplicateList(numberOfValue)">Add+</button></div>
 
                 </div>
                 <p-table [value]="duplicateArray" dataKey="id" editMode="row">
@@ -161,7 +170,7 @@
                       <th>Sl.No.</th>
                       <th>Image</th>
                       <th>Make</th>
-                      <th>Modal</th>
+                      <th>Model</th>
                       <th>year</th>
                       <th>Price</th>
                       <th>Description</th>
@@ -172,9 +181,14 @@
                     <tr [pEditableRow]="product">
                       {{product.id +1}}
                       <td>
-                        <input id={{product.id}} type="file" class="form-control" style=" width:10px;
-                            height:10px; background-color: indigo;" placeholder="+" multiple=""
+
+                        <input id={{product.id}} type="file" class="form-control" style=" visibility: hidden; width:10px;cursor: pointer;
+                            height:1px;" placeholder="+" multiple=""
                           (change)="onFileChange($event,product.id)">
+                          <label for={{product.id}} style="cursor: pointer;">
+                            <img style=" width:20px;cursor: pointer;
+                            height:20px;" src="/assets/editImage.png"/>Click to Edit
+                        </label>
 
                         <div *ngIf="showexistingImage[product.id]==true">
                           <img [src]="images[product.id]" [alt]="product.name" id={{product.id}} width="100"
@@ -219,25 +233,26 @@
                       </td>
 
                       <td style="text-align:center">
+
                         <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
-                          (click)="onRowEditInit(product)" class="p-button-rounded p-button-text"></button>
+                          (click)="onRowEditInit(product)" class="pi pi-pencil btn-floating indigo"></button>
                         <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
                           (click)="onRowEditSave(product)"
-                          class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+                          class="p-button-rounded p-button-text p-button-success p-mr-2 pi pi-check"></button>
                         <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
                           (click)="onRowEditCancel(product, ri)"
-                          class="p-button-rounded p-button-text p-button-danger"></button>
+                          class="p-button-rounded p-button-text p-button-danger pi pi-times"></button>
                       </td>
                     </tr>
                   </ng-template>
                 </p-table>
               </div>
               <div>
-                <label class="fontColor">You can duplicate your form upto 10 dataset</label>
 
-                <div class="row">
-                  <div class="col-md-10">
-                    <div class="mt-5 text-left">
+
+                <div class="row" *ngIf="duplicateFlag">
+                  <div class="">
+                    <div class="mt-5">
                       <button class="btn btn-primary profile-button button" (click)="submitDuplicateData()"
                         type="submit">Save</button>
                       <button type="cancel" class="btn btn-primary button"
@@ -318,6 +333,7 @@
         </div>
       </div>
     </div>
+
   </div>
 
 
