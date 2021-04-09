@@ -23,12 +23,13 @@ export class UpdateProfileService {
    setUserData(reqData) {
     console.log( 'request data ',reqData);
     return this.http
-      .post<UpdateProfileResponseData>(
+      .put<UpdateProfileResponseData>(
         `${this.appUrl}/uvp/profile/update/`+ JSON.parse(sessionStorage.getItem('ID') || '{}'),
         reqData
       )
-      .pipe(
-        catchError(errorRes => {
+      .pipe(map( response => {  
+            return response; 
+        }), catchError(errorRes => {
           let errorMessage = 'An unknown error occurred!';
           if (!errorRes.error || !errorRes.error.error) {
             return throwError(errorMessage);

@@ -173,8 +173,8 @@ export class UpdateProfileComponent {
         "street": this.updateProfileForm.value.address,
         "stateId": this.selectedstate.stateId.toString(),
         "cityId": this.selectedcity.cityId.toString(),    
-        //"state": this.selectedstate.stateId.toString(),
-        //"city": this.selectedcity.cityId.toString(),
+        "state": this.selectedstate.stateId.toString(),
+        "city": this.selectedcity.cityId.toString(),
         "zipCode": this.updateProfileForm.value.zipCode
       }
 
