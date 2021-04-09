@@ -76,6 +76,18 @@ export class SellInventoryService {
       );//end pipe
   }
 
+  getUserInventoryData(inventoryParam){
+    ///uvp/vehicles/get/{userId}/{status}/{startIdx}/{resultSize}
+    const url = `${this.appUrl}/uvp/vehicles/get/${inventoryParam.userId}/Available/${inventoryParam.startIdx}/${inventoryParam.resultSize}`;
+    return this.http.get<{}[]>(url)
+      .pipe(
+        map(response => {
+          console.log(response["Success"][0]["userSellVehicles"])
+          return response["Success"]["0"]["userSellVehicles"];
+        }), catchError(this.handleError('getstates', []))
+      );//end pipe
+  }
+
   submitDuplicateData(submitDuplicateData) {
     // http://localhost:8080/uvp/parts/duplicate
     console.log('submitDuplicateData--', submitDuplicateData);
@@ -150,6 +162,33 @@ export class SellInventoryService {
           return response["Success"]["0"]["userSellParts"];
         }), catchError(this.handleError('getstates', []))
       );//end pipe
+  }
+
+  editSelectedItem(partSellId,selectedFile,partAddRequest){
+   // /uvp/parts/update/{partSellId} <-------- update
+   const data = new FormData();
+    data.append('partAddRequest', JSON.stringify(partAddRequest));
+    data.append('images',  selectedFile ,selectedFile.name);
+
+    // const httpOptions = {
+    //   headers: new HttpHeaders({
+    //     'Content-Type': 'application/json'
+    //   })
+    // };
+   const url = `${this.appUrl}/uvp/parts/update/${partSellId}`;
+    return this.http.put(url ,data)
+      .pipe(map(response => {
+        console.log(response);
+        return response;
+      }), catchError(errorRes => {
+        let errorMessage = 'An unknown error occurred!';
+        if (errorRes.status !== 400) {
+          return throwError(errorMessage);
+        } else {
+          return throwError(errorRes.error.Error[0]);
+        }
+      })
+      );
   }
 
 }

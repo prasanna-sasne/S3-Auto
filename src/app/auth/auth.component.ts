@@ -96,16 +96,17 @@ export class AuthComponent {
       }
     });
   }
-  
+
   /**......Registration service call... */
   onSubmit() {
     this.error = [];
+    this.validateAllFormFields (this.registrationForm)
+
     if (!this.registrationForm.pristine) {
       console.log('form submitted');
     } else {
       console.log(this.registrationForm.valid);
 
-      this.validateAllFormFields (this.registrationForm) 
     return;  }
 
 
@@ -186,7 +187,7 @@ export class AuthComponent {
   // onFormChange(){
   //   if   ( this.registrationForm.valid == true)
   //   this.submitFlag = true;
-  //   else 
+  //   else
   //   this.submitFlag = false;
 
   // }

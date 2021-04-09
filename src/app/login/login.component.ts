@@ -55,12 +55,13 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     this.error = [];
+    this.validateAllFormFields (this.loginForm)
+
     if (!this.loginForm.pristine) {
       console.log('form submitted');
     } else {
       console.log(this.loginForm.valid);
 
-      this.validateAllFormFields (this.loginForm)
     return; }
     const userName = this.loginForm.value.userName;
     const password = this.loginForm.value.password;

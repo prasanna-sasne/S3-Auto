@@ -39,6 +39,9 @@ export class EditInventoryComponent implements OnInit {
   description:string;
   selectedFile;
   prePopulateData:{};
+  selectedVin;
+  selectedMileage;
+  partSellId;
 
 imageToShow;
   images :any[] =[];
@@ -69,11 +72,6 @@ imageToShow;
       vinValue:new FormControl('')
     });
 
-
-    this.sellInputFormService.getMakers().subscribe(data =>{
-      this.makers = data;
-      //  console.log(this.makers)
-    } );
     this.role = JSON.parse(sessionStorage.getItem('ROLE') || '{}');
     console.log(this.role);
     if(this.role == 'USER'){
@@ -81,22 +79,32 @@ imageToShow;
     }else {
       this.roleStatus = false;
     }
+    this.editForm();
 
-   // this.editForm();
-    this.generateYears();
 
   }
 
   onChangeMake(event: any) {
-    console.log("onchange get called", event);
-      this.selectedMake={make:event.make,makeId:event.makeId};
-      console.log("selectedMake",this.selectedMake);
-      this.sellInputFormService.getModels(this.selectedMake.makeId)
-      .subscribe(data =>{
-        this.models = data
-        this.onChangeModel(event);
-        //   console.log(this.models)
-      } );
+
+    this.selectedYear= {yearId: 1, year: 2015};
+    console.log(this.selectedYear);
+      if(event.value!==undefined){
+        this.sellInputFormService.getModels(event.value.makeId)
+        .subscribe(data =>{
+          this.models = data
+          this.onChangeModel(event);
+          //   console.log(this.models)
+        } );
+      }else{
+        this.selectedMake={make:event.make,makeId:event.makeId};
+        this.sellInputFormService.getModels(this.selectedMake.makeId)
+        .subscribe(data =>{
+          this.models = data
+          this.onChangeModel(event);
+          //   console.log(this.models)
+        } );
+      }
+
       this.modelFlag = false;
 
   }
@@ -108,8 +116,15 @@ imageToShow;
     //   this.selectedYear = {"yearId": -1, "year": "*"};
     //   this.yearStateFlag = true;
     // } else
-    {
+    this.selectedYear= {yearId: event.yearId, year: event.year};
+     if(event.value == null){
       this.selectedModel={model:event.model,modelId:event.modelId};
+      this.sellInputFormService.getParts().subscribe(data => this.parts = data);
+      this.generateYears();
+      this.onChangePart(event)
+      this.yearStateFlag = false;
+     }else
+    {
       this.sellInputFormService.getParts().subscribe(data => this.parts = data);
       this.generateYears();
     //  this.onChangePart(event)
@@ -117,10 +132,22 @@ imageToShow;
     }
   }
 
+
+  onChangePart(event: any){
+    if(event.value !== undefined){
+
+      if(this.selectedModel !== null && this.selectedModel.model !== "")
+        console.log(this.selectedModel)
+      this.yearStateFlag = false;
+    } else
+    this.selectedPart= {partId: event.partId, part: event.part}
+    this.yearStateFlag = false;
+      this.generateYears();
+  }
+
+
   generateYears():void {
     /**pre-selected data */
- //   this.selectedYear= {yearId: event.yearId, year: event.year};
-
     let currentYear = new Date().getFullYear();
     let startYear = (currentYear-50) || 1980;
     let index = 0;
@@ -129,18 +156,6 @@ imageToShow;
     }
   }
 
-
-  onChangePart(event: any){
-    // if(event.value == null){
-    //   this.yearStateFlag = true;
-    // } else
-    this.selectedPart= {partId: event.partId, part: event.part}
-      if(this.selectedModel !== null && this.selectedModel.model !== "")
-        console.log(this.selectedModel)
-      this.yearStateFlag = false;
-    //  this.generateYears(event);
-
-  }
 
   // image upload...
   onFileChange(event) {
@@ -199,19 +214,19 @@ imageToShow;
 
     submitPartForm(){
       let partAddRequest = {
-        "make": this.sellForm.value.makers.make,
-        "makeId": this.sellForm.value.makers.makeId,
-        "model": this.sellForm.value.models.model,
-        "modelId": this.sellForm.value.models.modelId,
-        "year": this.sellForm.value.years.year,
-        "partId":this.sellForm.value.partName.partId,
-        "part": this.sellForm.value.partName.part,
+        "make": this.selectedMake.make,
+        "makeId": this.selectedMake.makeId,
+        "model": this.selectedModel.model,
+        "modelId": this.selectedModel.modelId,
+        "year": this.selectedYear.year,
+        "partId":String(this.selectedPart.partId),
+        "part": this.selectedPart.part,
         "username": window.sessionStorage.getItem("USERNAME"),
-        "price": this.sellForm.value.price,
-        "description": this.sellForm.value.description,
-        "shipping":this.sellForm.value.shipping.shippingValue
+        "price": this.priceValue,
+        "description": this.description,
+        "shipping":String(this.selectedShippingOption.shippingValue)
       }
-      this.sellInputFormService.submitSellFormPart(this.selectedFile,partAddRequest).subscribe(
+      this.sellInventoryService.editSelectedItem(this.partSellId,this.selectedFile,partAddRequest).subscribe(
         resData => {
           console.log("resData", resData);
           // setting data to session .........
@@ -229,16 +244,16 @@ imageToShow;
     }
     submitVheicleForm() {
       let  vehicleAddRequest = {
-        "make": this.sellForm.value.makers.make,
-        "makeId": this.sellForm.value.makers.makeId,
-        "model": this.sellForm.value.models.model,
-        "modelId": this.sellForm.value.models.modelId,
-        "year": this.sellForm.value.years.year,
-        "vin":this.sellForm.value.vinValue,
-        "mileage": this.sellForm.value.mileage,
+        "make": this.selectedMake.make,
+        "makeId": this.selectedMake.makeId,
+        "model": this.selectedModel.model,
+        "modelId": this.selectedModel.modelId,
+        "year": this.selectedYear.year,
+        "vin":this.selectedVin,
+        "mileage": this.selectedMileage,
         "username": window.sessionStorage.getItem("USERNAME"),
-        "price": this.sellForm.value.price,
-        "description": this.sellForm.value.description,
+        "price": this.priceValue,
+        "description": this.description
 
       }
       const frmdata = new FormData();
@@ -268,10 +283,14 @@ imageToShow;
     editForm(){
       this.sellInventoryService.subject.subscribe(
         res=>{
-          console.log('selected data', res);
-          this.onChangeMake(res);
+          this.sellInputFormService.getMakers().subscribe(data =>{
+            this.makers = data;
+            this.onChangeMake(res);
+          } );
+          console.log('selected data', res.partSellId);
+          this.partSellId = res.partSellId
         //  this.generateYears(res);
-          this.selectedYear= {yearId: res.yearId, year: res.year};
+
           this.priceValue= res.price;
           this.description= res.description;
           /**render image */

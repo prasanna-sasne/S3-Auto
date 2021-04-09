@@ -113,6 +113,9 @@
   background-image: linear-gradient(to right, #563d7c, #1976d2);
 
 }
+.clr{
+  color: yellow;
+}
 
 .bi-envelope{
   cursor: pointer;

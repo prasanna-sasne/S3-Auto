@@ -121,6 +121,7 @@ duplicateFlag:boolean;
 
   paginateView(data: any[]) {
     //deep-copy of data array to buyItems
+    console.log(data)
     this.inventoryList = JSON.parse(JSON.stringify(data))
     //trim last record
     this.inventoryList.splice(8, 1)
@@ -149,6 +150,10 @@ duplicateFlag:boolean;
 
     /**Fetch inventory list*/
     getSellInventory(): void {
+      if(this.role == 'USER'){
+        this.getvehicleInventory();
+      }else {
+
       let inventoryParam = {
         userId: this.userId,
         role: this.role,
@@ -163,7 +168,25 @@ duplicateFlag:boolean;
         this.isLoading = false
       })
 
+
+    }
       this.currentPageIndex > 1 ? this.previousRecordFlag = false : this.previousRecordFlag = true
+    }
+
+    getvehicleInventory(){
+      let inventoryParam = {
+        userId: this.userId,
+        role: this.role,
+        startIdx: this.startIndex,
+        resultSize: 9
+      }
+      this.sellInventoryService.getUserInventoryData(inventoryParam).subscribe(data => {
+        console.log('data', data)
+        this.paginateView(data)
+        this.isLoading = false
+      }, error => {
+        this.isLoading = false
+      })
     }
 
 
