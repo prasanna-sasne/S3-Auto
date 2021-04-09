@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import { SellInputFormService } from './../../services/sell-input-form.service';
+import { SellInventoryService } from './../../services/sell-inventiry.service';
 import { FormBuilder, FormControlName, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import {DomSanitizer} from '@angular/platform-browser';
 
 interface ShipingOption {
   shipping: string,
@@ -22,24 +24,29 @@ export class EditInventoryComponent implements OnInit {
   selectedMake: {"makeId": number, "make": string} = {"makeId": -1, "make": ""};
   selectedModel: {"modelId": number, "model": string} = {"modelId": -1, "model": ""};
   selectedstate: {"stateId": string, "state": string} = {"stateId": "*", "state": ""};
-  selectedYear: {"yearId": number, "year": string} = {"yearId": -1, "year": "*"};
+  selectedYear: {"yearId": number, "year": number} = {"yearId": -1, "year": 0};
   selectedPart: {"partId": number, "part": string} = {"partId": -1, "part": ""};
   selectedShip: {"yes":'yes',}
   modelFlag:boolean;
   makers: {"makeId": number, "make": string}[] = [];
   models: {"modelId": number, "model": string}[] = [];
-  years: {"yearId": number, "year": number}[] = [];
+  years: {"yearId": any, "year": any}[] = [];
   parts: {"partId": number, "part": string}[] = [];
   role:String="";
   roleStatus:boolean = false;
   yearStateFlag:boolean = true;
   priceValue:string;
+  description:string;
   selectedFile;
+  prePopulateData:{};
 
+imageToShow;
   images :any[] =[];
   multiImages:any[]=[];
+  @Input() reSelectedData;
 
-  constructor( private sellInputFormService:SellInputFormService, private fb:FormBuilder, private router:Router) {
+  constructor( private sellInputFormService:SellInputFormService,public _DomSanitizationService: DomSanitizer,
+     private fb:FormBuilder, private router:Router, private sellInventoryService:SellInventoryService) {
     this.shippingStatus = [
     {shipping: 'YES', shippingValue: true},
     {shipping: 'NO', shippingValue: false}
@@ -67,7 +74,6 @@ export class EditInventoryComponent implements OnInit {
       this.makers = data;
       //  console.log(this.makers)
     } );
-
     this.role = JSON.parse(sessionStorage.getItem('ROLE') || '{}');
     console.log(this.role);
     if(this.role == 'USER'){
@@ -76,35 +82,46 @@ export class EditInventoryComponent implements OnInit {
       this.roleStatus = false;
     }
 
+   // this.editForm();
+    this.generateYears();
+
   }
 
   onChangeMake(event: any) {
-    if(event.value == null){
-      this.selectedMake = {"makeId": -1, "make": ""};
-    } else {
+    console.log("onchange get called", event);
+      this.selectedMake={make:event.make,makeId:event.makeId};
+      console.log("selectedMake",this.selectedMake);
       this.sellInputFormService.getModels(this.selectedMake.makeId)
       .subscribe(data =>{
         this.models = data
+        this.onChangeModel(event);
         //   console.log(this.models)
       } );
       this.modelFlag = false;
-    }
+
   }
 
   onChangeModel(event) {
-    if(event.value == null){
-      this.yearStateFlag = true;
-      this.selectedstate = {"stateId": "*", "state": ""};
-      this.selectedYear = {"yearId": -1, "year": "*"};
-      this.yearStateFlag = true;
-    } else {
+    // if(event.value == null){
+    //   this.yearStateFlag = true;
+    //   this.selectedstate = {"stateId": "*", "state": ""};
+    //   this.selectedYear = {"yearId": -1, "year": "*"};
+    //   this.yearStateFlag = true;
+    // } else
+    {
+      this.selectedModel={model:event.model,modelId:event.modelId};
       this.sellInputFormService.getParts().subscribe(data => this.parts = data);
       this.generateYears();
+    //  this.onChangePart(event)
       this.yearStateFlag = false;
     }
   }
 
   generateYears():void {
+debugger;
+    /**pre-selected data */
+ //   this.selectedYear= {yearId: event.yearId, year: event.year};
+
     let currentYear = new Date().getFullYear();
     let startYear = (currentYear-50) || 1980;
     let index = 0;
@@ -113,15 +130,17 @@ export class EditInventoryComponent implements OnInit {
     }
   }
 
+
   onChangePart(event: any){
-    if(event.value == null){
-      this.yearStateFlag = true;
-    } else {
+    // if(event.value == null){
+    //   this.yearStateFlag = true;
+    // } else
+    this.selectedPart= {partId: event.partId, part: event.part}
       if(this.selectedModel !== null && this.selectedModel.model !== "")
         console.log(this.selectedModel)
       this.yearStateFlag = false;
-      this.generateYears();
-    }
+    //  this.generateYears(event);
+
   }
 
   // image upload...
@@ -244,6 +263,46 @@ export class EditInventoryComponent implements OnInit {
         }
         );
     }
+
+
+    //edit form ..
+    editForm(){
+      debugger;
+      this.sellInventoryService.subject.subscribe(
+        res=>{
+          console.log('selected data', res);
+          this.onChangeMake(res);
+        //  this.generateYears(res);
+          this.selectedYear= {yearId: res.yearId, year: res.year};
+          this.priceValue= res.price;
+          this.description= res.description;
+          /**render image */
+          this.createImageFromBlob(res.imageUri)
+          if(res.shipping === "true")
+          this.selectedShippingOption={shipping: 'YES', shippingValue: true};
+          else
+          this.selectedShippingOption={shipping: 'NO', shippingValue: false}
+        }
+
+      )
+    }
+
+    // convert images to base64...
+    createImageFromBlob(imageValue) {
+      this.images=[];
+      this.images.push(imageValue);
+    let image = new Blob([imageValue]);
+      let reader = new FileReader();
+      reader.addEventListener("load", () => {
+      let image = [];
+       //image.push(reader.result);
+       //  this.images = reader.result;
+      }, false);
+
+      if (image) {
+         reader.readAsDataURL(image);
+      }
+   }
 
 
 }

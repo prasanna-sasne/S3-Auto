@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit,Output, EventEmitter  } from '@angular/core'
 import { LazyLoadEvent } from 'primeng/api'
 import { SellInventoryService } from './../../services/sell-inventiry.service'
 import {SellInputFormService} from './../../services/sell-input-form.service'
@@ -60,6 +60,8 @@ export class SellInventoryComponent implements OnInit {
   previousRecordFlag: boolean = true
   startIndex = 0
   currentPageIndex = 1
+
+  formdata;
   //Search parameters.....
   makers: { "makeId": number, "make": string }[] = []
   years: { "yearId": number, "year": number }[] = []
@@ -96,6 +98,7 @@ export class SellInventoryComponent implements OnInit {
     this.generateYears();
     this.getMakers();
     sessionStorage.removeItem('filterOptions')
+    //this.editFormData(1);
   }
   // To get previous page data
   previousPage(): void {
@@ -143,13 +146,13 @@ export class SellInventoryComponent implements OnInit {
 
     /**Fetch inventory list*/
     getSellInventory(): void {
-      let sellHistoryHeader = {
+      let inventoryParam = {
         userId: this.userId,
         role: this.role,
         startIdx: this.startIndex,
         resultSize: 9
       }
-      this.sellInventoryService.getInventoryData().subscribe(data => {
+      this.sellInventoryService.getInventoryData(inventoryParam).subscribe(data => {
         console.log('data', data)
         this.paginateView(data)
         this.isLoading = false
@@ -247,7 +250,7 @@ export class SellInventoryComponent implements OnInit {
 
   /**generate index value */
   getIndex(indexValue){
-     this.actionIndex = indexValue;
+    this.actionIndex = indexValue;
     console.log(indexValue);
     console.log(this.inventoryList[indexValue]);
     this.selectedPartList.push(this.inventoryList[indexValue]);
@@ -417,6 +420,13 @@ export class SellInventoryComponent implements OnInit {
         //   this.isLoading = false;
       }
     );
+  }
+
+  editFormData(indexValue){
+    debugger;
+    console.log(this.inventoryList[indexValue]);
+    this.formdata=this.inventoryList;
+    this.sellInventoryService.subject.emit(this.inventoryList[indexValue]);
   }
 
 

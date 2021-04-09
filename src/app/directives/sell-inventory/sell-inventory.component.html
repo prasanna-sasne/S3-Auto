@@ -112,7 +112,7 @@
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" data-toggle="collapse" href="#{{ 'editForm' + parentIndx }}"
-                role="button" (click)="getIndex(parentIndx)" aria-expanded="false"
+                role="button" (click)="editFormData(parentIndx)" aria-expanded="false"
                 aria-controls="multiCollapseExample1">Edit</a>
                 <a class="dropdown-item" (click)="openModal('delete_item')">Delete</a>
                 <a class="dropdown-item" (click)="openModal('sold_modal')">Sold</a>
@@ -149,6 +149,12 @@
               <div></div>
               <div>
                 <h5>Duplicate Form Data</h5>
+                <div class="mt-8">
+                  <input type="number" [(ngModel)]="numberOfValue" name="" id="" maxlength="10" minlength="0">
+                  <button type="button" class="btn btn-outline-primary"
+                    (click)="createDuplicateList(numberOfValue)">Add+</button>
+
+                </div>
                 <p-table [value]="duplicateArray" dataKey="id" editMode="row">
                   <ng-template pTemplate="header">
                     <tr>
@@ -228,17 +234,12 @@
               </div>
               <div>
                 <label class="fontColor">You can duplicate your form upto 10 dataset</label>
-                <div class="mt-8">
-                  <input type="number" [(ngModel)]="numberOfValue" name="" id="" maxlength="10" minlength="0">
-                  <button type="button" class="btn btn-outline-primary"
-                    (click)="createDuplicateList(numberOfValue)">+</button>
 
-                </div>
                 <div class="row">
                   <div class="col-md-10">
                     <div class="mt-5 text-left">
                       <button class="btn btn-primary profile-button button" (click)="submitDuplicateData()"
-                        type="submit">Duplicate</button>
+                        type="submit">Save</button>
                       <button type="cancel" class="btn btn-primary button"
                         (click)="closeModal('duplicate_modal')">cancel</button>
                     </div>

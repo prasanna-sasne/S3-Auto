@@ -50,9 +50,9 @@ export class LoginComponent implements OnInit {
       }
     });
   }
-  
 
-    
+
+
   login(): void {
     this.error = [];
     if (!this.loginForm.pristine) {
@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
     } else {
       console.log(this.loginForm.valid);
 
-      this.validateAllFormFields (this.loginForm) 
+      this.validateAllFormFields (this.loginForm)
     return; }
     const userName = this.loginForm.value.userName;
     const password = this.loginForm.value.password;
@@ -94,7 +94,6 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['tickets']);
             this.modalService.close('signUp_modal');
           } else {
-            debugger;
             this.modalService.close('signUp_modal');
             // this.router.navigate(['/s3-auto']);
           }

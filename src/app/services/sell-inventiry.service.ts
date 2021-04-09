@@ -1,8 +1,12 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { HttpErrorHandler, HandleError } from './http-error-handler.service';
+import { Subject } from 'rxjs';
+
+const subject = new Subject<number>();
+
 interface ResponseData {
   Success: [
     "Successfully added data."
@@ -13,8 +17,7 @@ interface ResponseData {
 export class SellInventoryService {
   private appUrl = 'http://s3auto-env.eba-dqkeutck.us-east-2.elasticbeanstalk.com';  // URL to web api
   private handleError: HandleError;
-
-
+  subject = new EventEmitter<object>();
 
   constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) {
     this.handleError = httpErrorHandler.createHandleError('BuyService');
@@ -57,13 +60,14 @@ export class SellInventoryService {
     return this.http.get<{ stateId: number, state: string }[]>(url)
       .pipe(
         map(response => {
+          console.log("parts cal incvent")
           return response["Success"]["0"]["parts"];
         }), catchError(this.handleError('getstates', []))
       );//end pipe
   }
 
-  getInventoryData() {
-    const url = `${this.appUrl}/uvp/parts/get/75/Available/0/10`;
+  getInventoryData(inventoryParam) {
+    const url = `${this.appUrl}/uvp/parts/get/${inventoryParam.userId}/Available/${inventoryParam.startIdx}/${inventoryParam.resultSize}`;
     return this.http.get<{}[]>(url)
       .pipe(
         map(response => {

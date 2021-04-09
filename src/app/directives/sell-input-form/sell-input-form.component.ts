@@ -19,6 +19,8 @@ export class SellInputFormComponent implements OnInit {
   sellForm;
   url: any; //Angular 11, for stricter type
   msg = "";
+  singleImage:boolean;
+  multiImage:boolean;
   shippingStatus: ShipingOption[];
   selectedShippingOption: ShipingOption ;
   selectedMake: {"makeId": number, "make": string} = {"makeId": -1, "make": ""};
@@ -132,10 +134,11 @@ export class SellInputFormComponent implements OnInit {
     if (event.target.files && event.target.files[0]) {
       var filesAmount = event.target.files.length;
       for (let i = 0; i < filesAmount; i++) {
-        if(filesAmount >4) {
+       if(filesAmount >4 && this.role == "USER"){
           alert('you can select four images only ');
           return;
-        }else {
+        }
+        else {
           var reader = new FileReader();
 
           reader.onload = (event:any) => {

@@ -60,7 +60,7 @@
              <h5>PART NAME</h5>
              <p-dropdown formControlName="partName" [options]="parts" [(ngModel)]="selectedPart" optionLabel="part"
              [filter]="true" filterBy="part" [showClear]="true" placeholder="Select Part" class="select-style"
-             [disabled]="modelFlag" (onChange)="onChangePart($event)">
+             [disabled]="modelFlag" >
              <ng-template pTemplate="selectedItem">
                <div class="country-item country-item-value" *ngIf="selectedPart">
                  <div>{{selectedPart.part}}</div>
@@ -97,7 +97,8 @@
        <div class="row mt-3" style="width: 600px;">
          <div class="col-md-4">
            <h5>Year</h5>
-           <p-dropdown formControlName="years" [options]="years" [(ngModel)]="selectedYear" optionLabel="year"
+           <p-dropdown formControlName="years" [options]="years" [(ngModel)]="selectedYear"
+             optionLabel="year"
            [filter]="true" filterBy="year" [showClear]="true" placeholder="Select Year" class="select-style"
            [disabled]="yearStateFlag"
            [ngClass]="{'ng-valid ng-dirty': selectedYear !== null}"
@@ -134,7 +135,7 @@
        <div class=" col-md-10">
 
          <h5>Description</h5>
-         <textarea class="form-control" rows="4" id="comment" formControlName="description"></textarea>
+         <textarea class="form-control" rows="4" id="comment" formControlName="description" [(ngModel)]="description"></textarea>
 
        </div>
      </div>
@@ -142,12 +143,13 @@
        <div class="col-md-10">
          <div class="mt-5 text-left">
            <button class="btn btn-primary profile-button button mr-2" type="submit">Submit</button>
-           <button type="cancel" class="btn btn-primary button"  (click)=sellInvenPage()>Check Inventory</button>
+           <button type="cancel" class="btn btn-primary button">cancel</button>
          </div>
        </div>
      </div>
    </div>
  </div>
+ <!--Upload Image section-->
  <div class=" col-md-6" style="margin-top: 50px;">
    <div class="p-0 py-0 row mt-8"></div>
    <div class="card bg-light row mt-8" style="text-align:center">
@@ -155,7 +157,7 @@
      <div [innerHtml]='msg' *ngIf="msg" style="color: red;"></div>
 
      <label class ="lableDetail" *ngIf="roleStatus">Please upload picture(front view,left view,back view,back view) you vehicle</label>
-     <label class ="lableDetail" *ngIf="!roleStatus">Please upload picture you vehicle part </label>
+     <label class ="lableDetail" *ngIf="!roleStatus">Please upload picture of your vehicle part </label>
      <input id="file" type="file" class="form-control fileUpload" multiple="" (change)="onFileChange($event)">
                <!-- <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">
                  <div *ngIf="f.file.errors.required">File is required.</div>
