@@ -14,16 +14,18 @@ import { ContactusComponent} from './components/admin/contactus/contactus.compon
 import { TicketsComponent} from './components/admin/tickets/tickets.component';
 import { ResetPasswordComponent } from './shared/reset-password/reset-password.component';
 import { ItemDetailsComponent } from './directives/buy-list/item-details/item-details.component';
+import {SellInfoComponent} from './shared/sell-info/sell-info.component';
 
 import {SellInputFormComponent} from './directives/sell-input-form/sell-input-form.component'
 const routes: Routes = [
-	{ path: '', component: WelcomPageComponent },
-	{ path: 'welcome', component: WelcomPageComponent },
-   { path: 'about-us', component: AboutUsComponent },
+{ path: '', component: WelcomPageComponent },
+{ path: 'welcome', component: WelcomPageComponent },
+{ path: 'about-us', component: AboutUsComponent },
+{ path: 'sell-service-info', component: SellInfoComponent },
 { path: 'updateProfile', component: UpdateProfileComponent },
 { path: 'sellInventory', component: SellInventoryComponent },
-    {path: 'contactus', component: ContactusComponent },
-  {path: 'tickets', component: TicketsComponent},
+{path: 'contactus', component: ContactusComponent },
+{path: 'tickets', component: TicketsComponent},
 {
 	path: 's3-auto',
 	component: JunkBuyComponent,

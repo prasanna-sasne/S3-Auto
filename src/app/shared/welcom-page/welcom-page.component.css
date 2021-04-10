@@ -13,12 +13,20 @@
 }
 
 #header{
-	color: yellow;
+	color: #ffc107;
 	text-align: center;
 	font-weight: 800;
 	font-size: x-large;
 }
 
+.part-tagline{
+	color: white;
+    margin-top: 2%;
+    text-align: center;
+    font-size: larger;
+    font-weight: 700;
+    text-transform: capitalize;
+}
 .carousel-inner > .item {
    height: 400px;
 }

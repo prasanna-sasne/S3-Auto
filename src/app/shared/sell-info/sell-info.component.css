@@ -1,0 +1,35 @@
+.sell-header{
+  font-family: ui-monospace;
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  color: #563d7c;
+}
+
+.sell-subheader{
+  text-align: center;
+  font-style: italic;
+  font-family: 'primeicons';
+  line-height: initial;
+  font-size: 20px;
+}
+
+.imp-pnt{
+  color: blue;
+  text-transform: capitalize;
+}
+.my-card{
+  width: 250px;
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+  text-align: center;
+}
+.my-card-content{
+  display: flex;
+  flex-direction: column;
+}
+
+.sell-car{
+  display: flex;
+  border-bottom: 1px solid blue;
+  justify-content: center;
+}
