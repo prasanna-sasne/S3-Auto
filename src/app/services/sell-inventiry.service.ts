@@ -211,4 +211,36 @@ let headers = new Headers();
       );
   }
 
+  editSellFormVehicle(vehId,multiImages,vehicleAddRequest) {
+    // console.log('request data ', partAddRequest);
+
+     // const data = new FormData();
+     // data.append('partAddRequest', JSON.stringify(partAddRequest));
+     // data.append('images',  selectedFile ,selectedFile.name);
+     const frmdata = new FormData();
+     frmdata.append('vehicleAddRequest', JSON.stringify(vehicleAddRequest));
+
+     for (var i = 0; i < multiImages.length; i++) {
+       frmdata.append('images', multiImages[i], multiImages[i].name);
+     }
+     return this.http
+       .put<ResponseData>(
+        `${this.appUrl}/uvp/vehicles/update/${vehId}`,
+        frmdata
+       )
+       .pipe(
+         catchError(errorRes => {
+           let errorMessage = 'An unknown error occurred!';
+           if (!errorRes.error || !errorRes.error.error) {
+             return throwError(errorMessage);
+           }
+           switch (errorRes.error.error.message) {
+             case 'EMAIL_EXISTS':
+               errorMessage = 'This email exists already';
+           }
+           return throwError(errorMessage);
+         })
+       );
+   }
+
 }

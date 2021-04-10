@@ -52,7 +52,7 @@ export class EditInventoryComponent implements OnInit {
   @Input() reSelectedData;
 
   constructor(private sellInputFormService: SellInputFormService, public _DomSanitizationService: DomSanitizer,
-    private fb: FormBuilder,private toaster:NotificationService, private router: Router, private sellInventoryService: SellInventoryService) {
+    private fb: FormBuilder, private toaster: NotificationService, private router: Router, private sellInventoryService: SellInventoryService) {
     this.shippingStatus = [
       { shipping: 'YES', shippingValue: true },
       { shipping: 'NO', shippingValue: false }
@@ -164,7 +164,7 @@ export class EditInventoryComponent implements OnInit {
       var filesAmount = event.target.files.length;
       for (let i = 0; i < filesAmount; i++) {
         if (filesAmount > 4) {
-          this.toaster.showError('Only four images can be uploaded','Upload Failure')
+          this.toaster.showError('Only four images can be uploaded', 'Upload Failure')
           return;
         } else {
           var reader = new FileReader();
@@ -232,7 +232,7 @@ export class EditInventoryComponent implements OnInit {
       resData => {
         console.log("resData", resData);
         // setting data to session .........
-        this.toaster.showSuccess('Your form has been updated successfully ','Successfully Edited');
+        this.toaster.showSuccess('Your form has been updated successfully ', 'Successfully Edited');
       },
       errorMessage => {
         console.log(errorMessage);
@@ -254,25 +254,19 @@ export class EditInventoryComponent implements OnInit {
       "modelId": this.selectedModel.modelId,
       "year": this.selectedYear.year,
       "vin": this.selectedVin,
-      "mileage": this.selectedMileage,
+      "mileage": String(this.selectedMileage),
       "username": window.sessionStorage.getItem("USERNAME"),
       "price": this.priceValue,
       "description": this.description
 
     }
-    const frmdata = new FormData();
-    frmdata.append('vehicleAddRequest', JSON.stringify(vehicleAddRequest));
-
-    for (var i = 0; i < this.multiImages.length; i++) {
-      frmdata.append('images', this.multiImages[i], this.multiImages[i].name);
-    }
 
     //  console.log('images',this.multiImages)
-    this.sellInputFormService.submitSellFormVehicle(frmdata).subscribe(
+    this.sellInventoryService.editSellFormVehicle(this.vhlId,this.multiImages,vehicleAddRequest).subscribe(
       resData => {
         console.log("resData", resData);
         // setting data to session .........
-        this.toaster.showSuccess('Your form has been updated successfully ','Successfully Edited');
+        this.toaster.showSuccess('Your form has been updated successfully ', 'Successfully Edited');
       },
       errorMessage => {
         console.log(errorMessage);
@@ -287,30 +281,31 @@ export class EditInventoryComponent implements OnInit {
   editForm() {
     this.sellInventoryService.subject.subscribe(
       res => {
-        console.log('response data',res);
+
         this.sellInputFormService.getMakers().subscribe(data => {
           this.makers = data;
-
         });
-        if(this.roleStatus){
-        // this.selectedVin =
-        this.onChangeMake(res.vehicleSells[0]);
-        }else {
+        if (this.roleStatus) {
+          // this.selectedVin =
+this.vhlId = res.vehicleSells[0].vehId;
+          this.description = res.vehicleSells[0].description;
+          this.priceValue = res.vehicleSells[0].price;
+          this.onChangeMake(res.vehicleSells[0]);
+          this.selectedVin = res.vehicleSells[0].vin;
+          this.selectedMileage = res.vehicleSells[0].mileage;
+          this.createImageFromBlob(res.vehicleSells[0].vehicleImages)
+
+        } else {
           this.onChangeMake(res);
-          console.log('selected data', res.partSellId);
           this.partSellId = res.partSellId
           if (res.shipping === "true")
-          this.selectedShippingOption = { shipping: 'YES', shippingValue: true };
-        else
-          this.selectedShippingOption = { shipping: 'NO', shippingValue: false }
+            this.selectedShippingOption = { shipping: 'YES', shippingValue: true };
+          else
+            this.selectedShippingOption = { shipping: 'NO', shippingValue: false }
+            this.priceValue = res.price;
+            this.description = res.description;
+            this.createImageFromBlob(res.imageUri)
         }
-
-        //  this.generateYears(res);
-        this.selectedYear = {year: 2015,yearId: 1 };
-        this.priceValue = res.price;
-        this.description = res.description;
-        /**render image */
-        this.createImageFromBlob(res.imageUri)
 
       }
 
@@ -320,7 +315,16 @@ export class EditInventoryComponent implements OnInit {
   /**convert images to base64...*/
   createImageFromBlob(imageValue) {
     this.images = [];
-    this.images.push(imageValue);
+    console.log(imageValue);
+    if(!this.roleStatus){
+      this.images.push(imageValue);
+    }else{
+   for(let i=0;i<imageValue.length;i++){
+
+     this.images.push(imageValue[i].imageUri);
+   }
+
+    }
     let image = new Blob([imageValue]);
     let reader = new FileReader();
     reader.addEventListener("load", () => {
