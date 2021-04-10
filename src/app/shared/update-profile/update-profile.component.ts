@@ -23,7 +23,7 @@ export class UpdateProfileComponent {
   selectedcity: { "cityId": string, "city": string } = { "cityId": "*", "city": "" };
   requestData: Object = {};
   error = [];
-  oldProfileData = [];
+  private oldProfileData = [];
 
   constructor(private updateProfileService: UpdateProfileService, private fb: FormBuilder, private router:Router) { }
 
@@ -52,8 +52,8 @@ export class UpdateProfileComponent {
     {
       this.updateProfileForm = this.fb.group({
         fname: result.firstName,
-        password: ['', Validators.required],
-        confirmPassword: ['', Validators.required],
+        password: [''],
+        confirmPassword: [''],
         lastName: result.lastName,
         username: result.username,
         phoneNumber: result.phone,
@@ -71,8 +71,8 @@ export class UpdateProfileComponent {
     {
       this.updateProfileForm = this.fb.group({
         fname: result.firstName,
-        password: ['', Validators.required],
-        confirmPassword: ['', Validators.required],
+        password: [''],
+        confirmPassword: [''],
         lastName: result.lastName,
         username: result.username,
         phoneNumber: result.phone,
@@ -92,18 +92,18 @@ export class UpdateProfileComponent {
   initForm(): void {
     this.updateProfileForm = this.fb.group({
       fname: ['', [Validators.required, Validators.maxLength(15), Validators.minLength(5)]],
-      password: ['', Validators.required],
+      password: ['', [Validators.required,  Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]],
       confirmPassword: ['', Validators.required],
-      username: ['', Validators.required],
+      username: ['', [Validators.required, Validators.minLength(5)]],
       lastName: ['', Validators.required],
       phoneNumber: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       email: [null, Validators.compose([
         Validators.email,
         Validators.required])],
-      selectedstate: ['', Validators.required],
-      selectedcity: ['', Validators.required],
+      selectedstate: ['', [ Validators.required]],
+      selectedcity: ['', [ Validators.required]],
       junkYardName: ['', Validators.required],
-      zipCode: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{5}$")]],
+      zipCode: ['', [Validators.required, Validators.pattern("^[0-9]{5}(?:-[0-9]{4})?$") ]],
       address: ['', Validators.required],
     }, {
       validator: this.ConfirmedValidator('password', 'confirmPassword')
@@ -203,10 +203,20 @@ export class UpdateProfileComponent {
       //  this.registrationForm.reset();
     }
 
-    cancelPageR(){
-      //navigate to homepage
-      this.router.navigate(['welcome']);
+    //Reset Update functionality
+    resetUpdate(){
+      this.setForm(this.oldProfileData);
+      if(this.states.length !== 0 && this.citiesList.length !== 0){
+        this.selectedstate = { "stateId": this.oldProfileData["stateId"], 
+        "state":  this.oldProfileData["state"]}
+        this.fetchCities();
+        // this.selectedcity = { "cityId": this.oldProfileData["cityId"], 
+        // "city":  this.oldProfileData["city"]}
+      } 
+      console.log(this.oldProfileData);
+      console.log(this.selectedcity);
     }
+    
     resetForm(){
       this.updateProfileForm.reset();
     }
@@ -217,7 +227,7 @@ export class UpdateProfileComponent {
         this.states = data;
         this.selectedstate = { "stateId": this.oldProfileData["stateId"], 
         "state":  this.oldProfileData["state"]}
-        this.fetchStates();
+        this.fetchCities();
       });
 
     }
@@ -229,11 +239,11 @@ export class UpdateProfileComponent {
       } else { 
         this.selectedstate = event.value;
         //fetch cities in the selectedstate state
-        this.fetchStates();
+        this.fetchCities();
       }
     }
 
-    fetchStates(){
+    fetchCities(){
       this.updateProfileService.getCity(this.selectedstate.stateId).subscribe(data => {
         this.citiesList = data;
         this.selectedcity = { "cityId": this.oldProfileData["cityId"], 

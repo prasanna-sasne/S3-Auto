@@ -45,8 +45,8 @@
     color: red;
     font-size: 12px; }
 
-    .ng-touched{
-      border-color:red;
+    .ng-dirty.ng-touched.ng-invalid {
+      border-color: red;
     }
 
     .custumheader {
@@ -64,10 +64,10 @@
     .disabled {
       cursor: not-allowed;
     }
-.required{
-  content:"*";
-  color:red;
-}
-.error-messages{
-  color:red;
-}
+    .required{
+      content:"*";
+      color:red;
+    }
+    .error-messages{
+      color:red;
+    }
