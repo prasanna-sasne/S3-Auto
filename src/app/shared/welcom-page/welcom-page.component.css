@@ -1,3 +1,24 @@
+.junk-sell{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.junk-sell > span > button{
+	text-transform: uppercase;
+}
+
+#star{
+	color: yellow;
+}
+
+#header{
+	color: yellow;
+	text-align: center;
+	font-weight: 800;
+	font-size: x-large;
+}
+
 .carousel-inner > .item {
    height: 400px;
 }
@@ -18,7 +39,7 @@ button.btn.btn-warning:disabled {
 	top: 29%;
 	background: #2959b9;
 	opacity: 0.9;
-	padding: 2%;
+	padding: 0 2% 2%;
 	text-transform: uppercase;
 	width: 75%;
 }

@@ -23,7 +23,12 @@
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="sr-only">Next</span>
   </a>
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 row-cols-xl-4 mt-4" id="search">
+
+  <div id="search">
+    <div id="header">
+      Looking for parts?
+    </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 row-cols-xl-4 mt-4">
     <div class="p-fluid make">
       <p-dropdown [options]="makers" [(ngModel)]="selectedMake" 
       optionLabel="make" [filter]="true" filterBy="make"
@@ -42,7 +47,7 @@
         </div>
       </ng-template>
     </p-dropdown>
-    <span style="color: yellow"><i class="bi bi-asterisk"></i></span>
+    <span id="star"><i class="bi bi-asterisk"></i></span>
   </div>
 
   <div class="p-fluid make">
@@ -62,7 +67,7 @@
       </div>
     </ng-template>
   </p-dropdown>
-  <span style="color: yellow"><i class="bi bi-asterisk"></i></span>
+  <span id="star"><i class="bi bi-asterisk"></i></span>
 </div>
 <div class="p-fluid make">
   <p-dropdown [options]="parts" [(ngModel)]="selectedPart" optionLabel="part" 
@@ -83,12 +88,18 @@
     </div>
   </ng-template>
 </p-dropdown>
-<span style="color: yellow"><i class="bi bi-asterisk"></i></span>
+<span id="star"><i class="bi bi-asterisk"></i></span>
 </div>
 <span class="search-btn"><button type="button" class="btn btn-warning mr-2"
  (click)="search()" [disabled]="yearStateFlag">Find Parts</button>
 </span>
 </div>
+  </div>
+</div>
+
+<div class="sm-button p-3 junk-sell">
+  <h1 class="search-header text-white mr-3">Do you own a Junkyard? </h1>
+  <span><button class="btn btn-warning">Sell Parts</button></span>
 </div>
 
 <!-- render images -->
@@ -149,7 +160,7 @@
 
 <!-- To show car search operation -->
 <h1 class="search-header mt-3">Search by Make, to get required auto parts</h1>
-<div class="row row-col-sm-3 row-col-sm-6 ">
+<div class="row row-col-sm-3 row-col-md-5 ml-5">
   <div class="static-part p-2 my-3 mx-4"> 
     <img src="assets/ac-hose.jpeg" />
     <span class="mx-3">Ac Hose</span>
