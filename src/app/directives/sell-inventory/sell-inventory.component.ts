@@ -199,13 +199,15 @@ duplicateFlag:boolean;
       this.sellInputFormService.getModels(this.selectedMake.makeId)
         .subscribe(data => this.models = data)
       this.modelFlag = false
+      this.yearStateFlag = false
     }
   }
 
   /* To clear state and year dropdown data and disable these fileds on clearing model */
   onChangeModel(event: any) {
+    this.generateYears();
     if (event.value == null) {
-      this.yearStateFlag = true
+      this.yearStateFlag = false
       this.selectedstate = { "stateId": "*", "state": "" }
       this.selectedYear = { "yearId": -1, "year": "*" }
     } else {

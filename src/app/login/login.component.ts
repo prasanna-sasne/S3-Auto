@@ -57,10 +57,9 @@ export class LoginComponent implements OnInit {
     this.error = [];
     this.validateAllFormFields (this.loginForm)
 
-    if (!this.loginForm.pristine) {
+    if (this.loginForm.valid) {
       console.log('form submitted');
     } else {
-      console.log(this.loginForm.valid);
 
     return; }
     const userName = this.loginForm.value.userName;

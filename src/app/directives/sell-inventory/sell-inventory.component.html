@@ -5,6 +5,7 @@
     </span>
   </div><br>
 
+  <!--Search field-->
   <div class="filter-row row  row-cols-xl-6" style="align-content: center;" *ngIf="!isLoading">
     <!--Search fields-->
     <p-dropdown [options]="makers" [(ngModel)]="selectedMake" optionLabel="make" [filter]="true" filterBy="make"
@@ -40,22 +41,6 @@
     </p-dropdown>
 
 
-    <!-- use this for parts -->
-    <p-dropdown [options]="parts" [(ngModel)]="selectedPart" optionLabel="part" [filter]="true" filterBy="part"
-      [showClear]="true" placeholder="Select Part" class="select-style" [disabled]="modelFlag" *ngIf="role === 'USER'" [ngClass]="{'ng-valid ng-dirty': selectedPart !== null}"
-      [ngClass]="{'ng-invalid ng-dirty': selectedPart == null}">
-      <ng-template pTemplate="selectedItem">
-        <div class="country-item country-item-value" *ngIf="selectedPart">
-          <div>{{selectedPart.part}}</div>
-        </div>
-      </ng-template>
-      <ng-template let-partName pTemplate="item">
-        <div class="country-item">
-          <div>{{partName.part}}</div>
-        </div>
-      </ng-template>
-    </p-dropdown>
-
 
     <p-dropdown [options]="years" [(ngModel)]="selectedYear" optionLabel="year" [filter]="true" filterBy="year"
       [showClear]="true" placeholder="Select Year" class="select-style" [disabled]="yearStateFlag">
@@ -89,13 +74,15 @@
   <div *ngIf="isLoading" style="text-align: center;">
     <app-loading-spinner></app-loading-spinner>
   </div>
-  <!--Cards to display the inventory-->
+  <!--Cards to display the inventory -->
 
   <div class="card mt-3 col-md-12">
 
     <div class="card mt-3 col-md-12" *ngFor="let item of inventoryList; let parentIndx = index;">
-      <div class="row no-gutters" >
-        <div class="embed-responsive embed-responsive-16by9 col-md-4" >
+
+      <!--Cards to display the inventory parts-->
+      <div class="row no-gutters" *ngIf="role =='JUNK_YARD_OWNER'">
+        <div class="embed-responsive embed-responsive-16by9 col-md-4">
           <span *ngIf="item.vehicleImages !== undefined; else soldPartImage">
             <img class="img-thumbnail embed-responsive-item"
               *ngFor="let itemImages of item.vehicleImages;let aIndex= index;" [src]="itemImages.imageUri"
@@ -106,7 +93,7 @@
           </ng-template>
         </div>
         <div class="col-md-8">
-          <div class="card-body" >
+          <div class="card-body">
             <h6 class="card-title"><strong><span *ngIf="item.partId !== undefined">{{item.part}} - </span>
                 {{item.make}}
                 {{ item.model }} {{item.year}}</strong></h6>
@@ -116,9 +103,9 @@
                 Actions
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" data-toggle="collapse" href="#{{ 'editForm' + parentIndx }}"
-                role="button" (click)="editFormData(parentIndx)" aria-expanded="false"
-                aria-controls="multiCollapseExample1">Edit</a>
+                <a class="dropdown-item" data-toggle="collapse" href="#{{ 'editForm' + parentIndx }}" role="button"
+                  (click)="editFormData(parentIndx)" aria-expanded="false"
+                  aria-controls="multiCollapseExample1">Edit</a>
                 <a class="dropdown-item" (click)="openModal('delete_item')">Delete</a>
                 <a class="dropdown-item" (click)="openModal('sold_modal')">Sold</a>
                 <a class="dropdown-item" data-toggle="collapse" href="#{{ 'multiCollapseExample1' + parentIndx }}"
@@ -144,6 +131,77 @@
 
         </div>
       </div>
+      <!--Cards to display the inventory vehicle-->
+      <div class="row no-gutters" *ngIf="role =='USER'">
+        <div class="col-12 col-lg-4">
+
+          <div id="carouselExampleIndicators" class="carousel" data-ride="carousel"
+            *ngIf="item.vehicleSells[0].vehicleImages !== undefined">
+            <ol class="carousel-indicators">
+              <li data-target="#carouselExampleIndicators" *ngFor="let item of item.vehicleSells[0].vehicleImages;"
+                data-slide-to="0" class="active"></li>
+            </ol>
+
+            <div class="carousel-inner">
+              <div class="carousel-item active"
+                *ngFor="let item of item.vehicleSells[0].vehicleImages; let index = index; let isFirst = first"
+                [ngClass]="{active:isFirst}">
+                <img [src]="item.imageUri" class="d-block w-100" alt="...">
+              </div>
+            </div>
+
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h6 class="card-title"><strong><span *ngIf="item.vehicleSells[0].vehId !== undefined"> </span>
+                {{item.vehicleSells[0].make}}
+                {{ item.vehicleSells[0].model }} {{item.vehicleSells[0].year}}</strong></h6>
+            <div class="dropdown btn float-right">
+              <button class="btn btn-secondary dropdown-toggle button dropup" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Actions
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" data-toggle="collapse" href="#{{ 'editForm' + parentIndx }}" role="button"
+                  (click)="editFormData(parentIndx)" aria-expanded="false"
+                  aria-controls="multiCollapseExample1">Edit</a>
+                <a class="dropdown-item" (click)="openModal('delete_item')">Delete</a>
+                <!-- <a class="dropdown-item" data-toggle="collapse" href="#{{ 'multiCollapseExample1' + parentIndx }}"
+            role="button" (click)="getIndex(parentIndx)" aria-expanded="false"
+            aria-controls="multiCollapseExample1">Duplicate</a> -->
+              </div>
+            </div>
+
+            <h6 class="card-subtitle mb-2 text-muted"><strong>{{ item.vehicleSells[0].price | currency }}</strong></h6>
+            <div class="row row-cols-xs-1 row-cols-sm-2">
+              <div class="col" *ngIf="item.vehicleSells[0].mileage !== undefined"><span class="text-muted">Miles
+                  Driven:</span>
+                {{item.vehicleSells[0].mileage}} miles</div>
+              <div class="col" *ngIf="item.vehicleSells[0].vin !== undefined"><span class="text-muted">Vin: </span>{{
+                item.vehicleSells[0].vin }}
+              </div>
+              <!-- <div class="col mb-2" *ngIf="item.shipping !== undefined">
+          <span class="text-muted">Shipping:</span> {{ item.shipping == true ? 'Available': 'Not Available'}}
+        </div> -->
+            </div>
+            <p class="card-text mt-2"><span class="text-muted">Description: </span>{{ item.vehicleSells[0].description
+              }}</p>
+            <!-- <footer class="blockquote-footer">Sold Date: <cite title="Source Title">{{item.soldDate | date}}</cite></footer> -->
+
+          </div>
+
+        </div>
+      </div>
+
       <!--Collapsable Table content for duplicate -->
       <div class="row">
         <div class="col-md-12">
@@ -158,10 +216,10 @@
                   <div class="col-md-6">
                     <label class="fontColor ">You can duplicate your form upto 10 dataset</label>
                   </div>
-                 <div class="error-messages" *ngIf="!duplicateFlag">{{msg}}</div>
+                  <div class="error-messages" *ngIf="!duplicateFlag">{{msg}}</div>
                   <input type="number" [(ngModel)]="numberOfValue" name="" id="" max="10" min="0">
                   <div class="col-md-4"><button type="button" class="btn btn-outline-primary"
-                    (click)="createDuplicateList(numberOfValue)">Add+</button></div>
+                      (click)="createDuplicateList(numberOfValue)">Add+</button></div>
 
                 </div>
                 <p-table [value]="duplicateArray" dataKey="id" editMode="row">
@@ -183,11 +241,10 @@
                       <td>
 
                         <input id={{product.id}} type="file" class="form-control" style=" visibility: hidden; width:10px;cursor: pointer;
-                            height:1px;" placeholder="+" multiple=""
-                          (change)="onFileChange($event,product.id)">
-                          <label for={{product.id}} style="cursor: pointer;">
-                            <img style=" width:20px;cursor: pointer;
-                            height:20px;" src="/assets/editImage.png"/>Click to Edit
+                            height:1px;" placeholder="+" multiple="" (change)="onFileChange($event,product.id)">
+                        <label for={{product.id}} style="cursor: pointer;">
+                          <img style=" width:20px;cursor: pointer;
+                            height:20px;" src="/assets/editImage.png" />Click to Edit
                         </label>
 
                         <div *ngIf="showexistingImage[product.id]==true">
@@ -335,6 +392,7 @@
     </div>
 
   </div>
+
 
 
 

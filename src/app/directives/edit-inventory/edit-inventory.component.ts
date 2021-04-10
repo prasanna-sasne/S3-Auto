@@ -194,12 +194,13 @@ imageToShow;
       }
     }
 
+    /**Navigate back */
     sellInvenPage(){
       //navigate to homepage
       this.router.navigate(['sellInventory']);
     }
 
-    // submit form ..
+    /**submit after edit */
     onSubmitForm() {
       console.log(this.sellForm.value);
       var formData: any = new FormData();
@@ -212,6 +213,7 @@ imageToShow;
       }
     }
 
+    /**Edit existing form */
     submitPartForm(){
       let partAddRequest = {
         "make": this.selectedMake.make,
@@ -242,6 +244,8 @@ imageToShow;
 
 
     }
+
+    /**Edit vehicle form */
     submitVheicleForm() {
       let  vehicleAddRequest = {
         "make": this.selectedMake.make,
@@ -279,7 +283,7 @@ imageToShow;
     }
 
 
-    //edit form ..
+    /**Initiate edit function and render form  */
     editForm(){
       this.sellInventoryService.subject.subscribe(
         res=>{
@@ -304,7 +308,7 @@ imageToShow;
       )
     }
 
-    // convert images to base64...
+    /**convert images to base64...*/
     createImageFromBlob(imageValue) {
       this.images=[];
       this.images.push(imageValue);
