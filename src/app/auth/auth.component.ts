@@ -38,7 +38,7 @@ export class AuthComponent {
       fname: ['', [Validators.required  ]],
       password: ['', [Validators.required,  Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]],
       confirmPassword: ['', Validators.required],
-      username: ['', Validators.required, Validators.minLength(5)],
+      username: ['', [Validators.required, Validators.minLength(5)]],
       lastName: ['', Validators.required],
       phoneNumber: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       email: [null, Validators.compose([
@@ -100,11 +100,57 @@ export class AuthComponent {
   /**......Registration service call... */
   onSubmit() {
     this.error = [];
-    this.validateAllFormFields (this.registrationForm)
 
     if (!this.registrationForm.pristine) {
-      console.log('form submitted');
+      if (this.registrationForm.valid)
+      {
+        console.log('form submitted');
+
+      }else 
+      {
+        //this.validateAllFormFields (this.registrationForm);
+        if(this.roleValue=="USER" && 
+        (this.registrationForm.controls.address.status== "INVALID" ||
+        this.registrationForm.controls.confirmPassword.status=="INVALID"||
+        this.registrationForm.controls.email.status== "INVALID" ||
+        this.registrationForm.controls.fname.status== "INVALID"||
+        this.registrationForm.controls.lastName.status== "INVALID"||
+        this.registrationForm.controls.password.status== "INVALID"||
+        this.registrationForm.controls.phoneNumber.status== "INVALID"||
+        this.registrationForm.controls.selectedcity.status== "INVALID"||
+        this.registrationForm.controls.selectedstate.status== "INVALID"||
+        this.registrationForm.controls.username.status== "INVALID"||
+        this.registrationForm.controls.zipCode.status== "INVALID" ) )
+        {
+          this.validateAllFormFields (this.registrationForm)
+          return;
+        }
+        this.validateAllFormFields (this.registrationForm);
+        if(this.roleValue=="JUNK_YARD_OWNER" && 
+        (this.registrationForm.controls.address.status== "INVALID" ||
+        this.registrationForm.controls.confirmPassword.status=="INVALID"||
+        this.registrationForm.controls.email.status== "INVALID" ||
+        this.registrationForm.controls.fname.status== "INVALID"||
+        this.registrationForm.controls.junkYardName.status== "INVALID"||
+        this.registrationForm.controls.lastName.status== "INVALID"||
+        this.registrationForm.controls.password.status== "INVALID"||
+        this.registrationForm.controls.phoneNumber.status== "INVALID"||
+        this.registrationForm.controls.selectedcity.status== "INVALID"||
+        this.registrationForm.controls.selectedstate.status== "INVALID"||
+        this.registrationForm.controls.username.status== "INVALID"||
+        this.registrationForm.controls.zipCode.status== "INVALID" ) )
+        {
+          this.validateAllFormFields (this.registrationForm)
+          return;
+        }
+        console.log('form submitted');
+
+        //this.registrationForm.
+      }
+
     } else {
+      this.validateAllFormFields (this.registrationForm)
+
       console.log(this.registrationForm.valid);
 
     return;  }
@@ -152,6 +198,7 @@ export class AuthComponent {
 
   resetForm(){
     this.registrationForm.reset();
+this.error =[];    
   }
 
   /**...State service call...  */

@@ -57,18 +57,18 @@ export class SellInputFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sellForm = new FormGroup({
-      // makers: new FormControl(''),
-      // models: new FormControl(''),
-      // partName: new FormControl(''),
-      // years: new FormControl(''),
-      // shipping: new FormControl(''),
-      // description: new FormControl(''),
-      // price: new FormControl(''),
-      // mileage: new FormControl(''),
-      // vinValue:new FormControl('')
-    });
-
+    // this.sellForm = new FormGroup({
+    //   // makers: new FormControl(''),
+    //   // models: new FormControl(''),
+    //   // partName: new FormControl(''),
+    //   // years: new FormControl(''),
+    //   // shipping: new FormControl(''),
+    //   // description: new FormControl(''),
+    //   // price: new FormControl(''),
+    //   // mileage: new FormControl(''),
+    //   // vinValue:new FormControl('')
+    // });
+    this.initForm();
 
     this.sellInputFormService.getMakers().subscribe(data =>{
       this.makers = data;
@@ -83,6 +83,19 @@ export class SellInputFormComponent implements OnInit {
       this.roleStatus = false;
     }
 
+  }
+
+  initForm(): void {
+    this.sellForm = this.fb.group({
+      selectedMake: ['',[ Validators.required]],
+      selectedModel: ['',[ Validators.required]],
+      selectedstate: ['',[ Validators.required]],
+      selectedYear: ['',[ Validators.required]],
+      selectedPart: ['',[ Validators.required]],
+      selectedShip: ['',[ Validators.required]],
+      selectedMileage:['',[ Validators.required]],
+      selectedVin:['',[ Validators.required, Validators.pattern('^(?=.*[0-9])(?=.*[A-z])[0-9A-z-]{17}$')]]
+    } );
   }
 
   onChangeMake(event: any) {

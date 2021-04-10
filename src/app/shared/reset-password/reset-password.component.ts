@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators ,FormControl} from '@angular/forms';
 import { Router,ActivatedRoute }   from '@angular/router';
 import {ResetService} from './reset-password.service'
 
@@ -31,8 +31,8 @@ export class ResetPasswordComponent implements OnInit {
 
   initForm(): void {
     this.resetForm = this.fb.group({
-      confirmPassword: ['', [Validators.required, Validators.maxLength(15), Validators.minLength(5)]],
-      password: ['', Validators.required]
+      password: ['', [Validators.required,  Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]],
+      confirmPassword: ['', [Validators.required]]
     },{
       validator: this.ConfirmedValidator('password', 'confirmPassword')
     } );
@@ -45,7 +45,25 @@ export class ResetPasswordComponent implements OnInit {
 
   }
 
+  validateAllFormFields(formGroup: FormGroup) {         //{1}
+    Object.keys(formGroup.controls).forEach(field => {  //{2}
+      const control = formGroup.get(field);             //{3}
+      if (control instanceof FormControl) {             //{4}
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {        //{5}
+        this.validateAllFormFields(control);            //{6}
+      }
+    });
+  }
+
   resetPassword(): void {
+    this.validateAllFormFields (this.resetForm)
+
+    if (this.resetForm.valid) {
+      console.log('form submitted');
+    } else {
+
+    return; }
     this.error = [];
     const url = new URL(window.location.href);
     console.log(url.searchParams.get('token'));

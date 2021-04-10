@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators , FormControl} from '@angular/forms';
 import { ModalService } from './../../_modal/modal.service';
 import { first, finalize } from 'rxjs/operators';
 import {ForgotPasswordService} from './forgot-password.service';
@@ -36,9 +36,27 @@ closeModal (modalId) {
   this.modalService.close(modalId);
 
 }
-
+validateAllFormFields(formGroup: FormGroup) {         //{1}
+  Object.keys(formGroup.controls).forEach(field => {  //{2}
+    const control = formGroup.get(field);             //{3}
+    if (control instanceof FormControl) {             //{4}
+      control.markAsTouched({ onlySelf: true });
+    } else if (control instanceof FormGroup) {        //{5}
+      this.validateAllFormFields(control);            //{6}
+    }
+  });
+}
 
 onSubmit(){
+
+
+  if (this.forgotPwform.valid) {
+    console.log('form submitted');
+  } else {
+    console.log(this.forgotPwform.valid);
+    this.validateAllFormFields (this.forgotPwform)
+
+  return;  }
   const email = this.forgotPwform.value.email;
   var formData: any = new FormData();
   formData.append('email', email);

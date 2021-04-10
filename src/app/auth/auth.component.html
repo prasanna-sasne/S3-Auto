@@ -37,9 +37,8 @@
                 <input type="email" class="form-control" formControlName="email" id="email" placeholder="Email" autocomplete="off" >
 
                 <div *ngIf="isValidInput('email')" class="error-messages">
-                  <div *ngIf="registrationForm.controls['email'].errors!.required">
-                    Email Name is required.
-                  </div>
+                  <div *ngIf="registrationForm.controls['email'].errors!.required">  Email ID  is required.  </div>
+                  <div *ngIf="registrationForm.controls['email'].errors!.pattern">  Provide a valid Email Id </div>
                 </div>
                 <label class="text-danger" *ngIf="registrationForm.controls['email'].hasError('email')">
                   Enter a valid email address!
@@ -50,6 +49,9 @@
                   <label></label>
                   <input type="text" class="form-control" id="junkYardName" formControlName="junkYardName" style=""
                     placeholder="Junk Yard Name" autocomplete="off" >
+                    <div *ngIf="isValidInput('junkYardName')" class="error-messages">
+                      <div *ngIf="registrationForm.controls['email'].errors!.required">  JunkYard Name is required.  </div>
+                    </div>
                 </div>
               </div>
             </div>
@@ -111,8 +113,9 @@
         <div class="form-group col-md-3" required=true>
           <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
           <p-dropdown [options]="states" formGroupName="selectedstate" optionLabel="state" [filter]="true"
-            filterBy="state" (onChange)="selectChange($event)" (onBlur)="onBlurevent($event)" [showClear]="true"
-            placeholder="Select State" class="select-style"  >
+            filterBy="state" (onChange)="selectChange($event)"  [showClear]="true"
+            placeholder="Select State" class="select-style" [(ngModel)]="selectedstate" 
+            [ngModelOptions]="{standalone: true}">
 
             <ng-template pTemplate="selectedItem">
               <div class="country-item country-item-value" *ngIf="selectedstate">
@@ -125,15 +128,22 @@
               </div>
             </ng-template>
           </p-dropdown>
-
+          <!-- <div *ngIf="isValidInput('selectedstate')" class="error-messages">
+            <div *ngIf="registrationForm.controls['selectedstate'].errors!.required">State Needs to be Selected</div>
+          </div> -->
         </div>
         <!---CITY VALUE---->
         <div class="form-group col-md-3">
           <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
           <p-dropdown [options]="citiesList" formGroupName="selectedcity" optionLabel="city" [filter]="true"
             filterBy="city" (onChange)="selectCityChange($event)" [showClear]="true" placeholder="Select City"
-            class="select-style"
-           >
+            class="select-style"             >
+            <!-- [(ngModel)]="selectedcity" 
+            [ngModelOptions]="{standalone: true}"
+            [ngClass]="{'ng-valid ng-dirty': selectedcity !== null}"
+            [ngClass]="{'ng-invalid ng-touched': selectedcity == null}"
+            [ngClass]="{'ng-valid ng-touched': selectedcity !== null}"
+            [ngClass]="{'ng-invalid ng-dirty': selectedcity == null}"> -->
             <ng-template pTemplate="selectedItem">
               <div class="country-item country-item-value" *ngIf="selectedcity">
                 <div>{{selectedcity.city}}</div>
@@ -145,6 +155,9 @@
               </div>
             </ng-template>
           </p-dropdown>
+          <!-- <div *ngIf="isValidInput('selectedcity')" class="error-messages">
+            <div *ngIf="registrationForm.controls['selectedcity'].errors!.required">City Needs to be Selected</div>
+          </div> -->
         </div>
 
         <!-- <div class="form-group col-md-3"> <input type="text" class="form-control" id="form41" placeholder="City">
