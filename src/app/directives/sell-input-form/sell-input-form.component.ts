@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { SellInputFormService } from './../../services/sell-input-form.service';
 import { FormBuilder, FormControlName, FormControl, FormGroup, Validators } from '@angular/forms';
+import { NotificationService } from './../../services/notification.service';
 import { Router } from '@angular/router';
+
 
 interface ShipingOption {
   shipping: string,
@@ -46,7 +48,9 @@ export class SellInputFormComponent implements OnInit {
   images :any[] =[];
   multiImages:any[]=[];
 
-  constructor( private sellInputFormService:SellInputFormService, private fb:FormBuilder, private router:Router) {
+  constructor( private sellInputFormService:SellInputFormService,
+    private toaster:NotificationService,
+    private fb:FormBuilder, private router:Router) {
     this.shippingStatus = [
     {shipping: 'YES', shippingValue: true},
     {shipping: 'NO', shippingValue: false}
@@ -151,7 +155,7 @@ export class SellInputFormComponent implements OnInit {
       var filesAmount = event.target.files.length;
       for (let i = 0; i < filesAmount; i++) {
        if(filesAmount >4 && this.role == "USER"){
-          alert('you can select four images only ');
+          this.toaster.showError('Only four images can be uploaded','Upload Failure')
           return;
         }
         else {
@@ -218,7 +222,7 @@ export class SellInputFormComponent implements OnInit {
         resData => {
           console.log("resData", resData);
           // setting data to session .........
-          alert('Uploaded Successfully.');
+          this.toaster.showSuccess('Your form has been submitted successfully ','Submitted');
         },
         errorMessage => {
           console.log(errorMessage);
@@ -256,7 +260,7 @@ export class SellInputFormComponent implements OnInit {
         resData => {
           console.log("resData", resData);
           // setting data to session .........
-          alert('Uploaded Successfully.');
+          this.toaster.showSuccess('Your form has been submitted successfully ','Submitted');
         },
         errorMessage => {
           console.log(errorMessage);

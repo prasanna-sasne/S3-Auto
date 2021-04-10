@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators ,FormControl} from '@angular/forms';
 import { Router,ActivatedRoute }   from '@angular/router';
 import {ResetService} from './reset-password.service'
+import { NotificationService } from './../../services/notification.service';
+
 
 @Component({
   selector: 'app-reset-password',
@@ -15,7 +17,7 @@ export class ResetPasswordComponent implements OnInit {
   token;
 
   constructor(private fb: FormBuilder, private resetService:ResetService,
-     private router:Router,
+     private router:Router,private toaster:NotificationService,
      private route: ActivatedRoute) {
   }
 
@@ -80,7 +82,7 @@ export class ResetPasswordComponent implements OnInit {
     this.resetService.resetPassword(formData).subscribe(
       resData => {
         console.log("resData", resData);
-        alert("Your password has been successfully updated. You are being redirected to home page")
+        this.toaster.showSuccess('Your password has been successfully updated. You are being redirected to home page','Updated Successfully')
         this.redirectHomePage();
         // setting data to session .........
       },

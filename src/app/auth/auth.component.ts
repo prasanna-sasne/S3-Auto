@@ -2,6 +2,7 @@ import { Component,Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
+import { NotificationService } from './../services/notification.service';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
@@ -23,7 +24,9 @@ export class AuthComponent {
   success;
   @Output() successRegister: EventEmitter<any> = new EventEmitter();
 
-  constructor(private authService: AuthService, private fb: FormBuilder,private router:Router ) { }
+  constructor(private authService: AuthService,
+    private fb: FormBuilder,private router:Router,
+    private toaster:NotificationService ) { }
 
 
 
@@ -181,9 +184,8 @@ export class AuthComponent {
     // service request for registration
     this.authService.signup(data).subscribe(
       resData => {
-        console.log(resData);
-        alert('You have been registered successfully.Please proceed with login');
-       this.successRegister.emit(true);
+       this.toaster.showSuccess('You have been registered successfully.Please proceed with login','Success')
+        this.successRegister.emit(true);
       //  this.router.navigate(['welcome']);
         //  this.isLoading = false;
       },

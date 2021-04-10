@@ -363,9 +363,10 @@
 
           <ul class="nav nav-pills nav-fill mx-auto">
             <li class="nav-item">
-              <button type="button" class="btn btn-outline-light btnHeadr btnRadius button"
+              <button *ngIf="role =='JUNK_YARD_OWNER'" type="button" class="btn btn-outline-light btnHeadr btnRadius button"
                 (click)="markDeleteItem(item.partSellId)">Yes</button>
-
+                <button *ngIf="role =='USER'" type="button" class="btn btn-outline-light btnHeadr btnRadius button"
+                (click)="markDeleteItem(item.vehicleSells[0].vehId)">Yes</button>
               <button type="button" class="btn btn-outline-light btnHeadr btnRadius button"
                 (click)="closeModal('delete_item')">No</button>
             </li>

@@ -1,10 +1,11 @@
 import { Component, OnInit,Output, EventEmitter  } from '@angular/core'
-import { LazyLoadEvent } from 'primeng/api'
 import { SellInventoryService } from './../../services/sell-inventiry.service'
 import {SellInputFormService} from './../../services/sell-input-form.service'
 import { ModalService } from './../../_modal/modal.service'
-import { windowWhen } from 'rxjs/operators'
 import { Router, ActivatedRoute } from '@angular/router';
+import { NotificationService } from './../../services/notification.service';
+
+
 
 interface inventoryObject {
 
@@ -91,6 +92,7 @@ duplicateFlag:boolean;
   constructor( private sellInventoryService: SellInventoryService,
     private sellInputFormService:SellInputFormService,
     private router:Router,private route: ActivatedRoute,
+    private toaster:NotificationService,
     private modalService: ModalService) {
     this.userId = JSON.parse(`${sessionStorage.getItem("ID")}`)
     this.role = JSON.parse(sessionStorage.getItem('ROLE') || '{}')
@@ -219,15 +221,6 @@ duplicateFlag:boolean;
     }
   }
 
-  // onChangePart(event: any) {
-  //   if (event.value == null) {
-  //     this.yearStateFlag = true
-  //   } else {
-  //     if (this.selectedModel !== null && this.selectedModel.model !== "")
-  //       this.yearStateFlag = false
-  //   }
-  // }
-
   search(): void {
     //sessionStorage.removeItem('filterOptions');
     //startIndex = 0;
@@ -296,7 +289,7 @@ duplicateFlag:boolean;
       var filesAmount = event.target.files.length;
       for (let i = 0; i < filesAmount; i++) {
         if (filesAmount > 4) {
-          alert('you can select four images only ');
+          this.toaster.showError('Only four images can be uploaded','Upload Failure')
           return;
         } else {
           var reader = new FileReader();
@@ -390,7 +383,8 @@ duplicateFlag:boolean;
       resData => {
         console.log("resData", resData);
         // setting data to session .........
-        alert('Uploaded Successfully.');
+
+        this.toaster.showSuccess('Duplicate items have been uploaded successfully','Duplication Success')
         location.reload(true);
       },
       errorMessage => {
@@ -427,7 +421,8 @@ duplicateFlag:boolean;
       resData => {
         console.log("resData", resData);
         // setting data to session .........
-        alert('Item sold and moved to sell history');
+
+        this.toaster.showSuccess('Item sold and moved to sell history','Item Sold')
         this.closeModal('sold_modal');
         location.reload(true);
       },
@@ -441,20 +436,39 @@ duplicateFlag:boolean;
 
    /**Delete service call.. */
    markDeleteItem(partSellId){
-    this.sellInventoryService.deleteFromInventory(partSellId).subscribe(
-      resData => {
-        console.log("resData", resData);
-        // setting data to session .........
-        alert('Deleted Successfully.');
-        this.closeModal('delete_item');
-        location.reload(true);
-      },
-      errorMessage => {
-        console.log(errorMessage);
-        //   this.error = errorMessage;
-        //   this.isLoading = false;
-      }
-    );
+     if(this.role= "JUNK_YARD_OWNER"){
+      this.sellInventoryService.deleteFromInventory(partSellId).subscribe(
+        resData => {
+          console.log("resData", resData);
+          // setting data to session .........
+
+          this.toaster.showSuccess('Item Deleted Successfully','Item Deleted')
+          this.closeModal('delete_item');
+          location.reload(true);
+        },
+        errorMessage => {
+          console.log(errorMessage);
+          //   this.error = errorMessage;
+          //   this.isLoading = false;
+        }
+      );
+     }else{
+      this.sellInventoryService.deleteVehicleFromInventory(partSellId).subscribe(
+        resData => {
+          console.log("resData", resData);
+          // setting data to session .........
+          this.toaster.showSuccess('Item Deleted Successfully','Item Deleted')
+          this.closeModal('delete_item');
+          location.reload(true);
+        },
+        errorMessage => {
+          console.log(errorMessage);
+          //   this.error = errorMessage;
+          //   this.isLoading = false;
+        }
+      );
+     }
+
   }
 
   editFormData(indexValue){

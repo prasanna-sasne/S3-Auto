@@ -15,7 +15,7 @@
               </div>
               <div class="row mt-3">
                 <div class="col-md-4" style="column-width: auto;">
-                  <h5>MAKE</h5>
+                  <h5>Make</h5>
                   <p-dropdown  [options]="makers" [(ngModel)]="selectedMake" optionLabel="make"
                     [filter]="true" filterBy="make" [showClear]="true" placeholder="Select Make" class="select-style"
                     (onChange)="onChangeMake($event)" [ngClass]="{'ng-valid ng-dirty': selectedMake.make !== ''}"
@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="col-md-4" style="column-width: auto;">
-                  <h5 class="required">MODEL</h5>
+                  <h5 class="required">Model</h5>
                   <p-dropdown [options]="models" [(ngModel)]="selectedModel"
                     optionLabel="model" [filter]="true" filterBy="model" [showClear]="true" placeholder="Select Model"
                     class="select-style" (onChange)="onChangeModel($event)" [disabled]="modelFlag"
@@ -56,7 +56,7 @@
               <!--Parts related parameter-->
               <div *ngIf="!roleStatus" class="row mt-3">
                 <div class="col-md-4" style="column-width: auto;">
-                  <h5>PART NAME</h5>
+                  <h5>Part Name</h5>
                   <p-dropdown  [options]="parts" [(ngModel)]="selectedPart" optionLabel="part"
                     [filter]="true" filterBy="part" [showClear]="true" placeholder="Select Part" class="select-style"
                     [disabled]="modelFlag" (onChange)="onChangePart($event)">
@@ -96,21 +96,7 @@
               <div class="row mt-3">
                 <div class="col-md-4" style="column-width: auto;">
                   <h5>Year</h5>
-                  <p-dropdown  [options]="years" [(ngModel)]="selectedYear" optionLabel="year"
-                    [filter]="true" filterBy="year" [showClear]="true" placeholder="Select Year" class="select-style"
-                    [disabled]="yearStateFlag" [ngClass]="{'ng-valid ng-dirty': selectedYear !== null}"
-                    [ngClass]="{'ng-invalid ng-dirty': selectedYear == null}">
-                    <ng-template pTemplate="selectedItem">
-                      <div class="country-item country-item-value" *ngIf="selectedYear">
-                        <div>{{selectedYear.year}}</div>
-                      </div>
-                    </ng-template>
-                    <ng-template let-yearNum pTemplate="item">
-                      <div class="country-item">
-                        <div>{{yearNum.year}}</div>
-                      </div>
-                    </ng-template>
-                  </p-dropdown>
+                  <p-dropdown [options]="years" [(ngModel)]="selectedYear"  optionLabel="year"></p-dropdown>
                 </div>
 
                 <div class="col-md-4" style="column-width: auto;">

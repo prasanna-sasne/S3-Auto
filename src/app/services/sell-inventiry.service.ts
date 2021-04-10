@@ -111,6 +111,26 @@ export class SellInventoryService {
       );
   }
 
+  deleteVehicleFromInventory(vehId){
+let headers = new Headers();
+    //	headers.append('Content-Type', 'application/json');
+    //headers.append('Access-Control-Allow-Origin','*');
+    const url = `${this.appUrl}/uvp/vehicles/delete/${vehId}`;
+    return this.http.delete(url)
+      .pipe(map(response => {
+        console.log(response);
+        return response;
+      }), catchError(errorRes => {
+        let errorMessage = 'An unknown error occurred!';
+        if (errorRes.status !== 400) {
+          return throwError(errorMessage);
+        } else {
+          return throwError(errorRes.error.Error[0]);
+        }
+      })
+      );
+  }
+
 
   deleteFromInventory(partSellId) {
     let headers = new Headers();
