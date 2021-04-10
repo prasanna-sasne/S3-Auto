@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import { UpdateProfileService } from './update-profile.service';
 import { Router } from '@angular/router';
 
@@ -152,113 +152,173 @@ export class UpdateProfileComponent {
 
     console.log(this.roleValue);
   }
-  /**......Registration service call... */
-  onSubmit() {
-    this.error = [];
-    // if (!this.registrationForm.valid) {
-      //   return;
-      // }
+  
+  validateAllFormFields(formGroup: FormGroup) {         //{1}
+  Object.keys(formGroup.controls).forEach(field => {  //{2}
+    const control = formGroup.get(field);             //{3}
+    if (control instanceof FormControl) {             //{4}
+      control.markAsTouched({ onlySelf: true });
+  } else if (control instanceof FormGroup) {        //{5}
+  this.validateAllFormFields(control);            //{6}
+}
+});
+}
 
-      /*..InitiLize list of value from thr form..*/
-      let data = {
-        "userId": JSON.parse(sessionStorage.getItem('ID') || '{}'),
-        "username": this.updateProfileForm.value.username,
-        "firstName": this.updateProfileForm.value.fname,
-        "lastName": this.updateProfileForm.value.lastName,
-        "email": this.updateProfileForm.value.email,
-        "password": this.updateProfileForm.value.password,
-        "newPassword": this.updateProfileForm.value.confirmPassword,
-        "role": this.roleValue,
-        "phoneNumber": this.updateProfileForm.value.phoneNumber,
-        "street": this.updateProfileForm.value.address,
-        "stateId": this.selectedstate.stateId.toString(),
-        "cityId": this.selectedcity.cityId.toString(),    
-        "state": this.selectedstate.stateId.toString(),
-        "city": this.selectedcity.cityId.toString(),
-        "zipCode": this.updateProfileForm.value.zipCode
+/**......Registration service call... */
+onSubmit() {
+  this.error = [];
+  if (!this.updateProfileForm.pristine) {
+    if (this.updateProfileForm.valid) {
+      console.log('form submitted');
+    } else {
+      //this.validateAllFormFields (this.registrationForm);
+      if(this.roleValue=="USER" && 
+        (this.updateProfileForm.controls.address.status== "INVALID" ||
+
+          this.updateProfileForm.controls.email.status== "INVALID" ||
+          this.updateProfileForm.controls.fname.status== "INVALID"||
+          this.updateProfileForm.controls.lastName.status== "INVALID"||
+
+          this.updateProfileForm.controls.phoneNumber.status== "INVALID"||
+          this.updateProfileForm.controls.selectedcity.status== "INVALID"||
+          this.updateProfileForm.controls.selectedstate.status== "INVALID"||
+          this.updateProfileForm.controls.username.status== "INVALID"||
+          this.updateProfileForm.controls.zipCode.status== "INVALID" ) )
+      {
+        this.validateAllFormFields (this.updateProfileForm)
+        return;
       }
+      this.validateAllFormFields (this.updateProfileForm);
+      if(this.roleValue=="JUNK_YARD_OWNER" && 
+        (this.updateProfileForm.controls.address.status== "INVALID" ||
 
-      if (this.show) {
-        data['junkYardName'] = this.updateProfileForm.value.junkYardName; //old version
-        data['newJunkYardName'] = this.updateProfileForm.value.junkYardName;
-      }
-      console.log(data);
-      const junkYardName = this.updateProfileForm.value.junkYardName;
+          this.updateProfileForm.controls.email.status== "INVALID" ||
+          this.updateProfileForm.controls.fname.status== "INVALID"||
+          this.updateProfileForm.controls.junkYardName.status== "INVALID"||
+          this.updateProfileForm.controls.lastName.status== "INVALID"||
 
-      // service request for registration
-      this.updateProfileService.setUserData(data).subscribe(
-        resData => {
-          console.log(resData);
-          //  this.isLoading = false;
-        },
-        errorMessage => {
-          console.log(errorMessage);
-          this.error = errorMessage;
-          //   this.isLoading = false;
-        }
-        );
-
-
-
-      //  this.registrationForm.reset();
+          this.updateProfileForm.controls.phoneNumber.status== "INVALID"||
+          this.updateProfileForm.controls.selectedcity.status== "INVALID"||
+          this.updateProfileForm.controls.selectedstate.status== "INVALID"||
+          this.updateProfileForm.controls.username.status== "INVALID"||
+          this.updateProfileForm.controls.zipCode.status== "INVALID" ) ){
+        this.validateAllFormFields (this.updateProfileForm)
+      return;
     }
+    console.log('form submitted');
 
-    //Reset Update functionality
-    resetUpdate(){
-      this.setForm(this.oldProfileData);
-      if(this.states.length !== 0 && this.citiesList.length !== 0){
-        this.selectedstate = { "stateId": this.oldProfileData["stateId"], 
-        "state":  this.oldProfileData["state"]}
-        this.fetchCities();
-        // this.selectedcity = { "cityId": this.oldProfileData["cityId"], 
-        // "city":  this.oldProfileData["city"]}
-      } 
-      console.log(this.oldProfileData);
-      console.log(this.selectedcity);
-    }
-    
-    resetForm(){
-      this.updateProfileForm.reset();
-    }
-
-    /**...State service call...  */
-    fetchState() {
-      this.updateProfileService.getStates().subscribe(data => {
-        this.states = data;
-        this.selectedstate = { "stateId": this.oldProfileData["stateId"], 
-        "state":  this.oldProfileData["state"]}
-        this.fetchCities();
-      });
-
-    }
-
-    /*....Fetch the selected state and call list of city service....*/
-    selectChange(event: any) {
-      if(event.value == null){
-        this.selectedcity = { "cityId": "*", "city": "" };
-      } else { 
-        this.selectedstate = event.value;
-        //fetch cities in the selectedstate state
-        this.fetchCities();
-      }
-    }
-
-    fetchCities(){
-      this.updateProfileService.getCity(this.selectedstate.stateId).subscribe(data => {
-        this.citiesList = data;
-        this.selectedcity = { "cityId": this.oldProfileData["cityId"], 
-        "city":  this.oldProfileData["city"]}
-      });
-    }
-
-    /*........selected City Value.........*/
-    selectCityChange(event: any) {
-
-      if(event.value !== null) { 
-       
-        this.selectedcity = event.value;
-        console.log("selectedstate option", this.selectedcity.city);
-        // let stateId = this.selectedstate.stateId.toString();
-      }
-    }
+    //this.registrationForm.
   }
+
+} else {
+  this.validateAllFormFields (this.updateProfileForm)
+
+  console.log(this.updateProfileForm.valid);
+
+  return;  }
+
+  /*..InitiLize list of value from thr form..*/
+  let data = {
+    "userId": JSON.parse(sessionStorage.getItem('ID') || '{}'),
+    "username": this.updateProfileForm.value.username,
+    "firstName": this.updateProfileForm.value.fname,
+    "lastName": this.updateProfileForm.value.lastName,
+    "email": this.updateProfileForm.value.email,
+    "password": this.updateProfileForm.value.password,
+    "newPassword": this.updateProfileForm.value.confirmPassword,
+    "role": this.roleValue,
+    "phoneNumber": this.updateProfileForm.value.phoneNumber,
+    "street": this.updateProfileForm.value.address,
+    "stateId": this.selectedstate.stateId.toString(),
+    "cityId": this.selectedcity.cityId.toString(),    
+    "state": this.selectedstate.stateId.toString(),
+    "city": this.selectedcity.cityId.toString(),
+    "zipCode": this.updateProfileForm.value.zipCode
+  }
+
+  if (this.show) {
+    data['junkYardName'] = this.updateProfileForm.value.junkYardName; //old version
+    data['newJunkYardName'] = this.updateProfileForm.value.junkYardName;
+  }
+  console.log(data);
+  const junkYardName = this.updateProfileForm.value.junkYardName;
+
+  // service request for registration
+  this.updateProfileService.setUserData(data).subscribe(
+    resData => {
+      console.log(resData);
+      //  this.isLoading = false;
+    },
+    errorMessage => {
+      console.log(errorMessage);
+      this.error = errorMessage;
+      //   this.isLoading = false;
+    }
+    );
+
+
+
+  //  this.registrationForm.reset();
+}
+
+//Reset Update functionality
+resetUpdate(){
+  this.setForm(this.oldProfileData);
+  if(this.states.length !== 0 && this.citiesList.length !== 0){
+    this.selectedstate = { "stateId": this.oldProfileData["stateId"], 
+    "state":  this.oldProfileData["state"]}
+    this.fetchCities();
+    // this.selectedcity = { "cityId": this.oldProfileData["cityId"], 
+    // "city":  this.oldProfileData["city"]}
+  } 
+  console.log(this.oldProfileData);
+  console.log(this.selectedcity);
+}
+
+resetForm(){
+  this.updateProfileForm.reset();
+}
+
+/**...State service call...  */
+fetchState() {
+  this.updateProfileService.getStates().subscribe(data => {
+    this.states = data;
+    this.selectedstate = { "stateId": this.oldProfileData["stateId"], 
+    "state":  this.oldProfileData["state"]}
+    this.fetchCities();
+  });
+
+}
+
+/*....Fetch the selected state and call list of city service....*/
+selectChange(event: any) {
+  this.selectedcity = { "cityId": "*", "city": "" };
+  if(event.value !== null){
+    this.selectedstate = event.value;
+    //fetch cities in the selectedstate state
+    this.fetchCities();
+  }
+}
+
+fetchCities(){
+  this.updateProfileService.getCity(this.selectedstate.stateId).subscribe(data => {
+    this.citiesList = data;
+    if(this.citiesList.some(city => city.city === this.oldProfileData["city"])){
+      this.selectedcity = { "cityId": this.oldProfileData["cityId"], 
+      "city":  this.oldProfileData["city"]}
+    } 
+    console.log(this.selectedcity);
+  });
+}
+
+/*........selected City Value.........*/
+selectCityChange(event: any) {
+
+  if(event.value !== null) { 
+
+    this.selectedcity = event.value;
+    console.log("selectedstate option", this.selectedcity.city);
+    // let stateId = this.selectedstate.stateId.toString();
+  }
+}
+}
