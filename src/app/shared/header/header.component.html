@@ -18,14 +18,14 @@
       <a class="contact" routerLink="s3-auto/buy-list">Home</a>
     </div>
 
-    <div class="nav-item mt-2 mr-2" *ngIf="roleflag">
-      <a class="contact" routerLink="contactus">Contact Us</a>
-    </div>
-    <div class="nav-item m-0" style="cursor: pointer;" *ngIf="email === undefined || email === null"
-    [routerLink]="['/sell-service-info']">
-    <h5><span class="badge badge-pill badge-warning">Sell <i class="bi bi-wallet2 ml-2"></i></span></h5>
-  </div>
-  <div class="nav-item mx-4" style="cursor: pointer;" *ngIf="email === undefined || email === null"
+<div class="nav-item mt-2 mr-2" *ngIf="roleflag">
+  <a class="contact" routerLink="contactus">Contact Us</a>
+</div>
+<div class="nav-item sell m-0" *ngIf="email === undefined || email === null"
+[routerLink]="['/sell-service-info']">
+  <h5><span class="badge badge-pill badge-warning">Sell <i class="bi bi-wallet2 ml-2"></i></span></h5>
+</div>
+<div class="nav-item abt-us" *ngIf="email === undefined || email === null"
   routerLink="about-us">
   About Us
 </div>
@@ -37,7 +37,6 @@
     </h4>
     <span class="dot" *ngIf="showBell"></span>
   </span>
-
 </div>
 
 <div class="nav-item" *ngIf="email !== undefined && email !== null">
