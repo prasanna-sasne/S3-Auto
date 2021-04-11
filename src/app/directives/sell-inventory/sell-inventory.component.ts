@@ -63,6 +63,7 @@ duplicateFlag:boolean;
   startIndex = 0;
   currentPageIndex = 1;
   msg:String;
+  isReadMore=true;
 
   formdata;
   //Search parameters.....
@@ -548,6 +549,10 @@ duplicateFlag:boolean;
 
   goToSellSection(){
     this.router.navigate(['../s3-auto/sell-form'], {relativeTo: this.route});
+  }
+
+  showText(){
+    this.isReadMore = !this.isReadMore
   }
 
 
