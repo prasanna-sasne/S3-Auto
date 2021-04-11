@@ -4,7 +4,7 @@ import { ModalService } from './../../_modal/modal.service';
 import { first, finalize } from 'rxjs/operators';
 import {ForgotPasswordService} from './forgot-password.service';
 import { Router,ActivatedRoute }   from '@angular/router';
-
+import { NotificationService } from './../../services/notification.service';
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
@@ -16,7 +16,7 @@ export class ForgotPasswordComponent implements OnInit {
   submitted = false;
   error:String;
   mailSentMessage:String;
-  constructor( private formBuilder: FormBuilder,private modalService:ModalService,
+  constructor( private formBuilder: FormBuilder,private modalService:ModalService, private toaster:NotificationService,
     private forgotPasswordService:ForgotPasswordService,private router:Router) { }
 
   ngOnInit(): void {
@@ -70,6 +70,7 @@ this.mailSentMessage ="We have sent a reset password link to your email. Please 
     errorMessage => {
       console.log(errorMessage);
       this.error = errorMessage;
+      this.toaster.showError(errorMessage,'Error Occured')
       //   this.isLoading = false;
     }
   );

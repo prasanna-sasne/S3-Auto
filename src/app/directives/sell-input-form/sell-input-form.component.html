@@ -3,23 +3,25 @@
   <div class="card col-md-10" style="margin-top: 40px;margin-block-end: 40px;">
     <div class="container rounded bg-white mt-5">
       <!-- <form  (ngSubmit)="onSubmitForm()"> -->
+      <form name="sellForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
 
-        <div class="row">
+        <div class="form-row">
 
-          <div class="col-md-6" style="column-width: auto;">
+          <div class="form-group col" style="column-width: auto;">
             <div class="p-0 py-0">
               <div class="d-flex justify-content-between align-items-center mb-3">
                 <div class="d-flex flex-row align-items-center back">
                   <i class="fa fa-long-arrow-left mr-1 mb-1"></i>
                 </div>
               </div>
-              <div class="row mt-3">
-                <div class="col-md-4" style="column-width: auto;">
+              <div class="form-row">
+                <div class="form-group col" style="column-width: auto;">
                   <h5>MAKE</h5>
-                  <p-dropdown  [options]="makers" [(ngModel)]="selectedMake" optionLabel="make"
-                    [filter]="true" filterBy="make" [showClear]="true" placeholder="Select Make" class="select-style"
-                    (onChange)="onChangeMake($event)" [ngClass]="{'ng-valid ng-dirty': selectedMake.make !== ''}"
-                    [ngClass]="{'ng-invalid ng-dirty': selectedMake.make == ''}">
+                  <p-dropdown class="form-control" [options]="makers" [(ngModel)]="selectedMake" optionLabel="make"
+                    [filter]="true" filterBy="make" placeholder="Select Make" class="select-style"
+                    (onChange)="onChangeMake($event)" [ngClass]="{ 'is-invalid': f.submitted && makeControl.invalid }"
+                    name="selectedMake" 
+                    #makeControl="ngModel">
                     <ng-template pTemplate="selectedItem">
                       <div class="country-item country-item-value" *ngIf="selectedMake">
                         <div>{{selectedMake.make}}</div>
@@ -30,36 +32,52 @@
                         <div>{{maker.make}}</div>
                       </div>
                     </ng-template>
+
                   </p-dropdown>
+                  <div *ngIf="selectedMake.make == '' && (makeControl.dirty || makeControl.touched)"
+                    class="error-messages">
+                    Make is required
+                  </div>
+                  <!-- <div [hidden]="testControl.control?.status !== 'INVALID' ">
+                    Value is required
+                  </div> -->
+
                 </div>
 
-                <div class="col-md-4" style="column-width: auto;">
+                <div class="form-group col" style="column-width: auto;">
                   <h5 class="required">MODEL</h5>
-                  <p-dropdown [options]="models" [(ngModel)]="selectedModel"
-                    optionLabel="model" [filter]="true" filterBy="model" [showClear]="true" placeholder="Select Model"
-                    class="select-style" (onChange)="onChangeModel($event)" [disabled]="modelFlag"
-                    [ngClass]="{'ng-valid ng-dirty': selectedModel !== null}"
-                    [ngClass]="{'ng-invalid ng-dirty': selectedModel == null}">
+                  <p-dropdown class="form-control" [options]="models" [(ngModel)]="selectedModel" optionLabel="model"
+                    [filter]="true" filterBy="make" placeholder="Select Model" class="select-style"
+                    (onChange)="onChangeModel($event)" [ngClass]="{'ng-valid ng-dirty': selectedModel.model !== ''}"
+                    name="selectedModel" [ngClass]="{'ng-invalid ng-dirty': selectedModel.model == ''}"
+                    #modelControl="ngModel">
                     <ng-template pTemplate="selectedItem">
-                      <div class="country-item country-item-value" *ngIf="selectedModel">
+                      <div class="country-item country-item-value" *ngIf="selectedMake">
                         <div>{{selectedModel.model}}</div>
                       </div>
                     </ng-template>
-                    <ng-template let-model pTemplate="item">
+                    <ng-template let-modelsL pTemplate="item">
                       <div class="country-item">
-                        <div>{{model.model}}</div>
+                        <div>{{modelsL.model}}</div>
                       </div>
                     </ng-template>
+
                   </p-dropdown>
+                  <div *ngIf="selectedModel.model == '' && (modelControl.dirty || modelControl.touched)"
+                    class="error-messages">
+                    Model is required
+                  </div>
                 </div>
               </div>
               <!--Parts related parameter-->
               <div *ngIf="!roleStatus" class="row mt-3">
-                <div class="col-md-4" style="column-width: auto;">
+                <div class="form-group col" style="column-width: auto;">
                   <h5>PART NAME</h5>
-                  <p-dropdown  [options]="parts" [(ngModel)]="selectedPart" optionLabel="part"
-                    [filter]="true" filterBy="part" [showClear]="true" placeholder="Select Part" class="select-style"
-                    [disabled]="modelFlag" (onChange)="onChangePart($event)">
+                  <p-dropdown class="form-control" [options]="parts" [(ngModel)]="selectedPart" optionLabel="part"
+                    [filter]="true" filterBy="part" placeholder="Select Part" class="select-style"
+                    [disabled]="modelFlag" name="selectedPart" (onChange)="onChangePart($event)"
+                    [ngClass]="{'ng-valid ng-dirty': selectedPart.part !== ''}"
+                    [ngClass]="{'ng-invalid ng-dirty': selectedPart.part == ''}" #partControl="ngModel">
                     <ng-template pTemplate="selectedItem">
                       <div class="country-item country-item-value" *ngIf="selectedPart">
                         <div>{{selectedPart.part}}</div>
@@ -71,89 +89,110 @@
                       </div>
                     </ng-template>
                   </p-dropdown>
+                  <div *ngIf="selectedPart.part == '' && (partControl.dirty || partControl.touched)"
+                    class="error-messages">
+                    Part is required
+                  </div>
                 </div>
-                <div class="col-md-4" style="column-width: auto;">
+                <div class="form-group col" style="column-width: auto;">
                   <h5>Shipping </h5>
-                  <p-dropdown  [options]="shippingStatus" [(ngModel)]="selectedShippingOption"
-                    placeholder="YES/NO" optionLabel="shipping" [showClear]="true"></p-dropdown>
+                  <p-dropdown [options]="shippingStatus" [(ngModel)]="selectedShippingOption" placeholder="YES/NO"
+                    optionLabel="shipping" [showClear]="true" #shipControl="ngModel" name="selectedShippingOption">
+                  </p-dropdown>
+
                 </div>
               </div>
               <!--VEHICLE parameters-->
               <div *ngIf="roleStatus" class="row mt-3">
 
-                <div class="col-md-4" style="column-width: auto;">
+                <div class="form-group col" style="column-width: auto;">
                   <h5>VIN </h5>
-                  <input type="text" class="form-control"  id="vinValue" [(ngModel)]="selectedVin"
-                    placeholder="e.g. 2GNAOXEX5E6235589">
+                  <input type="text" class="form-control" id="vinValue" [(ngModel)]="selectedVin"
+                    placeholder="e.g. 2GNAOXEX5E6235589" #vinValue="ngModel" required minlength="17" name="selectedVin">
+                  <div *ngIf="vinValue.invalid && (vinValue.dirty || vinValue.touched)" class="error-messages">
+                    <div *ngIf="vinValue.errors!.required"> VIN is required. </div>
+                    <div *ngIf="vinValue.errors?.minlength"> VIN is 17 characters Long </div>
 
+
+                  </div>
                 </div>
-                <div class="col-md-4" style="column-width: auto;">
+                <div class="form-group col" style="column-width: auto;">
                   <h5>MILEAGE</h5>
-                  <input type="text" class="form-control" [(ngModel)]="selectedMileage"  id="mileage"
-                    placeholder="e.g. 1500 miles"                                    >
+                  <input type="text" class="form-control" [(ngModel)]="selectedMileage" id="mileage"
+                    placeholder="e.g. 1500 miles" #mileage="ngModel" required name="selectedMileage">
+                  <div *ngIf="mileage.invalid && (mileage.dirty || mileage.touched)" class="error-messages">
+                    <div *ngIf="mileage.errors!.required"> Mileage is required. </div>
+
+                  </div>
 
                 </div>
               </div>
               <!--VEHICLE para meters end-->
-              <div class="row mt-3">
-                <div class="col-md-4" style="column-width: auto;">
-                  <h5>Year</h5>
-                  <p-dropdown  [options]="years" [(ngModel)]="selectedYear" optionLabel="year"
-                    [filter]="true" filterBy="year" [showClear]="true" placeholder="Select Year" class="select-style"
-                    [disabled]="yearStateFlag" [ngClass]="{'ng-valid ng-dirty': selectedYear !== null}"
-                    [ngClass]="{'ng-invalid ng-dirty': selectedYear == null}">
+              <div class="form-row">
+                <div class="form-group col" style="column-width: auto;">
+                  <h5 class="required">YEAR</h5>
+                  <p-dropdown class="form-control" [options]="years" [(ngModel)]="selectedYear" optionLabel="year"
+                    [filter]="true" filterBy="year" placeholder="Select Year" class="select-style"
+                    (onChange)="onChangeModel($event)" name="selectedYear"
+                    [ngClass]="{'ng-valid ng-dirty': selectedYear.year !== ''}"
+                    [ngClass]="{'ng-invalid ng-dirty': selectedYear.year == ''}" #yearControl="ngModel">
                     <ng-template pTemplate="selectedItem">
-                      <div class="country-item country-item-value" *ngIf="selectedYear">
+                      <div class="country-item country-item-value" *ngIf="selectedMake">
                         <div>{{selectedYear.year}}</div>
                       </div>
                     </ng-template>
-                    <ng-template let-yearNum pTemplate="item">
+                    <ng-template let-yearL pTemplate="item">
                       <div class="country-item">
-                        <div>{{yearNum.year}}</div>
+                        <div>{{yearL.year}}</div>
                       </div>
                     </ng-template>
+
                   </p-dropdown>
+                  <div *ngIf="selectedYear.year == '' && (yearControl.dirty || yearControl.touched)"
+                    class="error-messages">
+                    Year is required
+                  </div>
                 </div>
 
-                <div class="col-md-4" style="column-width: auto;">
+                <div class="form-group col" style="column-width: auto;">
                   <h5>Price </h5>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">$</span>
                       <!-- <span class="input-group-text">0.00</span> -->
                     </div>
-                    <input  type="number" [(ngModel)]="priceValue" value="0.00" min="0"
-                      step="1.01" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"
-                      id="c2" />
+                    <input class="form-control" type="number" [(ngModel)]="priceValue" value="0.00" min="0" step="1.01"
+                      data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"
+                      id="priceValue" #pricev="ngModel" required rows="3" name="priceValue">
+                    <div *ngIf="pricev.value== null && (pricev.dirty || pricev.touched)" class="error-messages">
+                      <div *ngIf="pricev.errors!.required"> Price is required. </div>
+
+                    </div>
                   </div>
                 </div>
 
               </div>
 
-              <div class="row mt-3">
-                <div class=" col-md-10">
+              <div class="form-row">
+                <h5>Description</h5>
+                <textarea type="text" class="form-control" [(ngModel)]="description" id="description"
+                  placeholder="e.g. Item Details " #descV="ngModel" name="description" required>
 
-                  <h5>Description</h5>
-                  <textarea class="form-control" [(ngModel)]="description" rows="4" id="comment" ></textarea>
+              </textarea>
+                <!-- <div [hidden]="description=='' &&  (descV.control.dirty || descV.control.touched) ">
+                Value is required
+              </div> -->
+                <div *ngIf="description=='' &&  (descV.control.dirty || descV.control.touched) " class="error-messages">
+                  <div *ngIf="descV.errors!.required"> Description is required. </div>
 
                 </div>
+
+
               </div>
-              <div class="row mt-3">
-                <div class="col-md-4">
-                  <div class="mt-5 text-left">
-                    <button class="btn btn-primary profile-button button mr-2" (click)=onSubmitForm() type="submit">Submit</button>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="mt-5 text-left">
-                    <button type="cancel" class="btn btn-primary button" (click)=sellInvenPage()>Check
-                      Inventory</button>
-                  </div>
-                </div>
-              </div>
+
             </div>
           </div>
-          <div class=" col-md-6" style="margin-top: 50px;">
+          <div class="form-group col" style="margin-top: 50px;">
             <div class="p-0 py-0 row mt-8"></div>
             <div class="card bg-light row mt-8" style="text-align:center">
 
@@ -162,8 +201,10 @@
               <label class="lableDetail" *ngIf="roleStatus">Please upload picture(front view,left view,back view,back
                 view) you vehicle</label>
               <label class="lableDetail" *ngIf="!roleStatus">Please upload picture of vehicle part </label>
-              <input *ngIf="roleStatus" id="file" type="file" class="form-control fileUpload" multiple="" (change)="onFileChange($event)">
-              <input *ngIf="!roleStatus" id="file" type="file" class="form-control fileUpload" (change)="onFileChange($event)">
+              <input *ngIf="roleStatus" id="file" type="file" class="form-control fileUpload" multiple=""
+                (change)="onFileChange($event)">
+              <input *ngIf="!roleStatus" id="file" type="file" class="form-control fileUpload"
+                (change)="onFileChange($event)">
               <!-- <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">
                 <div *ngIf="f.file.errors.required">File is required.</div>
               </div> -->
@@ -174,8 +215,24 @@
             </div>
           </div>
         </div>
-      <!-- </form> -->
+
+      <div class="form-row" class="d-flex justify-content-center">
+        <div class="form-group col" >
+          <div class="mt-5 text-left">
+            <button class="btn btn-primary button" type="submit" [disabled]="f.form.invalid">Submit</button>
+            
+          </div>
+        </div>
+        <div class="form-group col" >
+          <div class="mt-5 text-left">
+            <button type="cancel" class="btn btn-primary button" (click)=sellInvenPage()>Check
+              Inventory</button>
+          </div>
+        </div>
+      </div>
+    </form>
+
     </div>
   </div>
-  <div class=" col-md-1"></div>
+
 </div>

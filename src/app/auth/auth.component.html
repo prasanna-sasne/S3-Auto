@@ -112,10 +112,12 @@
         <!-----STATE DATA----->
         <div class="form-group col-md-3" required=true>
           <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
-          <p-dropdown [options]="states" formGroupName="selectedstate" optionLabel="state" [filter]="true"
-            filterBy="state" (onChange)="selectChange($event)"  [showClear]="true"
+          <p-dropdown [options]="states" formControlName="selectedstate" optionLabel="state" [filter]="true"
+            filterBy="state" (onChange)="selectChange($event)"  [showClear]="true" 
             placeholder="Select State" class="select-style" [(ngModel)]="selectedstate" 
-            [ngModelOptions]="{standalone: true}">
+            [ngModelOptions]="{standalone: true}" id="selectedstate"
+            [ngClass]="{'ng-valid ng-dirty': ( selectedstate != null) }"
+            [ngClass]="{'ng-invalid ng-dirty': (selectedstate == null)}" >
 
             <ng-template pTemplate="selectedItem">
               <div class="country-item country-item-value" *ngIf="selectedstate">
@@ -128,22 +130,20 @@
               </div>
             </ng-template>
           </p-dropdown>
-          <!-- <div *ngIf="isValidInput('selectedstate')" class="error-messages">
+          <div *ngIf="isValidInput('selectedstate')" class="error-messages">
             <div *ngIf="registrationForm.controls['selectedstate'].errors!.required">State Needs to be Selected</div>
-          </div> -->
+          </div>
         </div>
         <!---CITY VALUE---->
         <div class="form-group col-md-3">
           <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
-          <p-dropdown [options]="citiesList" formGroupName="selectedcity" optionLabel="city" [filter]="true"
+          <p-dropdown [options]="citiesList" formControlName="selectedcity" optionLabel="city" [filter]="true"
             filterBy="city" (onChange)="selectCityChange($event)" [showClear]="true" placeholder="Select City"
-            class="select-style"             >
-            <!-- [(ngModel)]="selectedcity" 
+            class="select-style"             
+            [(ngModel)]="selectedcity" 
             [ngModelOptions]="{standalone: true}"
             [ngClass]="{'ng-valid ng-dirty': selectedcity !== null}"
-            [ngClass]="{'ng-invalid ng-touched': selectedcity == null}"
-            [ngClass]="{'ng-valid ng-touched': selectedcity !== null}"
-            [ngClass]="{'ng-invalid ng-dirty': selectedcity == null}"> -->
+            [ngClass]="{'ng-invalid ng-dirty': selectedcity == null}">
             <ng-template pTemplate="selectedItem">
               <div class="country-item country-item-value" *ngIf="selectedcity">
                 <div>{{selectedcity.city}}</div>
@@ -155,9 +155,9 @@
               </div>
             </ng-template>
           </p-dropdown>
-          <!-- <div *ngIf="isValidInput('selectedcity')" class="error-messages">
+          <div *ngIf="isValidInput('selectedcity')" class="error-messages">
             <div *ngIf="registrationForm.controls['selectedcity'].errors!.required">City Needs to be Selected</div>
-          </div> -->
+          </div>
         </div>
 
         <!-- <div class="form-group col-md-3"> <input type="text" class="form-control" id="form41" placeholder="City">
@@ -180,7 +180,7 @@
         </div>
     </div>
     <br>
-      <div>
+      <div class="d-flex justify-content-center" >
         <button type="submit" class="btn btn-primary button"  >Submit</button>
         <button type="button" (click)=resetForm() class="btn btn-primary button">Reset</button>
       </div>

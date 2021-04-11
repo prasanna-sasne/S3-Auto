@@ -53,8 +53,10 @@ export class AuthComponent {
       zipCode: ['', [Validators.required, Validators.pattern("^[0-9]{5}(?:-[0-9]{4})?$") ]],
       address: ['', Validators.required]
     }, {
-      validator: this.ConfirmedValidator('password', 'confirmPassword')
+      validator: this.ConfirmedValidator('password', 'confirmPassword'),
+      updateOn: 'blur'
     });
+
   }
 
   /**.... Validation for input fields... */
@@ -217,6 +219,7 @@ this.error =[];
   }
   /*....Fetch the selected state and call list of city service....*/
   selectChange(event: any) {
+
     console.log("selected State", event.value);
     this.selectedstate = event.value;
     console.log("selectedstate option", this.selectedstate.stateId);
@@ -225,6 +228,9 @@ this.error =[];
       this.citiesList = data;
       console.log(data);
     });
+  
+  // else 
+  //   this.selectedstate= { "stateId": "", "state": "" };
   }
 
   save() {

@@ -24,6 +24,7 @@ export class SellInputFormComponent implements OnInit {
   singleImage:boolean;
   multiImage:boolean;
   shippingStatus: ShipingOption[];
+  
   selectedShippingOption: ShipingOption ;
   selectedMake: {"makeId": number, "make": string} = {"makeId": -1, "make": ""};
   selectedModel: {"modelId": number, "model": string} = {"modelId": -1, "model": ""};
@@ -36,14 +37,16 @@ export class SellInputFormComponent implements OnInit {
   modelFlag:boolean;
   makers: {"makeId": number, "make": string}[] = [];
   models: {"modelId": number, "model": string}[] = [];
-  years: {"yearId": number, "year": number}[] = [];
+  years: {"yearId": number, "year": string}[] = [];
   parts: {"partId": number, "part": string}[] = [];
-  description:String;
+  description:String="";
   role:String="";
   roleStatus:boolean = false;
   yearStateFlag:boolean = true;
   priceValue:string;
   selectedFile;
+  public cleared = false;
+
 
   images :any[] =[];
   multiImages:any[]=[];
@@ -59,7 +62,10 @@ export class SellInputFormComponent implements OnInit {
 
 
   }
-
+  clear() {
+    
+    this.cleared = true;
+  }
   ngOnInit(): void {
     // this.sellForm = new FormGroup({
     //   // makers: new FormControl(''),
@@ -88,24 +94,38 @@ export class SellInputFormComponent implements OnInit {
     }
 
   }
-
+  OnFocus() {
+    console.log("OnFocus");
+  }
+  OnBlur() {
+    console.log("OnBlur");
+  }
   initForm(): void {
-    this.sellForm = this.fb.group({
-      selectedMake: ['',[ Validators.required]],
-      selectedModel: ['',[ Validators.required]],
-      selectedstate: ['',[ Validators.required]],
-      selectedYear: ['',[ Validators.required]],
-      selectedPart: ['',[ Validators.required]],
-      selectedShip: ['',[ Validators.required]],
-      selectedMileage:['',[ Validators.required]],
-      selectedVin:['',[ Validators.required, Validators.pattern('^(?=.*[0-9])(?=.*[A-z])[0-9A-z-]{17}$')]]
+    this.sellForm = new FormGroup({
+      selectedMake: new FormControl([this.selectedMake,[ Validators.required]]),
+      selectedModel: new FormControl([this.selectedModel,[ Validators.required]]),
+      selectedstate: new FormControl([this.selectedstate,[ Validators.required]]),
+      selectedYear: new FormControl([this.selectedYear,[ Validators.required]]),
+      selectedPart: new FormControl([this.selectedPart,[ Validators.required]]),
+      selectedShip: new FormControl([this.selectedShip,[ Validators.required]]),
+      selectedMileage:new FormControl([this.selectedMileage,[ Validators.required]]),
+      priceValue: new FormControl([this.priceValue,[ Validators.required]]),
+      description: new FormControl([this.description,[ Validators.required]]),
+      selectedVin:new FormControl([this.selectedVin,[ Validators.required, Validators.pattern('^(?=.*[0-9])(?=.*[A-z])[0-9A-z-]{17}$')]])
     } );
   }
 
   onChangeMake(event: any) {
+    
     if(event.value == null){
       this.selectedMake = {"makeId": -1, "make": ""};
+      this.selectedModel = {"modelId": -1, "model": ""};
+      this.selectedYear = {"yearId": -1, "year": "*"};
     } else {
+      this.selectedModel.model='';
+      this.selectedYear.year='';
+      this.generateYears();
+
       this.sellInputFormService.getModels(this.selectedMake.makeId)
       .subscribe(data =>{
         this.models = data
@@ -119,7 +139,9 @@ export class SellInputFormComponent implements OnInit {
     if(event.value == null){
       this.yearStateFlag = true;
       this.selectedstate = {"stateId": "*", "state": ""};
-      this.selectedYear = {"yearId": -1, "year": "*"};
+  
+
+      //
       this.yearStateFlag = true;
     } else {
       this.sellInputFormService.getParts().subscribe(data => this.parts = data);
@@ -133,7 +155,7 @@ export class SellInputFormComponent implements OnInit {
     let startYear = (currentYear-50) || 1980;
     let index = 0;
     while ( currentYear >= startYear ) {
-      this.years.push({"year": currentYear--, "yearId": index++});
+      this.years.push({"year": String(currentYear--), "yearId": index++});
     }
   }
 
@@ -144,21 +166,41 @@ export class SellInputFormComponent implements OnInit {
       if(this.selectedModel !== null && this.selectedModel.model !== "")
         console.log(this.selectedModel)
       this.yearStateFlag = false;
-      this.generateYears();
+      //this.selectedYear = {"yearId": -1, "year": ""};
+
     }
   }
 
+  onChangeYear(event: any){
+    this.generateYears();
+    console.log(event);
+
+    if(event.value == null){
+      //this.yearStateFlag = true;
+    } else {
+      if(this.selectedModel !== null && this.selectedModel.model !== "")
+        console.log(this.selectedModel)
+
+        this.selectedYear ={"year": event.value.year, "yearId": event.value.yearId};
+
+      //this.yearStateFlag = false;
+    }
+  }
   // image upload...
   onFileChange(event) {
     this.images=[];
     if (event.target.files && event.target.files[0]) {
       var filesAmount = event.target.files.length;
       for (let i = 0; i < filesAmount; i++) {
-       if(filesAmount >4 && this.role == "USER"){
-          this.toaster.showError('Only four images can be uploaded','Upload Failure')
+       if(filesAmount !=4 && this.role == "USER"){
+          this.toaster.showError('Four(4) Images need to be uploaded','Upload Failure')
           return;
-        }
-        else {
+       }
+       if(filesAmount !=1 && this.role != "USER"){
+        this.toaster.showError('One(1) Image need to be uploaded','Upload Failure')
+        return;
+     }
+      {
           var reader = new FileReader();
 
           reader.onload = (event:any) => {
@@ -191,11 +233,46 @@ export class SellInputFormComponent implements OnInit {
       this.router.navigate(['sellInventory']);
     }
 
+  
+  
+    validateAllFormFields(formGroup: FormGroup) {         //{1}
+      Object.keys(formGroup.controls).forEach(field => {  //{2}
+        const control = formGroup.get(field);             //{3}
+        if (control instanceof FormControl) {             //{4}
+          control.markAsTouched({ onlySelf: true });
+        } else if (control instanceof FormGroup) {        //{5}
+          this.validateAllFormFields(control);            //{6}
+        }
+      });
+    }
+  
+  
+    ConfirmedValidator(controlName: string, matchingControlName: string){
+      return (formGroup: FormGroup) => {
+          const control = formGroup.controls[controlName];
+          const matchingControl = formGroup.controls[matchingControlName];
+          if (matchingControl.errors && !matchingControl.errors.confirmedValidator) {
+              return;
+          }
+          if (control.value !== matchingControl.value) {
+              matchingControl.setErrors({ confirmedValidator: true });
+          } else {
+              matchingControl.setErrors(null);
+          }
+      }
+  }
+      
     // submit form ..
-    onSubmitForm() {
+    onSubmit() {
       console.log(this.sellForm.value);
-      var formData: any = new FormData();
-      let partAddRequest = {}
+      //var formData: any = new FormData();
+      //let partAddRequest = {}
+      this.validateAllFormFields (this.sellForm);
+     if (this.sellForm.valid) {
+      console.log('form submitted');
+    } else {
+
+    return; }
       // sell form data ...
       if(this.roleStatus) {
         this.submitVheicleForm(); // Form for User
@@ -205,6 +282,27 @@ export class SellInputFormComponent implements OnInit {
     }
 
     submitPartForm(){
+
+      if(
+      this.selectedMake.make==null||
+      this.selectedMake.makeId==null||
+       this.selectedModel.model==null||
+      this.selectedModel.modelId==null||
+     this.selectedYear.year==null||
+      String(this.selectedPart.partId)==null||
+       this.selectedPart.part==null||
+       window.sessionStorage.getItem("USERNAME")==null||
+       this.priceValue==null||
+       this.description==null||
+       this.selectedFile==null||
+      String(this.selectedShippingOption.shippingValue)==null)
+      
+
+      {
+        this.toaster.showError('Check for input fields and Image for valid data','Input Field Error')
+
+      return;
+      }
       let partAddRequest = {
         "make": this.selectedMake.make,
         "makeId": this.selectedMake.makeId,
@@ -235,6 +333,25 @@ export class SellInputFormComponent implements OnInit {
 
     }
     submitVheicleForm() {
+      if(
+        this.selectedMake.make==null||
+        this.selectedMake.makeId==null||
+         this.selectedModel.model==null||
+        this.selectedModel.modelId==null||
+       this.selectedYear.year==null||
+       this.selectedVin==null||
+       this.selectedMileage==null||
+         window.sessionStorage.getItem("USERNAME")==null||
+         this.priceValue==null||
+         this.description==null||
+         this.multiImages==null
+       )
+       {
+        this.toaster.showError('Check input fields and images for valid data','Input Field Error')
+
+      return;
+      }
+
       let  vehicleAddRequest = {
         "make": this.selectedMake.make,
         "makeId": this.selectedMake.makeId,
