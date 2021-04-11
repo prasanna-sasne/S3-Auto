@@ -89,7 +89,7 @@
               alt="sell-history">
           </span>
           <ng-template #soldPartImage>
-            <img class="img-thumbnail embed-responsive-item" [src]="item.imageUri" alt="sell-history">
+            <img class="img-thumbnail embed-responsive-item" style="object-fit: cover;" [src]="item.imageUri" alt="sell-history">
           </ng-template>
         </div>
         <div class="col-md-8">
@@ -124,7 +124,14 @@
                 <span class="text-muted">Shipping:</span> {{ item.shipping == true ? 'Available': 'Not Available'}}
               </div>
             </div>
-            <p class="card-text mt-2"><span class="text-muted">Description: </span>{{ item.description }}</p>
+            <div class="col card-text mt-2" [ngClass]="{'limitTextHeight': isReadMore}"><span class="text-muted">Description:</span>
+              {{ item.description}}
+            </div><button id={{item.partId}} class="btn btn-link" type="button" (click)="showText()">
+    {{ isReadMore ? 'Read More': 'Read Less' }}
+  </button>
+
+
+            <!-- <p class="card-text mt-2"><span class="text-muted">Description: </span>{{ item.description }}</p> -->
             <!-- <footer class="blockquote-footer">Sold Date: <cite title="Source Title">{{item.soldDate | date}}</cite></footer> -->
 
           </div>
@@ -182,7 +189,7 @@
             </div>
 
             <h6 class="card-subtitle mb-2 text-muted"><strong>{{ item.vehicleSells[0].price | currency }}</strong></h6>
-            <div class="row row-cols-xs-1 row-cols-sm-2">
+
               <div class="col" *ngIf="item.vehicleSells[0].mileage !== undefined"><span class="text-muted">Miles
                   Driven:</span>
                 {{item.vehicleSells[0].mileage}} miles</div>
@@ -192,9 +199,14 @@
               <!-- <div class="col mb-2" *ngIf="item.shipping !== undefined">
           <span class="text-muted">Shipping:</span> {{ item.shipping == true ? 'Available': 'Not Available'}}
         </div> -->
-            </div>
-            <p class="card-text mt-2"><span class="text-muted">Description: </span>{{ item.vehicleSells[0].description
-              }}</p>
+
+            <div class="col card-text mt-2" [ngClass]="{'limitTextHeight': isReadMore}"><span class="text-muted">Description:</span>
+              {{ item.vehicleSells[0].description}}
+            </div><button id="{{item.vehicleSells[0].vehId}}" class="btn btn-link" type="button" (click)="showText()">
+    {{ isReadMore ? 'Read More': 'Read Less' }}
+  </button>
+            <!-- <p class="card-text mt-2"><span class="text-muted">Description: </span>{{ item.vehicleSells[0].description
+              }}</p> -->
             <!-- <footer class="blockquote-footer">Sold Date: <cite title="Source Title">{{item.soldDate | date}}</cite></footer> -->
 
           </div>
