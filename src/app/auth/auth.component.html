@@ -113,8 +113,8 @@
         <div class="form-group col-md-3" required=true>
           <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
           <p-dropdown [options]="states" formControlName="selectedstate" optionLabel="state" [filter]="true"
-            filterBy="state" (onChange)="selectChange($event)"  [showClear]="true" 
-            placeholder="Select State" class="select-style" [(ngModel)]="selectedstate" 
+            filterBy="state" (onChange)="selectChange($event)"  [showClear]="true"
+            placeholder="Select State" class="select-style" [(ngModel)]="selectedstate"
             [ngModelOptions]="{standalone: true}" id="selectedstate"
             [ngClass]="{'ng-valid ng-dirty': ( selectedstate != null) }"
             [ngClass]="{'ng-invalid ng-dirty': (selectedstate == null)}" >
@@ -139,8 +139,8 @@
           <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
           <p-dropdown [options]="citiesList" formControlName="selectedcity" optionLabel="city" [filter]="true"
             filterBy="city" (onChange)="selectCityChange($event)" [showClear]="true" placeholder="Select City"
-            class="select-style"             
-            [(ngModel)]="selectedcity" 
+            class="select-style"
+            [(ngModel)]="selectedcity"
             [ngModelOptions]="{standalone: true}"
             [ngClass]="{'ng-valid ng-dirty': selectedcity !== null}"
             [ngClass]="{'ng-invalid ng-dirty': selectedcity == null}">

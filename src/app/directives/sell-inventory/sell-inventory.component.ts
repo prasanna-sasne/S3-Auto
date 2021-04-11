@@ -285,47 +285,77 @@ duplicateFlag:boolean;
 
   /**Upload Image file */
   onFileChange(event,id) {
+
     if (event.target.files && event.target.files[0]) {
-      var filesAmount = event.target.files.length;
-      for (let i = 0; i < filesAmount; i++) {
-        if (filesAmount > 4) {
-          this.toaster.showError('Only four images can be uploaded','Upload Failure')
-          return;
-        } else {
-          var reader = new FileReader();
+        /**User role */
+        var filesAmount = event.target.files.length;
+        var reader = new FileReader();
 
-          reader.onload = (event: any) => {
-            console.log(event.target)
-            if (event.target.result !== undefined) {
-              //this.images = [];
-              this.showexistingImage[id] = true;
-            }
-            this.images[id]=event.target.result;
-            //  console.log(event.target.result);
-            // if (event.target.result.match(/image\/*/) == null) {
-            //   this.msg = "Only images are supported";
-            //   return;
-            //   }
+        reader.onload = (event: any) => {
+          console.log(event.target);
+          this.showexistingImage[id] = true;
+          //  console.log(event.target.result);
+          // if (event.target.result.match(/image\/*/) == null) {
+          //   this.msg = "Only images are supported";
+          //   return;
+          //   }
+          var temp = event.target;
+          // temp.append("name","file + id");
+          this.images[id] = (event.target.result);
 
-            //  this.sellForm.patchValue({
-            //     fileSource: this.sellForm
-            //  });
-          }
-
-          reader.readAsDataURL(event.target.files[i]);
-          // this.selectedFile =event.target.files[i];
-           this.multiImages.push(event.target.files[i]);
-          console.log(this.multiImages);
-          // console.log(event.target.files[i]);
+          // this.sellForm.patchValue({
+          //   fileSource: this.sellForm
+          // });
         }
 
+        reader.readAsDataURL(event.target.files[0]);
+       // this.selectedFile = event.target.files[0];
+        this.multiImages[id] = (event.target.files[0]);
+
+        console.log(this.multiImages);
       }
-    }
+    // if (event.target.files && event.target.files[0]) {
+    //   var filesAmount = event.target.files.length;
+    //   for (let i = 0; i < filesAmount; i++) {
+    //     if (filesAmount > 4) {
+    //       this.toaster.showError('Only four images can be uploaded','Upload Failure')
+    //       return;
+    //     } else {
+    //       var reader = new FileReader();
+
+    //       reader.onload = (event: any) => {
+    //         console.log(event.target)
+    //         if (event.target.result !== undefined) {
+    //           //this.images = [];
+    //           this.showexistingImage[id] = true;
+    //         }
+    //         this.images[id]=event.target.result;
+    //         //  console.log(event.target.result);
+    //         // if (event.target.result.match(/image\/*/) == null) {
+    //         //   this.msg = "Only images are supported";
+    //         //   return;
+    //         //   }
+
+    //         //  this.sellForm.patchValue({
+    //         //     fileSource: this.sellForm
+    //         //  });
+    //       }
+
+    //       reader.readAsDataURL(event.target.files[i]);
+    //       // this.selectedFile =event.target.files[i];
+    //        this.multiImages.push(event.target.files[i]);
+    //       console.log(this.multiImages);
+    //       // console.log(event.target.files[i]);
+    //     }
+
+    //   }
+    // }
   }
 
   /**Duplicate the list */
   createDuplicateList(numberOfValue) {
     this.duplicateArray = [];
+    this.multiImages=[];
     console.log(numberOfValue);
     if(numberOfValue >0 && numberOfValue <11) {
       this.duplicateFlag= true;
@@ -336,7 +366,12 @@ duplicateFlag:boolean;
         console.log(temp)
        this.duplicateArray.push(temp);
        this.showexistingImage[i]=false;
-      // this.images[0]
+       this.toDataURL(tempo.imageUri, (temp) => {
+        let blob_t = this.dataURItoBlob(temp);
+        this.multiImages[i] = blob_t;
+      }
+
+      );
       }
     }else{
       this.duplicateFlag= false;
@@ -345,7 +380,41 @@ duplicateFlag:boolean;
 
 
   }
+  toDataURL(url, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+      var reader = new FileReader();
+      reader.onloadend = function () {
+        callback(reader.result);
 
+      }
+      reader.readAsDataURL(xhr.response);
+    };
+    xhr.open('GET', url);
+    xhr.responseType = 'blob';
+    xhr.send();
+  }
+
+
+  dataURItoBlob(dataURI) {
+    // convert base64/URLEncoded data component to raw binary data held in a string
+    var byteString;
+    if (dataURI.split(',')[0].indexOf('base64') >= 0)
+      byteString = atob(dataURI.split(',')[1]);
+    else
+      byteString = unescape(dataURI.split(',')[1]);
+
+    // separate out the mime component
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+    // write the bytes of the string to a typed array
+    var ia = new Uint8Array(byteString.length);
+    for (var i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([ia], { type: mimeString });
+  }
 
   createDataSet(duplicateArray) {
    this.propertObject = [];

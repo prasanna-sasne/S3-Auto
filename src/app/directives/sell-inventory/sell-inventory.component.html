@@ -230,14 +230,21 @@
                       <th>Make</th>
                       <th>Model</th>
                       <th>year</th>
-                      <th>Price</th>
                       <th>Description</th>
+                      <th>Price</th>
+
                       <th style="width:8rem"></th>
                     </tr>
                   </ng-template>
                   <ng-template pTemplate="body" let-product let-editing="editing" let-ri="rowIndex">
                     <tr [pEditableRow]="product">
-                      {{product.id +1}}
+
+                      <td>
+                        <p>
+                          {{product.id +1}}
+                        </p>
+                      </td>
+
                       <td>
 
                         <input id={{product.id}} type="file" class="form-control" style=" visibility: hidden; width:10px;cursor: pointer;
@@ -268,16 +275,7 @@
                       <td>
                         <p>{{product.year}}</p>
                       </td>
-                      <td>
-                        <p-cellEditor>
-                          <ng-template pTemplate="input">
-                            <input pInputText type="text" [(ngModel)]="product.price">
-                          </ng-template>
-                          <ng-template pTemplate="output">
-                            {{product.price | currency: 'USD'}}
-                          </ng-template>
-                        </p-cellEditor>
-                      </td>
+
                       <td>
                         <p-cellEditor>
                           <ng-template pTemplate="input">
@@ -289,10 +287,21 @@
                         </p-cellEditor>
                       </td>
 
+                      <td>
+                        <p-cellEditor>
+                          <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="product.price">
+                          </ng-template>
+                          <ng-template pTemplate="output">
+                            {{product.price | currency: 'USD'}}
+                          </ng-template>
+                        </p-cellEditor>
+                      </td>
+
                       <td style="text-align:center">
 
-                        <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
-                          (click)="onRowEditInit(product)" class="pi pi-pencil btn-floating indigo"></button>
+                        <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="bi bi-pencil-square"
+                          (click)="onRowEditInit(product)" class="bi bi-pencil-square btn-floating indigo"></button>
                         <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
                           (click)="onRowEditSave(product)"
                           class="p-button-rounded p-button-text p-button-success p-mr-2 pi pi-check"></button>

@@ -104,6 +104,7 @@ export class AuthComponent {
 
   /**......Registration service call... */
   onSubmit() {
+    debugger;
     this.error = [];
 
     if (!this.registrationForm.pristine) {
@@ -111,10 +112,10 @@ export class AuthComponent {
       {
         console.log('form submitted');
 
-      }else 
+      }else
       {
         //this.validateAllFormFields (this.registrationForm);
-        if(this.roleValue=="USER" && 
+        if(this.roleValue=="USER" &&
         (this.registrationForm.controls.address.status== "INVALID" ||
         this.registrationForm.controls.confirmPassword.status=="INVALID"||
         this.registrationForm.controls.email.status== "INVALID" ||
@@ -131,7 +132,7 @@ export class AuthComponent {
           return;
         }
         this.validateAllFormFields (this.registrationForm);
-        if(this.roleValue=="JUNK_YARD_OWNER" && 
+        if(this.roleValue=="JUNK_YARD_OWNER" &&
         (this.registrationForm.controls.address.status== "INVALID" ||
         this.registrationForm.controls.confirmPassword.status=="INVALID"||
         this.registrationForm.controls.email.status== "INVALID" ||
@@ -202,7 +203,7 @@ export class AuthComponent {
 
   resetForm(){
     this.registrationForm.reset();
-this.error =[];    
+this.error =[];
   }
 
   /**...State service call...  */
