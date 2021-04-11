@@ -5,13 +5,13 @@
     <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
   </ol>
   <div class="carousel-inner">
-    <div class="carousel-item active" style="height:492px">
+    <div class="carousel-item active" style="height:440px">
       <img src="assets/wall4.jpg" class="d-block w-100" alt="...">
     </div>
-    <div class="carousel-item" style="height:492px">
+    <div class="carousel-item" style="height:440px">
       <img src="assets/wall2.jpg" class="d-block w-100" alt="...">
     </div>
-    <div class="carousel-item img-fluid" style="height:492px">
+    <div class="carousel-item" style="height:440px">
       <img src="assets/wall5.jpg" class="d-block w-100" alt="...">
     </div>
   </div>
@@ -169,31 +169,36 @@
 </ng-template>
 
 <!-- To show car search operation -->
-<h1 class="search-header mt-3">Search by Make, to get required auto parts</h1>
-<div class="row row-col-sm-3 row-col-md-5 ml-5">
+<h1 class="search-header mt-3">If you are a buyer, experience our benefits</h1>
+<div class="row row-col-sm-4 row-col-md-5 ml-5">
+  <div class="col-md-1"></div>
   <div class="static-part p-2 my-3 mx-4"> 
-    <img src="assets/ac-hose.jpeg" />
-    <span class="mx-3">Ac Hose</span>
+    <img src="assets/contact.jpg" /><br>
+    <span class="mx-3">Direct Contact to Supplier</span>
   </div>
   <div class="static-part p-2 my-3 mx-4"> 
-    <img src="assets/Ac_compressor.jpg" />
-    <span class="mx-3">Ac Compressor</span>
+    <img src="assets/bestPrice.png" /><br>
+    <span class="mx-3">Sell you Old Vehicle in Best Price</span>
   </div>
   <div class="static-part p-2 my-3 mx-4"> 
-    <img src="assets/Flowmeter-Air.png" />
-    <span class="mx-3">Flowmeter Air</span>
+    <img src="assets/multibuy.png" /><br>
+    <span class="mx-3">Buy Used Parts from Multiple Vendors</span>
   </div>
-  <div class="static-part p-2 my-3 mx-4"> 
+  <!-- <div class="static-part p-2 my-3 mx-4"> 
     <img src="assets/front_mirror.png" />
     <span class="mx-3">Front Mirror</span>
-  </div>
+  </div> -->
   
   <div class="static-part p-2 my-3 mx-4"> 
-    <img src="assets/air-conditioner-wiring-harness.jpeg" />
-    <span class="mx-3">AC Wiring Harness</span>
+    <img src="assets/freeuse.png" /><br>
+    <span class="mx-3">Free Platform</span>
   </div>
+
 </div>
-<div class="row" style="justify-content: flex-end; border-bottom: 4px solid #1976d2">
+
+
+
+<div class="row footerFix" style="justify-content: flex-end; border-bottom: 4px solid #1976d2">
   <div id="trapezoid" (click)="displayFooter()">
     <span style="color: white">Site Map
       <i *ngIf="footerFlag == false" class="bi bi-arrow-down"></i>

@@ -2,6 +2,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	height: 63px;
 }
 
 .junk-sell > span > button{
@@ -14,9 +15,9 @@
     width: 100%;
     padding-right: 0px;
     padding-left: 0px;
-    margin-right: auto;
-    margin-left: auto; 
-	margin-top: 0px!important; 
+    margin-right: 0px;
+    margin-left: 0px; 
+	margin-top: 5px!important; 
     padding: 0px 0px!important; 
 }
 
@@ -70,6 +71,18 @@
 }
 .carousel-inner > .item {
    height: 400px;
+   width: 100%;
+}
+
+.carousel {overflow:hidden;
+	width: 100%;
+}
+
+.footerFix {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: 0px;
+    margin-left: -1px;
 }
 button.btn.btn-warning:disabled {
 	cursor: not-allowed;
@@ -126,15 +139,17 @@ button.btn.btn-warning:disabled {
 }
 
 .static-part img{
-	max-height: 94%;
-	max-width: 88%;
-	width: 200px;
+	max-height: 70%;
+	max-width: 46%;
+	width: 100px;
 }
 
-.static-part{
-	width: 200px; 
-	text-align: center;
-	box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+.static-part {
+    border-radius: 50%;
+    width: 160px;
+    height: 160px;
+    text-align: center;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
 }
 
 p-dropdown.ng-dirty.ng-invalid > .p-dropdown {
