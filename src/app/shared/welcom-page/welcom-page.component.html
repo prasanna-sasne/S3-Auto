@@ -29,82 +29,73 @@
       Looking for parts?
     </div>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 row-cols-xl-4 mt-4">
+      <div class="p-fluid make">
+        <p-dropdown [options]="makers" [(ngModel)]="selectedMake" 
+        optionLabel="make" [filter]="true" filterBy="make"
+        [showClear]="true" placeholder="Select Make" class="select-style "
+        (onChange)="onChangeMake($event)"
+        [ngClass]="{'ng-valid ng-dirty': selectedMake.make !== ''}"
+        [ngClass]="{'ng-invalid ng-dirty': selectedMake.make == ''}">
+        <ng-template pTemplate="selectedItem">
+          <div class="country-item country-item-value" *ngIf="selectedMake">
+            <div>{{selectedMake.make}}</div>
+          </div>
+        </ng-template>
+        <ng-template let-maker pTemplate="item">
+          <div class="country-item">
+            <div>{{maker.make}}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+      <span id="star"><i class="bi bi-asterisk"></i></span>
+    </div>
+
     <div class="p-fluid make">
-      <p-dropdown [options]="makers" [(ngModel)]="selectedMake" 
-      optionLabel="make" [filter]="true" filterBy="make"
-      [showClear]="true" placeholder="Select Make" class="select-style "
-      (onChange)="onChangeMake($event)"
-      [ngClass]="{'ng-valid ng-dirty': selectedMake.make !== ''}"
-      [ngClass]="{'ng-invalid ng-dirty': selectedMake.make == ''}">
+      <p-dropdown [options]="models" [(ngModel)]="selectedModel" optionLabel="model" [filter]="true" filterBy="model"
+      [showClear]="true" placeholder="Select Model" class="select-style"
+      (onChange)="onChangeModel($event)" [disabled]="modelFlag"
+      [ngClass]="{'ng-valid ng-dirty': selectedModel !== null}"
+      [ngClass]="{'ng-invalid ng-dirty': selectedModel == null}">
       <ng-template pTemplate="selectedItem">
-        <div class="country-item country-item-value" *ngIf="selectedMake">
-          <div>{{selectedMake.make}}</div>
+        <div class="country-item country-item-value" *ngIf="selectedModel">
+          <div>{{selectedModel.model}}</div>
         </div>
       </ng-template>
-      <ng-template let-maker pTemplate="item">
+      <ng-template let-model pTemplate="item">
         <div class="country-item">
-          <div>{{maker.make}}</div>
+          <div>{{model.model}}</div>
         </div>
       </ng-template>
     </p-dropdown>
-    <!-- <span id="star"><i class="bi bi-asterisk"></i></span> -->
-    <span>
-      <img style=" width:19px;opacity: 70%;
-        height:11px;" src="/assets/asterisk.png" /></span>
+    <span id="star"><i class="bi bi-asterisk"></i></span>
   </div>
-
   <div class="p-fluid make">
-    <p-dropdown [options]="models" [(ngModel)]="selectedModel" optionLabel="model" [filter]="true" filterBy="model"
-    [showClear]="true" placeholder="Select Model" class="select-style"
-    (onChange)="onChangeModel($event)" [disabled]="modelFlag"
-    [ngClass]="{'ng-valid ng-dirty': selectedModel !== null}"
-    [ngClass]="{'ng-invalid ng-dirty': selectedModel == null}">
+    <p-dropdown [options]="parts" [(ngModel)]="selectedPart" optionLabel="part" 
+    [filter]="true" filterBy="part"
+    [showClear]="true" placeholder="Select Part" class="select-style" 
+    [disabled]="partFlag"
+    (onChange)="onChangePart($event)"
+    [ngClass]="{'ng-valid ng-dirty': selectedPart !== null}"
+    [ngClass]="{'ng-invalid ng-dirty': selectedPart == null}">
     <ng-template pTemplate="selectedItem">
-      <div class="country-item country-item-value" *ngIf="selectedModel">
-        <div>{{selectedModel.model}}</div>
+      <div class="country-item country-item-value" *ngIf="selectedPart">
+        <div>{{selectedPart.part}}</div>
       </div>
     </ng-template>
-    <ng-template let-model pTemplate="item">
+    <ng-template let-partName pTemplate="item">
       <div class="country-item">
-        <div>{{model.model}}</div>
+        <div>{{partName.part}}</div>
       </div>
     </ng-template>
   </p-dropdown>
-  <span>
-    <img style=" width:19px;opacity: 70%;
-      height:11px;" src="/assets/asterisk.png" /></span>
-  <!-- <span id="star"><i class="bi bi-asterisk"></i></span> -->
+  <span id="star"><i class="bi bi-asterisk"></i></span>
 </div>
-<div class="p-fluid make">
-  <p-dropdown [options]="parts" [(ngModel)]="selectedPart" optionLabel="part" 
-  [filter]="true" filterBy="part"
-  [showClear]="true" placeholder="Select Part" class="select-style" 
-  [disabled]="partFlag"
-  (onChange)="onChangePart($event)"
-  [ngClass]="{'ng-valid ng-dirty': selectedPart !== null}"
-  [ngClass]="{'ng-invalid ng-dirty': selectedPart == null}">
-  <ng-template pTemplate="selectedItem">
-    <div class="country-item country-item-value" *ngIf="selectedPart">
-      <div>{{selectedPart.part}}</div>
-    </div>
-  </ng-template>
-  <ng-template let-partName pTemplate="item">
-    <div class="country-item">
-      <div>{{partName.part}}</div>
-    </div>
-  </ng-template>
-</p-dropdown>
-<span>
-  <img style=" width:19px;opacity: 70%;
-    height:11px;" src="/assets/asterisk.png" /></span>
-<!-- <span id="star"><i class="bi bi-asterisk"></i></span> -->
-</div>
-<span class="search-btn"><button type="button" class="btn btn-light-blue butsrc"
+<span class="search-btn"><button type="button" class="btn btn-warning mr-2"
  (click)="search()" [disabled]="yearStateFlag">Find Parts</button>
 </span>
 </div>
 <div class="part-tagline">Create a User account with us to get started.</div>
-  </div>
+</div>
 </div>
 
 <div class="sm-button p-3 junk-sell">
@@ -113,13 +104,13 @@
 </div>
 
 <!-- render images -->
- <div *ngIf="isLoading" class="content-position">
-    <app-loading-spinner></app-loading-spinner>
+<div *ngIf="isLoading" class="content-position">
+  <app-loading-spinner></app-loading-spinner>
 </div>
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 row-cols-xl-5 mt-2">
-    <div class="col mb-4" *ngFor="let item of filteredData; let parentIndx = index;">
-      <div class="card h-100">
-        <div class="embed-responsive embed-responsive-16by9">
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 row-cols-xl-5 my-4 mx-4">
+  <div class="col mb-4" *ngFor="let item of filteredData; let parentIndx = index;">
+    <div class="card h-100">
+      <div class="embed-responsive embed-responsive-16by9">
         <img [src]="item.imageUri" class="card-img-top img-thumbnail embed-responsive-item" alt="Auto Parts">
       </div>
       <div class="card-body">
@@ -142,27 +133,27 @@
   <button type="button" class="btn btn-primary sm-button"
   (click)="showToast = true">
   Load More...
-  </button>
-  <hr>
+</button>
+<hr>
 </span>
 
 <div style="position: relative;">
   <div class="toast-confirm">
-  <div class="toast alert" [ngClass]="{'show': showToast}">
-    <div class="toast-header">
-      <strong class="mr-auto"><i class="fa fa-globe"></i>
-        <i class="bi bi-exclamation-triangle mr-2"></i>Please Sign Up/Login for more records  
-      </strong>
-    </div>
-    <div class="d-flex justify-content-center mt-2">
-      <button type="button" class="btn btn-success btn-sm mx-2" (click)="showToast = false">OK</button>
+    <div class="toast alert" [ngClass]="{'show': showToast}">
+      <div class="toast-header">
+        <strong class="mr-auto"><i class="fa fa-globe"></i>
+          <i class="bi bi-exclamation-triangle mr-2"></i>Please Sign Up/Login for more records  
+        </strong>
+      </div>
+      <div class="d-flex justify-content-center mt-2">
+        <button type="button" class="btn btn-success btn-sm mx-2" (click)="showToast = false">OK</button>
+      </div>
     </div>
   </div>
 </div>
-</div>
 
 <ng-template #noDataFound>
-  <div class="alert alert-info mt-3 text-center container" role="alert"
+  <div class="alert alert-info mt-3 text-center" role="alert"
   style="z-index: -1;" *ngIf="dataFlag">
   No data found related to search criteria
 </div>
@@ -170,26 +161,20 @@
 
 <!-- To show car search operation -->
 <h1 class="search-header mt-3">If you are a buyer, experience our benefits</h1>
-<div class="row row-col-sm-4 row-col-md-5 ml-5">
-  <div class="col-md-1"></div>
-  <div class="static-part p-2 my-3 mx-4"> 
+<div class="row row-col-sm-2 row-col-md-4" style="justify-content: space-evenly;">
+  <div class="static-part p-2 my-3"> 
     <img src="assets/contact.jpg" /><br>
     <span class="mx-3">Direct Contact to Supplier</span>
   </div>
-  <div class="static-part p-2 my-3 mx-4"> 
+  <div class="static-part p-2 my-3"> 
     <img src="assets/bestPrice.png" /><br>
     <span class="mx-3">Sell you Old Vehicle in Best Price</span>
   </div>
-  <div class="static-part p-2 my-3 mx-4"> 
+  <div class="static-part p-2 my-3"> 
     <img src="assets/multibuy.png" /><br>
     <span class="mx-3">Buy Used Parts from Multiple Vendors</span>
   </div>
-  <!-- <div class="static-part p-2 my-3 mx-4"> 
-    <img src="assets/front_mirror.png" />
-    <span class="mx-3">Front Mirror</span>
-  </div> -->
-  
-  <div class="static-part p-2 my-3 mx-4"> 
+  <div class="static-part p-2 my-3"> 
     <img src="assets/freeuse.png" /><br>
     <span class="mx-3">Free Platform</span>
   </div>

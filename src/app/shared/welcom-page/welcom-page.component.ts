@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked,ViewEncapsulation} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked} from '@angular/core';
 import {BuyService} from '../../services/buy.service';
 
 
@@ -6,8 +6,7 @@ import {BuyService} from '../../services/buy.service';
 	selector: 'app-welcom-page',
 	templateUrl: './welcom-page.component.html',
 	styleUrls: ['./welcom-page.component.css'],
-	providers: [BuyService],
-	encapsulation: ViewEncapsulation.None
+	providers: [BuyService]
 })
 export class WelcomPageComponent implements OnInit, AfterViewChecked {
 	@ViewChild('divToScroll') private divToScroll: ElementRef;
@@ -48,6 +47,7 @@ export class WelcomPageComponent implements OnInit, AfterViewChecked {
 			this.yearStateFlag = true;
 			this.partFlag = true;
 			this.filteredData = [];
+			this.dataFlag = false;
 		} else {
 			this.buyService.getModels(this.selectedMake.makeId)
 			.subscribe(data =>{

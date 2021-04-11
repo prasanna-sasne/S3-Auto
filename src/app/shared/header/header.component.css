@@ -1,4 +1,14 @@
- .spacer {
+.login-header{
+  cursor: pointer; 
+  display: flex;
+  flex-direction: column;
+}
+
+/*.login-header > span:hover{
+  color: #ffc107;
+}
+*/
+.spacer {
   flex: 1;
 }
 .colorLight{
