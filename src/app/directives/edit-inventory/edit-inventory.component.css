@@ -13,6 +13,9 @@ lableDetail{
   font-style: italic!important;
   color: rgb(11, 236, 199)!important;
 }
+input.ng-valid {
+  border-color:lightgreen;
+}
 
 
 .form-control:focus {

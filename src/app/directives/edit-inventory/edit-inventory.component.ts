@@ -19,7 +19,7 @@ interface ShipingOption {
 })
 export class EditInventoryComponent implements OnInit {
 
-  sellForm;
+  editFrm;
   url: any; //Angular 11, for stricter type
   msg = "";
   shippingStatus: ShipingOption[];
@@ -27,7 +27,7 @@ export class EditInventoryComponent implements OnInit {
   selectedMake: { "makeId": number, "make": string } = { "makeId": -1, "make": "" };
   selectedModel: { "modelId": number, "model": string } = { "modelId": -1, "model": "" };
   selectedstate: { "stateId": string, "state": string } = { "stateId": "*", "state": "" };
-  selectedYear: { "yearId": number, "year": number } = { "yearId": -1, "year": 1000 };
+  selectedYear: {"yearId": number, "year": string} = {"yearId": -1, "year": "*"};
   selectedPart: { "partId": number, "part": string } = { "partId": -1, "part": "" };
   selectedShip: { "yes": 'yes', }
   modelFlag: boolean;
@@ -64,16 +64,19 @@ export class EditInventoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sellForm = new FormGroup({
-      makers: new FormControl(''),
-      models: new FormControl(''),
-      partName: new FormControl(''),
-      years: new FormControl(''),
-      shipping: new FormControl(''),
-      description: new FormControl(''),
-      price: new FormControl(''),
-      mileage: new FormControl(''),
-      vinValue: new FormControl('')
+    this.editFrm = new FormGroup({
+
+
+      selectedMake: new FormControl([this.selectedMake,[ Validators.required]]),
+      selectedModel: new FormControl([this.selectedModel,[ Validators.required]]),
+      selectedstate: new FormControl([this.selectedstate,[ Validators.required]]),
+      selectedYear: new FormControl([this.selectedYear,[ Validators.required]]),
+      selectedPart: new FormControl([this.selectedPart,[ Validators.required]]),
+      selectedShip: new FormControl([this.selectedShip,[ Validators.required]]),
+      selectedMileage:new FormControl([this.selectedMileage,[ Validators.required]]),
+      priceValue: new FormControl([this.priceValue,[ Validators.required]]),
+      description: new FormControl([this.description,[ Validators.required]]),
+      selectedVin:new FormControl([this.selectedVin,[ Validators.required, Validators.pattern('^(?=.*[0-9])(?=.*[A-z])[0-9A-z-]{17}$')]])
     });
     this.generateYears();
     this.role = JSON.parse(sessionStorage.getItem('ROLE') || '{}');
@@ -88,9 +91,12 @@ export class EditInventoryComponent implements OnInit {
 
   }
 
+ 
   onChangeMake(event: any) {
 
     if (event.value !== undefined) {
+      this.selectedModel = {"modelId": -1, "model": "*"};
+      this.selectedYear = {"yearId": -1, "year": "*"};
       this.sellInputFormService.getModels(event.value.makeId)
         .subscribe(data => {
           this.models = data
@@ -111,6 +117,21 @@ export class EditInventoryComponent implements OnInit {
 
   }
 
+  onChangeYear(event: any){
+    this.generateYears();
+    console.log(event);
+
+    if(event.value == null){
+      //this.yearStateFlag = true;
+    } else {
+      if(this.selectedModel !== null && this.selectedModel.model !== "")
+        console.log(this.selectedModel)
+
+        this.selectedYear ={"year": event.value.year, "yearId": event.value.yearId};
+
+      //this.yearStateFlag = false;
+    }
+  }
   onChangeModel(event) {
     // if(event.value == null){
     //   this.yearStateFlag = true;
@@ -134,6 +155,32 @@ export class EditInventoryComponent implements OnInit {
   }
 
 
+  validateAllFormFields(formGroup: FormGroup) {         //{1}
+    Object.keys(formGroup.controls).forEach(field => {  //{2}
+      const control = formGroup.get(field);             //{3}
+      if (control instanceof FormControl) {             //{4}
+        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof FormGroup) {        //{5}
+        this.validateAllFormFields(control);            //{6}
+      }
+    });
+  }
+
+
+  ConfirmedValidator(controlName: string, matchingControlName: string){
+    return (formGroup: FormGroup) => {
+        const control = formGroup.controls[controlName];
+        const matchingControl = formGroup.controls[matchingControlName];
+        if (matchingControl.errors && !matchingControl.errors.confirmedValidator) {
+            return;
+        }
+        if (control.value !== matchingControl.value) {
+            matchingControl.setErrors({ confirmedValidator: true });
+        } else {
+            matchingControl.setErrors(null);
+        }
+    }
+}
   onChangePart(event: any) {
     if (event.value !== undefined) {
 
@@ -178,8 +225,8 @@ export class EditInventoryComponent implements OnInit {
           // temp.append("name","file + id");
           this.images[id] = (event.target.result);
 
-          this.sellForm.patchValue({
-            fileSource: this.sellForm
+          this.editFrm.patchValue({
+            fileSource: this.editFrm
           });
         }
 
@@ -209,8 +256,8 @@ export class EditInventoryComponent implements OnInit {
               this.images[0] = (event.target.result);
 
 
-              this.sellForm.patchValue({
-                fileSource: this.sellForm
+              this.editFrm.patchValue({
+                fileSource: this.editFrm
               });
             }
 
@@ -235,8 +282,8 @@ export class EditInventoryComponent implements OnInit {
   }
 
   /**submit after edit */
-  onSubmitForm() {
-    console.log(this.sellForm.value);
+  onSubmit() {
+    console.log(this.editFrm.value);
     var formData: any = new FormData();
     let partAddRequest = {}
     // sell form data ...
