@@ -8,7 +8,8 @@
   </span>
   <div class="spacer"></div>
 
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
@@ -20,99 +21,93 @@
       <div class="nav-item mt-2 mr-2" *ngIf="roleflag">
         <a class="contact" routerLink="contactus">Contact Us</a>
       </div>
-      <div class="nav-item m-0"
-        style="cursor: pointer;"
-        *ngIf="email === undefined || email === null"
+      <div class="nav-item m-0" style="cursor: pointer;" *ngIf="email === undefined || email === null"
         [routerLink]="['/sell-service-info']">
         <h5><span class="badge badge-pill badge-warning">Sell <i class="bi bi-wallet2 ml-2"></i></span></h5>
       </div>
-      <div class="nav-item mx-4"
-      style="cursor: pointer;"
-      *ngIf="email === undefined || email === null"
-      routerLink="about-us">
-      About Us
+      <div class="nav-item mx-4" style="cursor: pointer;" *ngIf="email === undefined || email === null"
+        routerLink="about-us">
+        About Us
       </div>
 
-    <div class="nav-item pt-1" *ngIf="roleflag">
-      <span class="notification mr-3">
-        <h4 (click)="checkNotification()">
-          <i class="bi bi-envelope"></i>
-        </h4>
-        <span class="dot" *ngIf="showBell"></span>
-      </span>
+      <div class="nav-item pt-1" *ngIf="roleflag">
+        <span class="notification mr-3">
+          <h4 (click)="checkNotification()">
+            <i class="bi bi-envelope"></i>
+          </h4>
+          <span class="dot" *ngIf="showBell"></span>
+        </span>
 
-    </div>
+      </div>
 
-    <div class="nav-item" *ngIf="email !== undefined && email !== null">
-      <div class="btn-group">
-        <button type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {{email}}
-        </button>
-        <div class="dropdown-menu dropdown-menu-right">
-          <button class="dropdown-item" type="button" (click)="updateProfile()">Profile<i class="bi bi-person-fill"></i></button>
-          <button class="dropdown-item" type="button" (click)="signOut()">Logout</button>
+      <div class="nav-item" *ngIf="email !== undefined && email !== null">
+        <div class="btn-group">
+          <button type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            {{email}}
+          </button>
+          <div class="dropdown-menu dropdown-menu-right">
+            <button class="dropdown-item" type="button" (click)="updateProfile()">Profile<i
+                class="bi bi-person-fill"></i></button>
+            <button class="dropdown-item" type="button" (click)="signOut()">Logout</button>
+          </div>
         </div>
       </div>
+
+      <div class="nav-item mb-2 mb-md-0 " style="cursor: pointer;" *ngIf="email === undefined || email === null"
+        (click)="openModal('signUp_modal')">
+        <span class="bi bi-person-square"></span>
+        Login<br>
+        <span style="font-size:11px">or Create Account</span>
+      </div>
     </div>
-
-    <div class="nav-item mb-2 mb-md-0"
-    style="cursor: pointer;"
-    *ngIf="email === undefined || email === null"
-    (click)="openModal('signUp_modal')">
-    Sign Up/Login
   </div>
-</div>
-</div>
 
-<jw-modal id="signUp_modal">
-  <div class="modal-header custumheader">
-    <ul class="nav justify-content-center">
-      <li class="nav-item" *ngIf="isLoginMode">
-        <h1>Login </h1>
-        <!-- <button type="button" class="btn btn-link clr" (click)="onSwitchMode(false)" >Creat new Account</button> -->
-      </li>
+  <jw-modal id="signUp_modal">
+    <div class="modal-header custumheader">
+      <ul class="nav justify-content-center">
+        <li class="nav-item" *ngIf="isLoginMode">
+          <h1>Login </h1>
+          <!-- <button type="button" class="btn btn-link clr" (click)="onSwitchMode(false)" >Creat new Account</button> -->
+        </li>
 
-      <li class="nav-item active" *ngIf="!isLoginMode">
-        <h1>Registration</h1>
-        <!-- <button type="button" class="btn btn-link clr" (click)="onSwitchMode(true)">Login</button> -->
-      </li>
-    </ul>
+        <li class="nav-item active" *ngIf="!isLoginMode">
+          <h1>Registration</h1>
+          <!-- <button type="button" class="btn btn-link clr" (click)="onSwitchMode(true)">Login</button> -->
+        </li>
+      </ul>
 
       <!-- <li class="nav-item active">
         <button type="button" class="btn btn-outline-light btnHeadr btnRadius" (click)="onSwitchMode(true)">Login</button>
       </li> -->
 
-    <i class="close closeColor bi bi-x-octagon" (click)="closeModal('signUp_modal')" data-dismiss="modal" aria-label="Close"></i>
+      <i class="close closeColor bi bi-x-octagon" (click)="closeModal('signUp_modal')" data-dismiss="modal"
+        aria-label="Close"></i>
 
-  </div>
-  <app-auth (successRegister)="successRegister($event)" *ngIf="!isLoginMode"></app-auth>
-  <br>
-  <app-login (userEmail)="logedinUserEmail($event)"
-  (userRole)="loggedInUserRole($event)" *ngIf="isLoginMode">
-</app-login>
-<div class="custumheader">
-  <ul class="nav justify-content-center">
-    <li class="nav-item" *ngIf="isLoginMode">
-      <label>New to S3 Auto? Register with us</label>
-      <button type="button" class="btn btn-link clr" (click)="onSwitchMode(false)" >Creat new Account</button>
-    </li>
+    </div>
+    <app-auth (successRegister)="successRegister($event)" *ngIf="!isLoginMode"></app-auth>
+    <br>
+    <app-login (userEmail)="logedinUserEmail($event)" (userRole)="loggedInUserRole($event)" *ngIf="isLoginMode">
+    </app-login>
+    <div class="custumheader">
+      <ul class="nav justify-content-center">
+        <li class="nav-item" *ngIf="isLoginMode">
+          <label>New to S3 Auto? Register with us</label>
+          <button type="button" class="btn btn-link clr" (click)="onSwitchMode(false)">Creat new Account</button>
+        </li>
 
-    <li class="nav-item active" *ngIf="!isLoginMode">
-      <label>Login to the application</label>
-      <button type="button" class="btn btn-link clr" (click)="onSwitchMode(true)">Login</button>
-    </li>
-  </ul>
+        <li class="nav-item active" *ngIf="!isLoginMode">
+          <label>Login to the application</label>
+          <button type="button" class="btn btn-link clr" (click)="onSwitchMode(true)">Login</button>
+        </li>
+      </ul>
+
+    </div>
+
+    <!-- <button (click)="closeModal('signUp_modal');">Close</button> -->
+  </jw-modal>
 
 </div>
 
-  <!-- <button (click)="closeModal('signUp_modal');">Close</button> -->
-</jw-modal>
-
-</div>
-
-<app-message *ngIf="triggerMsg"
-(closeNavFlag)="closeNav($event)"
-[showChat] = "openChat"
-[parent]="true"
-(showBell)="newMsgPresent($event)"
-></app-message>
+<app-message *ngIf="triggerMsg" (closeNavFlag)="closeNav($event)" [showChat]="openChat" [parent]="true"
+  (showBell)="newMsgPresent($event)"></app-message>
