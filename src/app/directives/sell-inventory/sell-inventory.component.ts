@@ -254,6 +254,14 @@ export class SellInventoryComponent implements OnInit {
     this.currentPageIndex > 1 ? this.previousRecordFlag = false : this.previousRecordFlag = true;
   }
 
+
+  
+  populateFilterOptions(){
+    this.sellInventoryService.getMakers().subscribe(data => this.makers = data);
+    this.sellInventoryService.getStates().subscribe(data => this.states = data);
+    this.sellInventoryService.getParts().subscribe(data => this.parts = data);
+  }
+
   resetFilters(): void {
     this.selectedMake = { "makeId": -1, "make": "" };
     this.selectedModel = { "modelId": -1, "model": "" };
@@ -263,10 +271,9 @@ export class SellInventoryComponent implements OnInit {
 
     this.modelFlag = true;
     this.yearStateFlag = true;
-    //  //   this.populateFilterOptions();
-    //     this.buyService.getBuyItemList({}, this.role).subscribe(data => {
-    //  //     this.handlePaginationOnRes(data);
-    //     });
+    this.populateFilterOptions();
+    this.getSellInventory();
+
     this.currentPageIndex > 1 ? this.previousRecordFlag = false : this.previousRecordFlag = true;
     sessionStorage.removeItem('filterOptions');
   }

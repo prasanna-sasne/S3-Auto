@@ -19,7 +19,8 @@
                   <h5>MAKE</h5>
                   <p-dropdown class="form-control" [options]="makers" [(ngModel)]="selectedMake" optionLabel="make"
                     [filter]="true" filterBy="make" placeholder="Select Make" class="select-style"
-                    (onChange)="onChangeMake($event)" [ngClass]="{ 'is-invalid': f.submitted && makeControl.invalid }"
+                    (onChange)="onChangeMake($event)" 
+                    [ngClass]="{ 'is-invalid': f.submitted && makeControl.invalid }"
                     name="selectedMake"
                     #makeControl="ngModel">
                     <ng-template pTemplate="selectedItem">
@@ -99,7 +100,10 @@
                   <p-dropdown [options]="shippingStatus" [(ngModel)]="selectedShippingOption" placeholder="YES/NO"
                     optionLabel="shipping" [showClear]="true" #shipControl="ngModel" name="selectedShippingOption">
                   </p-dropdown>
-
+                  <div *ngIf="shipControl.value == '' && (shipControl.dirty || shipControl.touched)"
+                  class="error-messages">
+                  Shipping is required
+                </div>
                 </div>
               </div>
               <!--VEHICLE parameters-->
@@ -134,8 +138,8 @@
                   <p-dropdown class="form-control" [options]="years" [(ngModel)]="selectedYear" optionLabel="year"
                     [filter]="true" filterBy="year" placeholder="Select Year" class="select-style"
                     (onChange)="onChangeModel($event)" name="selectedYear"
-                    [ngClass]="{'ng-valid ng-dirty': selectedYear.year !== ''}"
-                    [ngClass]="{'ng-invalid ng-dirty': selectedYear.year == ''}" #yearControl="ngModel">
+                    [ngClass]="{ 'is-invalid': f.submitted && yearControl.invalid }"
+                    #yearControl="ngModel">
                     <ng-template pTemplate="selectedItem">
                       <div class="country-item country-item-value" *ngIf="selectedMake">
                         <div>{{selectedYear.year}}</div>
@@ -148,9 +152,9 @@
                     </ng-template>
 
                   </p-dropdown>
-                  <div *ngIf="selectedYear.year == '' && (yearControl.dirty || yearControl.touched)"
+                  <div *ngIf="yearControl.value== '' && (yearControl.dirty || yearControl.touched)"
                     class="error-messages">
-                    Year is required
+                    Make is required
                   </div>
                 </div>
 
@@ -182,7 +186,7 @@
                 <!-- <div [hidden]="description=='' &&  (descV.control.dirty || descV.control.touched) ">
                 Value is required
               </div> -->
-                <div *ngIf="description=='' &&  (descV.control.dirty || descV.control.touched) " class="error-messages">
+                <div *ngIf="description=='' &&  (descV.control.dirty || descV.control.touched)" class="error-messages">
                   <div *ngIf="descV.errors!.required"> Description is required. </div>
 
                 </div>
@@ -192,7 +196,10 @@
 
             </div>
           </div>
-          <div class="form-group col" style="margin-top: 50px;">
+          <div class=".col-md- 	" style="width:20px" >
+            <br>
+          </div>
+          <div class="form-group col" style="column-width: auto;" style="text-align:center justify-content-md-center">
             <div class="p-0 py-0 row mt-8"></div>
             <div class="card bg-light row mt-8" style="text-align:center">
 
@@ -234,5 +241,6 @@
 
     </div>
   </div>
+  <div class=" col-md-1"></div>
 
 </div>
