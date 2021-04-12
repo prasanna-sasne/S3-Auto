@@ -8,6 +8,15 @@
 	text-transform: uppercase;
 }
 
+#carouselExampleIndicators .container-fluid.content.override{
+  width: 100%;
+  padding-right: 0px;
+  padding-left: 0px;
+  margin-right: 0px;
+  margin-left: 0px;
+margin-top: 5px!important;
+  padding: 0px 0px!important;
+}
 
 
 /* .container, .container-fluid, .container-sm, .container-md, .container-lg, .container-xl {
@@ -15,9 +24,9 @@
     padding-right: 0px;
     padding-left: 0px;
     margin-right: 0px;
-    margin-left: 0px; 
-	margin-top: 5px!important; 
-    padding: 0px 0px!important; 
+    margin-left: 0px;
+	margin-top: 5px!important;
+    padding: 0px 0px!important;
 } */
 
 #star{
@@ -46,9 +55,9 @@
 	padding-right: 0px;
 	padding-left: 0px;
 	margin-right: 0px;
-	margin-left: 0px; 
-	margin-top: 5px!important; 
-	padding: 0px 0px!important; 
+	margin-left: 0px;
+	margin-top: 5px!important;
+	padding: 0px 0px!important;
 	}*/
 
 .carousel-inner > .item {
@@ -99,12 +108,12 @@ button.btn.btn-warning:disabled {
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled):hover {
 	color: white;
-	background-image: linear-gradient(to right, #563d7c, #1976d2) !important; 
+	background-image: linear-gradient(to right, #563d7c, #1976d2) !important;
 }
 
 :host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled):hover{
 	color: white;
-	background-image: linear-gradient(to right, #563d7c, #1976d2) !important; 	
+	background-image: linear-gradient(to right, #563d7c, #1976d2) !important;
 }
 
 
@@ -114,7 +123,7 @@ button.btn.btn-warning:disabled {
 
 .p-dropdown-item p-ripple{
 	color: white;
-	background-image: linear-gradient(to right, #563d7c, #1976d2);			
+	background-image: linear-gradient(to right, #563d7c, #1976d2);
 }
 
 .static-part img{
@@ -144,8 +153,8 @@ p-dropdown.ng-dirty.ng-invalid > .p-dropdown {
 	background-color: #f8d7da;
 }
 .show{
-	background: #f8d7da; 
-	box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); 
+	background: #f8d7da;
+	box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
 	z-index: 10;
 }
 
@@ -209,7 +218,7 @@ p-dropdown{
 	}
 	.make, .p-fluid{
 		margin-left: 0% !important;
-	}	
+	}
 	.search-btn{
 		margin-top: 2%;
 		margin-left: 18% !important;

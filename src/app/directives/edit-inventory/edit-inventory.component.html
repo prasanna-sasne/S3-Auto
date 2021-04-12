@@ -20,7 +20,7 @@
                   <p-dropdown  [options]="makers" [(ngModel)]="selectedMake" optionLabel="make"
                     [filter]="true" filterBy="make"  placeholder="Select Make" class="select-style"
                     (onChange)="onChangeMake($event)"[ngClass]="{ 'is-invalid': f.submitted && makeControl.invalid }"
-                    name="selectedMake" 
+                    name="selectedMake"
                     #makeControl="ngModel">
                     <ng-template pTemplate="selectedItem">
                       <div class="country-item country-item-value" *ngIf="selectedMake">
@@ -68,7 +68,7 @@
               <div *ngIf="!roleStatus" class="row mt-3">
                 <div class="form-group col" style="column-width: auto;">
                   <h5>Part Name</h5>
-                  <p-dropdown  [options]="parts" [(ngModel)]="selectedPart" optionLabel="part" name="selectedPart" 
+                  <p-dropdown  [options]="parts" [(ngModel)]="selectedPart" optionLabel="part" name="selectedPart"
                     [filter]="true" filterBy="part" placeholder="Select Part" class="select-style"
                     [disabled]="modelFlag" (onChange)="onChangePart($event)" [ngClass]="{'ng-valid ng-dirty': selectedPart.part !== ''}"
                     [ngClass]="{'ng-invalid ng-dirty': selectedPart.part == ''}" #partControl="ngModel">
@@ -110,11 +110,11 @@
                 </div>
                 <div class="form-group col" style="column-width: auto;">
                   <h5>MILEAGE</h5>
-                  <input type="text" class="form-control" [(ngModel)]="selectedMileage"
+                  <input type="number" class="form-control" [(ngModel)]="selectedMileage"
                     placeholder="e.g. 1500 miles" #mileage="ngModel" required name="selectedMileage">
                     <div *ngIf="mileage.invalid && (mileage.dirty || mileage.touched)" class="error-messages">
                       <div *ngIf="mileage.errors!.required"> Mileage is required. </div>
-  
+
                     </div>
                 </div>
               </div>
@@ -175,8 +175,8 @@
                 </div>
                 <div class="form-group col" >
                   <div class="mt-5 text-left">
-                    <button type="cancel" class="btn btn-primary button" (click)=sellInvenPage()>Check
-                      Inventory</button>
+                    <button type="cancel" class="btn btn-primary button" (click)=sellInvenPage()>
+                      Cancel</button>
                   </div>
                 </div>
               </div>
@@ -198,11 +198,11 @@
                   <!-- <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">
                     <div *ngIf="f.file.errors.required">File is required.</div>
                   </div> -->
-                  <div style="height:100px; width:150px justify-content-md-center" >
+                  <div style="height:100px; width:150px" class="justify-content-md-center" >
                     <img [src]="url" height="100" width="150px" style="margin: 3px;" id="{{'image_'+imgIndex}}"> <br />
                   </div>
                 </div>
-    
+
               </div>
               <!--Image edit for parts-->
               <div *ngIf="!roleStatus" class="card bg-light row mt-8" style="text-align:center">

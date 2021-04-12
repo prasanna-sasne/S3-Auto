@@ -53,11 +53,12 @@ export class SellInventoryComponent implements OnInit {
   multiImages:any[]=[];
   images:any[]=[];
   actionIndex;
+  deleteIndex;
   private userId: number
   public role: string
   isLoading: boolean = true
   numberOfValue: number = 0;
-duplicateFlag:boolean;
+  duplicateFlag:boolean;
   nextRecordFlag: boolean = true
   previousRecordFlag: boolean = true
   startIndex = 0;
@@ -125,7 +126,12 @@ duplicateFlag:boolean;
   paginateView(data: any[]) {
     //deep-copy of data array to buyItems
     console.log(data)
-    this.inventoryList = JSON.parse(JSON.stringify(data))
+    if(this.role == 'USER'){
+      this.inventoryList = JSON.parse(JSON.stringify(data))
+     // this.getvehicleInventory();
+    }else {
+       this.inventoryList = JSON.parse(JSON.stringify(data))
+    }
     //trim last record
     this.inventoryList.splice(8, 1)
 
@@ -230,14 +236,14 @@ duplicateFlag:boolean;
       userId : window.sessionStorage.getItem('ID'),
       makeId: this.selectedMake.makeId,
       modelId: this.selectedModel.modelId,
-      year: this.selectedYear == null ? '*' : this.selectedYear.year,
+      year: this.selectedYear == null ? 'wildcard' : this.selectedYear.year,
       startIdx: this.startIndex,
       resultSize: 9
     }
     //  this.storeFilterOpts();
       this.sellInventoryService.searchData(filterQuery, this.role).subscribe(data => {
-      //  console.log(data.Success);
-        console.log(JSON.parse(JSON.stringify(data)))
+       console.log(data.Success);
+      //  console.log(JSON.parse(JSON.stringify(data)))
         console.log('data', data)
         this.paginateView(data)
         this.isLoading = false
@@ -266,7 +272,8 @@ duplicateFlag:boolean;
   }
 
   /* Open popup..*/
-  openModal(modalName) {
+  openModal(modalName,parentIndx) {
+    this.deleteIndex = parentIndx;
      this.modalService.open(modalName);
   }
 
@@ -381,6 +388,7 @@ duplicateFlag:boolean;
 
 
   }
+
   toDataURL(url, callback) {
     var xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -487,7 +495,7 @@ duplicateFlag:boolean;
 
   /**Sold service call.. */
   markDataSold(partSellId){
-    this.sellInventoryService.markDataSold(partSellId).subscribe(
+    this.sellInventoryService.markDataSold(this.inventoryList[this.deleteIndex].partSellId).subscribe(
       resData => {
         console.log("resData", resData);
         // setting data to session .........
@@ -495,6 +503,7 @@ duplicateFlag:boolean;
         this.toaster.showSuccess('Item sold and moved to sell history','Item Sold')
         this.closeModal('sold_modal');
         location.reload(true);
+
       },
       errorMessage => {
         console.log(errorMessage);
@@ -506,8 +515,11 @@ duplicateFlag:boolean;
 
    /**Delete service call.. */
    markDeleteItem(partSellId){
-     if(this.role= "JUNK_YARD_OWNER"){
-      this.sellInventoryService.deleteFromInventory(partSellId).subscribe(
+     debugger;
+     if(this.role== "JUNK_YARD_OWNER"){
+      this.inventoryList[this.deleteIndex]
+       let partSellIdValue = this.inventoryList[this.deleteIndex].partSellId;
+      this.sellInventoryService.deleteFromInventory(partSellIdValue).subscribe(
         resData => {
           console.log("resData", resData);
           // setting data to session .........
@@ -523,12 +535,18 @@ duplicateFlag:boolean;
         }
       );
      }else{
-      this.sellInventoryService.deleteVehicleFromInventory(partSellId).subscribe(
+       debugger;
+       console.log(partSellId);
+       console.log( this.inventoryList[this.deleteIndex]);
+      let vehId =  this.inventoryList[this.deleteIndex].vehicleSells[0].vehId;
+      console.log( this.inventoryList[partSellId]);
+      this.sellInventoryService.deleteVehicleFromInventory(vehId).subscribe(
         resData => {
+          debugger;
           console.log("resData", resData);
           // setting data to session .........
           this.toaster.showSuccess('Item Deleted Successfully','Item Deleted')
-          this.closeModal('delete_item');
+         this.closeModal('delete_item');
           location.reload(true);
         },
         errorMessage => {

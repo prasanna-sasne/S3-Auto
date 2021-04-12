@@ -91,7 +91,7 @@ export class EditInventoryComponent implements OnInit {
 
   }
 
- 
+
   onChangeMake(event: any) {
 
     if (event.value !== undefined) {
@@ -314,6 +314,7 @@ export class EditInventoryComponent implements OnInit {
         console.log("resData", resData);
         // setting data to session .........
         this.toaster.showSuccess('Your form has been updated successfully ', 'Successfully Edited');
+        location.reload(true);
       },
       errorMessage => {
         console.log(errorMessage);
@@ -348,9 +349,12 @@ export class EditInventoryComponent implements OnInit {
         console.log("resData", resData);
         // setting data to session .........
         this.toaster.showSuccess('Your form has been updated successfully ', 'Successfully Edited');
+        location.reload(true);
       },
       errorMessage => {
         console.log(errorMessage);
+        this.toaster.showError(errorMessage, 'Error Occured');
+
         //   this.error = errorMessage;
         //   this.isLoading = false;
       }

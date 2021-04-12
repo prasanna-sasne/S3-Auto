@@ -174,15 +174,28 @@ let headers = new Headers();
   }
 
   searchData(filterQuery, role) {
-    const url = `${this.appUrl}/uvp/parts/get/${filterQuery.userId}/${filterQuery.makeId}/${filterQuery.modelId}/${filterQuery.year}/${filterQuery.startIdx}/${filterQuery.resultSize}`;
-    return this.http.get<{}[]>(url)
-      .pipe(
-        map(response => {
-          console.log(response)
-          return response["Success"]["0"]["userSellParts"];
-        }), catchError(this.handleError('getstates', []))
-      );//end pipe
+    let url ="";
+    if(window.sessionStorage.getItem('ROLE') == 'JUNK_YARD_OWNER'){
+       url = `${this.appUrl}/uvp/parts/get/${filterQuery.userId}/${filterQuery.makeId}/${filterQuery.modelId}/${filterQuery.year}/${filterQuery.startIdx}/${filterQuery.resultSize}`;
+       return this.http.get<{}[]>(url)
+       .pipe(
+         map(response => {
+           console.log(response)
+           return response["Success"]["0"]["userSellParts"];
+         }), catchError(this.handleError('getstates', []))
+       );//end pipe
+      }else {
+       url = `${this.appUrl}/uvp/vehicles/get/${filterQuery.userId}/${filterQuery.makeId}/${filterQuery.modelId}/${filterQuery.year}/${filterQuery.startIdx}/${filterQuery.resultSize}`;
+       return this.http.get<{}[]>(url)
+       .pipe(
+         map(response => {
+           console.log(response)
+           return response["Success"]["0"]["userSellVehicles"];
+         }), catchError(this.handleError('getstates', []))
+       );//end pipe
+      }
   }
+
 
   editSelectedItem(partSellId,selectedFile,partAddRequest){
    // /uvp/parts/update/{partSellId} <-------- update
@@ -231,13 +244,12 @@ let headers = new Headers();
        .pipe(
          catchError(errorRes => {
            let errorMessage = 'An unknown error occurred!';
-           if (!errorRes.error || !errorRes.error.error) {
+           if (!errorRes.Error || !errorRes.Error.error) {
              return throwError(errorMessage);
-           }
-           switch (errorRes.error.error.message) {
-             case 'EMAIL_EXISTS':
-               errorMessage = 'This email exists already';
-           }
+           }else if(errorRes.Error !== null){
+            errorMessage =errorRes.Error;
+            return throwError(errorRes.Error);
+           }else
            return throwError(errorMessage);
          })
        );

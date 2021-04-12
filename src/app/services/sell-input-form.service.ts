@@ -103,13 +103,13 @@ export class SellInputFormService {
         .pipe(
           catchError(errorRes => {
             let errorMessage = 'An unknown error occurred!';
-            if (!errorRes.error || !errorRes.error.error) {
+            if (!errorRes.error.Error || !errorRes.error) {
               return throwError(errorMessage);
-            }
-            switch (errorRes.error.error.message) {
-              case 'EMAIL_EXISTS':
-                errorMessage = 'This email exists already';
-            }
+            }else if(errorRes.error.Error[0] !== null){
+              console.log(errorRes.error.Error)
+             errorMessage =errorRes.error.Error;
+             return throwError(errorMessage);
+            }else
             return throwError(errorMessage);
           })
         );

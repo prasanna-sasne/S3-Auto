@@ -24,7 +24,7 @@ export class SellInputFormComponent implements OnInit {
   singleImage:boolean;
   multiImage:boolean;
   shippingStatus: ShipingOption[];
-  
+
   selectedShippingOption: ShipingOption ;
   selectedMake: {"makeId": number, "make": string} = {"makeId": -1, "make": ""};
   selectedModel: {"modelId": number, "model": string} = {"modelId": -1, "model": ""};
@@ -63,7 +63,7 @@ export class SellInputFormComponent implements OnInit {
 
   }
   clear() {
-    
+
     this.cleared = true;
   }
   ngOnInit(): void {
@@ -116,7 +116,7 @@ export class SellInputFormComponent implements OnInit {
   }
 
   onChangeMake(event: any) {
-    
+
     if(event.value == null){
       this.selectedMake = {"makeId": -1, "make": ""};
       this.selectedModel = {"modelId": -1, "model": "*"};
@@ -139,7 +139,7 @@ export class SellInputFormComponent implements OnInit {
     if(event.value == null){
       this.yearStateFlag = true;
       this.selectedstate = {"stateId": "*", "state": ""};
-  
+
 
       //
       this.yearStateFlag = true;
@@ -233,8 +233,8 @@ export class SellInputFormComponent implements OnInit {
       this.router.navigate(['sellInventory']);
     }
 
-  
-  
+
+
     validateAllFormFields(formGroup: FormGroup) {         //{1}
       Object.keys(formGroup.controls).forEach(field => {  //{2}
         const control = formGroup.get(field);             //{3}
@@ -245,8 +245,8 @@ export class SellInputFormComponent implements OnInit {
         }
       });
     }
-  
-  
+
+
     ConfirmedValidator(controlName: string, matchingControlName: string){
       return (formGroup: FormGroup) => {
           const control = formGroup.controls[controlName];
@@ -261,7 +261,7 @@ export class SellInputFormComponent implements OnInit {
           }
       }
   }
-      
+
     // submit form ..
     onSubmit() {
       console.log(this.sellForm.value);
@@ -296,7 +296,7 @@ export class SellInputFormComponent implements OnInit {
        this.description==null||
        this.selectedFile==null||
       String(this.selectedShippingOption.shippingValue)==null)
-      
+
 
       {
         this.toaster.showError('Check for input fields and Image for valid data','Input Field Error')
@@ -324,6 +324,7 @@ export class SellInputFormComponent implements OnInit {
         },
         errorMessage => {
           console.log(errorMessage);
+          this.toaster.showError(errorMessage, 'Error Occured');
           //   this.error = errorMessage;
           //   this.isLoading = false;
         }
@@ -378,9 +379,11 @@ export class SellInputFormComponent implements OnInit {
           console.log("resData", resData);
           // setting data to session .........
           this.toaster.showSuccess('Your form has been submitted successfully ','Submitted');
+         this.router.navigate(['sellInventory']);
         },
         errorMessage => {
           console.log(errorMessage);
+          this.toaster.showError(errorMessage, 'Error Occured');
           //   this.error = errorMessage;
           //   this.isLoading = false;
         }
