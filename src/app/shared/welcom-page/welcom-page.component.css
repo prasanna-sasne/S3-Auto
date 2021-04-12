@@ -9,25 +9,14 @@
 }
 
 #carouselExampleIndicators .container-fluid.content.override{
-  width: 100%;
-  padding-right: 0px;
-  padding-left: 0px;
-  margin-right: 0px;
-  margin-left: 0px;
-margin-top: 5px!important;
-  padding: 0px 0px!important;
-}
-
-
-/* .container, .container-fluid, .container-sm, .container-md, .container-lg, .container-xl {
-    width: 100%;
-    padding-right: 0px;
-    padding-left: 0px;
-    margin-right: 0px;
-    margin-left: 0px;
+	width: 100%;
+	padding-right: 0px;
+	padding-left: 0px;
+	margin-right: 0px;
+	margin-left: 0px;
 	margin-top: 5px!important;
-    padding: 0px 0px!important;
-} */
+	padding: 0px 0px!important;
+}
 
 #star{
 	color: yellow;
@@ -48,17 +37,6 @@ margin-top: 5px!important;
 	font-weight: 700;
 	text-transform: capitalize;
 }
-
-
-/*.container, .container-fluid, .container-sm, .container-md, .container-lg, .container-xl {
-	width: 100%;
-	padding-right: 0px;
-	padding-left: 0px;
-	margin-right: 0px;
-	margin-left: 0px;
-	margin-top: 5px!important;
-	padding: 0px 0px!important;
-	}*/
 
 .carousel-inner > .item {
 	height: 400px;
@@ -92,30 +70,32 @@ button.btn.btn-warning:disabled {
 	top: 29%;
 	background: #2959b9;
 	opacity: 0.9;
-	padding: 0 2% 2%;
+	padding: 0px 0% 1%;
 	text-transform: uppercase;
 	width: 75%;
 }
 
-.search-btn{
-	margin-top: -40px;
-	margin-left: 83%;
+.search-filter{
+	margin-left: 8%;
 }
 
 .search-btn button{
 	text-transform: uppercase;
 }
 
+.search-btn{
+	margin-top: 2px;
+}
+
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled):hover {
 	color: white;
-	background-image: linear-gradient(to right, #563d7c, #1976d2) !important;
+	background-image: linear-gradient(to right, #563d7c, #1976d2) !important; 
 }
 
 :host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled):hover{
 	color: white;
-	background-image: linear-gradient(to right, #563d7c, #1976d2) !important;
+	background-image: linear-gradient(to right, #563d7c, #1976d2) !important; 	
 }
-
 
 .content-position{
 	text-align: center;
@@ -123,7 +103,7 @@ button.btn.btn-warning:disabled {
 
 .p-dropdown-item p-ripple{
 	color: white;
-	background-image: linear-gradient(to right, #563d7c, #1976d2);
+	background-image: linear-gradient(to right, #563d7c, #1976d2);			
 }
 
 .static-part img{
@@ -143,10 +123,6 @@ button.btn.btn-warning:disabled {
 .ng-invalid.ng-dirty{
 	border-style: solid;
 }
-/*
-p-dropdown.ng-dirty.ng-invalid > .p-dropdown {
-	border: 3px solid #dc3545;
-}*/
 
 .toast-header{
 	color: #721c24;
@@ -155,6 +131,32 @@ p-dropdown.ng-dirty.ng-invalid > .p-dropdown {
 .show{
 	background: #f8d7da;
 	box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+	z-index: 10;
+}
+
+#trapezoid{
+	border-bottom: 27px solid #1976d2;
+	border-left: 8px solid transparent;
+	border-right: 8px solid transparent;
+	height: 3px;
+	width: 100px;
+	cursor: pointer;
+}
+
+#divToScroll{
+	transition-delay: 0.5s
+}
+
+.p-disabled{
+	cursor: not-allowed !important;
+}
+.toast-header{
+	color: #721c24;
+	background-color: #f8d7da;
+}
+.show{
+	background: #f8d7da; 
+	box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%); 
 	z-index: 10;
 }
 
@@ -189,8 +191,14 @@ p-dropdown{
 	flex-grow: 1;
 	object-fit:contain;
 }
+
+.make, .p-fluid{
+	margin-left: 0% !important;
+}
+
 .card {
 	box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+
 }
 
 .card-body{
@@ -215,14 +223,17 @@ p-dropdown{
 	#search{
 		top: 5%;
 		right: 18%;
+		position: initial;
+		width: 17rem;
 	}
 	.make, .p-fluid{
 		margin-left: 0% !important;
-	}
+	}	
 	.search-btn{
 		margin-top: 2%;
 		margin-left: 18% !important;
 	}
+
 	.carousel-item > img{
 		height: 18rem !important;
 	}
@@ -236,24 +247,30 @@ p-dropdown{
 		width: 18rem;
 	}
 
+	.search-filter{
+		margin-left: 10%;
+	}
 
+	.carousel-inner, .carousel-control-prev, .carousel-control-next
+	, .carousel-indicators{
+		display: none;
+	}
+
+	.junk-sell{
+		width: 17rem;
+		flex-wrap: wrap;
+		margin-top: 2%;
+	}
 }
 
 @media (min-width: 1200px)
 {
 	.row-cols-xl-4 > * {
 		flex: 0 0 25%;
-		max-width: 23% !important;
 	}
 }
 
-@media(max-width: 1200px){
-	.search-btn{
-		margin-top: 1%;
-		margin-left: 6%;
-	}
-	.p-fluid{
-		margin-top: 3px;
-		margin-left: 6%;
-	}
+.p-fluid{
+	margin-top: 3px;
+	margin-left: 6%;
 }
