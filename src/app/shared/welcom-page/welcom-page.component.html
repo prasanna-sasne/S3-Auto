@@ -30,7 +30,7 @@
     </div>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 row-cols-xl-4 mt-4">
       <div class="p-fluid make">
-        <p-dropdown [options]="makers" [(ngModel)]="selectedMake" 
+        <p-dropdown [options]="makers" [(ngModel)]="selectedMake"
         optionLabel="make" [filter]="true" filterBy="make"
         [showClear]="true" placeholder="Select Make" class="select-style "
         (onChange)="onChangeMake($event)"
@@ -70,9 +70,9 @@
     <span id="star"><i class="bi bi-asterisk"></i></span>
   </div>
   <div class="p-fluid make">
-    <p-dropdown [options]="parts" [(ngModel)]="selectedPart" optionLabel="part" 
+    <p-dropdown [options]="parts" [(ngModel)]="selectedPart" optionLabel="part"
     [filter]="true" filterBy="part"
-    [showClear]="true" placeholder="Select Part" class="select-style" 
+    [showClear]="true" placeholder="Select Part" class="select-style"
     [disabled]="partFlag"
     (onChange)="onChangePart($event)"
     [ngClass]="{'ng-valid ng-dirty': selectedPart !== null}"
@@ -143,7 +143,7 @@
     <div class="toast alert" [ngClass]="{'show': showToast}">
       <div class="toast-header">
         <strong class="mr-auto"><i class="fa fa-globe"></i>
-          <i class="bi bi-exclamation-triangle mr-2"></i>Please Sign Up/Login for more records  
+          <i class="bi bi-exclamation-triangle mr-2"></i>Please Sign Up/Login for more records
         </strong>
       </div>
       <div class="d-flex justify-content-center mt-2">
@@ -163,19 +163,19 @@
 <!-- To show car search operation -->
 <h1 class="search-header mt-3">If you are a buyer, experience our benefits</h1>
 <div class="row row-col-sm-2 row-col-md-4" style="justify-content: space-evenly;">
-  <div class="static-part p-2 my-3"> 
+  <div class="static-part p-2 my-3">
     <img src="assets/contact.jpg" /><br>
     <span class="mx-3">Direct Contact to Supplier</span>
   </div>
-  <div class="static-part p-2 my-3"> 
+  <div class="static-part p-2 my-3">
     <img src="assets/bestPrice.png" /><br>
     <span class="mx-3">Sell you Old Vehicle in Best Price</span>
   </div>
-  <div class="static-part p-2 my-3"> 
+  <div class="static-part p-2 my-3">
     <img src="assets/multibuy.png" /><br>
     <span class="mx-3">Buy Used Parts from Multiple Vendors</span>
   </div>
-  <div class="static-part p-2 my-3"> 
+  <div class="static-part p-2 my-3">
     <img src="assets/freeuse.png" /><br>
     <span class="mx-3">Free Platform</span>
   </div>

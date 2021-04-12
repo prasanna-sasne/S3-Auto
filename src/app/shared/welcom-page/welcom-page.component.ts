@@ -6,7 +6,8 @@ import {BuyService} from '../../services/buy.service';
 	selector: 'app-welcom-page',
 	templateUrl: './welcom-page.component.html',
 	styleUrls: ['./welcom-page.component.css'],
-	providers: [BuyService]
+	providers: [BuyService],
+
 })
 export class WelcomPageComponent implements OnInit, AfterViewChecked {
 	@ViewChild('divToScroll') private divToScroll: ElementRef;

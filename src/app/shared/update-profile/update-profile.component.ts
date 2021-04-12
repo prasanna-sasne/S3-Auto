@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import { UpdateProfileService } from './update-profile.service';
 import { Router } from '@angular/router';
+import { NotificationService } from './../../services/notification.service';
 
 @Component({
   selector: 'app-update-profile',
@@ -25,7 +26,7 @@ export class UpdateProfileComponent {
   error = [];
   private oldProfileData = [];
 
-  constructor(private updateProfileService: UpdateProfileService, private fb: FormBuilder, private router:Router) { }
+  constructor(private updateProfileService: UpdateProfileService, private fb: FormBuilder, private router:Router, private toaster:NotificationService,) { }
 
 
 
@@ -50,7 +51,7 @@ export class UpdateProfileComponent {
   setForm(result): void {
     if(result.role=="USER")
     {
-      this.updateProfileForm = this.fb.group({
+      this.updateProfileForm.patchValue({
         fname: result.firstName,
         password: [''],
         confirmPassword: [''],
@@ -69,7 +70,7 @@ export class UpdateProfileComponent {
     }
     else
     {
-      this.updateProfileForm = this.fb.group({
+      this.updateProfileForm.patchValue({
         fname: result.firstName,
         password: [''],
         confirmPassword: [''],
@@ -91,23 +92,22 @@ export class UpdateProfileComponent {
   /**... form controller parameter... */
   initForm(): void {
     this.updateProfileForm = this.fb.group({
-      fname: ['', [Validators.required, Validators.maxLength(15), Validators.minLength(5)]],
-      password: ['', [Validators.required,  Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]],
-      confirmPassword: ['', Validators.required],
+      fname: ['', [Validators.required]],
+      password: ['',[] ],
+      confirmPassword: ['', [Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]],
       username: ['', [Validators.required, Validators.minLength(5)]],
-      lastName: ['', Validators.required],
+      lastName: ['', [Validators.required]],
       phoneNumber: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       email: [null, Validators.compose([
         Validators.email,
         Validators.required])],
       selectedstate: ['', [ Validators.required]],
       selectedcity: ['', [ Validators.required]],
-      junkYardName: ['', Validators.required],
+      junkYardName: ['', [Validators.required]],
       zipCode: ['', [Validators.required, Validators.pattern("^[0-9]{5}(?:-[0-9]{4})?$") ]],
-      address: ['', Validators.required],
-    }, {
-      validator: this.ConfirmedValidator('password', 'confirmPassword')
-    });
+      address: ['', [Validators.required]],
+    }
+    );
   }
 
   /**.... Validation for input fields... */
@@ -153,25 +153,69 @@ export class UpdateProfileComponent {
     console.log(this.roleValue);
   }
   
-  validateAllFormFields(formGroup: FormGroup) {         //{1}
-  Object.keys(formGroup.controls).forEach(field => {  //{2}
-    const control = formGroup.get(field);             //{3}
-    if (control instanceof FormControl) {             //{4}
-      control.markAsTouched({ onlySelf: true });
-  } else if (control instanceof FormGroup) {        //{5}
-  this.validateAllFormFields(control);            //{6}
-}
-});
+  validateAllFormFields(formGroup: FormGroup, type) {         //{1}
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (type == 1) 
+      {//{2}{}
+        const control = formGroup.get(field);             //{3}
+        if (control instanceof FormControl) 
+        {             //{4}
+          control.markAsTouched({ onlySelf: true });
+        } else if (control instanceof FormGroup) 
+        {        //{5}
+          this.validateAllFormFields(control, type);            //{6}
+        }
+      } else {
+        if ((field == "password")|| (field == "confirmPassword"))
+        {
+          if (control instanceof FormControl) 
+          {             //{4}
+            control.markAsTouched({ onlySelf: true });
+          } else if (control instanceof FormGroup) 
+          {        //{5}
+            this.validateAllFormFields(control, type);
+
+          }
+        }else {
+          if (control instanceof FormControl && type !=3) 
+          {             //{4}
+            control.markAsTouched({ onlySelf: true });
+          } else if (control instanceof FormGroup) 
+          {        //{5}
+            this.validateAllFormFields(control, type);
+
+          }
+        }
+      }
+    });
 }
 
 /**......Registration service call... */
 onSubmit() {
   this.error = [];
+  if(this.updateProfileForm.controls.password.value!="") {
+    this.updateProfileForm.controls.confirmPassword.setValidators([Validators.required,Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]);
+  } else {
+    this.updateProfileForm.controls.confirmPassword.clearValidators();
+      if(this.updateProfileForm.controls.confirmPassword.value!="") {
+        this.updateProfileForm.controls.confirmPassword.setValidators([Validators.required,Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]);
+    this.updateProfileForm.controls.password.setValidators([Validators.required]);
+  } else {
+    this.updateProfileForm.controls.password.clearValidators();
+  }
+
+  }
+  this.validateAllFormFields (this.updateProfileForm,3);
+
   if (!this.updateProfileForm.pristine) {
     if (this.updateProfileForm.valid) {
       console.log('form submitted');
     } else {
       //this.validateAllFormFields (this.registrationForm);
+      if(this.updateProfileForm.controls.password.value=="" &&
+      this.updateProfileForm.controls.confirmPassword.value=="" )
+      {
       if(this.roleValue=="USER" && 
         (this.updateProfileForm.controls.address.status== "INVALID" ||
 
@@ -185,10 +229,11 @@ onSubmit() {
           this.updateProfileForm.controls.username.status== "INVALID"||
           this.updateProfileForm.controls.zipCode.status== "INVALID" ) )
       {
-        this.validateAllFormFields (this.updateProfileForm)
+        this.toaster.showError('Empty Fields in the form','Empty Fields')
+
+        this.validateAllFormFields (this.updateProfileForm,0);
         return;
       }
-      this.validateAllFormFields (this.updateProfileForm);
       if(this.roleValue=="JUNK_YARD_OWNER" && 
         (this.updateProfileForm.controls.address.status== "INVALID" ||
 
@@ -202,17 +247,37 @@ onSubmit() {
           this.updateProfileForm.controls.selectedstate.status== "INVALID"||
           this.updateProfileForm.controls.username.status== "INVALID"||
           this.updateProfileForm.controls.zipCode.status== "INVALID" ) ){
-        this.validateAllFormFields (this.updateProfileForm)
+        this.validateAllFormFields (this.updateProfileForm,0);
+        this.toaster.showError('Empty Fields in the form','Empty Fields')
+
       return;
     }
     console.log('form submitted');
+  }else 
+  {
+    this.validateAllFormFields (this.updateProfileForm,0);
+    this.validateAllFormFields (this.updateProfileForm,3);
+    if(this.updateProfileForm.controls.password.value=="" ||
+      this.updateProfileForm.controls.confirmPassword.value=="" ){
+        this.toaster.showError('Eeither Password Fields is Empty','Empty Fields')
 
+    return;
+      }
+        
+      if(this.updateProfileForm.controls.password.invalid ||
+      this.updateProfileForm.controls.confirmPassword.invalid){
+        this.toaster.showError('Eeither Password Fields is Invalid','Invalid Fields')
+
+    return;
+      }
+      
+  }
     //this.registrationForm.
   }
 
 } else {
-  this.validateAllFormFields (this.updateProfileForm)
-
+  //this.validateAllFormFields (this.updateProfileForm)
+  this.toaster.showError('No Changes made in Form ','Error Occured')
   console.log(this.updateProfileForm.valid);
 
   return;  }
@@ -247,7 +312,8 @@ onSubmit() {
   this.updateProfileService.setUserData(data).subscribe(
     resData => {
       console.log(resData);
-      //  this.isLoading = false;
+      this.toaster.showSuccess('All Fields have been Updated','User Profile Updated')
+      this.router.navigate(['welcome']);      //  this.isLoading = false;
     },
     errorMessage => {
       console.log(errorMessage);
@@ -276,7 +342,22 @@ resetUpdate(){
 }
 
 resetForm(){
-  this.updateProfileForm.reset();
+   this.updateProfileForm.reset();
+
+  this.updateProfileService.getUserData().subscribe(
+    resData => {
+      this.oldProfileData = resData; 
+      console.log(resData);
+      this.setForm(resData);
+      //  this.isLoading = false;
+      this.fetchState();
+    },
+    errorMessage => {
+      console.log(errorMessage);
+      this.error = errorMessage;
+      //   this.isLoading = false;
+    }
+    );
 }
 
 /**...State service call...  */

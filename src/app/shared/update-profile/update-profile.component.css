@@ -6,6 +6,22 @@
     width: 50px;
     height: 20px;
   }
+  #drop-down.ng-invalid:not(form) > div {
+    border: 1px solid #D40000;
+     }
+  #drop-down.ng-invalid.ng-touched.ui-inputwrapper-focus:not(form) > div {
+          box-shadow: 0 0 0 0.05em #F40000;
+           border: 1px solid #D40000;
+           border-radius: 2px;
+         }
+  
+  #drop-down.ng-invalid.ng-untouched.ui-inputwrapper-focus:not(form) > div {
+       box-shadow: 0 0 0 0.05em #F40000;
+       border: 1px solid #D40000;
+       border-radius: 2px;
+     }
+     
+ 
   
   .switch input {
     opacity: 0;

@@ -119,7 +119,7 @@ export class SellInputFormComponent implements OnInit {
     
     if(event.value == null){
       this.selectedMake = {"makeId": -1, "make": ""};
-      this.selectedModel = {"modelId": -1, "model": ""};
+      this.selectedModel = {"modelId": -1, "model": "*"};
       this.selectedYear = {"yearId": -1, "year": "*"};
     } else {
       this.selectedModel.model='';

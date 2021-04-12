@@ -89,7 +89,7 @@
               alt="sell-history">
           </span>
           <ng-template #soldPartImage>
-            <img class="img-thumbnail embed-responsive-item" [src]="item.imageUri" alt="sell-history">
+            <img class="img-thumbnail embed-responsive-item" style="object-fit: cover;" [src]="item.imageUri" alt="sell-history">
           </ng-template>
         </div>
         <div class="col-md-8">
@@ -124,7 +124,14 @@
                 <span class="text-muted">Shipping:</span> {{ item.shipping == true ? 'Available': 'Not Available'}}
               </div>
             </div>
-            <p class="card-text mt-2"><span class="text-muted">Description: </span>{{ item.description }}</p>
+            <div class="col card-text mt-2" [ngClass]="{'limitTextHeight': isReadMore}"><span class="text-muted">Description:</span>
+              {{ item.description}}
+            </div><button id={{item.partId}} class="btn btn-link" type="button" (click)="showText()">
+    {{ isReadMore ? 'Read More': 'Read Less' }}
+  </button>
+
+
+            <!-- <p class="card-text mt-2"><span class="text-muted">Description: </span>{{ item.description }}</p> -->
             <!-- <footer class="blockquote-footer">Sold Date: <cite title="Source Title">{{item.soldDate | date}}</cite></footer> -->
 
           </div>
@@ -182,7 +189,7 @@
             </div>
 
             <h6 class="card-subtitle mb-2 text-muted"><strong>{{ item.vehicleSells[0].price | currency }}</strong></h6>
-            <div class="row row-cols-xs-1 row-cols-sm-2">
+
               <div class="col" *ngIf="item.vehicleSells[0].mileage !== undefined"><span class="text-muted">Miles
                   Driven:</span>
                 {{item.vehicleSells[0].mileage}} miles</div>
@@ -192,9 +199,14 @@
               <!-- <div class="col mb-2" *ngIf="item.shipping !== undefined">
           <span class="text-muted">Shipping:</span> {{ item.shipping == true ? 'Available': 'Not Available'}}
         </div> -->
-            </div>
-            <p class="card-text mt-2"><span class="text-muted">Description: </span>{{ item.vehicleSells[0].description
-              }}</p>
+
+            <div class="col card-text mt-2" [ngClass]="{'limitTextHeight': isReadMore}"><span class="text-muted">Description:</span>
+              {{ item.vehicleSells[0].description}}
+            </div><button id="{{item.vehicleSells[0].vehId}}" class="btn btn-link" type="button" (click)="showText()">
+    {{ isReadMore ? 'Read More': 'Read Less' }}
+  </button>
+            <!-- <p class="card-text mt-2"><span class="text-muted">Description: </span>{{ item.vehicleSells[0].description
+              }}</p> -->
             <!-- <footer class="blockquote-footer">Sold Date: <cite title="Source Title">{{item.soldDate | date}}</cite></footer> -->
 
           </div>
@@ -230,14 +242,21 @@
                       <th>Make</th>
                       <th>Model</th>
                       <th>year</th>
-                      <th>Price</th>
                       <th>Description</th>
+                      <th>Price</th>
+
                       <th style="width:8rem"></th>
                     </tr>
                   </ng-template>
                   <ng-template pTemplate="body" let-product let-editing="editing" let-ri="rowIndex">
                     <tr [pEditableRow]="product">
-                      {{product.id +1}}
+
+                      <td>
+                        <p>
+                          {{product.id +1}}
+                        </p>
+                      </td>
+
                       <td>
 
                         <input id={{product.id}} type="file" class="form-control" style=" visibility: hidden; width:10px;cursor: pointer;
@@ -268,16 +287,7 @@
                       <td>
                         <p>{{product.year}}</p>
                       </td>
-                      <td>
-                        <p-cellEditor>
-                          <ng-template pTemplate="input">
-                            <input pInputText type="text" [(ngModel)]="product.price">
-                          </ng-template>
-                          <ng-template pTemplate="output">
-                            {{product.price | currency: 'USD'}}
-                          </ng-template>
-                        </p-cellEditor>
-                      </td>
+
                       <td>
                         <p-cellEditor>
                           <ng-template pTemplate="input">
@@ -289,10 +299,21 @@
                         </p-cellEditor>
                       </td>
 
+                      <td>
+                        <p-cellEditor>
+                          <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="product.price">
+                          </ng-template>
+                          <ng-template pTemplate="output">
+                            {{product.price | currency: 'USD'}}
+                          </ng-template>
+                        </p-cellEditor>
+                      </td>
+
                       <td style="text-align:center">
 
-                        <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
-                          (click)="onRowEditInit(product)" class="pi pi-pencil btn-floating indigo"></button>
+                        <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="bi bi-pencil-square"
+                          (click)="onRowEditInit(product)" class="bi bi-pencil-square btn-floating indigo"></button>
                         <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
                           (click)="onRowEditSave(product)"
                           class="p-button-rounded p-button-text p-button-success p-mr-2 pi pi-check"></button>
