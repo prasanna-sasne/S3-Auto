@@ -33,6 +33,7 @@ export class AuthComponent {
   ngOnInit(): void {
     this.initForm();
     this.fetchState();
+    this.registrationForm.reset();
   }
 
   /**... form controller parameter... */
