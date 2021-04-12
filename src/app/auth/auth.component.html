@@ -1,10 +1,5 @@
 <div class="row">
   <div class="col-md-12 p-4">
-    <div *ngIf="error.length >0" class="error-messages">
-      <span *ngFor="let item of error | slice:0:4 ; let i = index">
-        {{ i+1}}. {{ item }} <br>
-      </span>
-    </div>
     <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" >
       <div class="form-row my-2">
         <div class="form-group col-md-6">
@@ -24,7 +19,7 @@
             <!----PASSWORD----->
             <div class="form-group">
               <label></label>
-              <input type="text" class="form-control" formControlName="password" id="password" placeholder="Password" autocomplete="off" >
+              <input type="password" class="form-control" formControlName="password" id="password" placeholder="Password" autocomplete="off" >
 
               <div *ngIf="isValidInput('password')" class="error-messages">
                 <div *ngIf="registrationForm.controls['password'].errors!.required">Password is required.</div>
@@ -78,7 +73,7 @@
               <!----Confirm Password input value----->
               <div class="form-group">
                 <label></label>
-                <input type="text" class="form-control" id="confirmPassword" formControlName="confirmPassword"
+                <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword"
                   placeholder="Confirm Password" autocomplete="off" >
 
                 <div *ngIf="isValidInput('confirmPassword')" class="error-messages">
@@ -113,7 +108,7 @@
         <div class="form-group col-md-3" required=true>
           <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
           <p-dropdown [options]="states" formControlName="selectedstate" optionLabel="state" [filter]="true"
-            filterBy="state" (onChange)="selectChange($event)"  [showClear]="true"
+            filterBy="state" (onChange)="selectChange($event)" 
             placeholder="Select State" class="select-style position: absolute"
              id="selectedstate"
             [ngClass]="{'ng-valid ng-dirty': ( selectedstate != null) }"
@@ -138,7 +133,7 @@
         <div class="form-group col-md-3">
           <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
           <p-dropdown [options]="citiesList" formControlName="selectedcity" optionLabel="city" [filter]="true"
-            filterBy="city" (onChange)="selectCityChange($event)" [showClear]="true" placeholder="Select City"
+            filterBy="city" (onChange)="selectCityChange($event)" placeholder="Select City"
             class="select-style position: absolute "            
             [ngClass]="{'ng-valid ng-dirty': selectedcity !== null}"
             [ngClass]="{'ng-invalid ng-dirty': selectedcity == null}">

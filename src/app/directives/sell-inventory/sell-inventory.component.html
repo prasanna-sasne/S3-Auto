@@ -7,9 +7,10 @@
 
   <!--Search field-->
   <div class="filter-row row  row-cols-xl-6" style="align-content: center;" *ngIf="!isLoading">
+    <div class="form-group col" >
     <!--Search fields-->
       <p-dropdown [options]="makers" [(ngModel)]="selectedMake" optionLabel="make" [filter]="true" filterBy="make"
-      [showClear]="true" placeholder="Select Make" class="select-style " (onChange)="onChangeMake($event)"
+      placeholder="Select Make" class="select-style " (onChange)="onChangeMake($event)"
       [ngClass]="{'ng-valid ng-dirty': selectedMake.make !== ''}"
       [ngClass]="{'ng-invalid ng-dirty': selectedMake.make == ''}">
       <ng-template pTemplate="selectedItem">
@@ -23,9 +24,10 @@
         </div>
       </ng-template>
     </p-dropdown>
-
+    </div>
+    <div class="form-group col" >
     <p-dropdown [options]="models" [(ngModel)]="selectedModel" optionLabel="model" [filter]="true" filterBy="model"
-      [showClear]="true" placeholder="Select Model" class="select-style" (onChange)="onChangeModel($event)"
+      placeholder="Select Model" class="select-style" (onChange)="onChangeModel($event)"
       [disabled]="modelFlag" [ngClass]="{'ng-valid ng-dirty': selectedModel !== null}"
       [ngClass]="{'ng-invalid ng-dirty': selectedModel == null}">
       <ng-template pTemplate="selectedItem">
@@ -39,9 +41,12 @@
         </div>
       </ng-template>
     </p-dropdown>
-
+    </div>
+    <div class="form-group col" >
     <p-dropdown [options]="years" [(ngModel)]="selectedYear" optionLabel="year" [filter]="true" filterBy="year"
-      [showClear]="true" placeholder="Select Year" class="select-style" [disabled]="yearStateFlag">
+      [showClear]="true" placeholder="Select Year" class="select-style" [disabled]="yearStateFlag"
+      [ngClass]="{'ng-valid ng-dirty': selectedYear !== null}"
+      [ngClass]="{'ng-invalid ng-dirty': selectedYear == null}">
       <ng-template pTemplate="selectedItem">
         <div class="country-item country-item-value" *ngIf="selectedYear">
           <div>{{selectedYear.year}}</div>
@@ -53,23 +58,14 @@
         </div>
       </ng-template>
     </p-dropdown>
-
-
-
-  <span *ngIf="role === 'USER'; else junkyardSearch">
-    <button type="button" class="btn btn-primary mr-2 mt-3 sm-button filter-btn" (click)="search()"
-      [disabled]="yearStateFlag">Search</button>
-    <button class="btn btn-secondary mr-2 mt-3" (click)="resetFilters()">Reset</button>
-  </span>
-
-
-    <ng-template #junkyardSearch>
+    </div>
+    <div class="form-group col" >
       <span>
         <button type="button" class="btn btn-primary sm-button mr-2 filter-btn" (click)="search()"
           [disabled]="yearStateFlag">Search</button>
         <button class="btn btn-secondary mr-2 filter-btn" (click)="resetFilters()">Reset</button>
       </span>
-    </ng-template>
+  </div>
   </div>
   <div style='margin-bottom: 20px'></div>
   <!--Spinner-->

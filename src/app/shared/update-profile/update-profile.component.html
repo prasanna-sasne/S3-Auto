@@ -24,7 +24,7 @@
             <!----PASSWORD----->
             <div class="form-group">
               <label></label>
-              <input type="text" class="form-control" formControlName="password" id="password" placeholder="OLD Password" autocomplete="off" >
+              <input type="password" class="form-control" formControlName="password" id="password" placeholder="OLD Password" autocomplete="off" >
 
               <div *ngIf="isValidInput('password')" class="error-messages">
                          <div *ngIf="updateProfileForm.controls['confirmPassword'].value!='' && updateProfileForm.controls['password'].value==null">
@@ -80,7 +80,7 @@
               <!----Confirm Password input value----->
               <div class="form-group">
                 <label></label>
-                <input type="text" class="form-control" id="confirmPassword" formControlName="confirmPassword"
+                <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword"
                   placeholder="NEW Password" autocomplete="off" >
 
                 <div *ngIf="isValidInput('confirmPassword')" class="error-messages">

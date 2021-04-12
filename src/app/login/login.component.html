@@ -8,14 +8,6 @@
         </div>
       </div>
       <div class="col-sm">
-
-          <div *ngIf="error.length >0"class="error-messages">
-            <!-- <span *ngFor="let item of error">{{item} "\n"} </span> -->
-            <span *ngFor="let item of error; let i = index">
-              {{ i+1}}. {{ item }} <br>
-            </span>
-
-          </div>
           <form [formGroup]="loginForm" (ngSubmit)="login()">
             <div class="form-group">
               <label for="userName">User Name</label>

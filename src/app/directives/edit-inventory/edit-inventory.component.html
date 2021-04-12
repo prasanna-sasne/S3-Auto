@@ -175,7 +175,7 @@
                 </div>
                 <div class="form-group col" >
                   <div class="mt-5 text-left">
-                    <button type="cancel" class="btn btn-primary button" (click)=sellInvenPage()>
+                    <button class="btn btn-primary button" (click)=sellInvenPage()>
                       Cancel</button>
                   </div>
                 </div>
@@ -189,8 +189,7 @@
           <div class="form-group col" style="column-width: auto;" style="text-align:center justify-content-md-center">
             <div class="p-0 py-0 row mt-8" ></div>
               <div *ngIf="roleStatus" class="card bg-light row mt-8" style="text-align:center">
-                <label class="lableDetail" *ngIf="roleStatus">Please upload picture(front view,left view,back view,back
-                  view) you vehicle</label>
+                <label class="lableDetail" *ngIf="roleStatus">Please upload your vehicle front ,left ,right and rear view images</label>
                 <div *ngFor='let url of images;let imgIndex=index'>
                   <div [innerHtml]='msg' *ngIf="msg" style="color: red;"></div>
                   <input *ngIf="roleStatus" id="{{'file' +imgIndex}}" type="file" class="form-control fileUpload"
@@ -207,7 +206,7 @@
               <!--Image edit for parts-->
               <div *ngIf="!roleStatus" class="card bg-light row mt-8" style="text-align:center">
                 <div [innerHtml]='msg' *ngIf="msg" style="color: red;"></div>
-                <label class="lableDetail" *ngIf="!roleStatus">Please upload picture of vehicle part </label>
+                <label class="lableDetail" *ngIf="!roleStatus">Please upload your vehicle part image </label>
                 <input *ngIf="!roleStatus" id="file" type="file" class="form-control fileUpload"
                   (change)="onFileChange($event,0)" style="justify-content-md-center">
                 <!-- <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">

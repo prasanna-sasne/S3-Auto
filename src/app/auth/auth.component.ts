@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { NotificationService } from './../services/notification.service';
+
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
@@ -196,6 +197,8 @@ export class AuthComponent {
       errorMessage => {
         console.log("test error ",errorMessage);
         this.error = errorMessage;
+        this.toaster.showError(errorMessage,'Registration Failure');
+
         //   this.isLoading = false;
       }
     );
@@ -221,8 +224,10 @@ this.error =[];
   }
   /*....Fetch the selected state and call list of city service....*/
   selectChange(event: any) {
-
+   // this.registrationForm.controls.selectedState.reset();
+   // this.registrationForm.controls.selectecity.reset();
     console.log("selected State", event.value);
+   // this.selectedcity= { "cityId": "", "city": "" };
     this.selectedstate = event.value;
     console.log("selectedstate option", this.selectedstate.stateId);
     // let stateId = this.selectedstate.stateId.toString();

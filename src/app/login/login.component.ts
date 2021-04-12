@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators , FormControl} from '@angular/forms'
 import { LoginService } from './login.service';
 import { ModalService } from './../_modal/modal.service';
 import { Router }          from '@angular/router';
+import { NotificationService } from './../services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder,private modalService:ModalService,
     private loginService: LoginService,
-    private router:Router) {
+    private router:Router, private toaster:NotificationService,) {
   }
 
   ngOnInit(): void {
@@ -72,6 +73,8 @@ export class LoginComponent implements OnInit {
     this.loginService.login(userName, password).subscribe(
       resData => {
         console.log("resData", resData);
+        this.toaster.showSuccess('You have been Loged-in successfully.','Success')
+
         // setting data to session .........
         for (let i = 0; i < resData.Success.length; i++) {
           console.log("response Data", resData.Success[i]);
@@ -103,6 +106,7 @@ export class LoginComponent implements OnInit {
       },
       errorMessage => {
         console.log(errorMessage);
+        this.toaster.showError(errorMessage,'Error Occured')
         this.error = errorMessage;
         //   this.isLoading = false;
       }
