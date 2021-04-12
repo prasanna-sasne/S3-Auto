@@ -102,16 +102,16 @@ export class SellInputFormComponent implements OnInit {
   }
   initForm(): void {
     this.sellForm = new FormGroup({
-      selectedMake: new FormControl([this.selectedMake,[ Validators.required]]),
-      selectedModel: new FormControl([this.selectedModel,[ Validators.required]]),
-      selectedstate: new FormControl([this.selectedstate,[ Validators.required]]),
-      selectedYear: new FormControl([this.selectedYear,[ Validators.required]]),
-      selectedPart: new FormControl([this.selectedPart,[ Validators.required]]),
-      selectedShip: new FormControl([this.selectedShip,[ Validators.required]]),
-      selectedMileage:new FormControl([this.selectedMileage,[ Validators.required]]),
-      priceValue: new FormControl([this.priceValue,[ Validators.required]]),
-      description: new FormControl([this.description,[ Validators.required]]),
-      selectedVin:new FormControl([this.selectedVin,[ Validators.required, Validators.pattern('^(?=.*[0-9])(?=.*[A-z])[0-9A-z-]{17}$')]])
+      selectedMake: new FormControl(this.selectedMake, Validators.required),
+      selectedModel: new FormControl(this.selectedModel, Validators.required),
+      selectedstate: new FormControl(this.selectedstate, Validators.required),
+      selectedYear: new FormControl(this.selectedYear, Validators.required),
+      selectedPart: new FormControl(this.selectedPart, Validators.required),
+      selectedShip: new FormControl(this.selectedShip, Validators.required),
+      selectedMileage:new FormControl(this.selectedMileage, Validators.required),
+      priceValue: new FormControl(this.priceValue, Validators.required),
+      description: new FormControl(this.description, Validators.required),
+      selectedVin:new FormControl(this.selectedVin,[ Validators.required, Validators.pattern('^(?=.*[0-9])(?=.*[A-z])[0-9A-z-]{17}$')])
     } );
   }
 
@@ -268,11 +268,20 @@ export class SellInputFormComponent implements OnInit {
       //var formData: any = new FormData();
       //let partAddRequest = {}
       this.validateAllFormFields (this.sellForm);
-     if (this.sellForm.valid) {
+     if (this.sellForm.pristine) {
       console.log('form submitted');
     } else {
 
     return; }
+
+    if(this.multiImages.length !=4 && this.role == "USER"){
+      this.toaster.showError('Four(4) Images need to be uploaded','Upload Failure')
+      return;
+   }
+   if(this.multiImages.length !=1 && this.role != "USER"){
+    this.toaster.showError('One(1) Image need to be uploaded','Upload Failure')
+    return;
+ }
       // sell form data ...
       if(this.roleStatus) {
         this.submitVheicleForm(); // Form for User
@@ -295,8 +304,9 @@ export class SellInputFormComponent implements OnInit {
        this.priceValue==null||
        this.description==null||
        this.selectedFile==null||
-      String(this.selectedShippingOption.shippingValue)==null)
-
+      String(this.selectedShippingOption.shippingValue)==null||
+      this.images.length==0)
+      
 
       {
         this.toaster.showError('Check for input fields and Image for valid data','Input Field Error')
