@@ -64,7 +64,7 @@ export class SellInventoryComponent implements OnInit {
   startIndex = 0;
   currentPageIndex = 1;
   msg:String;
-  isReadMore=true;
+  isReadMore:any[]=[];
 
   formdata;
   //Search parameters.....
@@ -255,7 +255,7 @@ export class SellInventoryComponent implements OnInit {
   }
 
 
-  
+
   populateFilterOptions(){
     this.sellInventoryService.getMakers().subscribe(data => this.makers = data);
     this.sellInventoryService.getStates().subscribe(data => this.states = data);
@@ -501,23 +501,43 @@ export class SellInventoryComponent implements OnInit {
   }
 
   /**Sold service call.. */
-  markDataSold(partSellId){
-    this.sellInventoryService.markDataSold(this.inventoryList[this.deleteIndex].partSellId).subscribe(
-      resData => {
-        console.log("resData", resData);
-        // setting data to session .........
+  markDataSold(partSellI){
+    if(this.role== "JUNK_YARD_OWNER"){
+      this.sellInventoryService.markDataSold(this.inventoryList[this.deleteIndex].partSellId).subscribe(
+        resData => {
+          console.log("resData", resData);
 
-        this.toaster.showSuccess('Item sold and moved to sell history','Item Sold')
+          this.toaster.showSuccess('Item sold and moved to sell history','Item Sold')
+          this.closeModal('sold_modal');
+          location.reload(true);
+
+        },
+        errorMessage => {
+          console.log(errorMessage);
+          //   this.error = errorMessage;
+          //   this.isLoading = false;
+        }
+      );
+    }else {
+      this.sellInventoryService.markVehicleDataSold(this.inventoryList[this.deleteIndex].vehicleSells[0].sellId).subscribe(
+        resData => {
+          console.log("resData", resData);
+          // setting data to session .........
+
+          this.toaster.showSuccess('Item sold and moved to vehicle history','Item Sold')
         this.closeModal('sold_modal');
-        location.reload(true);
+          location.reload(true);
 
-      },
-      errorMessage => {
-        console.log(errorMessage);
-        //   this.error = errorMessage;
-        //   this.isLoading = false;
-      }
-    );
+        },
+        errorMessage => {
+          console.log(errorMessage);
+          //   this.error = errorMessage;
+          //   this.isLoading = false;
+        }
+      );
+
+    }
+
   }
 
    /**Delete service call.. */
@@ -576,8 +596,8 @@ export class SellInventoryComponent implements OnInit {
     this.router.navigate(['../s3-auto/sell-form'], {relativeTo: this.route});
   }
 
-  showText(){
-    this.isReadMore = !this.isReadMore
+  showText(id){
+    this.isReadMore[id] = !this.isReadMore[id]
   }
 
 

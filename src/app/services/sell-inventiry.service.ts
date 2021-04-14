@@ -172,10 +172,30 @@ let headers = new Headers();
       })
       );
   }
+  markVehicleDataSold(vehId){
+    console.log(vehId);
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    const url = `${this.appUrl}/uvp/vehicles/sold/${vehId}`;
+    return this.http.put(url, { headers: headers })
+      .pipe(map(response => {
+        console.log(response);
+        return response;
+      }), catchError(errorRes => {
+        let errorMessage = 'An unknown error occurred!';
+        if (errorRes.status !== 400) {
+          return throwError(errorMessage);
+        } else {
+          return throwError(errorRes.error.Error[0]);
+        }
+      })
+      );
+  }
 
   searchData(filterQuery, role) {
     let url ="";
-    if(window.sessionStorage.getItem('ROLE') == 'JUNK_YARD_OWNER'){
+    if(role == 'JUNK_YARD_OWNER'){
        url = `${this.appUrl}/uvp/parts/get/${filterQuery.userId}/${filterQuery.makeId}/${filterQuery.modelId}/${filterQuery.year}/${filterQuery.startIdx}/${filterQuery.resultSize}`;
        return this.http.get<{}[]>(url)
        .pipe(
@@ -195,7 +215,6 @@ let headers = new Headers();
        );//end pipe
       }
   }
-
 
   editSelectedItem(partSellId,selectedFile,partAddRequest){
    // /uvp/parts/update/{partSellId} <-------- update
