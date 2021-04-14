@@ -2,3 +2,7 @@
     display: block;
     padding: 0.6rem 1rem;
 }
+
+.active{
+	font-weight: 800;
+}
