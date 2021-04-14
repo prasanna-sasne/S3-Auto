@@ -23,7 +23,7 @@ const routes: Routes = [
 { path: 'about-us', component: AboutUsComponent },
 { path: 'sell-service-info', component: SellInfoComponent },
 { path: 'updateProfile', component: UpdateProfileComponent },
-{ path: 'sellInventory', component: SellInventoryComponent },
+
 {path: 'contactus', component: ContactusComponent },
 {path: 'tickets', component: TicketsComponent},
 {
@@ -33,6 +33,7 @@ const routes: Routes = [
 	{ path: 'buy-list', component: BuyListComponent },
 	{ path: 'sell-form', component: SellInputFormComponent },
 	{ path: 'sell-history', component: SellHistoryComponent },
+  { path: 'sellInventory', component: SellInventoryComponent },
 	]
 },
 { path: 'item-details', component: ItemDetailsComponent },

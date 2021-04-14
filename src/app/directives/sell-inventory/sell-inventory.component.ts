@@ -65,6 +65,8 @@ export class SellInventoryComponent implements OnInit {
   currentPageIndex = 1;
   msg:String;
   isReadMore:any[]=[];
+  closeCollapse:boolean[]=[]
+  closeDuplicateWindow:boolean[]=[];
 
   formdata;
   //Search parameters.....
@@ -208,7 +210,7 @@ export class SellInventoryComponent implements OnInit {
       this.sellInputFormService.getModels(this.selectedMake.makeId)
         .subscribe(data => this.models = data)
       this.modelFlag = false
-      this.yearStateFlag = false
+    //  this.yearStateFlag = false
     }
   }
 
@@ -216,16 +218,12 @@ export class SellInventoryComponent implements OnInit {
   onChangeModel(event: any) {
     this.generateYears();
     if (event.value == null) {
-      this.yearStateFlag = false
+     this.yearStateFlag = false
       this.selectedstate = { "stateId": "*", "state": "" }
       this.selectedYear = { "yearId": -1, "year": "*" }
-    } else {
-      if (this.role.localeCompare("USER") === 0) {
-        if (this.selectedPart !== null && this.selectedPart.part !== "")
-          this.yearStateFlag = false
-      } else this.yearStateFlag = false
+    }  else this.yearStateFlag = false
 
-    }
+
   }
 
   search(): void {
@@ -286,6 +284,9 @@ export class SellInventoryComponent implements OnInit {
 
   /**generate index value */
   getIndex(indexValue){
+    this.closeDuplicateWindow[indexValue]=true;
+    this.closeCollapse[indexValue]=false;
+
     this.actionIndex = indexValue;
     console.log(indexValue);
     console.log(this.inventoryList[indexValue]);
@@ -390,7 +391,7 @@ export class SellInventoryComponent implements OnInit {
       }
     }else{
       this.duplicateFlag= false;
-      this.msg= "Value is greater than 10 "
+      this.msg= "Value is greater than 10    "
     }
 
 
@@ -587,17 +588,39 @@ export class SellInventoryComponent implements OnInit {
   }
 
   editFormData(indexValue){
+ // collasple show and hide.
+ this.closeDuplicateWindow[indexValue]=false;
+
+ this.closeCollapse[indexValue]=true;
     console.log(this.inventoryList[indexValue]);
     this.formdata=this.inventoryList;
     this.sellInventoryService.subject.emit(this.inventoryList[indexValue]);
   }
 
   goToSellSection(){
-    this.router.navigate(['../s3-auto/sell-form'], {relativeTo: this.route});
+    this.router.navigate(['../sell-form'], {relativeTo: this.route});
   }
 
   showText(id){
     this.isReadMore[id] = !this.isReadMore[id]
+  }
+
+  closeCollapsefun(index){
+    if(this.closeCollapse[index] == undefined){
+      this.closeCollapse[index] = false;
+    }else {
+
+      this.closeCollapse[index]=!this.closeCollapse[index];
+    }
+  }
+
+  closeDuplicateCollapse(index){
+    if(this.closeDuplicateWindow[index] == undefined){
+      this.closeDuplicateWindow[index] = false;
+    }else {
+
+      this.closeDuplicateWindow[index]=!this.closeDuplicateWindow[index];
+    }
   }
 
 

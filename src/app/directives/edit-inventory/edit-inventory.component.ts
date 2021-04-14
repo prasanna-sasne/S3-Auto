@@ -274,13 +274,6 @@ export class EditInventoryComponent implements OnInit {
 
   }
 
-
-  /**Navigate back */
-  sellInvenPage() {
-    //navigate to homepage
-    this.router.navigate(['sellInventory']);
-  }
-
   /**submit after edit */
   onSubmit() {
     console.log(this.editFrm.value);

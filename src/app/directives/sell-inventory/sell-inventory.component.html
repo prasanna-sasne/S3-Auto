@@ -102,12 +102,12 @@
                 Actions
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" data-toggle="collapse" href="#{{ 'editForm' + parentIndx }}" role="button"
-                  (click)="editFormData(parentIndx)" aria-expanded="false"
+                <a class="dropdown-item" data-toggle="collapse" role="button"
+                  (click)="editFormData(parentIndx)" mouseup aria-expanded="false"
                   aria-controls="multiCollapseExample1">Edit</a>
                 <a class="dropdown-item" (click)="openModal('delete_item',parentIndx)">Delete</a>
                 <a class="dropdown-item" (click)="openModal('sold_modal',parentIndx)">Sold</a>
-                <a class="dropdown-item" data-toggle="collapse" href="#{{ 'multiCollapseExample1' + parentIndx }}"
+                <a class="dropdown-item" data-toggle="collapse"
                   role="button" (click)="getIndex(parentIndx)" aria-expanded="false"
                   aria-controls="multiCollapseExample1">Duplicate</a>
               </div>
@@ -131,7 +131,7 @@
               {{ isReadMore[parentIndx] ? 'Read Less': 'Read More' }}
             </a>
             <!-- <p class="card-text mt-2"><span class="text-muted">Description: </span>{{ item.description }}</p> -->
-            <footer class="blockquote-footer">Sold Date: <cite title="Source Title">{{item.soldDate | date}}</cite></footer>
+            <!-- <footer class="blockquote-footer">Sold Date: <cite title="Source Title">{{item.soldDate | date}}</cite></footer> -->
           </div>
         </div>
       </div>
@@ -177,7 +177,7 @@
                 Actions
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" data-toggle="collapse" href="#{{ 'editForm' + parentIndx }}" role="button"
+                <a class="dropdown-item" data-toggle="collapse"  role="button"
                   (click)="editFormData(parentIndx)" aria-expanded="false"
                   aria-controls="multiCollapseExample1">Edit</a>
                   <a class="dropdown-item" (click)="openModal('sold_modal',parentIndx)">Sold</a>
@@ -191,19 +191,19 @@
 
             <h6 class="card-subtitle mb-2 text-muted"><strong>{{ item.vehicleSells[0].price | currency }}</strong></h6>
 
-            <div class="col" *ngIf="item.vehicleSells[0].mileage !== undefined"><span class="text-muted">Miles
-                Driven:</span>
-              {{item.vehicleSells[0].mileage}} miles</div>
-            <div class="col" *ngIf="item.vehicleSells[0].vin !== undefined"><span class="text-muted">Vin: </span>{{
-              item.vehicleSells[0].vin }}
+            <div class="row row-cols-xs-1 row-cols-sm-2" *ngIf="item.vehicleSells[0].mileage !== undefined"><span class="text-muted">Miles
+                Driven:{{item.vehicleSells[0].mileage}} miles</span>
+              </div>
+            <div class="row row-cols-xs-1 row-cols-sm-2" *ngIf="item.vehicleSells[0].vin !== undefined"><span class="text-muted">Vin:{{
+              item.vehicleSells[0].vin }} </span>
             </div>
             <!-- <div class="col mb-2" *ngIf="item.shipping !== undefined">
           <span class="text-muted">Shipping:</span> {{ item.shipping == true ? 'Available': 'Not Available'}}
         </div> -->
 
-            <div id="{{'description'+ parentIndx}}" class="col card-text mt-2" [ngClass]="{'limitTextHeight': !isReadMore[parentIndx]}"><span
-                class="text-muted">Description:</span>
-              {{ item.vehicleSells[0].description}}
+            <div id="{{'description'+ parentIndx}}" class="row row-cols-xs-1 row-cols-sm-2" [ngClass]="{'limitTextHeight': !isReadMore[parentIndx]}"><span
+                class="text-muted">Description: {{ item.vehicleSells[0].description}}</span>
+
 
             </div>
             <li href="#{{'description'+parentIndx}}" class="btn btn-link" type="link" (click)="showText(parentIndx)">
@@ -211,7 +211,7 @@
             </li>
             <!-- <p class="card-text mt-2"><span class="text-muted">Description: </span>{{ item.vehicleSells[0].description
               }}</p> -->
-            <footer class="blockquote-footer">Sold Date: <cite title="Source Title">{{item.vehicleSells[0].soldDate | date}}</cite></footer>
+            <!-- <footer class="blockquote-footer">Sold Date: <cite title="Source Title">{{item.vehicleSells[0].soldDate | date}}</cite></footer> -->
 
           </div>
 
@@ -222,8 +222,14 @@
       <div class="row">
 
         <div class="col-md-12">
-          <div class="collapse" id="{{ 'multiCollapseExample1' + parentIndx }}">
+          <div class="collapse" [ngClass]="{'show': closeDuplicateWindow[parentIndx]}" id="{{ 'multiCollapseExample1' + parentIndx }}">
             <div class="card card-body">
+              <div  class="text-right">
+                <span class="badge badge-pill badge-primary sm-button text-right" style="cursor: pointer;" (click)="closeCollapsefun(parentIndx)">
+                  <i class="bi bi-backspace pr-2"></i>Close</span>
+              </div>
+
+              <!-- <a class="close closeColor bi bi-x-octagon" style="align-content:flex-end;" (click)="closeDuplicateCollapse(parentIndx)" aria-label="Close"></a> -->
 
               <p-toast></p-toast>
               <div></div>
@@ -233,10 +239,14 @@
                   <div class="col-md-6">
                     <label class="fontColor ">You can duplicate your form upto 10 dataset</label>
                   </div>
-                  <div class="error-messages" *ngIf="!duplicateFlag">{{msg}}</div>
+                  <div class="col-md-6">
+                    <div class ="row">
+                    <span class="error-messages" *ngIf="!duplicateFlag">{{msg}}</span>
                   <input type="number" [(ngModel)]="numberOfValue" name="" id="" max="10" min="0">
-                  <div class="col-md-4"><button type="button" class="btn btn-outline-primary"
+                  <button type="button" class="btn btn-outline-primary"
                       (click)="createDuplicateList(numberOfValue)">Add+</button></div>
+                  </div>
+
 
                 </div>
                 <p-table [value]="duplicateArray" dataKey="id" editMode="row">
@@ -341,7 +351,7 @@
 
                 <div class="row" *ngIf="duplicateFlag">
                   <div class="">
-                    <div class="mt-5">
+                    <div class="text-right">
                       <button class="btn btn-primary profile-button button" (click)="submitDuplicateData()"
                         type="submit">Save</button>
                       <button type="cancel" class="btn btn-primary button"
@@ -411,8 +421,15 @@
 
       <div class="row">
         <div class="col-md-12">
-          <div class="collapse" id="{{ 'editForm' + parentIndx }}">
+
+          <div class="collapse" [ngClass]="{'show': closeCollapse[parentIndx]}" id="{{ 'editForm' + parentIndx }}">
             <div class="card card-body">
+              <div class="text-right">
+                <span class="badge badge-pill badge-primary sm-button text-right" style="cursor: pointer;" (click)="closeCollapsefun(parentIndx)">
+                  <i class="bi bi-backspace pr-2"></i>Close</span>
+              </div>
+              <!-- <a class="close closeColor bi bi-x-octagon" style="align-content:flex-end;" (click)="closeCollapsefun(parentIndx)" aria-label="Close"></a> -->
+
               <app-edit-inventory></app-edit-inventory>
             </div>
           </div>
@@ -426,6 +443,7 @@
     NO DATA IN INVENTORY TO SHOW!
   </div>
 
+  <!--Pagination-->
   <nav aria-label="Page navigation example" *ngIf="inventoryList?.length !== 0">
     <ul class="pagination justify-content-center">
       <li class="page-item" [ngClass]="{'disabled': previousRecordFlag}" style="cursor: pointer;">

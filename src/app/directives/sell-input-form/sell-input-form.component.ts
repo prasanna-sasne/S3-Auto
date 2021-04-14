@@ -230,7 +230,7 @@ export class SellInputFormComponent implements OnInit {
 
     sellInvenPage(){
       //navigate to homepage
-      this.router.navigate(['sellInventory']);
+      this.router.navigate(['s3-auto/sellInventory']);
     }
 
 
@@ -306,7 +306,7 @@ export class SellInputFormComponent implements OnInit {
        this.selectedFile==null||
       String(this.selectedShippingOption.shippingValue)==null||
       this.images.length==0)
-      
+
 
       {
         this.toaster.showError('Check for input fields and Image for valid data','Input Field Error')
