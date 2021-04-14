@@ -123,12 +123,13 @@
                 <span class="text-muted">Shipping:</span> {{ item.shipping == true ? 'Available': 'Not Available'}}
               </div>
             </div>
-            <div class="col card-text mt-2" [ngClass]="{'limitTextHeight': isReadMore[parentIndx]}"><span
+            <div class="col card-text mt-2" [ngClass]="{'limitTextHeight': !isReadMore[parentIndx]}"><span
                 class="text-muted">Description:</span>
-              {{ item.description}}<a id={{item.partId}} class="btn btn-link" type="button" (click)="showText(parentIndx)">
-                {{ isReadMore[parentIndx] ? 'Read More': 'Read Less' }}
-              </a>
+              {{ item.description}}
             </div>
+            <a id={{item.partId}} class="btn btn-link" type="button" (click)="showText(parentIndx)">
+              {{ isReadMore[parentIndx] ? 'Read Less': 'Read More' }}
+            </a>
             <!-- <p class="card-text mt-2"><span class="text-muted">Description: </span>{{ item.description }}</p> -->
             <footer class="blockquote-footer">Sold Date: <cite title="Source Title">{{item.soldDate | date}}</cite></footer>
           </div>
@@ -200,13 +201,14 @@
           <span class="text-muted">Shipping:</span> {{ item.shipping == true ? 'Available': 'Not Available'}}
         </div> -->
 
-            <div id="{{'description'+ parentIndx}}" class="col card-text mt-2" [ngClass]="{'limitTextHeight': isReadMore[parentIndx]}"><span
-                class="text-muted">Description:{{'description'+parentIndx}}</span>
+            <div id="{{'description'+ parentIndx}}" class="col card-text mt-2" [ngClass]="{'limitTextHeight': !isReadMore[parentIndx]}"><span
+                class="text-muted">Description:</span>
               {{ item.vehicleSells[0].description}}
-              <li href="#{{'description'+parentIndx}}" class="btn btn-link" type="link" (click)="showText(parentIndx)">
-                {{ isReadMore[parentIndx] ? 'Read More': 'Read Less' }}
-              </li>
+
             </div>
+            <li href="#{{'description'+parentIndx}}" class="btn btn-link" type="link" (click)="showText(parentIndx)">
+              {{ isReadMore[parentIndx] ? 'Read Less': 'Read More' }}
+            </li>
             <!-- <p class="card-text mt-2"><span class="text-muted">Description: </span>{{ item.vehicleSells[0].description
               }}</p> -->
             <footer class="blockquote-footer">Sold Date: <cite title="Source Title">{{item.vehicleSells[0].soldDate | date}}</cite></footer>
