@@ -8,10 +8,12 @@
 
       <div class="embed-responsive embed-responsive-16by9 col-md-4">
         <span *ngIf="item.vehicleImages !== undefined; else soldPartImage">
-          <img class="img-thumbnail embed-responsive-item" *ngFor="let itemImages of item.vehicleImages;let aIndex= index;" [src]="itemImages.imageUri" alt="sell-history">
+          <img class="img-thumbnail embed-responsive-item" *ngFor="let itemImages of item.vehicleImages;let aIndex= index;" [src]="itemImages.imageUri" alt="sell-history"
+          style="object-fit: contain;">
         </span>
         <ng-template #soldPartImage>
-          <img class="img-thumbnail embed-responsive-item" [src]="item.imageUri" alt="sell-history">
+          <img class="img-thumbnail embed-responsive-item" [src]="item.imageUri" alt="sell-history"
+          style="object-fit: contain;">
         </ng-template>
       </div>
 

@@ -2,6 +2,7 @@
     display: block;
     padding: 0.6rem 1rem;
 }
+
 .nav-link.active {
   font-weight: 800;
   color: #007bff;
