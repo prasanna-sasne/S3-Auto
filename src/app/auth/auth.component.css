@@ -41,7 +41,7 @@
      border: 1px solid #D40000;
      border-radius: 2px;
    }
-   
+
 input.ng-valid {
   border-color:lightgreen;
 }
@@ -61,6 +61,23 @@ input:checked + .slider {
   background-color: #2196F3;
 }
 
+.bs-tooltip-auto[x-placement^=top] .arrow::before,
+.bs-tooltip-bottom .arrow::before {
+  border-bottom-color: #f00; /* Red */
+}
+
+.tooltip{
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  font-weight: 700;
+  background: #f3f3f3;
+  border: 1px solid #f70a0a;
+  color: #e60e0e;
+  margin: 4px 121px 0 5px;
+  float: right;
+  text-align: left !important;
+}
 
 
 input:focus + .slider {

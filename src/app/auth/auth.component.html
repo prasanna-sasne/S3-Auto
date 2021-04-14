@@ -10,7 +10,8 @@
           <div class="form-group">
             <label></label>
 
-            <input type="text" class="form-control" formControlName="username" id="username" placeholder="User Name" autocomplete="off" >
+            <input type="text" class="form-control" formControlName="username" id="username" placeholder="User Name" data-toggle="tooltip"
+            data-placement="top" title="The User Name needs to be of min length 5 and is case insensitive" autocomplete="off" >
             <div *ngIf="isValidInput('username')" class="error-messages">
               <div *ngIf="registrationForm.controls['username'].errors!.required">User Name is required.</div>
               <div *ngIf="registrationForm.controls['username'].errors?.minlength">The User Name needs to be of min length 5
@@ -19,7 +20,8 @@
             <!----PASSWORD----->
             <div class="form-group">
               <label></label>
-              <input type="password" class="form-control" formControlName="password" id="password" placeholder="Password" autocomplete="off" >
+              <input type="password" class="form-control" data-toggle="tooltip"
+              data-placement="top" title="Password must contain more than 8 characters, 1 upper case letter, 1 lower case letter , 1 Number, and 1 special character" formControlName="password" id="password" placeholder="Password" autocomplete="off" >
 
               <div *ngIf="isValidInput('password')" class="error-messages">
                 <div *ngIf="registrationForm.controls['password'].errors!.required">Password is required.</div>
@@ -60,8 +62,9 @@
           <!----Phone number input value----->
           <div class="form-group">
             <label></label>
-            <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber"
-              placeholder="Phone Number" autocomplete="off" >
+            <input type="text" class="form-control" id="phoneNumber"  formControlName="phoneNumber"
+            data-toggle="tooltip"
+            data-placement="top" title="Please, Enter 10 digit Phone Number."  placeholder="Phone Number" autocomplete="off" >
             <div *ngIf="registrationForm.controls.phoneNumber.touched && registrationForm.controls.phoneNumber.invalid"              class="error-messages">
               <div *ngIf="registrationForm.controls.phoneNumber.errors!.required">Mobile Number is required.</div>
             </div>
@@ -108,7 +111,7 @@
         <div class="form-group col-md-3" required=true>
           <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
           <p-dropdown [options]="states" formControlName="selectedstate" optionLabel="state" [filter]="true"
-            filterBy="state" (onChange)="selectChange($event)" 
+            filterBy="state" (onChange)="selectChange($event)"
             placeholder="Select State" class="select-style position: absolute"
              id="selectedstate"
             [ngClass]="{'ng-valid ng-dirty': ( selectedstate != null) }"
@@ -134,7 +137,7 @@
           <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
           <p-dropdown [options]="citiesList" formControlName="selectedcity" optionLabel="city" [filter]="true"
             filterBy="city" (onChange)="selectCityChange($event)" placeholder="Select City"
-            class="select-style position: absolute "            
+            class="select-style position: absolute "
             [ngClass]="{'ng-valid ng-dirty': selectedcity !== null}"
             [ngClass]="{'ng-invalid ng-dirty': selectedcity == null}">
             <ng-template pTemplate="selectedItem">

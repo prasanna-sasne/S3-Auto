@@ -5,8 +5,6 @@ import { ModalService } from './../../_modal/modal.service'
 import { Router, ActivatedRoute } from '@angular/router';
 import { NotificationService } from './../../services/notification.service';
 
-
-
 interface inventoryObject {
 
   "userId": number,
@@ -113,14 +111,14 @@ export class SellInventoryComponent implements OnInit {
   previousPage(): void {
     this.currentPageIndex--
     this.startIndex -= 8
-    //	this.getSellHistory()
+  this.getSellInventory()
   }
 
   // To get next page data
   nextPage(): void {
     this.currentPageIndex++
     this.startIndex += 8
-    //	this.getSellHistory()
+    this.getSellInventory()
   }
 
 
@@ -138,8 +136,8 @@ export class SellInventoryComponent implements OnInit {
     this.inventoryList.splice(8, 1)
 
     if (data.length % 9 == 0) {
-      this.nextRecordFlag = false
-    } else this.nextRecordFlag = true
+      this.nextRecordFlag = false;
+    } else this.nextRecordFlag = true;
   }
 
   /**get make list  */
