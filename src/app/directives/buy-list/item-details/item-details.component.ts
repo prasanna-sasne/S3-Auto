@@ -92,7 +92,6 @@ export class ItemDetailsComponent implements OnInit {
 	}
 
 	newMsgPresent(showBell: {notificationPresent: boolean}){
-		console.log(showBell.notificationPresent);
 		this.notifyHeaderService.bellFlag.emit(showBell.notificationPresent);
 	}
 

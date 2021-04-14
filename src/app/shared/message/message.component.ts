@@ -89,6 +89,7 @@ import {Component, OnInit,
 
         public connect(): void {
             this.stompClient = Stomp.over(new SockJS(this.webSocketEndPoint));
+            this.stompClient.debug = () => {}
             this.stompClient.connect({'X-Authorization': 'Bearer ' + this.token}, (): void => {
                 this.stompClient.subscribe(this.topic + this.username, (message: any) => {
                     this.handleMessage(message);
