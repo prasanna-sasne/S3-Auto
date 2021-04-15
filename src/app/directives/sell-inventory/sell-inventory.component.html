@@ -227,7 +227,7 @@
             <div class="card card-body">
               <div  class="text-right">
                 <span class="badge badge-pill badge-primary sm-button text-right" style="cursor: pointer;" (click)="closeCollapsefun(parentIndx)">
-                  <i class="bi bi-backspace pr-2"></i>Close</span>
+                  Close</span>
               </div>
 
               <!-- <a class="close closeColor bi bi-x-octagon" style="align-content:flex-end;" (click)="closeDuplicateCollapse(parentIndx)" aria-label="Close"></a> -->
@@ -243,9 +243,10 @@
                   <div class="col-md-6">
                     <div class ="row">
                     <span class="error-messages" *ngIf="!duplicateFlag">{{msg}}</span>
+                    <button type="button" class="btn btn-outline-primary"
+                      (click)="createDuplicateList(numberOfValue)">Add+</button>
                   <input type="number" [(ngModel)]="numberOfValue" name="" id="" max="10" min="0">
-                  <button type="button" class="btn btn-outline-primary"
-                      (click)="createDuplicateList(numberOfValue)">Add+</button></div>
+                  </div>
                   </div>
 
 
@@ -276,9 +277,9 @@
                       <td>
 
                         <input id={{product.id}} type="file" class="form-control" style=" visibility: hidden; width:10px;cursor: pointer;
-                            height:1px;" placeholder="+" multiple="" (change)="onFileChange($event,product.id)">
+                            height:1px;" placeholder="+" multiple="" (change)="onFileChange($event,product.id)" accept="image/*">
                         <label for={{product.id}} style="cursor: pointer;">
-                          <a href="#" class="d-inline-block" data-toggle="tooltip" data-placement="right"
+                          <a class="d-inline-block" data-toggle="tooltip" data-placement="right"
                             title="Click to Edit">
                             <img style=" width:20px;cursor: pointer;
                             height:20px;" src="/assets/imageedit.png" /></a>
@@ -355,8 +356,8 @@
                     <div class="text-right">
                       <button class="btn btn-primary profile-button button" (click)="submitDuplicateData()"
                         type="submit">Save</button>
-                      <button type="cancel" class="btn btn-primary button"
-                        (click)="closeModal('duplicate_modal')">cancel</button>
+                      <!-- <button type="cancel" class="btn btn-primary button"
+                        (click)="closeModal('duplicate_modal')">cancel</button> -->
                     </div>
                   </div>
                 </div>
@@ -427,7 +428,7 @@
             <div class="card card-body">
               <div class="text-right">
                 <span class="badge badge-pill badge-primary sm-button text-right" style="cursor: pointer;" (click)="closeCollapsefun(parentIndx)">
-                  <i class="bi bi-backspace pr-2"></i>Close</span>
+                  Close</span>
               </div>
               <!-- <a class="close closeColor bi bi-x-octagon" style="align-content:flex-end;" (click)="closeCollapsefun(parentIndx)" aria-label="Close"></a> -->
 

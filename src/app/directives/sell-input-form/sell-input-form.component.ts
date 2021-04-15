@@ -337,6 +337,8 @@ export class SellInputFormComponent implements OnInit {
           console.log("resData", resData);
           // setting data to session .........
           this.toaster.showSuccess('Your form has been submitted successfully ','Submitted');
+          this.router.navigate(['s3-auto/sellInventory']);
+
         },
         errorMessage => {
           console.log(errorMessage);

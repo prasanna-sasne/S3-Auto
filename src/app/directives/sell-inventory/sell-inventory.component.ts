@@ -299,7 +299,7 @@ export class SellInventoryComponent implements OnInit {
 
   /**Upload Image file */
   onFileChange(event,id) {
-
+debugger;
     if (event.target.files && event.target.files[0]) {
         /**User role */
         var filesAmount = event.target.files.length;
