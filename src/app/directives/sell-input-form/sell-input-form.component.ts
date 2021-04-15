@@ -119,8 +119,8 @@ export class SellInputFormComponent implements OnInit {
 
     if(event.value == null){
       this.selectedMake = {"makeId": -1, "make": ""};
-      this.selectedModel = {"modelId": -1, "model": "*"};
-      this.selectedYear = {"yearId": -1, "year": "*"};
+      this.selectedModel = {"modelId": -1, "model": ""};
+      this.selectedYear = {"yearId": -1, "year": ""};
     } else {
       this.selectedModel.model='';
       this.selectedYear.year='';
@@ -154,9 +154,12 @@ export class SellInputFormComponent implements OnInit {
     let currentYear = new Date().getFullYear();
     let startYear = (currentYear-50) || 1980;
     let index = 0;
+    var temp : {"yearId": number, "year": string}[] = [];
     while ( currentYear >= startYear ) {
-      this.years.push({"year": String(currentYear--), "yearId": index++});
+      //this.years.push({"year": String(currentYear--), "yearId": index++});
+      temp.push({"year": String(currentYear--), "yearId": index++});
     }
+    this.years=temp;
   }
 
   onChangePart(event: any){
@@ -206,11 +209,13 @@ export class SellInputFormComponent implements OnInit {
 
           reader.onload = (event:any) => {
             console.log(event.target)
+            this.msg='';
             //  console.log(event.target.result);
-            // if (event.target.result.match(/image\/*/) == null) {
-              //   this.msg = "Only images are supported";
-              //   return;
-              //   }
+            if (event.target.result.match(/image\/*/) == null) {
+                this.msg = "Only images are supported";
+                //this.toaster.showError('Only images are supported','Upload Failure')
+                return;
+                }
               this.images.push(event.target.result);
 
               this.sellForm.patchValue({

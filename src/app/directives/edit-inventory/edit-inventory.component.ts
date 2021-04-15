@@ -97,6 +97,8 @@ export class EditInventoryComponent implements OnInit {
     if (event.value !== undefined) {
       this.selectedModel = {"modelId": -1, "model": "*"};
       this.selectedYear = {"yearId": -1, "year": "*"};
+      this.generateYears();
+
       this.sellInputFormService.getModels(event.value.makeId)
         .subscribe(data => {
           this.models = data
@@ -116,7 +118,20 @@ export class EditInventoryComponent implements OnInit {
     this.modelFlag = false;
 
   }
+  matrixIndexed(details, name) {
+    var r;
 
+    for (r = 0; r < details.length; ++r) {
+      
+       
+          const tempObject  = details[r];
+          if (tempObject.year == name) {
+             return { r};
+          }
+       
+    }
+    return {};
+ }
   onChangeYear(event: any){
     this.generateYears();
     console.log(event);
@@ -127,7 +142,7 @@ export class EditInventoryComponent implements OnInit {
       if(this.selectedModel !== null && this.selectedModel.model !== "")
         console.log(this.selectedModel)
 
-        this.selectedYear ={"year": event.value.year, "yearId": event.value.yearId};
+        this.selectedYear ={year: event.value.year, yearId: event.value.yearId};
 
       //this.yearStateFlag = false;
     }
@@ -139,11 +154,16 @@ export class EditInventoryComponent implements OnInit {
     //   this.selectedYear = {"yearId": -1, "year": "*"};
     //   this.yearStateFlag = true;
     // } else
-    this.selectedYear = { "yearId": event.yearId, "year": event.year };
     if (event.value == null) {
       this.selectedModel = { model: event.model, modelId: event.modelId };
       this.sellInputFormService.getParts().subscribe(data => this.parts = data);
-      this.generateYears();
+      //this.generateYears();
+      //console.log(this.years.findIndex(event.year ));
+
+this.selectedYear={yearId : this.matrixIndexed(this.years,event.year).r, year: event.year};
+this.editFrm.patchValue({
+  selectedYear: {yearId: this.matrixIndexed(this.years,event.year).r, year: event.year}
+          });
       this.onChangePart(event)
       this.yearStateFlag = false;
     } else {
@@ -190,7 +210,7 @@ export class EditInventoryComponent implements OnInit {
     } else
       this.selectedPart = { partId: event.partId, part: event.part }
     this.yearStateFlag = false;
-    this.generateYears();
+    //this.generateYears();
   }
 
   /**generate Year list */
@@ -199,9 +219,12 @@ export class EditInventoryComponent implements OnInit {
     let currentYear = new Date().getFullYear();
     let startYear = (currentYear - 50) || 1980;
     let index = 0;
-    while (currentYear >= startYear) {
-      this.years.push({ "year": currentYear--, "yearId": index++ });
+    var temp :  { "yearId": number, "year": number }[] = [];
+    while ( currentYear >= startYear ) {
+      //this.years.push({"year": String(currentYear--), "yearId": index++});
+      temp.push({"yearId": index++, "year": currentYear--});
     }
+    this.years=temp;
   }
 
 
@@ -217,10 +240,13 @@ export class EditInventoryComponent implements OnInit {
         reader.onload = (event: any) => {
           console.log(event.target)
           //  console.log(event.target.result);
-          // if (event.target.result.match(/image\/*/) == null) {
-          //   this.msg = "Only images are supported";
-          //   return;
-          //   }
+          this.msg ='';
+          if (event.target.result.match(/image\/*/) == null) {
+            this.msg = "Only images are supported";
+            this.multiImages[id]=[];
+
+            return;
+            }
           var temp = event.target;
           // temp.append("name","file + id");
           this.images[id] = (event.target.result);
@@ -249,10 +275,13 @@ export class EditInventoryComponent implements OnInit {
             reader.onload = (event: any) => {
               console.log(event.target)
               //  console.log(event.target.result);
-              // if (event.target.result.match(/image\/*/) == null) {
-              //   this.msg = "Only images are supported";
-              //   return;
-              //   }
+              this.msg ='';
+
+              if (event.target.result.match(/image\/*/) == null) {
+                this.msg = "Only images are supported";
+                this.multiImages[i]=[];
+                return;
+                }
               this.images[0] = (event.target.result);
 
 
@@ -280,6 +309,14 @@ export class EditInventoryComponent implements OnInit {
     var formData: any = new FormData();
     let partAddRequest = {}
     // sell form data ...
+    if(this.multiImages.length !=4 && this.role == "USER"){
+      this.toaster.showError('Four(4) Images need to be uploaded','Upload Failure')
+      return;
+   }
+   if(this.multiImages.length !=1 && this.role != "USER"){
+    this.toaster.showError('One(1) Image need to be uploaded','Upload Failure')
+    return;
+ }
     if (this.roleStatus) {
       this.submitVheicleForm(); // Form for User
     } else {

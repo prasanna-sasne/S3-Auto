@@ -210,7 +210,7 @@
               <input *ngIf="roleStatus" id="file" type="file" class="form-control fileUpload" multiple=""
                 (change)="onFileChange($event)">
               <input *ngIf="!roleStatus" id="file" type="file" class="form-control fileUpload"
-                (change)="onFileChange($event)">
+                (change)="onFileChange($event)" accept="image/*">
               <!-- <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">
                 <div *ngIf="f.file.errors.required">File is required.</div>
               </div> -->

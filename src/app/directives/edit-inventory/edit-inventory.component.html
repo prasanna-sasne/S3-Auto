@@ -185,11 +185,11 @@
           <div class="form-group col" style="column-width: auto;" style="text-align:center justify-content-md-center">
             <div class="p-0 py-0 row mt-8" ></div>
               <div *ngIf="roleStatus" class="card bg-light row mt-8" style="text-align:center">
+                <div [innerHtml]='msg' *ngIf="msg" style="color: red;"></div>
                 <label class="lableDetail" *ngIf="roleStatus">Please upload your vehicle front ,left ,right and rear view images</label>
                 <div *ngFor='let url of images;let imgIndex=index'>
-                  <div [innerHtml]='msg' *ngIf="msg" style="color: red;"></div>
                   <input *ngIf="roleStatus" id="{{'file' +imgIndex}}" type="file" class="form-control fileUpload"
-                    (change)="onFileChange($event,imgIndex)" style="justify-content-md-center">
+                    (change)="onFileChange($event,imgIndex)" style="justify-content-md-center " accept="image/*">
                   <!-- <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">
                     <div *ngIf="f.file.errors.required">File is required.</div>
                   </div> -->
@@ -204,7 +204,7 @@
                 <div [innerHtml]='msg' *ngIf="msg" style="color: red;"></div>
                 <label class="lableDetail" *ngIf="!roleStatus">Please upload your vehicle part image </label>
                 <input *ngIf="!roleStatus" id="file" type="file" class="form-control fileUpload"
-                  (change)="onFileChange($event,0)" style="justify-content-md-center">
+                  (change)="onFileChange($event,0)" style="justify-content-md-center" accept="image/*">
                 <!-- <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">
                     <div *ngIf="f.file.errors.required">File is required.</div>
                   </div> -->
