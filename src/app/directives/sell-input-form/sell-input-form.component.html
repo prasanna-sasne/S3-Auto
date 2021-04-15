@@ -208,7 +208,7 @@
               <label class="lableDetail" *ngIf="roleStatus">Please upload your vehicle front ,left ,right and rear view images</label>
               <label class="lableDetail" *ngIf="!roleStatus">Please upload your vehicle part image.</label>
               <input *ngIf="roleStatus" id="file" type="file" class="form-control fileUpload" multiple=""
-                (change)="onFileChange($event)">
+                (change)="onFileChange($event)" accept="image/*">
               <input *ngIf="!roleStatus" id="file" type="file" class="form-control fileUpload"
                 (change)="onFileChange($event)" accept="image/*">
               <!-- <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">
