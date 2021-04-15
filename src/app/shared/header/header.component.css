@@ -7,18 +7,25 @@
 .abt-us{
   cursor: pointer;
   align-self: center;
-  margin: 0px 20px;
-
+  margin-right: 20px;
 }
 
 .sell{
-  cursor: pointer;
   align-self: flex-end;
 }
-/*.login-header > span:hover{
+
+.abt-us:hover, .active, .login-header:hover{
   color: #ffc107;
 }
-*/
+
+.badge.badge-pill.badge-light:hover{
+  background-color: #ffc107;
+}
+
+.nav-item.sell.abt-us.active > h5 > .badge.badge-pill.badge-light{
+  background-color: #ffc107;
+}
+
 .spacer {
   flex: 1;
 }

@@ -43,6 +43,7 @@ import { FooterComponent} from "./shared/footer/footer.component";
 import { NotificationService } from './services/notification.service';
 import { EditInventoryComponent } from './directives/edit-inventory/edit-inventory.component';
 import { SellInfoComponent } from './shared/sell-info/sell-info.component';
+import { HomeComponent } from './shared/home/home.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { SellInfoComponent } from './shared/sell-info/sell-info.component';
   AboutUsComponent,
   FooterComponent,
   EditInventoryComponent,
-  SellInfoComponent
+  SellInfoComponent,
+  HomeComponent
   ],
 
   imports: [
