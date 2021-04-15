@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
     this.loginService.login(userName, password).subscribe(
       resData => {
         console.log("resData", resData);
-        this.toaster.showSuccess('You have been Loged-in successfully.','Success')
+        this.toaster.showSuccess('You have been Logged-In successfully.','Success')
 
         // setting data to session .........
         for (let i = 0; i < resData.Success.length; i++) {

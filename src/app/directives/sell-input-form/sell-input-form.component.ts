@@ -189,6 +189,7 @@ export class SellInputFormComponent implements OnInit {
   // image upload...
   onFileChange(event) {
     this.images=[];
+    this.multiImages=[];
     if (event.target.files && event.target.files[0]) {
       var filesAmount = event.target.files.length;
       for (let i = 0; i < filesAmount; i++) {
@@ -389,7 +390,7 @@ export class SellInputFormComponent implements OnInit {
           console.log("resData", resData);
           // setting data to session .........
           this.toaster.showSuccess('Your form has been submitted successfully ','Submitted');
-         this.router.navigate(['sellInventory']);
+          this.router.navigate(['s3-auto/sellInventory']);
         },
         errorMessage => {
           console.log(errorMessage);
