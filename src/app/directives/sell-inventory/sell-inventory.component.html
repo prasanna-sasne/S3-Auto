@@ -12,8 +12,7 @@
     <!--Search fields-->
       <p-dropdown [options]="makers" [(ngModel)]="selectedMake" optionLabel="make" [filter]="true" filterBy="make"
       placeholder="Select Make" class="select-style " (onChange)="onChangeMake($event)"
-      [ngClass]="{'ng-valid ng-dirty': selectedMake.make !== ''}"
-      [ngClass]="{'ng-invalid ng-dirty': selectedMake.make == ''}">
+      >
       <ng-template pTemplate="selectedItem">
         <div class="country-item country-item-value" *ngIf="selectedMake">
           <div>{{selectedMake.make}}</div>
@@ -29,8 +28,8 @@
     <div class="form-group col" >
     <p-dropdown [options]="models" [(ngModel)]="selectedModel" optionLabel="model" [filter]="true" filterBy="model"
       placeholder="Select Model" class="select-style" (onChange)="onChangeModel($event)"
-      [disabled]="modelFlag" [ngClass]="{'ng-valid ng-dirty': selectedModel !== null}"
-      [ngClass]="{'ng-invalid ng-dirty': selectedModel == null}">
+      [disabled]="modelFlag" 
+      >
       <ng-template pTemplate="selectedItem">
         <div class="country-item country-item-value" *ngIf="selectedModel">
           <div>{{selectedModel.model}}</div>
@@ -46,8 +45,7 @@
     <div class="form-group col" >
     <p-dropdown [options]="years" [(ngModel)]="selectedYear" optionLabel="year" [filter]="true" filterBy="year"
       [showClear]="true" placeholder="Select Year" class="select-style" [disabled]="yearStateFlag"
-      [ngClass]="{'ng-valid ng-dirty': selectedYear !== null}"
-      [ngClass]="{'ng-invalid ng-dirty': selectedYear == null}">
+      >
       <ng-template pTemplate="selectedItem">
         <div class="country-item country-item-value" *ngIf="selectedYear">
           <div>{{selectedYear.year}}</div>
@@ -226,7 +224,7 @@
           <div class="collapse" [ngClass]="{'show': closeDuplicateWindow[parentIndx]}" id="{{ 'multiCollapseExample1' + parentIndx }}">
             <div class="card card-body">
               <div  class="text-right">
-                <span class="badge badge-pill badge-primary sm-button text-right" style="cursor: pointer;" (click)="closeCollapsefun(parentIndx)">
+                <span class="badge badge-pill badge-primary sm-button text-right" style="cursor: pointer;" (click)="closeDuplicateCollapse(parentIndx)">
                   Close</span>
               </div>
 

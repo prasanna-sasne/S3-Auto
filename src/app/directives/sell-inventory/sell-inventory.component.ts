@@ -232,7 +232,7 @@ export class SellInventoryComponent implements OnInit {
       userId : window.sessionStorage.getItem('ID'),
       makeId: this.selectedMake.makeId,
       modelId: this.selectedModel.modelId,
-      year: this.selectedYear == null ? 'wildcard' : this.selectedYear.year,
+      year: this.selectedYear == null ? '*' : this.selectedYear.year,
       startIdx: this.startIndex,
       resultSize: 9
     }
