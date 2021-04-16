@@ -112,10 +112,11 @@
                 <div class="form-group col" style="column-width: auto;">
                   <h5>VIN </h5>
                   <input type="text" class="form-control" id="vinValue" [(ngModel)]="selectedVin"
-                    placeholder="e.g. 2GNAOXEX5E6235589" #vinValue="ngModel" required minlength="17" name="selectedVin">
+                    placeholder="e.g. 2GNAOXEX5E6235589" #vinValue="ngModel" required pattern="^(?=.*[0-9])(?=.*[A-z])[0-9A-z-]{17}$" name="selectedVin">
                   <div *ngIf="vinValue.invalid && (vinValue.dirty || vinValue.touched)" class="error-messages">
                     <div *ngIf="vinValue.errors!.required"> VIN is required. </div>
-                    <div *ngIf="vinValue.errors?.minlength"> VIN is 17 characters Long </div>
+                    <div *ngIf="vinValue.errors?.pattern">VIN is 17 characters long and must only have Digits and Alphanumeric characters
+                    </div>
 
 
                   </div>

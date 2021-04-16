@@ -30,15 +30,13 @@ export class UpdateProfileService {
       .pipe(map( response => {  
             return response; 
         }), catchError(errorRes => {
+          console.log(errorRes.error.Error[0]);
           let errorMessage = 'An unknown error occurred!';
-          if (!errorRes.error || !errorRes.error.error) {
+          if (!errorRes.error.Error) {
             return throwError(errorMessage);
+          }else {
+            return throwError(errorRes.error.Error);
           }
-          switch (errorRes.error.error.message) {
-            case 'EMAIL_EXISTS':
-              errorMessage = 'This email exists already';
-          }
-          return throwError(errorMessage);
         })
       );
   }

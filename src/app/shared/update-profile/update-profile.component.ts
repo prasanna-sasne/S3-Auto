@@ -53,8 +53,8 @@ export class UpdateProfileComponent {
     {
       this.updateProfileForm.patchValue({
         fname: result.firstName,
-        password: [''],
-        confirmPassword: [''],
+        password: '',
+        confirmPassword: '',
         lastName: result.lastName,
         username: result.username,
         phoneNumber: result.phone,
@@ -72,8 +72,8 @@ export class UpdateProfileComponent {
     {
       this.updateProfileForm.patchValue({
         fname: result.firstName,
-        password: [''],
-        confirmPassword: [''],
+        password: '',
+        confirmPassword: '',
         lastName: result.lastName,
         username: result.username,
         phoneNumber: result.phone,
@@ -259,14 +259,14 @@ onSubmit() {
     this.validateAllFormFields (this.updateProfileForm,3);
     if(this.updateProfileForm.controls.password.value=="" ||
       this.updateProfileForm.controls.confirmPassword.value=="" ){
-        this.toaster.showError('Eeither Password Fields is Empty','Empty Fields')
+        this.toaster.showError('Either Password Fields is Empty','Empty Fields')
 
     return;
       }
         
       if(this.updateProfileForm.controls.password.invalid ||
       this.updateProfileForm.controls.confirmPassword.invalid){
-        this.toaster.showError('Eeither Password Fields is Invalid','Invalid Fields')
+        this.toaster.showError('Either Password Fields is Invalid','Invalid Fields')
 
     return;
       }
@@ -296,8 +296,8 @@ onSubmit() {
     "street": this.updateProfileForm.value.address,
     "stateId": this.selectedstate.stateId.toString(),
     "cityId": this.selectedcity.cityId.toString(),    
-    "state": this.selectedstate.stateId.toString(),
-    "city": this.selectedcity.cityId.toString(),
+    "state": this.selectedstate.state.toString(),
+    "city": this.selectedcity.city.toString(),
     "zipCode": this.updateProfileForm.value.zipCode
   }
 
@@ -317,7 +317,9 @@ onSubmit() {
     },
     errorMessage => {
       console.log(errorMessage);
-      this.error = errorMessage;
+      this.toaster.showError(errorMessage,'Error Occured')
+
+      //this.error = errorMessage;
       //   this.isLoading = false;
     }
     );
