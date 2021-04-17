@@ -56,6 +56,8 @@ export class HeaderComponent implements OnInit {
   }
 
   closeModal(id: string) {
+    this.isLoginMode = true;
+
     this.modalService.close(id);
   }
 

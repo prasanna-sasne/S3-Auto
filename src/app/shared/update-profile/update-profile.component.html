@@ -1,10 +1,5 @@
 <div class="row">
   <div class="col-md-12 p-4">
-    <div *ngIf="error.length >0" class="error-messages">
-      <span *ngFor="let item of error | slice:0:4 ; let i = index">
-        {{ i+1}}. {{ item }} <br>
-      </span>
-    </div>
     <form [formGroup]="updateProfileForm" (ngSubmit)="onSubmit()" >
       <div class="form-row my-2">
         <div class="form-group col-md-6">

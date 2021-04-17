@@ -98,7 +98,7 @@
                 <div class="form-group col" style="column-width: auto;">
                   <h5>Shipping </h5>
                   <p-dropdown [options]="shippingStatus" [(ngModel)]="selectedShippingOption" placeholder="YES/NO"
-                    optionLabel="shipping" [showClear]="true" #shipControl="ngModel" name="selectedShippingOption">
+                    optionLabel="shipping"  #shipControl="ngModel" name="selectedShippingOption">
                   </p-dropdown>
                   <div *ngIf="shipControl.value == '' && (shipControl.dirty || shipControl.touched)"
                   class="error-messages">
@@ -116,6 +116,7 @@
                   <div *ngIf="vinValue.invalid && (vinValue.dirty || vinValue.touched)" class="error-messages">
                     <div *ngIf="vinValue.errors!.required"> VIN is required. </div>
                     <div *ngIf="vinValue.errors?.pattern">VIN is 17 characters long and must only have Digits and Alphanumeric characters
+
                     </div>
 
 

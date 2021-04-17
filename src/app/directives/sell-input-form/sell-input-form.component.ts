@@ -92,6 +92,7 @@ export class SellInputFormComponent implements OnInit {
     }else {
       this.roleStatus = false;
     }
+    this.selectedShippingOption = {shipping: 'NO', shippingValue: false};
 
   }
   OnFocus() {
@@ -116,6 +117,7 @@ export class SellInputFormComponent implements OnInit {
   }
 
   onChangeMake(event: any) {
+
 
     if(event.value == null){
       this.selectedMake = {"makeId": -1, "make": ""};
