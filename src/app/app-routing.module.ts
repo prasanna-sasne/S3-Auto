@@ -14,6 +14,7 @@ import { TicketsComponent} from './components/admin/tickets/tickets.component';
 import { ResetPasswordComponent } from './shared/reset-password/reset-password.component';
 import { ItemDetailsComponent } from './directives/buy-list/item-details/item-details.component';
 import {SellInfoComponent} from './shared/sell-info/sell-info.component';
+import { HomeComponent } from './shared/home/home.component';
 
 import {SellInputFormComponent} from './directives/sell-input-form/sell-input-form.component';
 
@@ -21,6 +22,7 @@ const routes: Routes = [
 { path: '', component: WelcomPageComponent },
 { path: 'welcome', component: WelcomPageComponent },
 { path: 'about-us', component: AboutUsComponent },
+{ path: 'home', component: HomeComponent},
 { path: 'sell-service-info', component: SellInfoComponent },
 { path: 'updateProfile', component: UpdateProfileComponent },
 {path: 'contactus', component: ContactusComponent },

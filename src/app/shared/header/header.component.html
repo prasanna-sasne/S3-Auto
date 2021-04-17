@@ -9,83 +9,84 @@
   <div class="spacer"></div>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-  aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-  <span class="navbar-toggler-icon"></span>
-</button>
-<div class="collapse navbar-collapse" id="navbarNavDropdown">
-  <div class="header-menu navbar-nav">
-    <div class="nav-item mt-2 mr-2" *ngIf="roleflag">
-      <a class="contact" routerLink="s3-auto/buy-list"
-      routerLinkActive="active">Services</a>
-    </div>
-
-<div class="nav-item mt-2 mr-2" *ngIf="roleflag">
-  <a class="contact" routerLink="contactus"
-  routerLinkActive="active">Contact Us</a>
-</div>
-
-<div class="nav-item sell abt-us" *ngIf="email === undefined || email === null"
-[routerLink]="['/sell-service-info']"
-routerLinkActive="active">
-  <h5><span class="badge badge-pill badge-light mr-2">Sell <i class="bi bi-wallet2 ml-2"></i></span></h5>
-</div>
-<div class="nav-item abt-us" *ngIf="email === undefined || email === null"
-  routerLink="about-us" routerLinkActive="active">
-  About Us
-</div>
-
-<div class="nav-item pt-1" *ngIf="roleflag">
-  <span class="notification mr-3">
-    <h4 (click)="checkNotification()">
-      <i class="bi bi-envelope"></i>
-    </h4>
-    <span class="dot" *ngIf="showBell"></span>
-  </span>
-</div>
-
-<div class="nav-item" *ngIf="email !== undefined && email !== null">
-  <div class="btn-group">
-    <button type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown"
-    aria-haspopup="true" aria-expanded="false">
-    {{email}}
+    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="dropdown-menu dropdown-menu-right">
-    <button class="dropdown-item" type="button" (click)="updateProfile()">Profile<i
-      class="bi bi-person-fill"></i></button>
-      <button class="dropdown-item" type="button" (click)="signOut()">Logout</button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <div class="header-menu navbar-nav">
+      <div class="nav-item mt-2 mr-2" *ngIf="roleflag">
+        <a class="contact" routerLink="s3-auto/buy-list" routerLinkActive="active">Services</a>
+      </div>
+
+      <div class="nav-item mt-2 mr-2" *ngIf="roleflag">
+        <a class="contact" routerLink="contactus" routerLinkActive="active">Contact Us</a>
+      </div>
+
+      <div class="nav-item sell abt-us" *ngIf="email === undefined || email === null"
+        [routerLink]="['/sell-service-info']" routerLinkActive="active">
+        <h5><span class="badge badge-pill badge-light mr-2">Sell <i class="bi bi-wallet2 ml-2"></i></span></h5>
+      </div>
+      <div class="nav-item abt-us" *ngIf="email === undefined || email === null" 
+      routerLink="home" routerLinkActive="active">
+        Services
+      </div>
+      <div class="nav-item abt-us" *ngIf="email === undefined || email === null" 
+      routerLink="about-us"  routerLinkActive="active">
+        About Us
+      </div>
+
+      <div class="nav-item pt-1" *ngIf="roleflag">
+        <span class="notification mr-3">
+          <h4 (click)="checkNotification()">
+            <i class="bi bi-envelope"></i>
+          </h4>
+          <span class="dot" *ngIf="showBell"></span>
+        </span>
+      </div>
+
+      <div class="nav-item" *ngIf="email !== undefined && email !== null">
+        <div class="btn-group">
+          <button type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            {{email}}
+          </button>
+          <div class="dropdown-menu dropdown-menu-right">
+            <button class="dropdown-item" type="button" (click)="updateProfile()">Profile<i
+                class="bi bi-person-fill"></i></button>
+            <button class="dropdown-item" type="button" (click)="signOut()">Logout</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-item mb-2 mb-md-0 login-header" *ngIf="email === undefined || email === null"
+        (click)="openModal('signUp_modal')">
+        <span class="bi bi-person-square"><span class="ml-2">Login</span></span>
+        <span style="font-size:11px">or Create Account</span>
+      </div>
+
     </div>
   </div>
-</div>
 
-<div class="nav-item mb-2 mb-md-0 login-header"
-*ngIf="email === undefined || email === null"
-(click)="openModal('signUp_modal')">
-<span class="bi bi-person-square"><span class="ml-2">Login</span></span>
-<span style="font-size:11px">or Create Account</span>
-</div>
-</div>
-</div>
+  <jw-modal id="signUp_modal">
+    <div class="modal-header custumheader">
+      <ul class="nav justify-content-center">
+        <li class="nav-item" *ngIf="isLoginMode">
+          <h1>Login </h1>
+          <!-- <button type="button" class="btn btn-link clr" (click)="onSwitchMode(false)" >Creat new Account</button> -->
+        </li>
 
-<jw-modal id="signUp_modal">
-  <div class="modal-header custumheader">
-    <ul class="nav justify-content-center">
-      <li class="nav-item" *ngIf="isLoginMode">
-        <h1>Login </h1>
-        <!-- <button type="button" class="btn btn-link clr" (click)="onSwitchMode(false)" >Creat new Account</button> -->
-      </li>
-
-      <li class="nav-item active" *ngIf="!isLoginMode">
-        <h1>Registration</h1>
-        <!-- <button type="button" class="btn btn-link clr" (click)="onSwitchMode(true)">Login</button> -->
-      </li>
-    </ul>
+        <li class="nav-item active" *ngIf="!isLoginMode">
+          <h1>Registration</h1>
+          <!-- <button type="button" class="btn btn-link clr" (click)="onSwitchMode(true)">Login</button> -->
+        </li>
+      </ul>
 
       <!-- <li class="nav-item active">
         <button type="button" class="btn btn-outline-light btnHeadr btnRadius" (click)="onSwitchMode(true)">Login</button>
       </li> -->
 
       <i class="close closeColor bi bi-x-octagon" (click)="closeModal('signUp_modal')" data-dismiss="modal"
-      aria-label="Close"></i>
+        aria-label="Close"></i>
 
     </div>
     <app-auth (successRegister)="successRegister($event)" *ngIf="!isLoginMode"></app-auth>
@@ -113,4 +114,4 @@ routerLinkActive="active">
 </div>
 
 <app-message *ngIf="triggerMsg" (closeNavFlag)="closeNav($event)" [showChat]="openChat" [parent]="true"
-(showBell)="newMsgPresent($event)"></app-message>
+  (showBell)="newMsgPresent($event)"></app-message>
