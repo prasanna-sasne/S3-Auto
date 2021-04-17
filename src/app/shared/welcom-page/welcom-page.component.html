@@ -100,9 +100,9 @@
 
 <div class="sm-button p-3 junk-sell">
   <h1 class="search-header text-white mr-3">Do you own a Junkyard? </h1>
-  <span><button class="btn btn-warning"
-    [routerLink]="['sell-service-info']"
-    fragment="Junkyard">Check Options</button></span>
+  <button class="btn btn-warning"
+    [routerLink]="['sell-service-info', 'Junkyard']">
+  Check Options</button>
 </div>
 
 <!-- render images -->
@@ -170,7 +170,7 @@
   </div>
   <div class="static-part p-2 my-3">
     <img src="assets/bestPrice.png" /><br>
-    <span class="mx-3">Sell you Old Vehicle in Best Price</span>
+    <span class="mx-3">Sell your Old Vehicle at Best Price</span>
   </div>
   <div class="static-part p-2 my-3">
     <img src="assets/multibuy.png" /><br>

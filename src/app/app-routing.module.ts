@@ -23,14 +23,15 @@ const routes: Routes = [
 { path: 'welcome', component: WelcomPageComponent },
 { path: 'about-us', component: AboutUsComponent },
 { path: 'home', component: HomeComponent},
-{ path: 'sell-service-info', component: SellInfoComponent },
+{ path: 'sell-service-info/:role', component: SellInfoComponent },
 { path: 'updateProfile', component: UpdateProfileComponent },
-{path: 'contactus', component: ContactusComponent },
-{path: 'tickets', component: TicketsComponent},
+{ path: 'contactus', component: ContactusComponent },
+{ path: 'tickets', component: TicketsComponent },
 {
 	path: 's3-auto',
 	component: JunkBuyComponent,
 	children: [
+	{ path: '', redirectTo: 'buy-list', pathMatch: 'full'},
 	{ path: 'buy-list', component: BuyListComponent },
 	{ path: 'sell-form', component: SellInputFormComponent },
 	{ path: 'sell-history', component: SellHistoryComponent },
