@@ -13,9 +13,12 @@
 }
 
 .cardStyle{
-  background-color: rgb(51 93 173);
-  opacity: .8;
-
+	opacity: .8;
+    margin-top: 4%;
+    color: white;
+    padding: 3%;
+    font-weight: lighter;
+    background-image: linear-gradient(to right, #563d7c, #1976d2);
 }
 
 .search-header{
@@ -38,14 +41,14 @@
 
 
 .circular--portrait {
-  position: relative;
-  width: 200px;
-  height: 200px;
-  overflow: hidden;
-  border-radius: 50%;
+	position: relative;
+	width: 200px;
+	height: 200px;
+	overflow: hidden;
+	border-radius: 50%;
 }
 
 .circular--portrait img {
-  width: 100%;
-  height: auto;
+	width: 100%;
+	height: auto;
 }
