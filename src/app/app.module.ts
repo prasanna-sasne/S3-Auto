@@ -19,7 +19,6 @@ import { BuyListComponent } from './directives/buy-list/buy-list.component';
 import { SellHistoryComponent } from './directives/sell-history/sell-history.component';
 import {SellInventoryComponent} from './directives/sell-inventory/sell-inventory.component'
 import { JunkBuyComponent } from './components/junkyard-owner/junk-buy/junk-buy.component';
-import { TestComponent } from './test/test.component';
 import { ItemDetailsComponent } from './directives/buy-list/item-details/item-details.component';
 import { AuthComponent } from './auth/auth.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
@@ -43,7 +42,6 @@ import { FooterComponent} from "./shared/footer/footer.component";
 import { NotificationService } from './services/notification.service';
 import { EditInventoryComponent } from './directives/edit-inventory/edit-inventory.component';
 import { SellInfoComponent } from './shared/sell-info/sell-info.component';
-import { HomeComponent } from './shared/home/home.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +50,6 @@ import { HomeComponent } from './shared/home/home.component';
   LoginComponent,
   BuyListComponent,
   JunkBuyComponent,
-  TestComponent,
   ItemDetailsComponent,
   AuthComponent,
   ForgotPasswordComponent,
@@ -71,8 +68,7 @@ import { HomeComponent } from './shared/home/home.component';
   AboutUsComponent,
   FooterComponent,
   EditInventoryComponent,
-  SellInfoComponent,
-  HomeComponent
+  SellInfoComponent
   ],
 
   imports: [

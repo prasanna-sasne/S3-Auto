@@ -1,8 +1,0 @@
-select {
-	border-radius: 8px;
-    padding: 10px;
-}
-
-:host ::ng-deep .p-dropdown {
-  width: 14rem;
-}

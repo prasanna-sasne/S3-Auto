@@ -15,21 +15,19 @@
 <div class="collapse navbar-collapse" id="navbarNavDropdown">
   <div class="header-menu navbar-nav">
     <div class="nav-item mt-2 mr-2" *ngIf="roleflag">
-      <a class="contact" routerLink="s3-auto/buy-list">Services</a>
+      <a class="contact" routerLink="s3-auto/buy-list"
+      routerLinkActive="active">Services</a>
     </div>
 
 <div class="nav-item mt-2 mr-2" *ngIf="roleflag">
-  <a class="contact" routerLink="contactus">Contact Us</a>
+  <a class="contact" routerLink="contactus"
+  routerLinkActive="active">Contact Us</a>
 </div>
 
 <div class="nav-item sell abt-us" *ngIf="email === undefined || email === null"
 [routerLink]="['/sell-service-info']"
 routerLinkActive="active">
   <h5><span class="badge badge-pill badge-light mr-2">Sell <i class="bi bi-wallet2 ml-2"></i></span></h5>
-</div>
-<div class="nav-item abt-us" *ngIf="email === undefined || email === null"
-  routerLink="home" routerLinkActive="active">
-  Home
 </div>
 <div class="nav-item abt-us" *ngIf="email === undefined || email === null"
   routerLink="about-us" routerLinkActive="active">

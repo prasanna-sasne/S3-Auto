@@ -14,12 +14,14 @@
   align-self: flex-end;
 }
 
-.abt-us:hover, .active, .login-header:hover{
+.abt-us:hover, .abt-us.active, .login-header:hover{
   color: #ffc107;
+  cursor: pointer;
 }
 
 .badge.badge-pill.badge-light:hover{
   background-color: #ffc107;
+  cursor: pointer;
 }
 
 .nav-item.sell.abt-us.active > h5 > .badge.badge-pill.badge-light{
@@ -53,6 +55,9 @@
 
 .contact{
   cursor: pointer;
+}
+
+.contact.active{
   text-decoration: underline;
 }
 
