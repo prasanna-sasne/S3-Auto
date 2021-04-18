@@ -54,9 +54,7 @@ onSubmit(){
 
 
   if (this.forgotPwform.valid) {
-    console.log('form submitted');
   } else {
-    console.log(this.forgotPwform.valid);
     this.validateAllFormFields (this.forgotPwform)
 
   return;  }
@@ -66,12 +64,10 @@ onSubmit(){
   // formData.append("email", this.form.get('name').value);
   this.forgotPasswordService.forgotPw(formData).subscribe(
     resData => {
-      console.log("resData", resData);
 this.mailSentMessage ="We have sent a reset password link to your email. Please Check"
 
     },
     errorMessage => {
-      console.log(errorMessage);
       this.error = errorMessage;
       this.toaster.showError(errorMessage,'Error Occured')
       //   this.isLoading = false;

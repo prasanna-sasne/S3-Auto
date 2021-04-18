@@ -21,7 +21,6 @@ export class ResetService {
         password)
       .pipe(
         catchError(errorRes => {
-         // console.log(errorRes.error.Error[0]);
           let errorMessage = 'An unknown error occurred!';
           if (!errorRes.error.Error || !errorRes.error.Error) {
             return throwError(errorMessage);

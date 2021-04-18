@@ -17,7 +17,6 @@ export class AppComponent implements OnInit{
   //  this.router.navigate(['welcome']);
     this.flagresetForm = false;
     if(this.url.searchParams.get('token') !== null || undefined){
-        console.log(this.url.searchParams.get('token'));
         this.tken=this.url.searchParams.get('token');
         this.flagresetForm = true;
         this.router.navigate(['/resetPassword/reset'],{queryParams : {token: this.tken}});

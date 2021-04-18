@@ -80,7 +80,6 @@ export class EditInventoryComponent implements OnInit {
     });
     this.generateYears();
     this.role = JSON.parse(sessionStorage.getItem('ROLE') || '{}');
-    console.log(this.role);
     if (this.role == 'USER') {
       this.roleStatus = true;
     } else {
@@ -103,7 +102,6 @@ export class EditInventoryComponent implements OnInit {
         .subscribe(data => {
           this.models = data
           this.onChangeModel(event);
-          //   console.log(this.models)
         });
     } else {
       this.selectedMake = { make: event.make, makeId: event.makeId };
@@ -111,7 +109,6 @@ export class EditInventoryComponent implements OnInit {
         .subscribe(data => {
           this.models = data
           this.onChangeModel(event);
-          //   console.log(this.models)
         });
     }
 
@@ -134,13 +131,11 @@ export class EditInventoryComponent implements OnInit {
  }
   onChangeYear(event: any){
     this.generateYears();
-    console.log(event);
 
     if(event.value == null){
       //this.yearStateFlag = true;
     } else {
       if(this.selectedModel !== null && this.selectedModel.model !== "")
-        console.log(this.selectedModel)
 
         this.selectedYear ={year: event.value.year, yearId: event.value.yearId};
 
@@ -158,7 +153,6 @@ export class EditInventoryComponent implements OnInit {
       this.selectedModel = { model: event.model, modelId: event.modelId };
       this.sellInputFormService.getParts().subscribe(data => this.parts = data);
       //this.generateYears();
-      //console.log(this.years.findIndex(event.year ));
 
 this.selectedYear={yearId : this.matrixIndexed(this.years,event.year).r, year: event.year};
 this.editFrm.patchValue({
@@ -205,7 +199,6 @@ this.editFrm.patchValue({
     if (event.value !== undefined) {
 
       if (this.selectedModel !== null && this.selectedModel.model !== "")
-        console.log(this.selectedModel)
       this.yearStateFlag = false;
     } else
       this.selectedPart = { partId: event.partId, part: event.part }
@@ -238,8 +231,6 @@ this.editFrm.patchValue({
         var reader = new FileReader();
 
         reader.onload = (event: any) => {
-          console.log(event.target)
-          //  console.log(event.target.result);
           this.msg ='';
           if (event.target.result.match(/image\/*/) == null) {
             this.msg = "Only images are supported";
@@ -260,7 +251,6 @@ this.editFrm.patchValue({
         this.selectedFile = event.target.files[0];
         this.multiImages[id] = (event.target.files[0]);
 
-        console.log(this.multiImages);
       }
       else{
         // junkyard owner role
@@ -273,8 +263,6 @@ this.editFrm.patchValue({
             var reader = new FileReader();
 
             reader.onload = (event: any) => {
-              console.log(event.target)
-              //  console.log(event.target.result);
               this.msg ='';
 
               if (event.target.result.match(/image\/*/) == null) {
@@ -293,8 +281,6 @@ this.editFrm.patchValue({
             reader.readAsDataURL(event.target.files[i]);
             this.selectedFile = event.target.files[i];
             this.multiImages[0] = (event.target.files[0]);
-            console.log(this.multiImages);
-            // console.log(event.target.files[i]);
           }
 
         }
@@ -305,7 +291,6 @@ this.editFrm.patchValue({
 
   /**submit after edit */
   onSubmit() {
-    console.log(this.editFrm.value);
     var formData: any = new FormData();
     let partAddRequest = {}
     // sell form data ...
@@ -341,7 +326,6 @@ this.editFrm.patchValue({
     }
     this.sellInventoryService.editSelectedItem(this.partSellId, this.multiImages[0], partAddRequest).subscribe(
       resData => {
-        console.log("resData", resData);
         // setting data to session .........
         this.toaster.showSuccess('Your form has been updated successfully ', 'Successfully Edited');
         location.reload(true);
@@ -373,16 +357,13 @@ this.editFrm.patchValue({
 
     }
 
-    //  console.log('images',this.multiImages)
     this.sellInventoryService.editSellFormVehicle(this.vhlId, this.multiImages, vehicleAddRequest).subscribe(
       resData => {
-        console.log("resData", resData);
         // setting data to session .........
         this.toaster.showSuccess('Your form has been updated successfully ', 'Successfully Edited');
         location.reload(true);
       },
       errorMessage => {
-        console.log(errorMessage);
         this.toaster.showError(errorMessage, 'Error Occured');
 
         //   this.error = errorMessage;
@@ -434,7 +415,6 @@ this.editFrm.patchValue({
   /**convert images to base64...*/
   createImageFromBlob(imageValue) {
     // junkyard role
-    console.log(imageValue);
     if (!this.roleStatus) {
       this.images[0] = (imageValue);
       this.toDataURL(imageValue, (temp) => {
@@ -455,7 +435,6 @@ this.editFrm.patchValue({
         );
 
         //this.multiImages[i]=this.dataURItoBlob(imageValue[i].imageUri);
-        console.log("multimages", this.multiImages);
 
       }
 

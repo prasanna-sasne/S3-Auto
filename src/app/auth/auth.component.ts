@@ -90,7 +90,6 @@ export class AuthComponent {
     } else {
       this.roleValue = "USER";
     }
-    console.log(this.roleValue);
   }
 
   validateAllFormFields(formGroup: FormGroup) {         //{1}
@@ -112,7 +111,6 @@ export class AuthComponent {
     if (!this.registrationForm.pristine) {
       if (this.registrationForm.valid)
       {
-        console.log('form submitted');
 
       }else
       {
@@ -151,7 +149,6 @@ export class AuthComponent {
           this.validateAllFormFields (this.registrationForm)
           return;
         }
-        console.log('form submitted');
 
         //this.registrationForm.
       }
@@ -159,7 +156,6 @@ export class AuthComponent {
     } else {
       this.validateAllFormFields (this.registrationForm)
 
-      console.log(this.registrationForm.valid);
 
     return;  }
 
@@ -183,7 +179,6 @@ export class AuthComponent {
     if (this.show) {
       data['junkYardName'] = this.registrationForm.value.junkYardName;
     }
-    console.log(data);
     const junkYardName = this.registrationForm.value.junkYardName;
 
     // service request for registration
@@ -195,7 +190,6 @@ export class AuthComponent {
         //  this.isLoading = false;
       },
       errorMessage => {
-        console.log("test error ",errorMessage);
         this.error = errorMessage;
         this.toaster.showError(errorMessage,'Registration Failure');
 
@@ -226,14 +220,11 @@ this.error =[];
   selectChange(event: any) {
    // this.registrationForm.controls.selectedState.reset();
    // this.registrationForm.controls.selectecity.reset();
-    console.log("selected State", event.value);
    // this.selectedcity= { "cityId": "", "city": "" };
     this.selectedstate = event.value;
-    console.log("selectedstate option", this.selectedstate.stateId);
     // let stateId = this.selectedstate.stateId.toString();
     this.authService.getCity(this.selectedstate.stateId).subscribe(data => {
       this.citiesList = data;
-      console.log(data);
     });
   
   // else 
@@ -241,7 +232,6 @@ this.error =[];
   }
 
   save() {
-    console.log('Now we can save');
     this.success = 'Yay! We can save now!'
   }
 
@@ -255,9 +245,7 @@ this.error =[];
   // }
   /*........selected City Value.........*/
   selectCityChange(event: any) {
-    console.log("selected City", event.value);
     this.selectedcity = event.value;
-    console.log("selectedstate option", this.selectedcity.city);
     // let stateId = this.selectedstate.stateId.toString();
 
   }

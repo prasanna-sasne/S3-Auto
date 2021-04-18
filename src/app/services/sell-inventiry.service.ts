@@ -60,7 +60,6 @@ export class SellInventoryService {
     return this.http.get<{ stateId: number, state: string }[]>(url)
       .pipe(
         map(response => {
-          console.log("parts cal incvent")
           return response["Success"]["0"]["parts"];
         }), catchError(this.handleError('getstates', []))
       );//end pipe
@@ -82,7 +81,6 @@ export class SellInventoryService {
     return this.http.get<{}[]>(url)
       .pipe(
         map(response => {
-          console.log(response["Success"][0]["userSellVehicles"])
           return response["Success"]["0"]["userSellVehicles"];
         }), catchError(this.handleError('getstates', []))
       );//end pipe
@@ -90,7 +88,6 @@ export class SellInventoryService {
 
   submitDuplicateData(submitDuplicateData) {
     // http://localhost:8080/uvp/parts/duplicate
-    console.log('submitDuplicateData--', submitDuplicateData);
     return this.http
       .post<ResponseData>(
         `${this.appUrl}/uvp/parts/duplicate`,
@@ -118,7 +115,6 @@ let headers = new Headers();
     const url = `${this.appUrl}/uvp/vehicles/delete/${vehId}`;
     return this.http.delete(url)
       .pipe(map(response => {
-        console.log(response);
         return response;
       }), catchError(errorRes => {
         let errorMessage = 'An unknown error occurred!';
@@ -139,7 +135,6 @@ let headers = new Headers();
     const url = `${this.appUrl}/uvp/parts/delete/${partSellId}`;
     return this.http.delete(url)
       .pipe(map(response => {
-        console.log(response);
         return response;
       }), catchError(errorRes => {
         let errorMessage = 'An unknown error occurred!';
@@ -153,14 +148,12 @@ let headers = new Headers();
   }
 
   markDataSold(partSellId) {
-    console.log(partSellId);
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
     const url = `${this.appUrl}/uvp/parts/sold/${partSellId}`;
     return this.http.put(url, { headers: headers })
       .pipe(map(response => {
-        console.log(response);
         return response;
       }), catchError(errorRes => {
         let errorMessage = 'An unknown error occurred!';
@@ -173,14 +166,12 @@ let headers = new Headers();
       );
   }
   markVehicleDataSold(vehId){
-    console.log(vehId);
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
     const url = `${this.appUrl}/uvp/vehicles/sold/${vehId}`;
     return this.http.put(url, { headers: headers })
       .pipe(map(response => {
-        console.log(response);
         return response;
       }), catchError(errorRes => {
         let errorMessage = 'An unknown error occurred!';
@@ -200,7 +191,6 @@ let headers = new Headers();
        return this.http.get<{}[]>(url)
        .pipe(
          map(response => {
-           console.log(response)
            return response["Success"]["0"]["userSellParts"];
          }), catchError(this.handleError('getstates', []))
        );//end pipe
@@ -209,7 +199,6 @@ let headers = new Headers();
        return this.http.get<{}[]>(url)
        .pipe(
          map(response => {
-           console.log(response)
            return response["Success"]["0"]["userSellVehicles"];
          }), catchError(this.handleError('getstates', []))
        );//end pipe
@@ -230,7 +219,6 @@ let headers = new Headers();
    const url = `${this.appUrl}/uvp/parts/update/${partSellId}`;
     return this.http.put(url ,data)
       .pipe(map(response => {
-        console.log(response);
         return response;
       }), catchError(errorRes => {
         let errorMessage = 'An unknown error occurred!';
@@ -244,11 +232,7 @@ let headers = new Headers();
   }
 
   editSellFormVehicle(vehId,multiImages,vehicleAddRequest) {
-    // console.log('request data ', partAddRequest);
 
-     // const data = new FormData();
-     // data.append('partAddRequest', JSON.stringify(partAddRequest));
-     // data.append('images',  selectedFile ,selectedFile.name);
      const frmdata = new FormData();
      frmdata.append('vehicleAddRequest', JSON.stringify(vehicleAddRequest));
 

@@ -59,7 +59,6 @@ export class LoginComponent implements OnInit {
     this.validateAllFormFields (this.loginForm)
 
     if (this.loginForm.valid) {
-      console.log('form submitted');
     } else {
 
     return; }
@@ -72,12 +71,10 @@ export class LoginComponent implements OnInit {
     }
     this.loginService.login(userName, password).subscribe(
       resData => {
-        console.log("resData", resData);
         this.toaster.showSuccess('You have been Logged-In successfully.','Success')
 
         // setting data to session .........
         for (let i = 0; i < resData.Success.length; i++) {
-          console.log("response Data", resData.Success[i]);
           this.responseData = resData.Success[i];
           window.sessionStorage.setItem("TOKEN",this.responseData.token);
           window.sessionStorage.setItem("ID", this.responseData.id);
@@ -105,7 +102,6 @@ export class LoginComponent implements OnInit {
         //  this.isLoading = false;
       },
       errorMessage => {
-        console.log(errorMessage);
         this.toaster.showError(errorMessage,'Error Occured')
         this.error = errorMessage;
         //   this.isLoading = false;

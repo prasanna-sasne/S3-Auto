@@ -35,13 +35,11 @@ export class UpdateProfileComponent {
     this.updateProfileService.getUserData().subscribe(
       resData => {
         this.oldProfileData = resData;
-        console.log(resData);
         this.setForm(resData);
         //  this.isLoading = false;
         this.fetchState();
       },
       errorMessage => {
-        console.log(errorMessage);
         this.error = errorMessage;
         //   this.isLoading = false;
       }
@@ -138,7 +136,6 @@ export class UpdateProfileComponent {
     } else {
       this.roleValue = "USER";
     }
-    console.log(this.roleValue);
   }
 
   setRole(role) {
@@ -150,7 +147,6 @@ export class UpdateProfileComponent {
     }
     this.show = role;
 
-    console.log(this.roleValue);
   }
 
   validateAllFormFields(formGroup: FormGroup, type) {         //{1}
@@ -236,7 +232,6 @@ onSubmit() {
       this.toaster.showError('Empty Fields in the form', 'Empty Fields')
       return;
     }
-    console.log('form submitted');
 
     
   } else {
@@ -293,7 +288,6 @@ if (this.roleValue == "JUNK_YARD_OWNER" &&
 else {
   //this.validateAllFormFields (this.updateProfileForm)
   this.toaster.showError('No Changes made in Form ', 'Error Occured')
-  console.log(this.updateProfileForm.valid);
 
   return;
 }
@@ -321,18 +315,15 @@ if (this.show) {
   data['junkYardName'] = this.updateProfileForm.value.junkYardName; //old version
   data['newJunkYardName'] = this.updateProfileForm.value.junkYardName;
 }
-console.log(data);
 const junkYardName = this.updateProfileForm.value.junkYardName;
 
 // service request for registration
 this.updateProfileService.setUserData(data).subscribe(
   resData => {
-    console.log(resData);
     this.toaster.showSuccess('All Fields have been Updated', 'User Profile Updated')
     this.router.navigate(['welcome']);      //  this.isLoading = false;
   },
   errorMessage => {
-    console.log(errorMessage);
     this.toaster.showError(errorMessage, 'Error Occured')
 
     //this.error = errorMessage;
@@ -358,8 +349,6 @@ resetUpdate(){
     // this.selectedcity = { "cityId": this.oldProfileData["cityId"], 
     // "city":  this.oldProfileData["city"]}
   }
-  console.log(this.oldProfileData);
-  console.log(this.selectedcity);
 }
 
 resetForm(){
@@ -368,13 +357,11 @@ resetForm(){
   this.updateProfileService.getUserData().subscribe(
     resData => {
       this.oldProfileData = resData;
-      console.log(resData);
       this.setForm(resData);
       //  this.isLoading = false;
       this.fetchState();
     },
     errorMessage => {
-      console.log(errorMessage);
       this.error = errorMessage;
       //   this.isLoading = false;
     }
@@ -401,7 +388,6 @@ selectChange(event: any) {
     //fetch cities in the selectedstate state
     this.fetchCities();
   } else {
-    console.log(this.isValidInput('selectedcity')+"---------");
   }
 }
 
@@ -412,7 +398,6 @@ fetchCities(){
       this.selectedcity = { "cityId": this.oldProfileData["cityId"], 
       "city":  this.oldProfileData["city"]}
     } 
-    console.log(this.selectedcity);
   });
 }
 
@@ -422,7 +407,6 @@ selectCityChange(event: any) {
   if(event.value !== null) { 
 
     this.selectedcity = event.value;
-    console.log("selectedstate option", this.selectedcity.city);
     // let stateId = this.selectedstate.stateId.toString();
   }
 }

@@ -125,7 +125,6 @@ export class SellInventoryComponent implements OnInit {
 
   paginateView(data: any[]) {
     //deep-copy of data array to buyItems
-    console.log(data)
     if(this.role == 'USER'){
       this.inventoryList = JSON.parse(JSON.stringify(data))
      // this.getvehicleInventory();
@@ -144,7 +143,6 @@ export class SellInventoryComponent implements OnInit {
   getMakers(){
     this.sellInputFormService.getMakers().subscribe(data =>{
       this.makers = data;
-      //  console.log(this.makers)
     } );
   }
   //Generate year list
@@ -170,7 +168,6 @@ export class SellInventoryComponent implements OnInit {
         resultSize: 9
       }
       this.sellInventoryService.getInventoryData(inventoryParam).subscribe(data => {
-        console.log('data', data)
         this.paginateView(data)
         this.isLoading = false
       }, error => {
@@ -190,7 +187,6 @@ export class SellInventoryComponent implements OnInit {
         resultSize: 9
       }
       this.sellInventoryService.getUserInventoryData(inventoryParam).subscribe(data => {
-        console.log('data', data)
         this.paginateView(data)
         this.isLoading = false
       }, error => {
@@ -238,9 +234,6 @@ export class SellInventoryComponent implements OnInit {
     }
     //  this.storeFilterOpts();
       this.sellInventoryService.searchData(filterQuery, this.role).subscribe(data => {
-       console.log(data.Success);
-      //  console.log(JSON.parse(JSON.stringify(data)))
-        console.log('data', data)
         this.paginateView(data)
         this.isLoading = false
       }, error => {
@@ -286,10 +279,7 @@ export class SellInventoryComponent implements OnInit {
     this.closeCollapse[indexValue]=false;
 
     this.actionIndex = indexValue;
-    console.log(indexValue);
-    console.log(this.inventoryList[indexValue]);
     this.selectedPartList.push(this.inventoryList[indexValue]);
-    console.log(this.selectedPartList);
   }
 
   /**Close modal using id */
@@ -306,78 +296,31 @@ debugger;
         var reader = new FileReader();
 
         reader.onload = (event: any) => {
-          console.log(event.target);
           this.showexistingImage[id] = true;
-          //  console.log(event.target.result);
-          // if (event.target.result.match(/image\/*/) == null) {
-          //   this.msg = "Only images are supported";
-          //   return;
-          //   }
+  
           var temp = event.target;
-          // temp.append("name","file + id");
           this.images[id] = (event.target.result);
 
-          // this.sellForm.patchValue({
-          //   fileSource: this.sellForm
-          // });
         }
 
         reader.readAsDataURL(event.target.files[0]);
        // this.selectedFile = event.target.files[0];
         this.multiImages[id] = (event.target.files[0]);
 
-        console.log(this.multiImages);
       }
-    // if (event.target.files && event.target.files[0]) {
-    //   var filesAmount = event.target.files.length;
-    //   for (let i = 0; i < filesAmount; i++) {
-    //     if (filesAmount > 4) {
-    //       this.toaster.showError('Only four images can be uploaded','Upload Failure')
-    //       return;
-    //     } else {
-    //       var reader = new FileReader();
 
-    //       reader.onload = (event: any) => {
-    //         console.log(event.target)
-    //         if (event.target.result !== undefined) {
-    //           //this.images = [];
-    //           this.showexistingImage[id] = true;
-    //         }
-    //         this.images[id]=event.target.result;
-    //         //  console.log(event.target.result);
-    //         // if (event.target.result.match(/image\/*/) == null) {
-    //         //   this.msg = "Only images are supported";
-    //         //   return;
-    //         //   }
-
-    //         //  this.sellForm.patchValue({
-    //         //     fileSource: this.sellForm
-    //         //  });
-    //       }
-
-    //       reader.readAsDataURL(event.target.files[i]);
-    //       // this.selectedFile =event.target.files[i];
-    //        this.multiImages.push(event.target.files[i]);
-    //       console.log(this.multiImages);
-    //       // console.log(event.target.files[i]);
-    //     }
-
-    //   }
-    // }
   }
 
   /**Duplicate the list */
   createDuplicateList(numberOfValue) {
     this.duplicateArray = [];
     this.multiImages=[];
-    console.log(numberOfValue);
     if(numberOfValue >0 && numberOfValue <11) {
       this.duplicateFlag= true;
       let tempo =this.inventoryList[this.actionIndex];
       for (let i = 0; i < numberOfValue; i++) {
         var temp ={id : i};
         Object.assign(temp,tempo);
-        console.log(temp)
        this.duplicateArray.push(temp);
        this.showexistingImage[i]=false;
        this.toDataURL(tempo.imageUri, (temp) => {
@@ -389,7 +332,7 @@ debugger;
       }
     }else{
       this.duplicateFlag= false;
-      this.msg= "Value is greater than 10    "
+      this.msg= "Value should be between 1 and 10 "
     }
 
 
@@ -453,19 +396,15 @@ debugger;
   }
 
   submitDuplicateData() {
-    console.log(this.duplicateArray)
     this.createDataSet(this.duplicateArray); // request object for duplicate..
     const frmdata = new FormData();
-    console.log(this.propertObject);
     frmdata.append('partAddRequest',JSON.stringify(this.propertObject));
     for (var i = 0; i < this.multiImages.length; i++) {
       frmdata.append('images', this.multiImages[i], this.multiImages[i].name);
     }
 
-    //  console.log('images',this.multiImages)
     this.sellInventoryService.submitDuplicateData(frmdata).subscribe(
       resData => {
-        console.log("resData", resData);
         // setting data to session .........
 
         this.toaster.showSuccess('Duplicate items have been uploaded successfully','Duplication Success')
@@ -504,7 +443,6 @@ debugger;
     if(this.role== "JUNK_YARD_OWNER"){
       this.sellInventoryService.markDataSold(this.inventoryList[this.deleteIndex].partSellId).subscribe(
         resData => {
-          console.log("resData", resData);
 
           this.toaster.showSuccess('Item sold and moved to sell history','Item Sold')
           this.closeModal('sold_modal');
@@ -520,7 +458,6 @@ debugger;
     }else {
       this.sellInventoryService.markVehicleDataSold(this.inventoryList[this.deleteIndex].vehicleSells[0].sellId).subscribe(
         resData => {
-          console.log("resData", resData);
           // setting data to session .........
 
           this.toaster.showSuccess('Item sold and moved to vehicle history','Item Sold')
@@ -547,7 +484,6 @@ debugger;
        let partSellIdValue = this.inventoryList[this.deleteIndex].partSellId;
       this.sellInventoryService.deleteFromInventory(partSellIdValue).subscribe(
         resData => {
-          console.log("resData", resData);
           // setting data to session .........
 
           this.toaster.showSuccess('Item Deleted Successfully','Item Deleted')
@@ -562,14 +498,10 @@ debugger;
       );
      }else{
        debugger;
-       console.log(partSellId);
-       console.log( this.inventoryList[this.deleteIndex]);
       let vehId =  this.inventoryList[this.deleteIndex].vehicleSells[0].vehId;
-      console.log( this.inventoryList[partSellId]);
       this.sellInventoryService.deleteVehicleFromInventory(vehId).subscribe(
         resData => {
           debugger;
-          console.log("resData", resData);
           // setting data to session .........
           this.toaster.showSuccess('Item Deleted Successfully','Item Deleted')
          this.closeModal('delete_item');
@@ -590,7 +522,6 @@ debugger;
  this.closeDuplicateWindow[indexValue]=false;
 
  this.closeCollapse[indexValue]=true;
-    console.log(this.inventoryList[indexValue]);
     this.formdata=this.inventoryList;
     this.sellInventoryService.subject.emit(this.inventoryList[indexValue]);
   }

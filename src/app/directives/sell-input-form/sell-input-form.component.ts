@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SellInputFormService } from './../../services/sell-input-form.service';
-import { FormBuilder, FormControlName, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControlName, FormControl, FormGroup, Validators, NgForm } from '@angular/forms';
 import { NotificationService } from './../../services/notification.service';
 import { Router } from '@angular/router';
 
@@ -82,11 +82,9 @@ export class SellInputFormComponent implements OnInit {
 
     this.sellInputFormService.getMakers().subscribe(data =>{
       this.makers = data;
-      //  console.log(this.makers)
     } );
 
     this.role = JSON.parse(sessionStorage.getItem('ROLE') || '{}');
-    console.log(this.role);
     if(this.role == 'USER'){
       this.roleStatus = true;
     }else {
@@ -96,10 +94,8 @@ export class SellInputFormComponent implements OnInit {
 
   }
   OnFocus() {
-    console.log("OnFocus");
   }
   OnBlur() {
-    console.log("OnBlur");
   }
   initForm(): void {
     this.sellForm = new FormGroup({
@@ -108,7 +104,7 @@ export class SellInputFormComponent implements OnInit {
       selectedstate: new FormControl(this.selectedstate, Validators.required),
       selectedYear: new FormControl(this.selectedYear, Validators.required),
       selectedPart: new FormControl(this.selectedPart, Validators.required),
-      selectedShip: new FormControl(this.selectedShip, Validators.required),
+      selectedShippingOption: new FormControl(this.selectedShip, Validators.required),
       selectedMileage:new FormControl(this.selectedMileage, Validators.required),
       priceValue: new FormControl(this.priceValue, Validators.required),
       description: new FormControl(this.description, Validators.required),
@@ -131,7 +127,6 @@ export class SellInputFormComponent implements OnInit {
       this.sellInputFormService.getModels(this.selectedMake.makeId)
       .subscribe(data =>{
         this.models = data
-        //   console.log(this.models)
       } );
       this.modelFlag = false;
     }
@@ -169,7 +164,6 @@ export class SellInputFormComponent implements OnInit {
       this.yearStateFlag = true;
     } else {
       if(this.selectedModel !== null && this.selectedModel.model !== "")
-        console.log(this.selectedModel)
       this.yearStateFlag = false;
       //this.selectedYear = {"yearId": -1, "year": ""};
 
@@ -178,13 +172,11 @@ export class SellInputFormComponent implements OnInit {
 
   onChangeYear(event: any){
     this.generateYears();
-    console.log(event);
 
     if(event.value == null){
       //this.yearStateFlag = true;
     } else {
       if(this.selectedModel !== null && this.selectedModel.model !== "")
-        console.log(this.selectedModel)
 
         this.selectedYear ={"year": event.value.year, "yearId": event.value.yearId};
 
@@ -210,9 +202,7 @@ export class SellInputFormComponent implements OnInit {
           var reader = new FileReader();
 
           reader.onload = (event:any) => {
-            console.log(event.target)
             this.msg='';
-            //  console.log(event.target.result);
             if (event.target.result.match(/image\/*/) == null) {
                 this.msg = "Only images are supported";
                 //this.toaster.showError('Only images are supported','Upload Failure')
@@ -228,8 +218,6 @@ export class SellInputFormComponent implements OnInit {
             reader.readAsDataURL(event.target.files[i]);
             this.selectedFile =event.target.files[i];
             this.multiImages.push(event.target.files[i]);
-            console.log(this.multiImages);
-            // console.log(event.target.files[i]);
           }
 
         }
@@ -271,16 +259,35 @@ export class SellInputFormComponent implements OnInit {
   }
 
     // submit form ..
-    onSubmit() {
-      console.log(this.sellForm.value);
+    onSubmit(form: NgForm) {
       //var formData: any = new FormData();
       //let partAddRequest = {}
       this.validateAllFormFields (this.sellForm);
      if (this.sellForm.pristine) {
-      console.log('form submitted');
     } else {
 
     return; }
+    if(this.role=="USER"&&  (form.controls.selectedMake.value.make== "" ||
+    form.controls.selectedModel.value.model == "" ||
+    form.controls.selectedVin.value == "" ||
+    form.controls.selectedMileage.value == "" ||
+    form.controls.selectedYear.value.year == "" ||
+    form.controls.priceValue.value == "" ||
+    form.controls.description.value == "" )){
+      this.toaster.showError('Some Fields are Empty','Upload Failure')
+      return;
+    }
+
+    if(this.role!="USER"&&  (form.controls.selectedMake.value.make == "" ||
+    form.controls.selectedModel.value.model == "" ||
+    form.controls.selectedPart.value.part == "" ||
+    form.controls.selectedYear.value.year == "" ||
+    form.controls.selectedShippingOption.value.ship == "" ||
+    form.controls.priceValue.value == "" ||
+    form.controls.description.value == "" )){
+      this.toaster.showError('Some Fields are Empty','Upload Failure')
+      return;
+    }
 
     if(this.multiImages.length !=4 && this.role == "USER"){
       this.toaster.showError('Four(4) Images need to be uploaded','Upload Failure')
@@ -336,14 +343,12 @@ export class SellInputFormComponent implements OnInit {
       }
       this.sellInputFormService.submitSellFormPart(this.selectedFile,partAddRequest).subscribe(
         resData => {
-          console.log("resData", resData);
           // setting data to session .........
           this.toaster.showSuccess('Your form has been submitted successfully ','Submitted');
           this.router.navigate(['s3-auto/sellInventory']);
 
         },
         errorMessage => {
-          console.log(errorMessage);
           this.toaster.showError(errorMessage, 'Error Occured');
           //   this.error = errorMessage;
           //   this.isLoading = false;
@@ -393,16 +398,13 @@ export class SellInputFormComponent implements OnInit {
         frmdata.append('images',  this.multiImages[i] ,this.multiImages[i].name);
       }
 
-      //  console.log('images',this.multiImages)
       this.sellInputFormService.submitSellFormVehicle(frmdata).subscribe(
         resData => {
-          console.log("resData", resData);
           // setting data to session .........
           this.toaster.showSuccess('Your form has been submitted successfully ','Submitted');
           this.router.navigate(['s3-auto/sellInventory']);
         },
         errorMessage => {
-          console.log(errorMessage);
           this.toaster.showError(errorMessage, 'Error Occured');
           //   this.error = errorMessage;
           //   this.isLoading = false;

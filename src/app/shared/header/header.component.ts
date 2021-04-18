@@ -36,7 +36,6 @@ export class HeaderComponent implements OnInit {
       this.triggerMsg = true;
     }
     this.showContactUs();  
-    console.log(this.role);
   }
 
   showContactUs(){  
@@ -62,12 +61,10 @@ export class HeaderComponent implements OnInit {
   }
 
   successRegister(event) {
-    console.log(event);
     this.isLoginMode = true;
   }
 
   logedinUserEmail(el) {
-    console.log('email',el);
     this.email = el;
     if(this.email !== undefined && this.email !== null){
       this.triggerMsg = true;

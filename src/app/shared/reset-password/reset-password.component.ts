@@ -27,7 +27,6 @@ export class ResetPasswordComponent implements OnInit {
       this.token=params['token'];
     }
       );
-      console.log("Token Rcv",this.token);
     this.initForm();
   }
 
@@ -62,13 +61,11 @@ export class ResetPasswordComponent implements OnInit {
     this.validateAllFormFields (this.resetForm)
 
     if (this.resetForm.valid) {
-      console.log('form submitted');
     } else {
 
     return; }
     this.error = [];
     const url = new URL(window.location.href);
-    console.log(url.searchParams.get('token'));
     //this.token = url.searchParams.get('token');
     const password = this.resetForm.value.password;
     var formData: any = new FormData();
@@ -81,13 +78,11 @@ export class ResetPasswordComponent implements OnInit {
     // }
     this.resetService.resetPassword(formData).subscribe(
       resData => {
-        console.log("resData", resData);
         this.toaster.showSuccess('Your password has been successfully updated. You are being redirected to home page','Updated Successfully')
         this.redirectHomePage();
         // setting data to session .........
       },
       errorMessage => {
-        console.log(errorMessage);
         this.error = errorMessage;
         //   this.isLoading = false;
       }

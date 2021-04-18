@@ -238,13 +238,15 @@
                   <div class="col-md-6">
                     <label class="fontColor ">You can duplicate your form upto 10 dataset</label>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-6 ">
                     <div class ="row">
-                    <span class="error-messages" *ngIf="!duplicateFlag">{{msg}}</span>
+                      <input type="number" [(ngModel)]="numberOfValue" name="" id="" max="10" min="0">
+
                     <button type="button" class="btn btn-outline-primary"
                       (click)="createDuplicateList(numberOfValue)">Add+</button>
-                  <input type="number" [(ngModel)]="numberOfValue" name="" id="" max="10" min="0">
                   </div>
+                  <span class="error-messages" *ngIf="!duplicateFlag">{{msg}}</span>
+
                   </div>
 
 

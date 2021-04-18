@@ -20,7 +20,6 @@ export class AuthService {
    }
 
   signup(reqData) {
-    console.log( 'request data ',reqData);
     return this.http
       .post<AuthResponseData>(
         `${this.appUrl}/uvp/authentication/signup`,
@@ -28,7 +27,6 @@ export class AuthService {
       )
       // .pipe(
       //   catchError(errorRes => {
-      //     console.log(errorRes.error.Error[0]);
       //     let errorMessage = 'An unknown error occurred!';
 
 
@@ -45,7 +43,6 @@ export class AuthService {
       // );
       .pipe(
         catchError(errorRes => {
-          console.log(errorRes.error.Error[0]);
           let errorMessage = 'An unknown error occurred!';
           if (!errorRes.error.Error) {
             return throwError(errorMessage);
@@ -76,13 +73,11 @@ export class AuthService {
 }
 
 getCity(stateId): Observable<{cityId: number, city: string}[]>{
-  console.log('test state id' , stateId);
   const url = `${this.appUrl}/uvp/search/get/cities/${stateId}`;
 
   return this.http.get<{cityId: number, city: string}[]>(url)
   .pipe(
       map( response => {
-        console.log('response' , response);
           return response["Success"]["0"]["cities"];
       }),catchError(errorRes => {
         return throwError(errorRes);

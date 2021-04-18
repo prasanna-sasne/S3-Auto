@@ -21,7 +21,6 @@ export class UpdateProfileService {
    }
 
    setUserData(reqData) {
-    console.log( 'request data ',reqData);
     return this.http
       .put<UpdateProfileResponseData>(
         `${this.appUrl}/uvp/profile/update/`+ JSON.parse(sessionStorage.getItem('ID') || '{}'),
@@ -30,7 +29,6 @@ export class UpdateProfileService {
       .pipe(map( response => {  
             return response; 
         }), catchError(errorRes => {
-          console.log(errorRes.error.Error[0]);
           let errorMessage = 'An unknown error occurred!';
           if (!errorRes.error.Error) {
             return throwError(errorMessage);
@@ -48,7 +46,6 @@ export class UpdateProfileService {
     return this.http.get<[]>(url)
     .pipe(
         map( response => {
-         // console.log(response);
             return response["Success"]["0"]["userProfile"];
         }),catchError(errorRes => {
           return throwError(errorRes);

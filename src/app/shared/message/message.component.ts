@@ -199,7 +199,6 @@ import {Component, OnInit,
 
             }, error => {
                 //set array to the empty
-                console.log(error);
                 if(this.conversations.length == 0 && this.toUserName !== undefined){
                     this.pushNewUser();
                 }

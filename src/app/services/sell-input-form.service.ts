@@ -63,7 +63,6 @@ export class SellInputFormService {
 
 //parts service call.....
   submitSellFormPart(selectedFile, partAddRequest) {
-    console.log('request data ', partAddRequest);
 
     const data = new FormData();
     data.append('partAddRequest', JSON.stringify(partAddRequest));
@@ -90,7 +89,6 @@ export class SellInputFormService {
 
   //Vehicle service call...
   submitSellFormVehicle(data) {
-     // console.log('request data ', partAddRequest);
 
       // const data = new FormData();
       // data.append('partAddRequest', JSON.stringify(partAddRequest));
@@ -106,7 +104,6 @@ export class SellInputFormService {
             if (!errorRes.error.Error || !errorRes.error) {
               return throwError(errorMessage);
             }else if(errorRes.error.Error[0] !== null){
-              console.log(errorRes.error.Error)
              errorMessage =errorRes.error.Error;
              return throwError(errorMessage);
             }else

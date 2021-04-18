@@ -3,7 +3,7 @@
   <div class="card col-md-10" style="margin-top: 40px;margin-block-end: 40px;">
     <div class="container rounded bg-white mt-5">
       <!-- <form  (ngSubmit)="onSubmitForm()"> -->
-      <form name="sellForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
+      <form (ngSubmit)="form.valid && onSubmit(form)" #form="ngForm">
 
         <div class="form-row">
 
@@ -20,7 +20,7 @@
                   <p-dropdown class="form-control" [options]="makers" [(ngModel)]="selectedMake" optionLabel="make"
                     [filter]="true" filterBy="make" placeholder="Select Make" class="select-style"
                     (onChange)="onChangeMake($event)" 
-                    [ngClass]="{ 'is-invalid': f.submitted && makeControl.invalid }"
+                    [ngClass]="{ 'is-invalid': form.submitted && makeControl.invalid }"
                     name="selectedMake"
                     #makeControl="ngModel">
                     <ng-template pTemplate="selectedItem">
@@ -140,7 +140,7 @@
                   <p-dropdown class="form-control" [options]="years" [(ngModel)]="selectedYear" optionLabel="year"
                     [filter]="true" filterBy="year" placeholder="Select Year" class="select-style"
                     (onChange)="onChangeModel($event)" name="selectedYear"
-                    [ngClass]="{ 'is-invalid': f.submitted && yearControl.invalid }"
+                    [ngClass]="{ 'is-invalid': form.submitted && yearControl.invalid }"
                     #yearControl="ngModel">
                     <ng-template pTemplate="selectedItem">
                       <div class="country-item country-item-value" *ngIf="selectedMake">
@@ -170,10 +170,11 @@
                     <input class="form-control" type="number" [(ngModel)]="priceValue" value="0.00" min="0" step="0.01"
                       data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"
                       id="priceValue" #pricev="ngModel" required rows="3" name="priceValue">
-                    <div *ngIf="pricev.value== null && (pricev.dirty || pricev.touched)" class="error-messages">
-                      <div *ngIf="pricev.errors!.required"> Price is required. </div>
+                    
+                  </div>
+                  <div *ngIf="pricev.value== null && (pricev.dirty || pricev.touched)" class="error-messages">
+                    <div *ngIf="pricev.errors!.required"> Price is required. </div>
 
-                    </div>
                   </div>
                 </div>
 
@@ -213,8 +214,8 @@
                 (change)="onFileChange($event)" accept="image/*">
               <input *ngIf="!roleStatus" id="file" type="file" class="form-control fileUpload"
                 (change)="onFileChange($event)" accept="image/*">
-              <!-- <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">
-                <div *ngIf="f.file.errors.required">File is required.</div>
+              <!-- <div *ngIf="form.file.touched && form.file.invalid" class="alert alert-danger">
+                <div *ngIf="form.file.errors.required">File is required.</div>
               </div> -->
               <div>
 
@@ -227,7 +228,7 @@
       <div class="form-row" class="d-flex justify-content-center">
         <!-- <div class="form-group col" >
           <div class="mt-5 text-right"> -->
-            <button class="btn btn-primary button" type="submit" [disabled]="f.form.invalid">Submit</button>
+            <button class="btn btn-primary button" type="submit" [disabled]="form.invalid">Submit</button>
 <!-- 
           </div>
         </div> -->
