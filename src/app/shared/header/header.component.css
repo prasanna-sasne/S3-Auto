@@ -14,9 +14,10 @@
   align-self: flex-end;
 }
 
-.abt-us:hover, .abt-us.active, .login-header:hover{
+.abt-us:hover, .abt-us.active, .login-header:hover, .login-header:hover{
   color: #ffc107;
   cursor: pointer;
+  outline: none;
 }
 
 .badge.badge-pill.badge-light:hover{
