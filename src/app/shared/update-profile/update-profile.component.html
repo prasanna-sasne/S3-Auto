@@ -139,7 +139,7 @@
       </ng-template>
     </p-dropdown>
     <div *ngIf="isValidInput('selectedcity')" class="error-messages">
-      <div *ngIf="updateProfileForm.controls['selectedcity'].errors!.required">City Needs to be Selected</div>
+      <div *ngIf="updateProfileForm.controls['selectedcity'].errors!.required">City Needs to be Selected1</div>
     </div>
     <span *ngIf="selectedcity !== null">
       <div *ngIf="citiesList.length === 0 || selectedcity.city === ''" class="error-messages">
@@ -170,11 +170,16 @@
       </div>
       <br>
       <div class="d-flex justify-content-center" >
-        <button type="submit" 
-        class="btn btn-primary button" [disabled]="!updateProfileForm.valid" >Submit</button>
-        <button type="button" (click)=resetForm() class="btn btn-primary button">Reset</button>
-      </div>
+        <button type="submit" *ngIf="selectedcity !== null; else cityNull" 
+        class="btn btn-primary button" [disabled]="!updateProfileForm.valid ||
+        selectedcity.city === ''">Submit</button>
+        <ng-template #cityNull>
+         <button type="submit" 
+         class="btn btn-primary button" [disabled]="!updateProfileForm.valid">Submit</button>
+       </ng-template>
+       <button type="button" (click)=resetForm() class="btn btn-primary button">Reset</button>
+     </div>
 
-    </form>
-  </div>
+   </form>
+ </div>
 </div>
