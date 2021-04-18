@@ -121,7 +121,7 @@ export class SellInputFormComponent implements OnInit {
       this.selectedYear = {"yearId": -1, "year": ""};
     } else {
       this.selectedModel.model='';
-      this.selectedYear.year='';
+      //this.selectedYear.year='';
       this.generateYears();
 
       this.sellInputFormService.getModels(this.selectedMake.makeId)

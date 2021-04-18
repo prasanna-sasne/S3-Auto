@@ -140,7 +140,8 @@
                   <p-dropdown class="form-control" [options]="years" [(ngModel)]="selectedYear" optionLabel="year"
                     [filter]="true" filterBy="year" placeholder="Select Year" class="select-style"
                     (onChange)="onChangeModel($event)" name="selectedYear"
-                    [ngClass]="{ 'is-invalid': form.submitted && yearControl.invalid }"
+                    [ngClass]="{'ng-valid ng-dirty': selectedYear.year !== ''}"
+                    [ngClass]="{'ng-invalid ng-dirty': selectedYear.year == ''}"
                     #yearControl="ngModel">
                     <ng-template pTemplate="selectedItem">
                       <div class="country-item country-item-value" *ngIf="selectedMake">
@@ -154,9 +155,9 @@
                     </ng-template>
 
                   </p-dropdown>
-                  <div *ngIf="yearControl.value== '' && (yearControl.dirty || yearControl.touched)"
+                  <div *ngIf="selectedYear.year == '' && (yearControl.dirty || yearControl.touched)"
                     class="error-messages">
-                    Make is required
+                    Year is required
                   </div>
                 </div>
 
