@@ -225,7 +225,7 @@ export class BuyListComponent implements OnInit {
   }
 
   newMsgPresent(showBell: {notificationPresent: boolean}){
-    console.log(showBell.notificationPresent);
+    //Emit the flag to notify another component
     this.notifyHeaderService.bellFlag.emit(showBell.notificationPresent);
   }
 

@@ -23,6 +23,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(public modalService:ModalService, private router:Router,
     private getChildNotification: NotifyHeaderService) {
+    //Receive an event when there is a change
     this.getChildNotification.bellFlag.subscribe(
       (flag: boolean) => {
         this.showBell = flag});
