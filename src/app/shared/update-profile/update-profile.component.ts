@@ -25,7 +25,7 @@ export class UpdateProfileComponent {
   requestData: Object = {};
   error = [];
   private oldProfileData = [];
-
+  
   constructor(private updateProfileService: UpdateProfileService, private fb: FormBuilder, private router: Router, private toaster: NotificationService,) { }
 
 
@@ -45,7 +45,7 @@ export class UpdateProfileComponent {
         this.error = errorMessage;
         //   this.isLoading = false;
       }
-    );
+      );
   }
 
   setForm(result): void {
@@ -65,6 +65,7 @@ export class UpdateProfileComponent {
         zipCode: result.zip,
         address: result.street,
       });
+      this.updateProfileForm.removeControl('junkYardName');
       this.setRole(false);
     }
     else {
@@ -111,8 +112,8 @@ export class UpdateProfileComponent {
   /**.... Validation for input fields... */
   isValidInput(fieldName): boolean {
     return this.updateProfileForm.controls[fieldName].invalid &&
-      (this.updateProfileForm.controls[fieldName].dirty ||
-        this.updateProfileForm.controls[fieldName].touched);
+    (this.updateProfileForm.controls[fieldName].dirty ||
+      this.updateProfileForm.controls[fieldName].touched);
   }
 
   ConfirmedValidator(controlName: string, matchingControlName: string) {
@@ -145,6 +146,7 @@ export class UpdateProfileComponent {
       this.roleValue = "JUNK_YARD_OWNER";
     } else {
       this.roleValue = "USER";
+
     }
     this.show = role;
 
@@ -152,277 +154,277 @@ export class UpdateProfileComponent {
   }
 
   validateAllFormFields(formGroup: FormGroup, type) {         //{1}
-    Object.keys(formGroup.controls).forEach(field => {
-      const control = formGroup.get(field);
-      if (type == 1) {//{2}{}
-        const control = formGroup.get(field);             //{3}
-        if (control instanceof FormControl) {             //{4}
-          control.markAsTouched({ onlySelf: true });
-        } else if (control instanceof FormGroup) {        //{5}
-          this.validateAllFormFields(control, type);            //{6}
-        }
-      } else {
-        if ((field == "password") || (field == "confirmPassword")) {
-          if (control instanceof FormControl) {             //{4}
-            control.markAsTouched({ onlySelf: true });
-          } else if (control instanceof FormGroup) {        //{5}
-            this.validateAllFormFields(control, type);
+  Object.keys(formGroup.controls).forEach(field => {
+    const control = formGroup.get(field);
+    if (type == 1) {//{2}{}
+      const control = formGroup.get(field);             //{3}
+    if (control instanceof FormControl) {             //{4}
+      control.markAsTouched({ onlySelf: true });
+  } else if (control instanceof FormGroup) {        //{5}
+  this.validateAllFormFields(control, type);            //{6}
+}
+} else {
+  if ((field == "password") || (field == "confirmPassword")) {
+    if (control instanceof FormControl) {             //{4}
+      control.markAsTouched({ onlySelf: true });
+  } else if (control instanceof FormGroup) {        //{5}
+  this.validateAllFormFields(control, type);
 
-          }
-        } else {
-          if (control instanceof FormControl && type != 3) {             //{4}
-            control.markAsTouched({ onlySelf: true });
-          } else if (control instanceof FormGroup) {        //{5}
-            this.validateAllFormFields(control, type);
+}
+} else {
+  if (control instanceof FormControl && type != 3) {             //{4}
+    control.markAsTouched({ onlySelf: true });
+} else if (control instanceof FormGroup) {        //{5}
+this.validateAllFormFields(control, type);
 
-          }
-        }
-      }
-    });
+}
+}
+}
+});
+}
+
+/**......Registration service call... */
+onSubmit() {
+  this.error = [];
+  if (this.updateProfileForm.controls.password.value != "") {
+    this.updateProfileForm.controls.confirmPassword.setValidators([Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]);
+  } else {
+    this.updateProfileForm.controls.confirmPassword.clearValidators();
+    if (this.updateProfileForm.controls.confirmPassword.value != "") {
+      this.updateProfileForm.controls.confirmPassword.setValidators([Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]);
+      this.updateProfileForm.controls.password.setValidators([Validators.required]);
+    } else {
+      this.updateProfileForm.controls.password.clearValidators();
+    }
+
+  }
+  this.validateAllFormFields(this.updateProfileForm, 3);
+
+  if (!this.updateProfileForm.pristine) 
+  {
+    //this.validateAllFormFields (this.registrationForm);
+    if (this.updateProfileForm.controls.password.value == "" &&   this.updateProfileForm.controls.confirmPassword.value == "") 
+    {
+      if (this.roleValue == "USER" &&
+        (this.updateProfileForm.controls.address.value == "" ||
+          this.updateProfileForm.controls.email.value == "" ||
+          this.updateProfileForm.controls.fname.value == "" ||
+          this.updateProfileForm.controls.lastName.value == "" ||
+          this.updateProfileForm.controls.phoneNumber.value == "" ||
+          this.updateProfileForm.controls.selectedcity.value.city == "" ||
+          this.updateProfileForm.controls.selectedstate.value.state == "" ||
+          this.updateProfileForm.controls.username.value == "" ||
+          this.updateProfileForm.controls.zipCode.value == "")) {
+        this.toaster.showError('Empty Fields in the form', 'Empty Fields')
+      this.validateAllFormFields(this.updateProfileForm, 0);
+      return;
+    }
+
+    if (this.roleValue == "JUNK_YARD_OWNER" &&
+      (this.updateProfileForm.controls.address.value == "" ||
+        this.updateProfileForm.controls.email.value == "" ||
+        this.updateProfileForm.controls.fname.value == "" ||
+        this.updateProfileForm.controls.junkYardName.value == "" ||
+        this.updateProfileForm.controls.lastName.value == "" ||
+        this.updateProfileForm.controls.phoneNumber.value == "" ||
+        this.updateProfileForm.controls.selectedcity.value.city == "" ||
+        this.updateProfileForm.controls.selectedstate.value.state == "" ||
+        this.updateProfileForm.controls.username.value == "" ||
+        this.updateProfileForm.controls.zipCode.value == "")) 
+    {
+      this.validateAllFormFields(this.updateProfileForm, 0);
+      this.toaster.showError('Empty Fields in the form', 'Empty Fields')
+      return;
+    }
+    console.log('form submitted');
+
+    
+  } else {
+    
+    this.validateAllFormFields(this.updateProfileForm, 0);
+    this.validateAllFormFields(this.updateProfileForm, 3);
+    if (this.updateProfileForm.controls.password.value == "" ||
+      this.updateProfileForm.controls.confirmPassword.value == "") {
+      this.toaster.showError('Either Password Fields is Empty', 'Empty Fields')
+    return;
   }
 
-  /**......Registration service call... */
-  onSubmit() {
-    this.error = [];
-    if (this.updateProfileForm.controls.password.value != "") {
-      this.updateProfileForm.controls.confirmPassword.setValidators([Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]);
-    } else {
-      this.updateProfileForm.controls.confirmPassword.clearValidators();
-      if (this.updateProfileForm.controls.confirmPassword.value != "") {
-        this.updateProfileForm.controls.confirmPassword.setValidators([Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]);
-        this.updateProfileForm.controls.password.setValidators([Validators.required]);
-      } else {
-        this.updateProfileForm.controls.password.clearValidators();
-      }
+  if (this.updateProfileForm.controls.password.invalid ||
+    this.updateProfileForm.controls.confirmPassword.invalid) 
+  {
+    this.toaster.showError('Either Password Fields is Invalid', 'Invalid Fields')
+    return;
+  }
 
-    }
-    this.validateAllFormFields(this.updateProfileForm, 3);
+  if (this.roleValue == "USER" &&
+    (this.updateProfileForm.controls.address.value == "" ||
+      this.updateProfileForm.controls.email.value == "" ||
+      this.updateProfileForm.controls.fname.value == "" ||
+      this.updateProfileForm.controls.lastName.value == "" ||
+      this.updateProfileForm.controls.phoneNumber.value == "" ||
+      this.updateProfileForm.controls.selectedcity.value.city == "" ||
+      this.updateProfileForm.controls.selectedstate.value.state == "" ||
+      this.updateProfileForm.controls.username.value == "" ||
+      this.updateProfileForm.controls.zipCode.value == "")) {
+    this.toaster.showError('Empty Fields in the form', 'Empty Fields')
+  this.validateAllFormFields(this.updateProfileForm, 0);
+  return;
+}
 
-    if (!this.updateProfileForm.pristine) 
-    {
-      //this.validateAllFormFields (this.registrationForm);
-      if (this.updateProfileForm.controls.password.value == "" &&   this.updateProfileForm.controls.confirmPassword.value == "") 
-      {
-        if (this.roleValue == "USER" &&
-          (this.updateProfileForm.controls.address.value == "" ||
-            this.updateProfileForm.controls.email.value == "" ||
-            this.updateProfileForm.controls.fname.value == "" ||
-            this.updateProfileForm.controls.lastName.value == "" ||
-            this.updateProfileForm.controls.phoneNumber.value == "" ||
-            this.updateProfileForm.controls.selectedcity.value.city == "" ||
-            this.updateProfileForm.controls.selectedstate.value.state == "" ||
-            this.updateProfileForm.controls.username.value == "" ||
-            this.updateProfileForm.controls.zipCode.value == "")) {
-          this.toaster.showError('Empty Fields in the form', 'Empty Fields')
-          this.validateAllFormFields(this.updateProfileForm, 0);
-          return;
-        }
+if (this.roleValue == "JUNK_YARD_OWNER" &&
+  (this.updateProfileForm.controls.address.value == "" ||
+    this.updateProfileForm.controls.email.value == "" ||
+    this.updateProfileForm.controls.fname.value == "" ||
+    this.updateProfileForm.controls.junkYardName.value == "" ||
+    this.updateProfileForm.controls.lastName.value == "" ||
+    this.updateProfileForm.controls.phoneNumber.value == "" ||
+    this.updateProfileForm.controls.selectedcity.value.city == "" ||
+    this.updateProfileForm.controls.selectedstate.value.state == "" ||
+    this.updateProfileForm.controls.username.value == "" ||
+    this.updateProfileForm.controls.zipCode.value == "")) 
+{
+  this.validateAllFormFields(this.updateProfileForm, 0);
+  this.toaster.showError('Empty Fields in the form', 'Empty Fields')
+  return;
+}
+}
+}
 
-        if (this.roleValue == "JUNK_YARD_OWNER" &&
-          (this.updateProfileForm.controls.address.value == "" ||
-            this.updateProfileForm.controls.email.value == "" ||
-            this.updateProfileForm.controls.fname.value == "" ||
-            this.updateProfileForm.controls.junkYardName.value == "" ||
-            this.updateProfileForm.controls.lastName.value == "" ||
-            this.updateProfileForm.controls.phoneNumber.value == "" ||
-            this.updateProfileForm.controls.selectedcity.value.city == "" ||
-            this.updateProfileForm.controls.selectedstate.value.state == "" ||
-            this.updateProfileForm.controls.username.value == "" ||
-            this.updateProfileForm.controls.zipCode.value == "")) 
-            {
-            this.validateAllFormFields(this.updateProfileForm, 0);
-            this.toaster.showError('Empty Fields in the form', 'Empty Fields')
-            return;
-            }
-        console.log('form submitted');
-
-        
-      } else {
-      
-        this.validateAllFormFields(this.updateProfileForm, 0);
-        this.validateAllFormFields(this.updateProfileForm, 3);
-        if (this.updateProfileForm.controls.password.value == "" ||
-          this.updateProfileForm.controls.confirmPassword.value == "") {
-          this.toaster.showError('Either Password Fields is Empty', 'Empty Fields')
-          return;
-        }
-
-        if (this.updateProfileForm.controls.password.invalid ||
-          this.updateProfileForm.controls.confirmPassword.invalid) 
-          {
-          this.toaster.showError('Either Password Fields is Invalid', 'Invalid Fields')
-          return;
-        }
-
-        if (this.roleValue == "USER" &&
-          (this.updateProfileForm.controls.address.value == "" ||
-            this.updateProfileForm.controls.email.value == "" ||
-            this.updateProfileForm.controls.fname.value == "" ||
-            this.updateProfileForm.controls.lastName.value == "" ||
-            this.updateProfileForm.controls.phoneNumber.value == "" ||
-            this.updateProfileForm.controls.selectedcity.value.city == "" ||
-            this.updateProfileForm.controls.selectedstate.value.state == "" ||
-            this.updateProfileForm.controls.username.value == "" ||
-            this.updateProfileForm.controls.zipCode.value == "")) {
-          this.toaster.showError('Empty Fields in the form', 'Empty Fields')
-          this.validateAllFormFields(this.updateProfileForm, 0);
-          return;
-        }
-
-        if (this.roleValue == "JUNK_YARD_OWNER" &&
-          (this.updateProfileForm.controls.address.value == "" ||
-            this.updateProfileForm.controls.email.value == "" ||
-            this.updateProfileForm.controls.fname.value == "" ||
-            this.updateProfileForm.controls.junkYardName.value == "" ||
-            this.updateProfileForm.controls.lastName.value == "" ||
-            this.updateProfileForm.controls.phoneNumber.value == "" ||
-            this.updateProfileForm.controls.selectedcity.value.city == "" ||
-            this.updateProfileForm.controls.selectedstate.value.state == "" ||
-            this.updateProfileForm.controls.username.value == "" ||
-            this.updateProfileForm.controls.zipCode.value == "")) 
-            {
-            this.validateAllFormFields(this.updateProfileForm, 0);
-            this.toaster.showError('Empty Fields in the form', 'Empty Fields')
-            return;
-            }
-      }
-    }
-    
 else {
-          //this.validateAllFormFields (this.updateProfileForm)
-          this.toaster.showError('No Changes made in Form ', 'Error Occured')
-          console.log(this.updateProfileForm.valid);
+  //this.validateAllFormFields (this.updateProfileForm)
+  this.toaster.showError('No Changes made in Form ', 'Error Occured')
+  console.log(this.updateProfileForm.valid);
 
-          return;
-        }
+  return;
+}
 
-        /*..InitiLize list of value from thr form..*/
-        let data = {
-          "userId": JSON.parse(sessionStorage.getItem('ID') || '{}'),
-          "username": this.updateProfileForm.value.username,
-          "firstName": this.updateProfileForm.value.fname,
-          "lastName": this.updateProfileForm.value.lastName,
-          "email": this.updateProfileForm.value.email,
-          "password": this.updateProfileForm.value.password,
-          "newPassword": this.updateProfileForm.value.confirmPassword,
-          "role": this.roleValue,
-          "phoneNumber": this.updateProfileForm.value.phoneNumber,
-          "street": this.updateProfileForm.value.address,
-          "stateId": this.selectedstate.stateId.toString(),
-          "cityId": this.selectedcity.cityId.toString(),
-          "state": this.selectedstate.state.toString(),
-          "city": this.selectedcity.city.toString(),
-          "zipCode": this.updateProfileForm.value.zipCode
-        }
+/*..InitiLize list of value from thr form..*/
+let data = {
+  "userId": JSON.parse(sessionStorage.getItem('ID') || '{}'),
+  "username": this.updateProfileForm.value.username,
+  "firstName": this.updateProfileForm.value.fname,
+  "lastName": this.updateProfileForm.value.lastName,
+  "email": this.updateProfileForm.value.email,
+  "password": this.updateProfileForm.value.password,
+  "newPassword": this.updateProfileForm.value.confirmPassword,
+  "role": this.roleValue,
+  "phoneNumber": this.updateProfileForm.value.phoneNumber,
+  "street": this.updateProfileForm.value.address,
+  "stateId": this.selectedstate.stateId.toString(),
+  "cityId": this.selectedcity.cityId.toString(),
+  "state": this.selectedstate.state.toString(),
+  "city": this.selectedcity.city.toString(),
+  "zipCode": this.updateProfileForm.value.zipCode
+}
 
-        if (this.show) {
-          data['junkYardName'] = this.updateProfileForm.value.junkYardName; //old version
-          data['newJunkYardName'] = this.updateProfileForm.value.junkYardName;
-        }
-        console.log(data);
-        const junkYardName = this.updateProfileForm.value.junkYardName;
+if (this.show) {
+  data['junkYardName'] = this.updateProfileForm.value.junkYardName; //old version
+  data['newJunkYardName'] = this.updateProfileForm.value.junkYardName;
+}
+console.log(data);
+const junkYardName = this.updateProfileForm.value.junkYardName;
 
-        // service request for registration
-        this.updateProfileService.setUserData(data).subscribe(
-          resData => {
-            console.log(resData);
-            this.toaster.showSuccess('All Fields have been Updated', 'User Profile Updated')
-            this.router.navigate(['welcome']);      //  this.isLoading = false;
-          },
-          errorMessage => {
-            console.log(errorMessage);
-            this.toaster.showError(errorMessage, 'Error Occured')
+// service request for registration
+this.updateProfileService.setUserData(data).subscribe(
+  resData => {
+    console.log(resData);
+    this.toaster.showSuccess('All Fields have been Updated', 'User Profile Updated')
+    this.router.navigate(['welcome']);      //  this.isLoading = false;
+  },
+  errorMessage => {
+    console.log(errorMessage);
+    this.toaster.showError(errorMessage, 'Error Occured')
 
-            //this.error = errorMessage;
-            //   this.isLoading = false;
-          }
-        );
+    //this.error = errorMessage;
+    //   this.isLoading = false;
+  }
+  );
 
 
-      
-      
-        //  this.registrationForm.reset();
-      }
 
-      //Reset Update functionality
-      resetUpdate(){
-        this.setForm(this.oldProfileData);
-        if (this.states.length !== 0 && this.citiesList.length !== 0) {
-          this.selectedstate = {
-            "stateId": this.oldProfileData["stateId"],
-            "state": this.oldProfileData["state"]
-          }
-          this.fetchCities();
-          // this.selectedcity = { "cityId": this.oldProfileData["cityId"], 
-          // "city":  this.oldProfileData["city"]}
-        }
-        console.log(this.oldProfileData);
-        console.log(this.selectedcity);
-      }
 
-      resetForm(){
-        this.updateProfileForm.reset();
+//  this.registrationForm.reset();
+}
 
-        this.updateProfileService.getUserData().subscribe(
-          resData => {
-            this.oldProfileData = resData;
-            console.log(resData);
-            this.setForm(resData);
-            //  this.isLoading = false;
-            this.fetchState();
-          },
-          errorMessage => {
-            console.log(errorMessage);
-            this.error = errorMessage;
-            //   this.isLoading = false;
-          }
-        );
-      }
-
-      /**...State service call...  */
-      fetchState() {
-        this.updateProfileService.getStates().subscribe(data => {
-          this.states = data;
-          this.selectedstate = {
-            "stateId": this.oldProfileData["stateId"],
-            "state": this.oldProfileData["state"]
-          }
-          this.fetchCities();
-        });
-
-      }
-
-      /*....Fetch the selected state and call list of city service....*/
-      selectChange(event: any) {
-        this.selectedcity = { "cityId": "*", "city": "" };
-        if (event.value !== null) {
-          this.selectedstate = event.value;
-          //fetch cities in the selectedstate state
-          this.fetchCities();
-        }
-      }
-
-      fetchCities(){
-        this.updateProfileService.getCity(this.selectedstate.stateId).subscribe(data => {
-          this.citiesList = data;
-          if (this.citiesList.some(city => city.city === this.oldProfileData["city"])) {
-            this.selectedcity = {
-              "cityId": this.oldProfileData["cityId"],
-              "city": this.oldProfileData["city"]
-            }
-          }
-          console.log(this.selectedcity);
-        });
-      }
-
-      /*........selected City Value.........*/
-      selectCityChange(event: any) {
-
-        if (event.value !== null) {
-
-          this.selectedcity = event.value;
-          console.log("selectedstate option", this.selectedcity.city);
-          // let stateId = this.selectedstate.stateId.toString();
-        }
-      }
+//Reset Update functionality
+resetUpdate(){
+  this.setForm(this.oldProfileData);
+  if (this.states.length !== 0 && this.citiesList.length !== 0) {
+    this.selectedstate = {
+      "stateId": this.oldProfileData["stateId"],
+      "state": this.oldProfileData["state"]
     }
+    this.fetchCities();
+    // this.selectedcity = { "cityId": this.oldProfileData["cityId"], 
+    // "city":  this.oldProfileData["city"]}
+  }
+  console.log(this.oldProfileData);
+  console.log(this.selectedcity);
+}
+
+resetForm(){
+  this.updateProfileForm.reset();
+
+  this.updateProfileService.getUserData().subscribe(
+    resData => {
+      this.oldProfileData = resData;
+      console.log(resData);
+      this.setForm(resData);
+      //  this.isLoading = false;
+      this.fetchState();
+    },
+    errorMessage => {
+      console.log(errorMessage);
+      this.error = errorMessage;
+      //   this.isLoading = false;
+    }
+    );
+}
+
+/**...State service call...  */
+fetchState() {
+  this.updateProfileService.getStates().subscribe(data => {
+    this.states = data;
+    this.selectedstate = { "stateId": this.oldProfileData["stateId"], 
+    "state":  this.oldProfileData["state"]}
+    this.fetchCities();
+  });
+
+}
+
+/*....Fetch the selected state and call list of city service....*/
+selectChange(event: any) {
+  this.selectedcity = { "cityId": "*", "city": "" };
+  this.citiesList = [];
+  if(event.value !== null){
+    this.selectedstate = event.value;
+    //fetch cities in the selectedstate state
+    this.fetchCities();
+  } else {
+    console.log(this.isValidInput('selectedcity')+"---------");
+  }
+}
+
+fetchCities(){
+  this.updateProfileService.getCity(this.selectedstate.stateId).subscribe(data => {
+    this.citiesList = data;
+    if(this.citiesList.some(city => city.city === this.oldProfileData["city"])){
+      this.selectedcity = { "cityId": this.oldProfileData["cityId"], 
+      "city":  this.oldProfileData["city"]}
+    } 
+    console.log(this.selectedcity);
+  });
+}
+
+/*........selected City Value.........*/
+selectCityChange(event: any) {
+
+  if(event.value !== null) { 
+
+    this.selectedcity = event.value;
+    console.log("selectedstate option", this.selectedcity.city);
+    // let stateId = this.selectedstate.stateId.toString();
+  }
+}
+}
+
