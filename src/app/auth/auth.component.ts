@@ -105,7 +105,6 @@ export class AuthComponent {
 
   /**......Registration service call... */
   onSubmit() {
-    debugger;
     this.error = [];
 
     if (!this.registrationForm.pristine) {

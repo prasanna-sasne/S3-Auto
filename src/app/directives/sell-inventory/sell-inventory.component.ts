@@ -289,7 +289,6 @@ export class SellInventoryComponent implements OnInit {
 
   /**Upload Image file */
   onFileChange(event,id) {
-debugger;
     if (event.target.files && event.target.files[0]) {
         /**User role */
         var filesAmount = event.target.files.length;
@@ -478,7 +477,6 @@ debugger;
 
    /**Delete service call.. */
    markDeleteItem(partSellId){
-     debugger;
      if(this.role== "JUNK_YARD_OWNER"){
       this.inventoryList[this.deleteIndex]
        let partSellIdValue = this.inventoryList[this.deleteIndex].partSellId;
@@ -497,11 +495,9 @@ debugger;
         }
       );
      }else{
-       debugger;
       let vehId =  this.inventoryList[this.deleteIndex].vehicleSells[0].vehId;
       this.sellInventoryService.deleteVehicleFromInventory(vehId).subscribe(
         resData => {
-          debugger;
           // setting data to session .........
           this.toaster.showSuccess('Item Deleted Successfully','Item Deleted')
          this.closeModal('delete_item');
