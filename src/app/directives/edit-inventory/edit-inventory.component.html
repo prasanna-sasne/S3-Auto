@@ -20,7 +20,7 @@
                   <h5>Make</h5>
                   <p-dropdown  [options]="makers" [(ngModel)]="selectedMake" optionLabel="make"
                     [filter]="true" filterBy="make"  placeholder="Select Make" class="select-style"
-                    (onChange)="onChangeMake($event)"[ngClass]="{ 'is-invalid': f.submitted && makeControl.invalid }"
+                    (onChange)="onChangeMake($event,f)"[ngClass]="{ 'is-invalid': f.submitted && makeControl.invalid }"
                     name="selectedMake"
                     #makeControl="ngModel">
                     <ng-template pTemplate="selectedItem">

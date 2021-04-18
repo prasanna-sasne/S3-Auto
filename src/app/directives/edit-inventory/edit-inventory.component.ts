@@ -91,12 +91,13 @@ export class EditInventoryComponent implements OnInit {
   }
 
 
-  onChangeMake(event: any) {
+  onChangeMake(event: any,form) {
 
     if (event.value !== undefined) {
-      this.selectedModel = {"modelId": -1, "model": "*"};
-      this.selectedYear = {"yearId": -1, "year": "*"};
-      this.generateYears();
+      this.selectedModel.model =''; 
+      form.controls.selectedModel.setErrors({required : true});
+      //this.selectedYear.year =''; 
+      //this.generateYears();
 
       this.sellInputFormService.getModels(event.value.makeId)
         .subscribe(data => {
@@ -388,14 +389,14 @@ this.editFrm.patchValue({
           this.vhlId = res.vehicleSells[0].vehId;
           this.description = res.vehicleSells[0].description;
           this.priceValue = res.vehicleSells[0].price;
-          this.onChangeMake(res.vehicleSells[0]);
+          this.onChangeMake(res.vehicleSells[0],null);
           this.selectedVin = res.vehicleSells[0].vin;
           this.selectedMileage = res.vehicleSells[0].mileage;
           this.createImageFromBlob(res.vehicleSells[0].vehicleImages)
 
         } else {
           //junkyard role
-          this.onChangeMake(res);
+          this.onChangeMake(res,null);
           this.partSellId = res.partSellId
           if (res.shipping === "true")
             this.selectedShippingOption = { shipping: 'YES', shippingValue: true };
