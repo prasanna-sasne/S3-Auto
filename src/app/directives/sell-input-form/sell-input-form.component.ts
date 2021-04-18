@@ -112,7 +112,7 @@ export class SellInputFormComponent implements OnInit {
     } );
   }
 
-  onChangeMake(event: any) {
+  onChangeMake(event: any, form: NgForm) {
 
 
     if(event.value == null){
@@ -121,6 +121,9 @@ export class SellInputFormComponent implements OnInit {
       this.selectedYear = {"yearId": -1, "year": ""};
     } else {
       this.selectedModel.model='';
+      form.controls.selectedModel.setErrors({required : true});
+      //form.controls.selectedModel.reset();
+      //this.selectedModel.model='';
       //this.selectedYear.year='';
       this.generateYears();
 
@@ -136,9 +139,6 @@ export class SellInputFormComponent implements OnInit {
     if(event.value == null){
       this.yearStateFlag = true;
       this.selectedstate = {"stateId": "*", "state": ""};
-
-
-      //
       this.yearStateFlag = true;
     } else {
       this.sellInputFormService.getParts().subscribe(data => this.parts = data);

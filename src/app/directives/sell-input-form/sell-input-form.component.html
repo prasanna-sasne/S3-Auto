@@ -19,7 +19,7 @@
                   <h5>MAKE</h5>
                   <p-dropdown class="form-control" [options]="makers" [(ngModel)]="selectedMake" optionLabel="make"
                     [filter]="true" filterBy="make" placeholder="Select Make" class="select-style"
-                    (onChange)="onChangeMake($event)" 
+                    (onChange)="onChangeMake($event,form)" 
                     [ngClass]="{ 'is-invalid': form.submitted && makeControl.invalid }"
                     name="selectedMake"
                     #makeControl="ngModel">
@@ -49,8 +49,9 @@
                   <h5 class="required">MODEL</h5>
                   <p-dropdown class="form-control" [options]="models" [(ngModel)]="selectedModel" optionLabel="model"
                     [filter]="true" filterBy="make" placeholder="Select Model" class="select-style"
-                    (onChange)="onChangeModel($event)" [ngClass]="{'ng-valid ng-dirty': selectedModel.model !== ''}"
-                    name="selectedModel" [ngClass]="{'ng-invalid ng-dirty': selectedModel.model == ''}"
+                    (onChange)="onChangeModel($event)" name="selectedModel" 
+                    [ngClass]="{'ng-valid ng-dirty': selectedModel.model !== ''}"
+                    [ngClass]="{'ng-invalid ng-dirty': selectedModel.model == ''}"
                     #modelControl="ngModel">
                     <ng-template pTemplate="selectedItem">
                       <div class="country-item country-item-value" *ngIf="selectedMake">
