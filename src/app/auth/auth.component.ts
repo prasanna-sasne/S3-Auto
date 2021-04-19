@@ -55,8 +55,7 @@ export class AuthComponent {
       zipCode: ['', [Validators.required, Validators.pattern("^[0-9]{5}(?:-[0-9]{4})?$") ]],
       address: ['', Validators.required]
     }, {
-      validator: this.ConfirmedValidator('password', 'confirmPassword'),
-      updateOn: 'blur'
+      validator: this.ConfirmedValidator('password', 'confirmPassword')
     });
 
   }
