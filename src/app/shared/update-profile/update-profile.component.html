@@ -1,16 +1,18 @@
 <div class="row">
-  <div class="col-md-12 p-4">
+  <div class="col-md-12 px-4">
     <form [formGroup]="updateProfileForm" (ngSubmit)="onSubmit()" >
       <div class="form-row my-2">
         <div class="form-group col-md-6">
+          <label for="fName" class="mb-0">First Name <span class="required">*</span></label>
           <input type="text" class="form-control" formControlName="fname" id="fName" placeholder="First Name" autocomplete="off" >
           <div *ngIf="isValidInput('fname')" class="error-messages">
             <div *ngIf="updateProfileForm.controls['fname'].errors!.required">First Name is required. </div>
           </div>
           <div class="form-group">
-            <label></label>
-
-            <input readonly type="text" class="form-control" formControlName="username" id="username" placeholder="User Name" autocomplete="off" >
+            <label for="username" class="mb-0 mt-3">User Name <span class="required">*</span></label>
+            <input readonly type="text" class="form-control" formControlName="username" id="username" placeholder="User Name" autocomplete="off" 
+            title="UserName is not editable"
+            alt="UserName is not editable">
             <div *ngIf="isValidInput('username')" class="error-messages">
               <div *ngIf="updateProfileForm.controls['username'].errors!.required">User Name is required.</div>
               <div *ngIf="updateProfileForm.controls['username'].errors?.minlength">The User Name needs to be of min length 5
@@ -18,7 +20,7 @@
             </div>
             <!----PASSWORD----->
             <div class="form-group">
-              <label></label>
+              <label for="password" class="mb-0 mt-3">Password </label>
               <input type="password" class="form-control" formControlName="password" id="password" placeholder="OLD Password" autocomplete="off" >
 
               <div *ngIf="isValidInput('password')" class="error-messages">
@@ -30,9 +32,12 @@
             </div>
             <!--EMAIL-->
             <div class="form-group">
-              <label></label>
-              <input readonly type="email" class="form-control" formControlName="email" id="email" placeholder="Email" autocomplete="off" >
-
+              <label for="email" class="mb-0 mt-3"> Email<span class="required">*</span></label>
+              
+                <input readonly type="email" class="form-control" formControlName="email" id="email" placeholder="Email" autocomplete="off" 
+                title="Email is not editable"
+                alt="UserName is not editable">
+              
               <div *ngIf="isValidInput('email')" class="error-messages">
                 <div *ngIf="updateProfileForm.controls['email'].errors!.required">  Email ID  is required.  </div>
                 <div *ngIf="updateProfileForm.controls['email'].errors!.pattern">  Provide a valid Email Id </div>
@@ -43,7 +48,7 @@
 
               <!--JUNK-YARD OWNER NAME-->
               <div class="form-group" *ngIf="show">
-                <label></label>
+                <label for="junkYardName" class="mb-0 mt-3">JunkYard Name <span class="required">*</span></label>
                 <input type="text" class="form-control" id="junkYardName" formControlName="junkYardName" style=""
                 placeholder="Junk Yard Name" autocomplete="off" >
                 <div *ngIf="isValidInput('junkYardName')" class="error-messages">
@@ -55,13 +60,14 @@
         </div>
       </div>
       <div class="form-group col-md-6">
+        <label for="lastName" class="mb-0">Last Name<span class="required">*</span></label>
         <input type="text" class="form-control" formControlName="lastName" id="lastName" placeholder="Last Name" autocomplete="off">
         <div *ngIf="isValidInput('lastName')" class="error-messages">
           <div *ngIf="updateProfileForm.controls['lastName'].errors!.required">Last Name is required. </div>
         </div>
         <!----Phone number input value----->
         <div class="form-group">
-          <label></label>
+          <label for="phoneNumber" class="mb-0 mt-3">Phone Number<span class="required">*</span></label>
           <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber"
           placeholder="Phone Number" autocomplete="off" >
           <div *ngIf="updateProfileForm.controls.phoneNumber.touched && updateProfileForm.controls.phoneNumber.invalid"              class="error-messages">
@@ -74,7 +80,7 @@
 
             <!----Confirm Password input value----->
             <div class="form-group">
-              <label></label>
+               <label for="confirmPassword" class="mb-0 mt-3">New Password</label>
               <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword"
               placeholder="NEW Password" autocomplete="off" >
 
@@ -92,8 +98,10 @@
     </div>
     <div class="form-row">
       <!-----STATE DATA----->
+      <label for="state" class="mb-0"> State<span class="required">*</span></label>
       <div class="form-group col-md-3" required=true>
         <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
+
         <p-dropdown [options]="states" formControlName="selectedstate" optionLabel="state" [filter]="true"
         filterBy="state" (onChange)="selectChange($event)"  [showClear]="true"
         placeholder="Select State" class="select-style" [(ngModel)]="selectedstate"
@@ -117,6 +125,7 @@
       </div>
     </div>
     <!---CITY VALUE---->
+    <label for="city" class="mb-0"> City<span class="required">*</span></label>
     <div class="form-group col-md-3">
       <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
       <p-dropdown [options]="citiesList" formControlName="selectedcity" optionLabel="city" [filter]="true"
@@ -151,8 +160,9 @@
 
         <!-- <div class="form-group col-md-3"> <input type="text" class="form-control" id="form41" placeholder="City">
         </div>-->
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-3" style="margin-top: -21px;">
           <div class="form-group">
+            <label for="zipCode" class="mb-0"> Zip Code<span class="required">*</span></label>
             <input type="text" class="form-control" formControlName="zipCode" id="zipCode" placeholder="Zip Code" autocomplete="off" >
             <div *ngIf="updateProfileForm.controls.zipCode.touched && updateProfileForm.controls.zipCode.invalid"              class="error-messages">
               <div *ngIf="updateProfileForm.controls.zipCode.errors!.required">ZipCode is required.</div>
@@ -163,6 +173,7 @@
         </div>
       </div>
       <div>
+        <label for="address" class="mb-0"> Address<span class="required">*</span></label>
         <input type="text" class="form-control" formControlName="address" id="address" placeholder="Address" aria-rowcount="3">
         <div *ngIf="isValidInput('address')" class="error-messages">
           <div *ngIf="updateProfileForm.controls['address'].errors!.required">Address is required. </div>

@@ -7,10 +7,14 @@
     margin-left: 8% !important;
 }
 */
-.validation-star, .p-float-label > label{
+.validation-star{
   color: red; 
   font-size: xx-large;
   margin-top: -4%;
+  position: initial;
+}
+.p-float-label > label{
+  color: red; 
   position: initial;
 }
 
