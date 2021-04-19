@@ -55,7 +55,7 @@
 }
 
 .filter-row{
-  margin-top: 20px;
+  margin-top: 3%;
 }
 
 .filter-dropdown{
@@ -97,5 +97,11 @@ button.btn.btn-primary.filter-btn:disabled {
   }
   .filter-btn{
     margin-top: 16px;
+  }
+}
+
+@media only screen and (max-width: 690px){
+  span.p-float-label{
+    margin-top: 4%;
   }
 }

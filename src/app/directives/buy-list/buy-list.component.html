@@ -4,10 +4,12 @@
 
 <div class="filter-row row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-5"
 *ngIf="!isLoading">
-  
+
+<span class="p-float-label">
 <p-dropdown [options]="makers" [(ngModel)]="selectedMake" 
+id="make"
 optionLabel="make" [filter]="true" filterBy="make"
-[showClear]="true" placeholder="Select Make" class="select-style "
+[showClear]="true" placeholder="Select Make" class="select-style"
 (onChange)="onChangeMake($event)"
 [ngClass]="{'ng-valid ng-dirty': selectedMake.make !== ''}"
 [ngClass]="{'ng-invalid ng-dirty': selectedMake.make == ''}">
@@ -22,8 +24,12 @@ optionLabel="make" [filter]="true" filterBy="make"
   </div>
 </ng-template>
 </p-dropdown>
+<label for="make" class="validation-star">*</label>
+</span>
 
+<span class="p-float-label">
 <p-dropdown [options]="models" [(ngModel)]="selectedModel" optionLabel="model" [filter]="true" filterBy="model"
+id="model"
 [showClear]="true" placeholder="Select Model" class="select-style"
 (onChange)="onChangeModel($event)" [disabled]="modelFlag"
 [ngClass]="{'ng-valid ng-dirty': selectedModel !== null}"
@@ -39,15 +45,17 @@ optionLabel="make" [filter]="true" filterBy="make"
   </div>
 </ng-template>
 </p-dropdown>
-
+<label for="model" class="validation-star">*</label>
+</span>
 
 <!-- use this for parts -->
+<span class="p-float-label" *ngIf="role === 'USER'">
 <p-dropdown [options]="parts" [(ngModel)]="selectedPart" optionLabel="part" 
 [filter]="true" filterBy="part"
+id="part"
 [showClear]="true" placeholder="Select Part" class="select-style" 
 [disabled]="modelFlag"
-(onChange)="onChangePart($event)"
-*ngIf="role === 'USER'" 
+(onChange)="onChangePart($event)" 
 [ngClass]="{'ng-valid ng-dirty': selectedPart !== null}"
 [ngClass]="{'ng-invalid ng-dirty': selectedPart == null}">
 <ng-template pTemplate="selectedItem">
@@ -61,7 +69,8 @@ optionLabel="make" [filter]="true" filterBy="make"
   </div>
 </ng-template>
 </p-dropdown>
-
+<label for="part" class="validation-star">*</label>
+</span>
 
 <p-dropdown [options]="years" [(ngModel)]="selectedYear" optionLabel="year" [filter]="true" filterBy="year"
 [showClear]="true" placeholder="Select Year" class="select-style"

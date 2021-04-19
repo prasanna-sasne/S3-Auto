@@ -10,6 +10,7 @@
   <div class="filter-row row  row-cols-xl-6" style="align-content: center;" *ngIf="!isLoading">
     <div class="form-group col" >
     <!--Search fields-->
+    <span class="p-float-label">
       <p-dropdown [options]="makers" [(ngModel)]="selectedMake" optionLabel="make" [filter]="true" filterBy="make"
       placeholder="Select Make" class="select-style " (onChange)="onChangeMake($event)"
       >
@@ -24,8 +25,11 @@
         </div>
       </ng-template>
     </p-dropdown>
+    <label class="validation-star">*</label>
+  </span>
     </div>
     <div class="form-group col" >
+       <span class="p-float-label">
     <p-dropdown [options]="models" [(ngModel)]="selectedModel" optionLabel="model" [filter]="true" filterBy="model"
       placeholder="Select Model" class="select-style" (onChange)="onChangeModel($event)"
       [disabled]="modelFlag" 
@@ -41,6 +45,8 @@
         </div>
       </ng-template>
     </p-dropdown>
+    <label for="make" class="validation-star">*</label>
+  </span>
     </div>
     <div class="form-group col" >
     <p-dropdown [options]="years" [(ngModel)]="selectedYear" optionLabel="year" [filter]="true" filterBy="year"
