@@ -16,7 +16,7 @@
               </div>
               <div class="form-row">
                 <div class="form-group col" style="column-width: auto;">
-                  <h5>MAKE</h5>
+                  <h5>MAKE <span aria-hidden="true" class="required">*</span></h5>
                   <p-dropdown class="form-control" [options]="makers" [(ngModel)]="selectedMake" optionLabel="make"
                     [filter]="true" filterBy="make" placeholder="Select Make" class="select-style"
                     (onChange)="onChangeMake($event,form)" 
@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="form-group col" style="column-width: auto;">
-                  <h5 class="required">MODEL</h5>
+                  <h5 class="required">MODEL <span aria-hidden="true" class="required">*</span></h5>
                   <p-dropdown class="form-control" [options]="models" [(ngModel)]="selectedModel" optionLabel="model"
                     [filter]="true" filterBy="make" placeholder="Select Model" class="select-style"
                     (onChange)="onChangeModel($event)" name="selectedModel" 
@@ -74,7 +74,7 @@
               <!--Parts related parameter-->
               <div *ngIf="!roleStatus" class="row mt-3">
                 <div class="form-group col" style="column-width: auto;">
-                  <h5>PART NAME</h5>
+                  <h5>PART NAME <span aria-hidden="true" class="required">*</span></h5>
                   <p-dropdown class="form-control" [options]="parts" [(ngModel)]="selectedPart" optionLabel="part"
                     [filter]="true" filterBy="part" placeholder="Select Part" class="select-style"
                     [disabled]="modelFlag" name="selectedPart" (onChange)="onChangePart($event)"
@@ -97,7 +97,7 @@
                   </div>
                 </div>
                 <div class="form-group col" style="column-width: auto;">
-                  <h5>Shipping </h5>
+                  <h5>Shipping <span aria-hidden="true" class="required">*</span></h5>
                   <p-dropdown [options]="shippingStatus" [(ngModel)]="selectedShippingOption" placeholder="YES/NO"
                     optionLabel="shipping"  #shipControl="ngModel" name="selectedShippingOption">
                   </p-dropdown>
@@ -111,7 +111,7 @@
               <div *ngIf="roleStatus" class="row mt-3">
 
                 <div class="form-group col" style="column-width: auto;">
-                  <h5>VIN </h5>
+                  <h5>VIN <span aria-hidden="true" class="required">*</span></h5>
                   <input type="text" class="form-control" id="vinValue" [(ngModel)]="selectedVin"
                     placeholder="e.g. 2GNAOXEX5E6235589" #vinValue="ngModel" required pattern="^(?=.*[0-9])(?=.*[A-z])[0-9A-z-]{17}$" name="selectedVin">
                   <div *ngIf="vinValue.invalid && (vinValue.dirty || vinValue.touched)" class="error-messages">
@@ -124,7 +124,7 @@
                   </div>
                 </div>
                 <div class="form-group col" style="column-width: auto;">
-                  <h5>MILEAGE</h5>
+                  <h5>MILEAGE <span aria-hidden="true" class="required">*</span></h5>
                   <input type="number" class="form-control" [(ngModel)]="selectedMileage" id="mileage"
                     placeholder="e.g. 1500 miles" #mileage="ngModel" required name="selectedMileage">
                   <div *ngIf="mileage.invalid && (mileage.dirty || mileage.touched)" class="error-messages">
@@ -137,7 +137,7 @@
               <!--VEHICLE para meters end-->
               <div class="form-row">
                 <div class="form-group col" style="column-width: auto;">
-                  <h5 class="required">YEAR</h5>
+                  <h5 class="required">YEAR <span aria-hidden="true" class="required">*</span></h5>
                   <p-dropdown class="form-control" [options]="years" [(ngModel)]="selectedYear" optionLabel="year"
                     [filter]="true" filterBy="year" placeholder="Select Year" class="select-style"
                     (onChange)="onChangeModel($event)" name="selectedYear"
@@ -163,7 +163,7 @@
                 </div>
 
                 <div class="form-group col" style="column-width: auto;">
-                  <h5>Price </h5>
+                  <h5>Price <span aria-hidden="true" class="required">*</span></h5>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">$</span>
@@ -183,7 +183,7 @@
               </div>
 
               <div class="form-row">
-                <h5>Description</h5>
+                <h5>Description <span aria-hidden="true" class="required">*</span></h5>
                 <textarea type="text" class="form-control" [(ngModel)]="description" id="description"
                   placeholder="e.g. Item Details " #descV="ngModel" name="description" required>
 
@@ -210,8 +210,8 @@
 
               <div [innerHtml]='msg' *ngIf="msg" style="color: red;"></div>
 
-              <label class="lableDetail" *ngIf="roleStatus">Please upload your vehicle front ,left ,right and rear view images</label>
-              <label class="lableDetail" *ngIf="!roleStatus">Please upload your vehicle part image.</label>
+              <label class="lableDetail" *ngIf="roleStatus">Please upload your vehicle front ,left ,right and rear view images <span aria-hidden="true" class="required">*</span></label>
+              <label class="lableDetail" *ngIf="!roleStatus">Please upload your vehicle part image. <span aria-hidden="true" class="required">*</span></label>
               <input *ngIf="roleStatus" id="file" type="file" class="form-control fileUpload" multiple=""
                 (change)="onFileChange($event)" accept="image/*">
               <input *ngIf="!roleStatus" id="file" type="file" class="form-control fileUpload"

@@ -10,7 +10,7 @@
           <div class="form-group">
             <label></label>
 
-            <input type="text" class="form-control" formControlName="username" id="username" placeholder="User Name" autocomplete="off" >
+            <input readonly type="text" class="form-control" formControlName="username" id="username" placeholder="User Name" autocomplete="off" >
             <div *ngIf="isValidInput('username')" class="error-messages">
               <div *ngIf="updateProfileForm.controls['username'].errors!.required">User Name is required.</div>
               <div *ngIf="updateProfileForm.controls['username'].errors?.minlength">The User Name needs to be of min length 5
@@ -31,7 +31,7 @@
             <!--EMAIL-->
             <div class="form-group">
               <label></label>
-              <input type="email" class="form-control" formControlName="email" id="email" placeholder="Email" autocomplete="off" >
+              <input readonly type="email" class="form-control" formControlName="email" id="email" placeholder="Email" autocomplete="off" >
 
               <div *ngIf="isValidInput('email')" class="error-messages">
                 <div *ngIf="updateProfileForm.controls['email'].errors!.required">  Email ID  is required.  </div>
