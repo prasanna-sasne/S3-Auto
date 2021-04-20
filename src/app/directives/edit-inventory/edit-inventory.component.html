@@ -107,7 +107,7 @@
                     <div *ngIf="vinValue.invalid && (vinValue.dirty || vinValue.touched)" class="error-messages">
                       <div *ngIf="vinValue.errors!.required"> VIN is required. </div>
                     <div *ngIf="vinValue.errors?.pattern">VIN is 17 characters long and must only have Digits and Alphanumeric characters
- </div>
+                      </div>
                     </div>
                 </div>
                 <div class="form-group col" style="column-width: auto;">
@@ -190,11 +190,11 @@
                 <label class="lableDetail" *ngIf="roleStatus">Please upload your vehicle front ,left ,right and rear view images <span aria-hidden="true" class="required">*</span></label>
                 <div *ngFor='let url of images;let imgIndex=index'>
                   <input *ngIf="roleStatus" id="{{'file' +imgIndex}}" type="file" class="form-control fileUpload"
-                    (change)="onFileChange($event,imgIndex)" style="justify-content-md-center " accept="image/jpeg">
+                    (change)="onFileChange($event,imgIndex)" style="justify-content-md-center" accept="image/jpeg">
                   <!-- <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">
                     <div *ngIf="f.file.errors.required">File is required.</div>
                   </div> -->
-                  <div  class="justify-content-md-center" style="height:100px; width:150px;">
+                  <div  class="justify-content-md-center" style="height:100px width:150px">
                     <img [src]="url" height="100" width="150px" style="margin: 3px;" id="{{'image_'+imgIndex}}"> <br />
                   </div>
                 </div>

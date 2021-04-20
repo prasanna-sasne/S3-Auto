@@ -227,7 +227,12 @@ this.editFrm.patchValue({
   // image upload...
   onFileChange(event, id) {
     //this.images = [];
-    if(event.target.files[0].size < 2000000){
+    if(event.target.accept == "image\jpeg"){
+      if (event.target.files[0].size > 2000000) {
+        this.toaster.showError('Image Size Cannot Exceed 2Mb', 'Upload Failure')
+
+        return;
+        }
     if (event.target.files && event.target.files[0]) {
 
       if (this.roleStatus == true) {
@@ -237,12 +242,8 @@ this.editFrm.patchValue({
 
         reader.onload = (event: any) => {
           this.msg ='';
-          if (event.target.result.match(/image\/*/) == null) {
-            this.msg = "Only images are supported";
-            this.multiImages[id]=[];
-
-            return;
-            }
+ 
+            
           var temp = event.target;
           // temp.append("name","file + id");
           this.images[id] = (event.target.result);
@@ -292,7 +293,7 @@ this.editFrm.patchValue({
       }
     }
   }else{
-    this.toaster.showError('Image Size cannot exceed 2Mb', 'Upload Failure')
+    this.toaster.showError('Only Jpeg File Format are supported', 'Upload Failure')
 
   }
 
