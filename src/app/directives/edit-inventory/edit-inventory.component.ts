@@ -227,7 +227,7 @@ this.editFrm.patchValue({
   // image upload...
   onFileChange(event, id) {
     //this.images = [];
-    if(event.target.accept == "image\jpeg"){
+    if(event.target.accept == "image/jpeg"){
       if (event.target.files[0].size > 2000000) {
         this.toaster.showError('Image Size Cannot Exceed 2Mb', 'Upload Failure')
 
@@ -271,11 +271,7 @@ this.editFrm.patchValue({
             reader.onload = (event: any) => {
               this.msg ='';
 
-              if (event.target.result.match(/image\/*/) == null) {
-                this.msg = "Only images are supported";
-                this.multiImages[i]=[];
-                return;
-                }
+
               this.images[0] = (event.target.result);
 
 
