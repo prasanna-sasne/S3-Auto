@@ -3,15 +3,15 @@
     <span class="badge badge-pill badge-primary sm-button" style="cursor: pointer;" (click)="goToBuySection()">
       <i class="bi bi-backspace pr-2"></i>Back
     </span>
-    <span *ngIf="selectedItemDetail.junkYardRating !== undefined && selectedItemDetail.junkYardRating !== null; else firstRating">
+    <span *ngIf="selectedItemDetail.junkYardRating !== undefined && selectedItemDetail.junkYardRating !== null">
       <span class="mr-1 h6 d-none d-md-inline">Overall Rating</span>
       <span class="badge badge-pill badge-primary sm-button">
         {{selectedItemDetail.junkYardRating}}<i class="bi bi-heart-fill ml-2"></i>
       </span>
     </span>
-    <ng-template #firstRating>
+    <span *ngIf="selectedItemDetail.junkYardRating === null">
       <span class="d-none d-md-inline noRate">Be the first to give rating<i class="bi bi-heart-fill ml-2"></i></span>
-    </ng-template>
+    </span>
   </h4>
   <section class="container-fluid px-0">
     <div class="row">
