@@ -1,3 +1,7 @@
+.carousel-inner{
+	background-color: black;
+}
+
 .carousel img{
 	height: 24rem;
 }

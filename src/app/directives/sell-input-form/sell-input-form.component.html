@@ -15,7 +15,7 @@
                 </div>
               </div>
               <div class="form-row">
-                <div class="form-group col" style="column-width: auto;">
+                <div class="form-group col p-fluid" style="column-width: auto;">
                   <h5>Make<span aria-hidden="true" class="required">*</span></h5>
                   <p-dropdown class="form-control" [options]="makers" [(ngModel)]="selectedMake" optionLabel="make"
                     [filter]="true" filterBy="make" placeholder="Select Make" class="select-style"
@@ -45,7 +45,7 @@
 
                 </div>
 
-                <div class="form-group col" style="column-width: auto;">
+                <div class="form-group col p-fluid" style="column-width: auto;">
                   <h5 class="required">Model<span aria-hidden="true" class="required">*</span></h5>
                   <p-dropdown class="form-control" [options]="models" [(ngModel)]="selectedModel" optionLabel="model"
                     [filter]="true" filterBy="make" placeholder="Select Model" class="select-style"
@@ -73,7 +73,7 @@
               </div>
               <!--Parts related parameter-->
               <div *ngIf="!roleStatus" class="form-row">
-                <div class="form-group col" style="column-width: auto;">
+                <div class="form-group col p-fluid" style="column-width: auto;">
                   <h5>Part Name<span aria-hidden="true" class="required">*</span></h5>
                   <p-dropdown class="form-control" [options]="parts" [(ngModel)]="selectedPart" optionLabel="part"
                     [filter]="true" filterBy="part" placeholder="Select Part" class="select-style"
@@ -96,7 +96,7 @@
                     Part is required
                   </div>
                 </div>
-                <div class="form-group col" style="column-width: auto;">
+                <div class="form-group col p-fluid" style="column-width: auto;">
                   <h5>Shipping<span aria-hidden="true" class="required">*</span></h5>
                   <p-dropdown [options]="shippingStatus" [(ngModel)]="selectedShippingOption" placeholder="YES/NO"
                     optionLabel="shipping"  #shipControl="ngModel" name="selectedShippingOption">
@@ -136,7 +136,7 @@
               </div>
               <!--VEHICLE para meters end-->
               <div class="form-row">
-                <div class="form-group col" style="column-width: auto;">
+                <div class="form-group col p-fluid" style="column-width: auto;">
                   <h5 class="required">Year<span aria-hidden="true" class="required">*</span></h5>
                   <p-dropdown class="form-control" [options]="years" [(ngModel)]="selectedYear" optionLabel="year"
                     [filter]="true" filterBy="year" placeholder="Select Year" class="select-style"
