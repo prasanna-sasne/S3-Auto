@@ -18,8 +18,8 @@ export class AuthComponent {
   roleStatus: boolean;
   states: { "stateId": number, "state": string }[] = [];
   citiesList: { "cityId": number, "city": string }[] = [];
-  selectedstate: { "stateId": string, "state": string } = { "stateId": "*", "state": "" };
-  selectedcity: { "cityId": string, "city": string } = { "cityId": "*", "city": "" };
+  selectedstate: { "stateId": number, "state": string } = { "stateId": -1, "state": "" };
+  selectedcity: { "cityId": number, "city": string } = { "cityId": -1, "city": "" };
   requestData: Object = {};
   error = [];
   success;
@@ -218,7 +218,8 @@ this.error =[];
   selectChange(event: any) {
    // this.registrationForm.controls.selectedState.reset();
    // this.registrationForm.controls.selectecity.reset();
-   // this.selectedcity= { "cityId": "", "city": "" };
+    this.selectedcity= { "cityId": -1, "city": "" };
+    this.registrationForm.controls['selectedcity'].setErrors({required : true});
     this.selectedstate = event.value;
     // let stateId = this.selectedstate.stateId.toString();
     this.authService.getCity(this.selectedstate.stateId).subscribe(data => {

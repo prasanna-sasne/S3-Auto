@@ -5,7 +5,7 @@
         <div class="form-group col-md-6">
           <input type="text" class="form-control" formControlName="fname" id="fName" placeholder="First Name" autocomplete="off" >
           <div *ngIf="isValidInput('fname')" class="error-messages">
-            <div *ngIf="registrationForm.controls['fname'].errors!.required">First Name is required. </div>
+            <div *ngIf="registrationForm.controls['fname'].errors!.required">First Name is required.  </div>
           </div>
           <div class="form-group">
             <label></label>
@@ -107,7 +107,7 @@
       </div>
       <div class="form-row">
         <!-----STATE DATA----->
-        <div class="form-group col-md-3" required=true>
+        <div class="form-group col" required=true>
           <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
           <p-dropdown [options]="states" formControlName="selectedstate" optionLabel="state" [filter]="true"
             filterBy="state" (onChange)="selectChange($event)"
@@ -150,7 +150,7 @@
               </div>
             </ng-template>
           </p-dropdown>
-          <div *ngIf="isValidInput('selectedcity')" class="error-messages">
+          <div *ngIf="isValidInput('selectedcity') && registrationForm.controls['selectedcity'].value!=''" class="error-messages">
             <div *ngIf="registrationForm.controls['selectedcity'].errors!.required">City Needs to be Selected</div>
           </div>
         </div>

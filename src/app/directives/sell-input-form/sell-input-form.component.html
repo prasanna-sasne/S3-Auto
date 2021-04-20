@@ -176,7 +176,7 @@
                   </div>
                   <div *ngIf="pricev.invalid && (pricev.dirty || pricev.touched)" class="error-messages">
                     <div *ngIf="pricev.errors!.required"> Price is required. </div>
-                    <div *ngIf="pricev.errors?.pattern"> Only Integer Values allowed </div>
+                    <div *ngIf="pricev.errors?.pattern"> No decimal values allowed </div>
                   </div>
                 </div>
 
