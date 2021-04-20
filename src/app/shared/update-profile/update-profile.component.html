@@ -107,10 +107,10 @@
     </div>
     <div class="form-row">
       <div class="form-group col">
-        <label for="state" > State<span class="required">*</span></label>
-        <div class="form-group" required=true>
+        <label for="state" style="margin-bottom: 0px !important"> State<span class="required">*</span></label>
+        <div class="form-group p-fluid" required=true>
           <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
-  
+          
           <p-dropdown [options]="states" formControlName="selectedstate" optionLabel="state" [filter]="true"
           filterBy="state" (onChange)="selectChange($event)"  [showClear]="true"
           placeholder="Select State" class="select-style" [(ngModel)]="selectedstate"
@@ -136,7 +136,7 @@
       </div>
       <div class="form-group col">
         <label for="city" class="mb-0"> City<span class="required">*</span></label>
-        <div class="form-group">
+        <div class="form-group p-fluid">
           <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
           <p-dropdown [options]="citiesList" formControlName="selectedcity" optionLabel="city" [filter]="true"
           filterBy="city" (onChange)="selectCityChange($event)" [showClear]="true" placeholder="Select City"

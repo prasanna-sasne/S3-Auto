@@ -1,3 +1,7 @@
+disabled{
+  cursor: not-allowed;
+}
+
 /* Side bar css */
 .sidenav {
   position: fixed;

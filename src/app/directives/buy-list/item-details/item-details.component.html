@@ -24,7 +24,7 @@
             <div class="carousel-item active"
               *ngFor="let item of selectedItemDetail.vehicleImages; let index = index; let isFirst = first"
               [ngClass]="{active:isFirst}">
-              <img [src]="item.imageUri" class="d-block w-100" alt="...">
+              <img [src]="item.imageUri" class="d-block w-100" alt="..." style="object-fit: contain;">
             </div>
           </div>
 
@@ -41,7 +41,7 @@
           <div class="card" style="cursor: pointer;">
             <div class="embed-responsive embed-responsive-16by9">
               <img [src]="selectedItemDetail.imageUri" class="card-img-top img-thumbnail embed-responsive-item"
-                alt="Salvage Car">
+                alt="Salvage Car" style="object-fit: contain;">
             </div>
           </div>
         </ng-template>

@@ -8,11 +8,11 @@
 
   <!--Search field-->
   <div class="filter-row row  row-cols-xl-6" style="align-content: center;" *ngIf="!isLoading">
-    <div class="form-group col" >
+    <div class="form-group col p-fluid" >
     <!--Search fields-->
     <span class="p-float-label">
       <p-dropdown [options]="makers" [(ngModel)]="selectedMake" optionLabel="make" [filter]="true" filterBy="make"
-      placeholder="Select Make" class="select-style " (onChange)="onChangeMake($event)"
+      placeholder="Select Make" class="select-style validate" (onChange)="onChangeMake($event)"
       >
       <ng-template pTemplate="selectedItem">
         <div class="country-item country-item-value" *ngIf="selectedMake">
@@ -28,10 +28,10 @@
     <label class="validation-star">*</label>
   </span>
     </div>
-    <div class="form-group col" >
+    <div class="form-group col p-fluid" >
        <span class="p-float-label">
     <p-dropdown [options]="models" [(ngModel)]="selectedModel" optionLabel="model" [filter]="true" filterBy="model"
-      placeholder="Select Model" class="select-style" (onChange)="onChangeModel($event)"
+      placeholder="Select Model" class="select-style validate" (onChange)="onChangeModel($event)"
       [disabled]="modelFlag" 
       >
       <ng-template pTemplate="selectedItem">
@@ -48,7 +48,7 @@
     <label for="make" class="validation-star">*</label>
   </span>
     </div>
-    <div class="form-group col" >
+    <div class="form-group col p-fluid" >
     <p-dropdown [options]="years" [(ngModel)]="selectedYear" optionLabel="year" [filter]="true" filterBy="year"
       [showClear]="true" placeholder="Select Year" class="select-style" [disabled]="yearStateFlag"
       >

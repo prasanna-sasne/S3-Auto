@@ -3,23 +3,25 @@
 	background-image: linear-gradient(to right, #563d7c, #1976d2);
   } */
 
-/*.validate > .p-dropdown .p-dropdown-label.p-placeholder {
+.validate > .p-dropdown .p-dropdown-label.p-placeholder {
     margin-left: 8% !important;
 }
-*/
+
 .validation-star{
   color: red; 
   font-size: xx-large;
-  margin-top: -4%;
-  position: initial;
+  margin-top: -5%;
+  
 }
 .p-float-label > label{
   color: red; 
-  position: initial;
+  margin-top: -5%;
+  /*position: initial;*/
 }
 
 .validation-star{
   font-size: xx-large !important;
+
 }
 
   .button {

@@ -54,7 +54,8 @@
                   <input  type="text" [(ngModel)]="message" class="form-control" name="message" required>
                   <button class="msg_send_btn badge badge-pill badge-primary sm-button" type="button"
                   (click)="send(message)"
-                  [disabled]="message == ''">Send</button>
+                  [disabled]="message == ''"
+                  [ngClass]="{'disabled': message == ''}">Send</button>
 
                 </div>
               </form>

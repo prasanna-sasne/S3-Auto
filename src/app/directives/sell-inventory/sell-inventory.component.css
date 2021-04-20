@@ -2,6 +2,11 @@
 	margin-top: 20px;
 }
 
+.select-style{
+  flex-wrap: wrap;
+  width: 13%;
+}
+
 .card {
 
   height: auto ;

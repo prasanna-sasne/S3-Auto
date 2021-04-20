@@ -1,3 +1,6 @@
+.carousel img{
+	height: 24rem;
+}
 .item-details-container {
 	/*background: #f1f5fb;*/
 	box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
@@ -23,7 +26,7 @@
 
 .toast-header{
 	color: #721c24;
-    background-color: #f8d7da;
+	background-color: #f8d7da;
 }
 
 .disabled{
