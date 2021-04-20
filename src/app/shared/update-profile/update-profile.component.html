@@ -9,7 +9,7 @@
             <div *ngIf="updateProfileForm.controls['fname'].errors!.required">First Name is required. </div>
           </div>
           <div class="form-group">
-            <label for="username" class="mb-0 mt-3">User Name <span class="required">*</span></label>
+            <label for="username" class="mb-0 mt-3">User Name </label>
             <input readonly type="text" class="form-control" formControlName="username" id="username" placeholder="User Name" autocomplete="off" 
             title="UserName is not editable"
             alt="UserName is not editable">
@@ -23,20 +23,18 @@
               <label for="password" class="mb-0 mt-3">Password </label>
               <input type="password" class="form-control" formControlName="password" id="password" placeholder="OLD Password" autocomplete="off" >
 
-              <div *ngIf="isValidInput('password')" class="error-messages">
-               <div *ngIf="updateProfileForm.controls['confirmPassword'].value!='' && updateProfileForm.controls['password'].value==null">
-                Please enter NEW Password as OLD
+              <div *ngIf="updateProfileForm.controls['confirmPassword'].value!='' || updateProfileForm.controls['password'].value==null" class="error-messages">
+               <div *ngIf="updateProfileForm.controls['password'].value=='' || updateProfileForm.controls['password'].value==null">
+                Please enter NEW Password as OLD Password is Entered
               </div>
-              <div *ngIf="updateProfileForm.controls['password'].errors!.required && updateProfileForm.controls['confirmPassword'].value!=''">OLD Password is required.</div>
-
             </div>
             <!--EMAIL-->
             <div class="form-group">
-              <label for="email" class="mb-0 mt-3"> Email<span class="required">*</span></label>
+              <label for="email" class="mb-0 mt-3"> Email</label>
               
                 <input readonly type="email" class="form-control" formControlName="email" id="email" placeholder="Email" autocomplete="off" 
                 title="Email is not editable"
-                alt="UserName is not editable">
+                alt="Email is not editable">
               
               <div *ngIf="isValidInput('email')" class="error-messages">
                 <div *ngIf="updateProfileForm.controls['email'].errors!.required">  Email ID  is required.  </div>
@@ -84,84 +82,100 @@
               <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword"
               placeholder="NEW Password" autocomplete="off" >
 
+              <div *ngIf="updateProfileForm.controls['password'].value!='' && updateProfileForm.controls['password'].value!=null" class="error-messages">
+                <div *ngIf="updateProfileForm.controls['confirmPassword'].value=='' || updateProfileForm.controls['confirmPassword'].value==null ">
+                  NEW Password is required.</div>
+              </div>
               <div *ngIf="isValidInput('confirmPassword')" class="error-messages">
-                <div *ngIf="updateProfileForm.controls['confirmPassword'].errors!.required">NEW Password is required.</div>
-
-                <div *ngIf="updateProfileForm.controls['confirmPassword'].errors?.pattern && updateProfileForm.controls['confirmPassword'].value!=''">Password must contain more than 8
+                <div *ngIf="updateProfileForm.controls['confirmPassword'].errors?.pattern">Password must contain more than 8
                 characters, 1 upper case letter, 1 lower case letter , 1 Number, and 1 special character</div>
               </div>
+
+              <label for="confirmnewPassword" class="mb-0 mt-3">Confirm New Password</label>
+              <input type="password" class="form-control" id="confirmnewPassword" formControlName="confirmnewPassword"
+              placeholder="Confirm NEW Password" autocomplete="off" >
+
+              <div *ngIf="updateProfileForm.controls['confirmPassword'].value!=''||updateProfileForm.controls['confirmPassword'].value!=null" class="error-messages">
+                <div *ngIf="updateProfileForm.controls.confirmnewPassword.errors?.confirmedValidator">Password not matching.</div>
+              </div>
             </div>
+            
 
           </div>
         </div>
       </div>
     </div>
     <div class="form-row">
-      <!-----STATE DATA----->
-      <label for="state" class="mb-0"> State<span class="required">*</span></label>
-      <div class="form-group col-md-3" required=true>
-        <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
-
-        <p-dropdown [options]="states" formControlName="selectedstate" optionLabel="state" [filter]="true"
-        filterBy="state" (onChange)="selectChange($event)"  [showClear]="true"
-        placeholder="Select State" class="select-style" [(ngModel)]="selectedstate"
-        [ngModelOptions]="{standalone: true}" id="selectedstate"
-        [ngClass]="{'ng-valid ng-dirty': ( selectedstate != null) }"
-        [ngClass]="{'ng-invalid ng-dirty': (selectedstate == null)}" >
-
-        <ng-template pTemplate="selectedItem">
-          <div class="country-item country-item-value" *ngIf="selectedstate">
-            <div>{{selectedstate.state}}</div>
-          </div>
-        </ng-template>
-        <ng-template let-stateObj pTemplate="item">
-          <div class="country-item">
-            <div>{{stateObj.state}}</div>
-          </div>
-        </ng-template>
-      </p-dropdown>
-      <div *ngIf="isValidInput('selectedstate')" class="error-messages">
-        <div *ngIf="updateProfileForm.controls['selectedstate'].errors!.required">State Needs to be Selected</div>
+      <div class="form-group col">
+        <label for="state" > State<span class="required">*</span></label>
+        <div class="form-group" required=true>
+          <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
+  
+          <p-dropdown [options]="states" formControlName="selectedstate" optionLabel="state" [filter]="true"
+          filterBy="state" (onChange)="selectChange($event)"  [showClear]="true"
+          placeholder="Select State" class="select-style" [(ngModel)]="selectedstate"
+          [ngModelOptions]="{standalone: true}" id="selectedstate"
+          [ngClass]="{'ng-valid ng-dirty': ( selectedstate != null) }"
+          [ngClass]="{'ng-invalid ng-dirty': (selectedstate == null)}" >
+  
+          <ng-template pTemplate="selectedItem">
+            <div class="country-item country-item-value" *ngIf="selectedstate">
+              <div>{{selectedstate.state}}</div>
+            </div>
+          </ng-template>
+          <ng-template let-stateObj pTemplate="item">
+            <div class="country-item">
+              <div>{{stateObj.state}}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+        <div *ngIf="isValidInput('selectedstate')" class="error-messages">
+          <div *ngIf="updateProfileForm.controls['selectedstate'].errors!.required">State Needs to be Selected</div>
+        </div>
+      </div>
+      </div>
+      <div class="form-group col">
+        <label for="city" class="mb-0"> City<span class="required">*</span></label>
+        <div class="form-group">
+          <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
+          <p-dropdown [options]="citiesList" formControlName="selectedcity" optionLabel="city" [filter]="true"
+          filterBy="city" (onChange)="selectCityChange($event)" [showClear]="true" placeholder="Select City"
+          class="select-style"
+          [(ngModel)]="selectedcity"
+          [ngModelOptions]="{standalone: true}"
+          [ngClass]="{'ng-valid ng-dirty': selectedcity !== null}"
+          [ngClass]="{'ng-invalid ng-dirty': selectedcity == null}"
+          [disabled]="citiesList.length === 0">
+          <ng-template pTemplate="selectedItem">
+            <div class="country-item country-item-value" *ngIf="selectedcity">
+              <div>{{selectedcity.city}}</div>
+            </div>
+          </ng-template>
+          <ng-template let-cityObj pTemplate="item">
+            <div class="country-item">
+              <div>{{cityObj.city}}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+        <div *ngIf="isValidInput('selectedcity')" class="error-messages">
+          <div *ngIf="updateProfileForm.controls['selectedcity'].errors!.required">City Needs to be Selected1</div>
+        </div>
+        <span *ngIf="selectedcity !== null">
+          <div *ngIf="citiesList.length === 0 || selectedcity.city === ''" class="error-messages">
+            City Needs to be Selected
+          </div>  
+        </span>
+    
       </div>
     </div>
-    <!---CITY VALUE---->
-    <label for="city" class="mb-0"> City<span class="required">*</span></label>
-    <div class="form-group col-md-3">
-      <!-- <div class="form-group"><input type="text" class="form-control" id="form36" placeholder="State"></div> -->
-      <p-dropdown [options]="citiesList" formControlName="selectedcity" optionLabel="city" [filter]="true"
-      filterBy="city" (onChange)="selectCityChange($event)" [showClear]="true" placeholder="Select City"
-      class="select-style"
-      [(ngModel)]="selectedcity"
-      [ngModelOptions]="{standalone: true}"
-      [ngClass]="{'ng-valid ng-dirty': selectedcity !== null}"
-      [ngClass]="{'ng-invalid ng-dirty': selectedcity == null}"
-      [disabled]="citiesList.length === 0">
-      <ng-template pTemplate="selectedItem">
-        <div class="country-item country-item-value" *ngIf="selectedcity">
-          <div>{{selectedcity.city}}</div>
-        </div>
-      </ng-template>
-      <ng-template let-cityObj pTemplate="item">
-        <div class="country-item">
-          <div>{{cityObj.city}}</div>
-        </div>
-      </ng-template>
-    </p-dropdown>
-    <div *ngIf="isValidInput('selectedcity')" class="error-messages">
-      <div *ngIf="updateProfileForm.controls['selectedcity'].errors!.required">City Needs to be Selected1</div>
-    </div>
-    <span *ngIf="selectedcity !== null">
-      <div *ngIf="citiesList.length === 0 || selectedcity.city === ''" class="error-messages">
-        City Needs to be Selected
-      </div>  
-    </span>
+      <!-----STATE DATA----->
 
-  </div>
+    <!---CITY VALUE---->
+
 
         <!-- <div class="form-group col-md-3"> <input type="text" class="form-control" id="form41" placeholder="City">
         </div>-->
-        <div class="form-group col-md-3" style="margin-top: -21px;">
-          <div class="form-group">
+          <div class="form-group col">
             <label for="zipCode" class="mb-0"> Zip Code<span class="required">*</span></label>
             <input type="text" class="form-control" formControlName="zipCode" id="zipCode" placeholder="Zip Code" autocomplete="off" >
             <div *ngIf="updateProfileForm.controls.zipCode.touched && updateProfileForm.controls.zipCode.invalid"              class="error-messages">
@@ -170,7 +184,6 @@
             <div class="error-messages" *ngIf="updateProfileForm.controls.zipCode.errors?.pattern">Please, Enter 5
             digit zipCode</div>
           </div>
-        </div>
       </div>
       <div>
         <label for="address" class="mb-0"> Address<span class="required">*</span></label>

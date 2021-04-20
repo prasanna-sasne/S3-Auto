@@ -52,6 +52,7 @@ export class UpdateProfileComponent {
         fname: result.firstName,
         password: '',
         confirmPassword: '',
+        confirmnewPassword: '',
         lastName: result.lastName,
         username: result.username,
         phoneNumber: result.phone,
@@ -71,6 +72,7 @@ export class UpdateProfileComponent {
         fname: result.firstName,
         password: '',
         confirmPassword: '',
+        confirmnewPassword: '',
         lastName: result.lastName,
         username: result.username,
         phoneNumber: result.phone,
@@ -91,6 +93,7 @@ export class UpdateProfileComponent {
     this.updateProfileForm = this.fb.group({
       fname: ['', [Validators.required]],
       password: ['', []],
+      confirmnewPassword: ['', []],
       confirmPassword: ['', [Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]],
       username: ['', [Validators.required, Validators.minLength(5)]],
       lastName: ['', [Validators.required]],
@@ -103,8 +106,9 @@ export class UpdateProfileComponent {
       junkYardName: ['', [Validators.required]],
       zipCode: ['', [Validators.required, Validators.pattern("^[0-9]{5}(?:-[0-9]{4})?$")]],
       address: ['', [Validators.required]],
-    }
-    );
+    }, {
+      validator: this.ConfirmedValidator('confirmPassword', 'confirmnewPassword')
+    });
   }
 
   /**.... Validation for input fields... */
@@ -182,18 +186,18 @@ this.validateAllFormFields(control, type);
 /**......Registration service call... */
 onSubmit() {
   this.error = [];
-  if (this.updateProfileForm.controls.password.value != "") {
-    this.updateProfileForm.controls.confirmPassword.setValidators([Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]);
-  } else {
-    this.updateProfileForm.controls.confirmPassword.clearValidators();
-    if (this.updateProfileForm.controls.confirmPassword.value != "") {
-      this.updateProfileForm.controls.confirmPassword.setValidators([Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]);
-      this.updateProfileForm.controls.password.setValidators([Validators.required]);
-    } else {
-      this.updateProfileForm.controls.password.clearValidators();
-    }
+  // if (this.updateProfileForm.controls.password.value != "") {
+  //   this.updateProfileForm.controls.confirmPassword.setValidators([Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]);
+  // } else {
+  //   this.updateProfileForm.controls.confirmPassword.clearValidators();
+  //   if (this.updateProfileForm.controls.confirmPassword.value != "") {
+  //     this.updateProfileForm.controls.confirmPassword.setValidators([Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]);
+  //     this.updateProfileForm.controls.password.setValidators([Validators.required]);
+  //   } else {
+  //     this.updateProfileForm.controls.password.clearValidators();
+  //   }
 
-  }
+  // }
   this.validateAllFormFields(this.updateProfileForm, 3);
 
   if (!this.updateProfileForm.pristine) 

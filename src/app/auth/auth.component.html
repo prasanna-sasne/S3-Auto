@@ -44,10 +44,9 @@
                 <!--JUNK-YARD OWNER NAME-->
                 <div class="form-group" *ngIf="show">
                   <label></label>
-                  <input type="text" class="form-control" id="junkYardName" formControlName="junkYardName" style=""
-                    placeholder="Junk Yard Name" autocomplete="off" >
+                  <input type="text" class="form-control" id="junkYardName" formControlName="junkYardName"   placeholder="Junk Yard Name" autocomplete="off" >
                     <div *ngIf="isValidInput('junkYardName')" class="error-messages">
-                      <div *ngIf="registrationForm.controls['email'].errors!.required">  JunkYard Name is required.  </div>
+                      <div *ngIf="registrationForm.controls['junkYardName'].errors!.required">  JunkYard Name is required.  </div>
                     </div>
                 </div>
               </div>
@@ -177,7 +176,7 @@
     </div>
     <br>
       <div class="d-flex justify-content-center" >
-        <button type="submit" class="btn btn-primary button"  >Submit</button>
+        <button type="submit" class="btn btn-primary button">Submit</button>
         <button type="button" (click)=resetForm() class="btn btn-primary button">Reset</button>
       </div>
 
