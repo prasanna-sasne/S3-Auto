@@ -48,7 +48,7 @@
                 <div class="form-group col p-fluid" style="column-width: auto;">
                   <h5 class="required">Model<span aria-hidden="true" class="required">*</span></h5>
                   <p-dropdown class="form-control" [options]="models" [(ngModel)]="selectedModel" optionLabel="model"
-                    [filter]="true" filterBy="make" placeholder="Select Model" class="select-style"
+                    [filter]="true" filterBy="model" placeholder="Select Model" class="select-style"
                     (onChange)="onChangeModel($event)" name="selectedModel" 
                     [ngClass]="{'ng-valid ng-dirty': selectedModel.model !== ''}"
                     [ngClass]="{'ng-invalid ng-dirty': selectedModel.model == ''}"

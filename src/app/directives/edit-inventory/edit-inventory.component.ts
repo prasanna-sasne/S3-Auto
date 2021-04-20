@@ -227,7 +227,9 @@ this.editFrm.patchValue({
   // image upload...
   onFileChange(event, id) {
     //this.images = [];
+    if(event.target.files[0].size < 2000000){
     if (event.target.files && event.target.files[0]) {
+
       if (this.roleStatus == true) {
         /**User role */
         var filesAmount = event.target.files.length;
@@ -289,6 +291,10 @@ this.editFrm.patchValue({
         }
       }
     }
+  }else{
+    this.toaster.showError('Image Size cannot exceed 2Mb', 'Upload Failure')
+
+  }
 
   }
 
