@@ -199,9 +199,11 @@ export class SellInventoryComponent implements OnInit {
 
   onChangeMake(event: any) {
     if (event.value == null) {
+
       // this.resetFilters();
     } else {
-      this.sellInputFormService.getModels(this.selectedMake.makeId)
+      this.yearStateFlag = true;
+            this.sellInputFormService.getModels(this.selectedMake.makeId)
         .subscribe(data => this.models = data)
       this.modelFlag = false
     //  this.yearStateFlag = false

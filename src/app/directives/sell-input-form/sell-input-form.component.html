@@ -213,9 +213,9 @@
               <label class="lableDetail" *ngIf="roleStatus">Please upload your vehicle front ,left ,right and rear view images <span aria-hidden="true" class="required">*</span></label>
               <label class="lableDetail" *ngIf="!roleStatus">Please upload your vehicle part image. <span aria-hidden="true" class="required">*</span></label>
               <input *ngIf="roleStatus" id="file" type="file" class="form-control fileUpload" multiple=""
-                (change)="onFileChange($event)" accept="image/*">
+                (change)="onFileChange($event)" accept="image/jpeg">
               <input *ngIf="!roleStatus" id="file" type="file" class="form-control fileUpload"
-                (change)="onFileChange($event)" accept="image/*">
+                (change)="onFileChange($event)" accept="image/jpeg">
               <!-- <div *ngIf="form.file.touched && form.file.invalid" class="alert alert-danger">
                 <div *ngIf="form.file.errors.required">File is required.</div>
               </div> -->

@@ -103,10 +103,11 @@
                 <div class="form-group col" style="column-width: auto;">
                   <h5>VIN<span aria-hidden="true" class="required">*</span> </h5>
                   <input type="text" class="form-control"  [(ngModel)]="selectedVin"
-                    placeholder="e.g. 2GNAOXEX5E6235589"#vinValue="ngModel" required minlength="17" name="selectedVin">
+                    placeholder="e.g. 2GNAOXEX5E6235589"#vinValue="ngModel" required pattern="^(?=.*[0-9])(?=.*[A-z])[0-9A-z-]{17}$" name="selectedVin">
                     <div *ngIf="vinValue.invalid && (vinValue.dirty || vinValue.touched)" class="error-messages">
                       <div *ngIf="vinValue.errors!.required"> VIN is required. </div>
-                      <div *ngIf="vinValue.errors?.minlength"> VIN is 17 characters Long </div>
+                    <div *ngIf="vinValue.errors?.pattern">VIN is 17 characters long and must only have Digits and Alphanumeric characters
+ </div>
                     </div>
                 </div>
                 <div class="form-group col" style="column-width: auto;">
@@ -140,7 +141,6 @@
                     <input class="form-control min-width: 150px" type="number" [(ngModel)]="priceValue" value="0.00" min="0" step="1.01"
                       data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"
                       id="priceValue" #pricev="ngModel" required rows="3" name="priceValue">
-                      <br>
                     <div *ngIf="pricev.value== null && (pricev.dirty || pricev.touched)" class="error-messages">
                       <div *ngIf="pricev.errors!.required"> Price is required. </div>
 
@@ -190,7 +190,7 @@
                 <label class="lableDetail" *ngIf="roleStatus">Please upload your vehicle front ,left ,right and rear view images <span aria-hidden="true" class="required">*</span></label>
                 <div *ngFor='let url of images;let imgIndex=index'>
                   <input *ngIf="roleStatus" id="{{'file' +imgIndex}}" type="file" class="form-control fileUpload"
-                    (change)="onFileChange($event,imgIndex)" style="justify-content-md-center " accept="image/*">
+                    (change)="onFileChange($event,imgIndex)" style="justify-content-md-center " accept="image/jpeg">
                   <!-- <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">
                     <div *ngIf="f.file.errors.required">File is required.</div>
                   </div> -->
@@ -205,7 +205,7 @@
                 <div [innerHtml]='msg' *ngIf="msg" style="color: red;"></div>
                 <label class="lableDetail" *ngIf="!roleStatus">Please upload your vehicle part image <span aria-hidden="true" class="required">*</span> </label>
                 <input *ngIf="!roleStatus" id="file" type="file" class="form-control fileUpload"
-                  (change)="onFileChange($event,0)" style="justify-content-md-center" accept="image/*">
+                  (change)="onFileChange($event,0)" style="justify-content-md-center" accept="image/jpeg">
                 <!-- <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">
                     <div *ngIf="f.file.errors.required">File is required.</div>
                   </div> -->

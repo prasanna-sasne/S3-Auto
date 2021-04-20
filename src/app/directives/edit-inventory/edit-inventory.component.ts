@@ -94,7 +94,7 @@ export class EditInventoryComponent implements OnInit {
   onChangeMake(event: any,form) {
 
     if (event.value !== undefined) {
-      this.selectedModel.model =''; 
+      this.selectedModel.model=""; 
       form.controls.selectedModel.setErrors({required : true});
       //this.selectedYear.year =''; 
       //this.generateYears();
@@ -116,6 +116,8 @@ export class EditInventoryComponent implements OnInit {
     this.modelFlag = false;
 
   }
+
+  
   matrixIndexed(details, name) {
     var r;
 
