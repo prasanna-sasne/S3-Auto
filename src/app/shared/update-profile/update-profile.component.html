@@ -24,7 +24,7 @@
               <input type="password" class="form-control" formControlName="password" id="password" placeholder="OLD Password" autocomplete="off" >
 
               <div *ngIf="updateProfileForm.controls['confirmPassword'].value!='' || updateProfileForm.controls['password'].value==null" class="error-messages">
-               <div *ngIf="updateProfileForm.controls['password'].value=='' || updateProfileForm.controls['password'].value==null">
+               <div *ngIf="(updateProfileForm.controls['password'].value=='' || updateProfileForm.controls['password'].value==null) && isValidInput('confirmPassword')">
                 Please enter NEW Password as OLD Password is Entered
               </div>
             </div>

@@ -109,6 +109,8 @@ export class SellInventoryComponent implements OnInit {
   }
   // To get previous page data
   previousPage(): void {
+    this.closeCollapse =new Array(this.closeCollapse.length).fill(false);
+    this.closeDuplicateWindow =new Array(this.closeDuplicateWindow.length).fill(false);
     this.currentPageIndex--
     this.startIndex -= 8
   this.getSellInventory()
@@ -116,6 +118,8 @@ export class SellInventoryComponent implements OnInit {
 
   // To get next page data
   nextPage(): void {
+    this.closeCollapse =new Array(this.closeCollapse.length).fill(false);
+    this.closeDuplicateWindow =new Array(this.closeDuplicateWindow.length).fill(false);
     this.currentPageIndex++
     this.startIndex += 8
     this.getSellInventory()

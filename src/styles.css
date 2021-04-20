@@ -60,7 +60,11 @@
     padding: 0rem 0rem;
     margin: 0;
   }
-
+  .p-datatable table {
+    border-collapse: collapse;
+    table-layout: auto!important;
+    width: 100%;
+  }
   .error-messages {
     color: red;
     font-size: 12px; }
@@ -92,3 +96,7 @@
       color:red;
       padding-right: 4px;
     }
+
+
+
+  

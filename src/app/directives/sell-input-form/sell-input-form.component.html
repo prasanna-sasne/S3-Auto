@@ -169,14 +169,14 @@
                       <span class="input-group-text">$</span>
                       <!-- <span class="input-group-text">0.00</span> -->
                     </div>
-                    <input class="form-control" type="number" [(ngModel)]="priceValue" value="0.00" min="0" step="0.01"
-                      data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency"
+                    <input class="form-control" type="number" [(ngModel)]="priceValue" value="0" min="0" step="1"
+                       class="form-control currency" pattern="^[0-9]*$"
                       id="priceValue" #pricev="ngModel" required rows="3" name="priceValue">
                     
                   </div>
-                  <div *ngIf="pricev.value== null && (pricev.dirty || pricev.touched)" class="error-messages">
+                  <div *ngIf="pricev.invalid && (pricev.dirty || pricev.touched)" class="error-messages">
                     <div *ngIf="pricev.errors!.required"> Price is required. </div>
-
+                    <div *ngIf="pricev.errors?.pattern"> Only Integer Values allowed </div>
                   </div>
                 </div>
 
