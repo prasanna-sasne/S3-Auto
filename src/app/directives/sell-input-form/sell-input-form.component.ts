@@ -190,6 +190,12 @@ export class SellInputFormComponent implements OnInit {
     if (event.target.files && event.target.files[0]) {
       var filesAmount = event.target.files.length;
       for (let i = 0; i < filesAmount; i++) {
+
+        if (event.target.files[i].type != ("image/jpeg")) {
+          this.toaster.showError('Only Images are Supported','Upload Failure')
+          //this.toaster.showError('Only images are supported','Upload Failure')
+          return;
+          }
        if(filesAmount !=4 && this.role == "USER"){
           this.toaster.showError('Four(4) Images need to be uploaded','Upload Failure')
           return;
@@ -203,11 +209,7 @@ export class SellInputFormComponent implements OnInit {
 
           reader.onload = (event:any) => {
             this.msg='';
-            if (event.target.result.match(/image\/*/) == null) {
-                this.msg = "Only images are supported";
-                //this.toaster.showError('Only images are supported','Upload Failure')
-                return;
-                }
+
               this.images.push(event.target.result);
 
               this.sellForm.patchValue({
