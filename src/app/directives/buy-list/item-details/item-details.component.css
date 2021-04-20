@@ -1,3 +1,9 @@
+.noRate{
+	display: inline !important;
+	font-size: large;
+	color: #3e559f;
+}
+
 .carousel-inner{
 	background-color: #c1c1c1;
 }
