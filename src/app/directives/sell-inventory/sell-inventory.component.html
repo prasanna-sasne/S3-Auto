@@ -32,7 +32,7 @@
        <span class="p-float-label">
     <p-dropdown [options]="models" [(ngModel)]="selectedModel" optionLabel="model" [filter]="true" filterBy="model"
       placeholder="Select Model" class="select-style validate" (onChange)="onChangeModel($event)"
-      [disabled]="modelFlag" 
+      [disabled]="modelFlag"
       >
       <ng-template pTemplate="selectedItem">
         <div class="country-item country-item-value" *ngIf="selectedModel">
@@ -92,7 +92,7 @@
               alt="sell-history">
           </span>
           <ng-template #soldPartImage>
-            <img class="img-thumbnail embed-responsive-item" style="object-fit: cover;" [src]="item.imageUri"
+            <img class="img-thumbnail embed-responsive-item" style="object-fit: contain;" [src]="item.imageUri"
               alt="sell-history">
           </ng-template>
         </div>
