@@ -297,6 +297,17 @@ export class SellInventoryComponent implements OnInit {
   onFileChange(event,id) {
     if (event.target.files && event.target.files[0]) {
         /**User role */
+        if (event.target.files[0].type != ("image/jpeg")) {
+          this.toaster.showError('Only Jpeg Format is Supported', 'Upload Failure')
+  
+          return;
+  
+        }
+        if (event.target.files[0].size > 2000000) {
+          this.toaster.showError('Image Size Cannot Exceed 2Mb', 'Upload Failure')
+  
+          return;
+          }
         var filesAmount = event.target.files.length;
         var reader = new FileReader();
 
