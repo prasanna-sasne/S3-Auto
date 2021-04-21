@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     if(window.sessionStorage.getItem('EMAIL') != ""){
-      this.email = window.sessionStorage.getItem('EMAIL');
+      this.email = window.sessionStorage.getItem('USERNAME');
     }
     if(this.email !== undefined && this.email !== null){
       this.triggerMsg = true;

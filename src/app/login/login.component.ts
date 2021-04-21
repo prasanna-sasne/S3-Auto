@@ -85,7 +85,7 @@ export class LoginComponent implements OnInit {
           window.sessionStorage.setItem("USERNAME", this.responseData.username);
 
           // Update email on header....
-          this.userEmail.emit(this.responseData.email);
+          this.userEmail.emit(this.responseData.username);
           this.userRole.emit(this.responseData.role);
 
           // reditecting according to the role....
