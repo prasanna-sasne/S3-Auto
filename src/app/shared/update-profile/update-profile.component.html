@@ -80,7 +80,7 @@
             <div class="form-group">
                <label for="confirmPassword" class="mb-0 mt-3">New Password</label>
               <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword"
-              placeholder="NEW Password" autocomplete="off" >
+              placeholder="NEW Password" autocomplete="off" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" >
 
               <div *ngIf="updateProfileForm.controls['password'].value!='' && updateProfileForm.controls['password'].value!=null" class="error-messages">
                 <div *ngIf="updateProfileForm.controls['confirmPassword'].value=='' || updateProfileForm.controls['confirmPassword'].value==null ">

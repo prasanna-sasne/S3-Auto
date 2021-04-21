@@ -41,7 +41,7 @@ export class AuthComponent {
   initForm(): void {
     this.registrationForm = this.fb.group({
       fname: ['', [Validators.required]],
-      password: ['', [Validators.required,  Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]],
+      password: ['', [Validators.required]],
       confirmPassword: ['', [Validators.required]],
       username: ['', [Validators.required, Validators.minLength(5)]],
       lastName: ['', [Validators.required]],

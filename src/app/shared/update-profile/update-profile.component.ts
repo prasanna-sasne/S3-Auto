@@ -94,7 +94,7 @@ export class UpdateProfileComponent {
       fname: ['', [Validators.required]],
       password: ['', []],
       confirmnewPassword: ['', []],
-      confirmPassword: ['', [Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]],
+      confirmPassword: ['', []],
       username: ['', [Validators.required, Validators.minLength(5)]],
       lastName: ['', [Validators.required]],
       phoneNumber: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],

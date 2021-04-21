@@ -20,7 +20,7 @@
             <!----PASSWORD----->
             <div class="form-group">
               <label></label>
-              <input type="password" class="form-control" data-toggle="tooltip"
+              <input type="password" class="form-control" data-toggle="tooltip" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
               data-placement="top" title="Password must contain more than 8 characters, 1 upper case letter, 1 lower case letter , 1 Number, and 1 special character" formControlName="password" id="password" placeholder="Password" autocomplete="off" >
 
               <div *ngIf="isValidInput('password')" class="error-messages">
